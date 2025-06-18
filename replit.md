@@ -2,7 +2,7 @@
 
 ## Overview
 
-ProBalance CPA is a modern full-stack web application designed for a CPA firm serving small businesses. The application combines traditional accounting service offerings with innovative AI-powered financial tools, providing both client engagement and lead generation capabilities.
+ProBalance CPA is a comprehensive full-stack web application designed for a CPA firm serving individuals, businesses across all industries, and specialized sectors. The application combines traditional accounting services with innovative AI-powered financial tools, secure file sharing solutions, and strategic technology partnerships for complete client engagement and lead generation capabilities.
 
 ## System Architecture
 
@@ -44,15 +44,17 @@ The application uses five main entities:
 - **Chat Integration**: Real-time customer support functionality
 
 ### Frontend Pages
-- **Home**: Landing page with service showcase and lead capture
+- **Home**: Landing page with expanded service showcase and lead capture
 - **Blog**: Content marketing hub with pagination
 - **AI Tools**: Interactive financial calculators and AI builder
+- **Partners**: Technology partnerships and affiliate solutions showcase
 - **Individual Blog Posts**: SEO-optimized content pages
 
 ### AI-Powered Features
 - **Calculator Builder**: Generates custom financial calculators from natural language prompts
 - **Pre-built Calculators**: Tax, ROI, and cash flow analysis tools
 - **Chatbot Integration**: Customer service automation
+- **Technology Partnerships**: Curated affiliate links for financial, AI, and SaaS solutions
 
 ## Data Flow
 
@@ -114,6 +116,14 @@ The application uses five main entities:
 ```
 Changelog:
 - June 18, 2025. Initial setup
+- June 18, 2025. Fixed app startup issues (analytics integration, import paths, type mismatches)
+- June 18, 2025. Expanded service offerings to include individuals and all industries
+- June 18, 2025. Added compilation and financial statement preparation services
+- June 18, 2025. Integrated secure file sharing and document management features
+- June 18, 2025. Created Partners page with affiliate technology solutions
+- June 18, 2025. Updated contact information with cell phone (301-640-8549)
+- June 18, 2025. Configured for virtual office/remote service model
+- June 18, 2025. Removed IRS Enrolled Agent credential references
 ```
 
 ## User Preferences

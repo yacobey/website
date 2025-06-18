@@ -58,6 +58,7 @@ export const insertContactSchema = createInsertSchema(contacts).omit({
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
   publishedAt: true,
+  status: true,
 });
 
 export const insertCalculatorSchema = createInsertSchema(calculators).omit({

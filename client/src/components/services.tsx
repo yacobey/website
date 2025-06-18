@@ -42,16 +42,10 @@ export default function Services() {
       eventName: "learn_more_security"
     },
     {
-      icon: Users,
-      title: "Payroll & HR Services",
-      description: "Complete payroll management, HR consulting, and compliance support for businesses of all sizes and industries.",
-      eventName: "learn_more_payroll"
-    },
-    {
-      icon: Building,
-      title: "Business Formation & Consulting",
-      description: "Entity formation, business structure optimization, and ongoing consulting for startups, established businesses, and industry-specific ventures.",
-      eventName: "learn_more_formation"
+      icon: Lightbulb,
+      title: "AI Financial Calculators",
+      description: "Custom-built financial calculators using AI technology for investment analysis, loan calculations, depreciation, and business planning scenarios.",
+      eventName: "learn_more_calculators"
     },
     {
       icon: Briefcase,
@@ -83,7 +77,7 @@ export default function Services() {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (

@@ -19,10 +19,10 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-              Expert CPA Services That Grow With Your Business
+              Expert CPA Services for Individuals, Businesses & Industries
             </h1>
             <p className="text-xl mb-8 text-blue-100">
-              Professional accounting, tax preparation, and financial planning designed specifically for small businesses. Plus AI-powered tools to streamline your financial management.
+              Comprehensive accounting, tax preparation, and financial services for individuals, small businesses, corporations, and specialized industries. Enhanced with AI-powered tools and secure file sharing solutions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 

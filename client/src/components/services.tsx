@@ -7,7 +7,11 @@ import {
   Building, 
   Lightbulb, 
   Search,
-  ArrowRight 
+  ArrowRight,
+  Shield,
+  FileText,
+  Link2,
+  Briefcase
 } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 
@@ -15,39 +19,51 @@ export default function Services() {
   const services = [
     {
       icon: Calculator,
-      title: "Tax Preparation & Planning",
-      description: "Expert tax preparation for individuals and businesses with year-round planning to minimize your tax burden.",
+      title: "Tax Services",
+      description: "Individual and business tax preparation, planning, and representation for all industries including healthcare, retail, real estate, and professional services.",
       eventName: "learn_more_tax"
     },
     {
       icon: TrendingUp,
       title: "Bookkeeping & Accounting",
-      description: "Accurate bookkeeping and financial reporting to keep your business organized and compliant.",
+      description: "Full-service bookkeeping, financial reporting, and accounting for individuals, small businesses, and corporations across all industries.",
       eventName: "learn_more_bookkeeping"
     },
     {
+      icon: Search,
+      title: "Audit, Review & Compilation",
+      description: "Professional audit, review, compilation services, and financial statement preparation with comprehensive cleanup services.",
+      eventName: "learn_more_audit"
+    },
+    {
+      icon: Shield,
+      title: "Secure File Sharing",
+      description: "Bank-level encrypted file sharing portal for safe transmission of sensitive financial documents and data with clients.",
+      eventName: "learn_more_security"
+    },
+    {
       icon: Users,
-      title: "Payroll Services",
-      description: "Complete payroll management including tax calculations, direct deposit, and compliance reporting.",
+      title: "Payroll & HR Services",
+      description: "Complete payroll management, HR consulting, and compliance support for businesses of all sizes and industries.",
       eventName: "learn_more_payroll"
     },
     {
       icon: Building,
-      title: "Business Formation",
-      description: "Help establish your business structure, obtain EIN, and set up proper accounting systems from day one.",
+      title: "Business Formation & Consulting",
+      description: "Entity formation, business structure optimization, and ongoing consulting for startups, established businesses, and industry-specific ventures.",
       eventName: "learn_more_formation"
     },
     {
-      icon: Lightbulb,
-      title: "Financial Planning",
-      description: "Strategic financial advice to help you make informed decisions and plan for long-term growth.",
-      eventName: "learn_more_planning"
+      icon: Briefcase,
+      title: "Industry Specialization",
+      description: "Specialized accounting services for healthcare, real estate, retail, restaurants, professional services, and emerging technology sectors.",
+      eventName: "learn_more_industry"
     },
     {
-      icon: Search,
-      title: "Audit & Review",
-      description: "Professional audit and review services to ensure accuracy and compliance with accounting standards.",
-      eventName: "learn_more_audit"
+      icon: Link2,
+      title: "Financial Technology Partners",
+      description: "Curated affiliate partnerships with leading financial, AI, and SaaS solutions for accounting, process management, security, and business financing.",
+      eventName: "learn_more_partners"
     }
   ];
 
@@ -62,12 +78,12 @@ export default function Services() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">Comprehensive CPA Services</h2>
-          <p className="text-xl text-slate-gray max-w-2xl mx-auto">
-            From tax preparation to strategic financial planning, we provide the expertise your business needs to thrive.
+          <p className="text-xl text-slate-gray max-w-3xl mx-auto">
+            From individual tax preparation to enterprise-level financial services, we serve clients across all industries with specialized expertise, secure technology, and strategic partnerships.
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (

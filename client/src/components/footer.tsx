@@ -83,10 +83,7 @@ export default function Footer() {
               <IdCard className="text-success w-5 h-5" />
               <span>CPA Certified</span>
             </div>
-            <div className="flex items-center gap-2 text-gray-300">
-              <Shield className="text-success w-5 h-5" />
-              <span>IRS Enrolled Agent</span>
-            </div>
+
             <div className="flex items-center gap-2 text-gray-300">
               <Award className="text-success w-5 h-5" />
               <span>QuickBooks ProAdvisor</span>

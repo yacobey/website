@@ -44,10 +44,7 @@ export default function Hero() {
                 <CheckCircle className="w-5 h-5 text-success" />
                 <span>CPA Certified</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-success" />
-                <span>IRS Enrolled Agent</span>
-              </div>
+
               <div className="flex items-center gap-2">
                 <Award className="w-5 h-5 text-success" />
                 <span>20+ Years Experience</span>

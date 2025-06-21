@@ -95,12 +95,8 @@ const ServiceSelector = ({ onServiceSelect }: { onServiceSelect: (service: any) 
   const [customDescription, setCustomDescription] = useState("");
 
   const predefinedServices = [
-    { name: "Tax Return Preparation", price: 299, description: "Individual tax return preparation and filing" },
-    { name: "Business Tax Return", price: 499, description: "Business tax return preparation and filing" },
-    { name: "Financial Statement Review", price: 799, description: "Compilation or review of financial statements" },
-    { name: "Tax Planning Consultation", price: 199, description: "Strategic tax planning session (1 hour)" },
-    { name: "Bookkeeping Setup", price: 399, description: "QuickBooks setup and training" },
-    { name: "IRS Representation", price: 299, description: "IRS correspondence and representation" }
+    { name: "CPA Consultation - 30 Minutes", price: 99, description: "Professional accounting consultation session (30 minutes)" },
+    { name: "CPA Consultation - 1 Hour", price: 250, description: "Comprehensive accounting consultation session (1 hour)" }
   ];
 
   const handleCustomService = () => {
@@ -116,7 +112,7 @@ const ServiceSelector = ({ onServiceSelect }: { onServiceSelect: (service: any) 
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-semibold mb-4">Select a Service</h3>
+        <h3 className="text-lg font-semibold mb-4">Standard Consultations</h3>
         <div className="grid gap-3">
           {predefinedServices.map((service, index) => (
             <Card 
@@ -141,13 +137,13 @@ const ServiceSelector = ({ onServiceSelect }: { onServiceSelect: (service: any) 
       <Separator />
 
       <div>
-        <h3 className="text-lg font-semibold mb-4">Custom Service</h3>
+        <h3 className="text-lg font-semibold mb-4">Extended Consultation</h3>
         <div className="space-y-4">
           <div>
-            <Label htmlFor="customDescription">Service Description</Label>
+            <Label htmlFor="customDescription">Consultation Details</Label>
             <Input
               id="customDescription"
-              placeholder="Describe the service you need"
+              placeholder="Describe your consultation needs and estimated time"
               value={customDescription}
               onChange={(e) => setCustomDescription(e.target.value)}
             />
@@ -158,18 +154,18 @@ const ServiceSelector = ({ onServiceSelect }: { onServiceSelect: (service: any) 
               id="customAmount"
               type="number"
               step="0.01"
-              min="0.50"
-              placeholder="0.00"
+              min="99"
+              placeholder="99.00"
               value={customAmount}
               onChange={(e) => setCustomAmount(e.target.value)}
             />
           </div>
           <Button 
             onClick={handleCustomService}
-            disabled={!customAmount || !customDescription || parseFloat(customAmount) < 0.5}
+            disabled={!customAmount || !customDescription || parseFloat(customAmount) < 99}
             className="w-full"
           >
-            Continue with Custom Service
+            Continue with Extended Consultation
           </Button>
         </div>
       </div>
@@ -224,9 +220,9 @@ export default function Payment() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">Secure Online Payments</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">Book Your CPA Consultation</h1>
               <p className="text-lg text-gray-600 mb-6">
-                Pay for your CPA services securely with our encrypted payment system
+                Schedule and pay for your professional consultation securely online
               </p>
               
               <div className="flex justify-center gap-8 mb-8">
@@ -247,9 +243,9 @@ export default function Payment() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Payment Options</CardTitle>
+                <CardTitle>Select Consultation Duration</CardTitle>
                 <CardDescription>
-                  Choose from our standard services or enter a custom amount
+                  Choose your consultation length or book extended time for complex needs
                 </CardDescription>
               </CardHeader>
               <CardContent>

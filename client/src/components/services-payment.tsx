@@ -5,69 +5,28 @@ import { DollarSign, Clock, Shield, CheckCircle } from "lucide-react";
 
 const services = [
   {
-    name: "Individual Tax Return",
-    price: 299,
-    description: "Complete tax preparation and filing for individuals",
+    name: "CPA Consultation - 30 Minutes",
+    price: 99,
+    description: "Professional accounting consultation session",
     features: [
-      "All standard forms and schedules",
-      "Itemized or standard deduction optimization", 
-      "E-filing included",
-      "One year of support"
+      "Expert CPA guidance and advice",
+      "Tax planning strategies discussion",
+      "Financial questions answered",
+      "Personalized recommendations",
+      "Follow-up summary provided"
     ]
   },
   {
-    name: "Business Tax Return",
-    price: 499,
-    description: "Comprehensive business tax preparation",
+    name: "CPA Consultation - 1 Hour",
+    price: 250,
+    description: "Comprehensive accounting consultation session",
     features: [
-      "All business forms (1120, 1120S, 1065, etc.)",
-      "Depreciation schedules",
-      "Multi-state filing if needed",
-      "Tax planning consultation included"
-    ]
-  },
-  {
-    name: "Financial Statement Review",
-    price: 799,
-    description: "Professional compilation or review services",
-    features: [
-      "Balance sheet and income statement",
-      "Cash flow statement",
-      "Notes to financial statements",
-      "CPA review letter"
-    ]
-  },
-  {
-    name: "Tax Planning Session",
-    price: 199,
-    description: "Strategic tax planning consultation (1 hour)",
-    features: [
-      "Current year tax projection",
-      "Multi-year tax strategies",
-      "Deduction optimization",
-      "Retirement planning advice"
-    ]
-  },
-  {
-    name: "QuickBooks Setup",
-    price: 399,
-    description: "Complete bookkeeping system setup and training",
-    features: [
-      "Chart of accounts setup",
-      "Bank account connections",
-      "Initial data entry",
-      "2-hour training session"
-    ]
-  },
-  {
-    name: "IRS Representation",
-    price: 299,
-    description: "Professional representation for IRS matters",
-    features: [
-      "IRS correspondence handling",
-      "Audit representation",
-      "Payment plan negotiations",
-      "Resolution documentation"
+      "In-depth financial analysis",
+      "Detailed tax planning strategies", 
+      "Business structure recommendations",
+      "Financial statement review",
+      "Written consultation summary",
+      "Priority email support for 30 days"
     ]
   }
 ];
@@ -78,10 +37,10 @@ export default function ServicesPayment() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Professional CPA Services
+            CPA Consultation Services
           </h2>
           <p className="text-lg text-gray-600 mb-8">
-            Transparent pricing with no hidden fees. Pay securely online and get started immediately.
+            Get professional accounting advice with transparent pricing. Book and pay securely online.
           </p>
           
           <div className="flex justify-center gap-8 mb-8">
@@ -100,7 +59,7 @@ export default function ServicesPayment() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
           {services.map((service, index) => (
             <Card key={index} className="relative border border-gray-200 hover:shadow-lg transition-shadow">
               <CardHeader>
@@ -139,10 +98,10 @@ export default function ServicesPayment() {
         <div className="text-center">
           <Card className="inline-block p-6 bg-blue-50 border-blue-200">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Need a Custom Service?
+              Need Extended Consultation?
             </h3>
             <p className="text-gray-600 mb-4">
-              Have a unique accounting need? We offer custom services tailored to your specific requirements.
+              For consultations longer than 1 hour or specialized project needs, we offer custom pricing.
             </p>
             <Link href="/payment">
               <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white">

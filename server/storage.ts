@@ -1,6 +1,31 @@
-import { contacts, blogPosts, calculators, chatMessages, users, type Contact, type BlogPost, type Calculator, type ChatMessage, type User, type InsertContact, type InsertBlogPost, type InsertCalculator, type InsertChatMessage, type InsertUser } from "@shared/schema";
+import {
+  contacts,
+  blogPosts,
+  calculators,
+  chatMessages,
+  users,
+  userPurchases,
+  userProgress,
+  personalizedRecommendations,
+  type Contact,
+  type BlogPost,
+  type Calculator,
+  type ChatMessage,
+  type User,
+  type UserPurchase,
+  type UserProgress,
+  type PersonalizedRecommendation,
+  type InsertContact,
+  type InsertBlogPost,
+  type InsertCalculator,
+  type InsertChatMessage,
+  type InsertUser,
+  type InsertUserPurchase,
+  type InsertUserProgress,
+  type InsertPersonalizedRecommendation,
+} from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc, and, isNull } from "drizzle-orm";
 
 export interface IStorage {
   // User methods
@@ -27,6 +52,16 @@ export interface IStorage {
   // Chat methods
   createChatMessage(message: InsertChatMessage): Promise<ChatMessage>;
   getChatHistory(sessionId: string): Promise<ChatMessage[]>;
+  
+  // Dashboard methods
+  createUserPurchase(purchase: InsertUserPurchase): Promise<UserPurchase>;
+  getUserPurchases(email: string): Promise<UserPurchase[]>;
+  createUserProgress(progress: InsertUserProgress): Promise<UserProgress>;
+  updateUserProgress(email: string, guideTitle: string, sectionsCompleted: number, notes?: string): Promise<UserProgress | undefined>;
+  getUserProgress(email: string): Promise<UserProgress[]>;
+  createPersonalizedRecommendation(recommendation: InsertPersonalizedRecommendation): Promise<PersonalizedRecommendation>;
+  getUserRecommendations(email: string): Promise<PersonalizedRecommendation[]>;
+  dismissRecommendation(id: number): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -35,11 +70,17 @@ export class MemStorage implements IStorage {
   private blogPosts: Map<number, BlogPost>;
   private calculators: Map<number, Calculator>;
   private chatMessages: Map<number, ChatMessage>;
+  private userPurchases: Map<number, UserPurchase>;
+  private userProgress: Map<number, UserProgress>;
+  private personalizedRecommendations: Map<number, PersonalizedRecommendation>;
   private currentId: number;
   private currentContactId: number;
   private currentBlogId: number;
   private currentCalculatorId: number;
   private currentChatId: number;
+  private currentPurchaseId: number;
+  private currentProgressId: number;
+  private currentRecommendationId: number;
 
   constructor() {
     this.users = new Map();
@@ -47,11 +88,17 @@ export class MemStorage implements IStorage {
     this.blogPosts = new Map();
     this.calculators = new Map();
     this.chatMessages = new Map();
+    this.userPurchases = new Map();
+    this.userProgress = new Map();
+    this.personalizedRecommendations = new Map();
     this.currentId = 1;
     this.currentContactId = 1;
     this.currentBlogId = 1;
     this.currentCalculatorId = 1;
     this.currentChatId = 1;
+    this.currentPurchaseId = 1;
+    this.currentProgressId = 1;
+    this.currentRecommendationId = 1;
     
     this.initializeSampleData();
   }
@@ -211,6 +258,89 @@ export class MemStorage implements IStorage {
       .filter(msg => msg.sessionId === sessionId)
       .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
   }
+
+  async createUserPurchase(insertPurchase: InsertUserPurchase): Promise<UserPurchase> {
+    const id = this.currentPurchaseId++;
+    const purchase: UserPurchase = {
+      ...insertPurchase,
+      id,
+      purchaseDate: new Date(),
+      status: insertPurchase.status || "completed",
+    };
+    this.userPurchases.set(id, purchase);
+    return purchase;
+  }
+
+  async getUserPurchases(email: string): Promise<UserPurchase[]> {
+    return Array.from(this.userPurchases.values())
+      .filter(purchase => purchase.email === email)
+      .sort((a, b) => (b.purchaseDate?.getTime() || 0) - (a.purchaseDate?.getTime() || 0));
+  }
+
+  async createUserProgress(insertProgress: InsertUserProgress): Promise<UserProgress> {
+    const id = this.currentProgressId++;
+    const progress: UserProgress = {
+      ...insertProgress,
+      id,
+      lastAccessedAt: new Date(),
+      sectionsCompleted: insertProgress.sectionsCompleted ?? null,
+      completedAt: insertProgress.completedAt ?? null,
+      notes: insertProgress.notes ?? null,
+    };
+    this.userProgress.set(id, progress);
+    return progress;
+  }
+
+  async updateUserProgress(email: string, guideTitle: string, sectionsCompleted: number, notes?: string): Promise<UserProgress | undefined> {
+    const existingProgress = Array.from(this.userProgress.values())
+      .find(p => p.email === email && p.guideTitle === guideTitle);
+    
+    if (existingProgress) {
+      existingProgress.sectionsCompleted = sectionsCompleted;
+      existingProgress.lastAccessedAt = new Date();
+      if (notes) existingProgress.notes = notes;
+      if (sectionsCompleted >= existingProgress.totalSections) {
+        existingProgress.completedAt = new Date();
+      }
+      this.userProgress.set(existingProgress.id, existingProgress);
+      return existingProgress;
+    }
+    return undefined;
+  }
+
+  async getUserProgress(email: string): Promise<UserProgress[]> {
+    return Array.from(this.userProgress.values())
+      .filter(progress => progress.email === email)
+      .sort((a, b) => (b.lastAccessedAt?.getTime() || 0) - (a.lastAccessedAt?.getTime() || 0));
+  }
+
+  async createPersonalizedRecommendation(insertRecommendation: InsertPersonalizedRecommendation): Promise<PersonalizedRecommendation> {
+    const id = this.currentRecommendationId++;
+    const recommendation: PersonalizedRecommendation = {
+      ...insertRecommendation,
+      id,
+      createdAt: new Date(),
+      priority: insertRecommendation.priority ?? null,
+      isActive: insertRecommendation.isActive ?? null,
+      dismissedAt: insertRecommendation.dismissedAt ?? null,
+    };
+    this.personalizedRecommendations.set(id, recommendation);
+    return recommendation;
+  }
+
+  async getUserRecommendations(email: string): Promise<PersonalizedRecommendation[]> {
+    return Array.from(this.personalizedRecommendations.values())
+      .filter(rec => rec.email === email && rec.isActive && !rec.dismissedAt)
+      .sort((a, b) => (b.priority || 0) - (a.priority || 0));
+  }
+
+  async dismissRecommendation(id: number): Promise<void> {
+    const recommendation = this.personalizedRecommendations.get(id);
+    if (recommendation) {
+      recommendation.dismissedAt = new Date();
+      this.personalizedRecommendations.set(id, recommendation);
+    }
+  }
 }
 
 // Database Storage Implementation
@@ -308,11 +438,87 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getChatHistory(sessionId: string): Promise<ChatMessage[]> {
-    return await db
-      .select()
-      .from(chatMessages)
+    return await db.select().from(chatMessages)
       .where(eq(chatMessages.sessionId, sessionId))
       .orderBy(chatMessages.createdAt);
+  }
+
+  async createUserPurchase(insertPurchase: InsertUserPurchase): Promise<UserPurchase> {
+    const [purchase] = await db
+      .insert(userPurchases)
+      .values(insertPurchase)
+      .returning();
+    return purchase;
+  }
+
+  async getUserPurchases(email: string): Promise<UserPurchase[]> {
+    return await db.select().from(userPurchases)
+      .where(eq(userPurchases.email, email))
+      .orderBy(desc(userPurchases.purchaseDate));
+  }
+
+  async createUserProgress(insertProgress: InsertUserProgress): Promise<UserProgress> {
+    const [progress] = await db
+      .insert(userProgress)
+      .values(insertProgress)
+      .returning();
+    return progress;
+  }
+
+  async updateUserProgress(email: string, guideTitle: string, sectionsCompleted: number, notes?: string): Promise<UserProgress | undefined> {
+    const [existing] = await db.select().from(userProgress)
+      .where(and(eq(userProgress.email, email), eq(userProgress.guideTitle, guideTitle)));
+    
+    if (existing) {
+      const updateData: any = {
+        sectionsCompleted,
+        lastAccessedAt: new Date(),
+      };
+      
+      if (notes) updateData.notes = notes;
+      if (sectionsCompleted >= existing.totalSections) {
+        updateData.completedAt = new Date();
+      }
+      
+      const [updated] = await db
+        .update(userProgress)
+        .set(updateData)
+        .where(eq(userProgress.id, existing.id))
+        .returning();
+      return updated;
+    }
+    return undefined;
+  }
+
+  async getUserProgress(email: string): Promise<UserProgress[]> {
+    return await db.select().from(userProgress)
+      .where(eq(userProgress.email, email))
+      .orderBy(desc(userProgress.lastAccessedAt));
+  }
+
+  async createPersonalizedRecommendation(insertRecommendation: InsertPersonalizedRecommendation): Promise<PersonalizedRecommendation> {
+    const [recommendation] = await db
+      .insert(personalizedRecommendations)
+      .values(insertRecommendation)
+      .returning();
+    return recommendation;
+  }
+
+  async getUserRecommendations(email: string): Promise<PersonalizedRecommendation[]> {
+    return await db.select().from(personalizedRecommendations)
+      .where(and(
+        eq(personalizedRecommendations.email, email),
+        eq(personalizedRecommendations.isActive, true),
+        isNull(personalizedRecommendations.dismissedAt)
+      ))
+      .orderBy(desc(personalizedRecommendations.priority));
+  }
+
+  async dismissRecommendation(id: number): Promise<void> {
+    await db
+      .update(personalizedRecommendations)
+      .set({ dismissedAt: new Date() })
+      .where(eq(personalizedRecommendations.id, id));
   }
 }
 

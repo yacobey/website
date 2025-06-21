@@ -12,6 +12,157 @@ import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const contact = await storage.createContact(req.body);
+      res.json(contact);
+    } catch (error) {
+      console.error("Error creating contact:", error);
+      res.status(500).json({ message: "Failed to submit contact form" });
+    }
+  });
+
+  // Get all contacts (for admin)
+  app.get("/api/contacts", async (req, res) => {
+    try {
+      const contacts = await storage.getContacts();
+      res.json(contacts);
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+      res.status(500).json({ message: "Failed to fetch contacts" });
+    }
+  });
+
+  // Update contact status
+  app.patch("/api/contacts/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { status } = req.body;
+      const contact = await storage.updateContactStatus(id, status);
+      res.json(contact);
+    } catch (error) {
+      console.error("Error updating contact:", error);
+      res.status(500).json({ message: "Failed to update contact" });
+    }
+  });
+
+  // Blog routes
+  app.get("/api/blog", async (req, res) => {
+    try {
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      console.error("Error fetching blog posts:", error);
+      res.status(500).json({ message: "Failed to fetch blog posts" });
+    }
+  });
+
+  app.get("/api/blog/:slug", async (req, res) => {
+    try {
+      const post = await storage.getBlogPost(req.params.slug);
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      console.error("Error fetching blog post:", error);
+      res.status(500).json({ message: "Failed to fetch blog post" });
+    }
+  });
+
+  app.post("/api/blog", async (req, res) => {
+    try {
+      const post = await storage.createBlogPost(req.body);
+      res.json(post);
+    } catch (error) {
+      console.error("Error creating blog post:", error);
+      res.status(500).json({ message: "Failed to create blog post" });
+    }
+  });
+
+  // Calculator routes
+  app.get("/api/calculators", async (req, res) => {
+    try {
+      const calculators = await storage.getCalculators();
+      res.json(calculators);
+    } catch (error) {
+      console.error("Error fetching calculators:", error);
+      res.status(500).json({ message: "Failed to fetch calculators" });
+    }
+  });
+
+  app.post("/api/calculators", async (req, res) => {
+    try {
+      const calculator = await storage.createCalculator(req.body);
+      res.json(calculator);
+    } catch (error) {
+      console.error("Error creating calculator:", error);
+      res.status(500).json({ message: "Failed to create calculator" });
+    }
+  });
+
+  // Chat routes
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const { sessionId, message } = req.body;
+      
+      // Generate a simple response (you can enhance this with AI)
+      const response = generateChatResponse(message);
+      
+      // Save both user message and bot response
+      await storage.createChatMessage({
+        sessionId,
+        message,
+        response
+      });
+      
+      res.json({ response });
+    } catch (error) {
+      console.error("Error processing chat message:", error);
+      res.status(500).json({ message: "Failed to process chat message" });
+    }
+  });
+
+  app.get("/api/chat/:sessionId/history", async (req, res) => {
+    try {
+      const messages = await storage.getChatHistory(req.params.sessionId);
+      res.json(messages);
+    } catch (error) {
+      console.error("Error fetching chat history:", error);
+      res.status(500).json({ message: "Failed to fetch chat history" });
+    }
+  });
+
+  // Stripe payment route for one-time payments
+  app.post("/api/create-payment-intent", async (req, res) => {
+    try {
+      const { amount, description = "CPA Services" } = req.body;
+      
+      if (!amount || amount < 0.50) {
+        return res.status(400).json({ error: "Amount must be at least $0.50" });
+      }
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(amount * 100), // Convert to cents
+        currency: "usd",
+        description,
+        metadata: {
+          description: description
+        }
+      });
+      
+      res.json({ 
+        clientSecret: paymentIntent.client_secret,
+        amount: amount
+      });
+    } catch (error: any) {
+      console.error("Error creating payment intent:", error);
+      res.status(500).json({ 
+        message: "Error creating payment intent: " + error.message 
+      });
+    }
+  });
+  // Contact form submission
   app.post("/api/contacts", async (req, res) => {
     try {
       const contactData = insertContactSchema.parse(req.body);
@@ -145,6 +296,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Dashboard API endpoints
+  app.get("/api/user-purchases/:email", async (req, res) => {
+    try {
+      const purchases = await storage.getUserPurchases(req.params.email);
+      res.json(purchases);
+    } catch (error) {
+      console.error("Error fetching user purchases:", error);
+      res.status(500).json({ message: "Failed to fetch user purchases" });
+    }
+  });
+
+  app.get("/api/user-progress/:email", async (req, res) => {
+    try {
+      const progress = await storage.getUserProgress(req.params.email);
+      res.json(progress);
+    } catch (error) {
+      console.error("Error fetching user progress:", error);
+      res.status(500).json({ message: "Failed to fetch user progress" });
+    }
+  });
+
+  app.get("/api/user-recommendations/:email", async (req, res) => {
+    try {
+      const recommendations = await storage.getUserRecommendations(req.params.email);
+      res.json(recommendations);
+    } catch (error) {
+      console.error("Error fetching user recommendations:", error);
+      res.status(500).json({ message: "Failed to fetch user recommendations" });
+    }
+  });
+
+  app.patch("/api/user-progress/:email", async (req, res) => {
+    try {
+      const { guideTitle, sectionsCompleted, notes } = req.body;
+      const progress = await storage.updateUserProgress(req.params.email, guideTitle, sectionsCompleted, notes);
+      res.json(progress);
+    } catch (error) {
+      console.error("Error updating user progress:", error);
+      res.status(500).json({ message: "Failed to update user progress" });
+    }
+  });
+
+  app.delete("/api/recommendations/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.dismissRecommendation(id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error dismissing recommendation:", error);
+      res.status(500).json({ message: "Failed to dismiss recommendation" });
     }
   });
 

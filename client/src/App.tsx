@@ -14,6 +14,7 @@ import Partners from "@/pages/partners";
 import Payment from "@/pages/payment";
 import PaymentSuccess from "@/pages/payment-success";
 import DigitalGuides from "@/pages/digital-guides";
+import DashboardPage from "@/pages/dashboard";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/payment" component={Payment} />
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route path="/digital-guides" component={DigitalGuides} />
+      <Route path="/dashboard" component={DashboardPage} />
       <Route component={NotFound} />
     </Switch>
   );

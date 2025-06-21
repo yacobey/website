@@ -22,6 +22,7 @@ export default function Header() {
     { href: "/#services", label: "Services" },
     { href: "/ai-tools", label: "AI Tools" },
     { href: "/digital-guides", label: "Digital Guides" },
+    { href: "/dashboard", label: "Dashboard" },
     { href: "/partners", label: "Partners" },
     { href: "/blog", label: "Blog" },
     { href: "/#contact", label: "Contact" },

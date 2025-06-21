@@ -13,6 +13,7 @@ import AITools from "@/pages/ai-tools";
 import Partners from "@/pages/partners";
 import Payment from "@/pages/payment";
 import PaymentSuccess from "@/pages/payment-success";
+import DigitalGuides from "@/pages/digital-guides";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -27,6 +28,7 @@ function Router() {
       <Route path="/partners" component={Partners} />
       <Route path="/payment" component={Payment} />
       <Route path="/payment-success" component={PaymentSuccess} />
+      <Route path="/digital-guides" component={DigitalGuides} />
       <Route component={NotFound} />
     </Switch>
   );

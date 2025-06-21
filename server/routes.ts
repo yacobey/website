@@ -108,7 +108,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { amount, description = "CPA Services" } = req.body;
       
-      if (!amount || amount < 50) {
+      if (!amount || amount < 0.50) {
         return res.status(400).json({ error: "Amount must be at least $0.50" });
       }
 

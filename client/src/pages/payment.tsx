@@ -95,8 +95,9 @@ const ServiceSelector = ({ onServiceSelect }: { onServiceSelect: (service: any) 
   const [customDescription, setCustomDescription] = useState("");
 
   const predefinedServices = [
-    { name: "CPA Consultation - 30 Minutes", price: 99, description: "Professional accounting consultation session (30 minutes)" },
-    { name: "Free CPA Consultation - 1 Hour", price: 0, description: "Complimentary comprehensive accounting consultation session (1 hour)" }
+    { name: "Free CPA Consultation - 30 Minutes", price: 0, description: "Complimentary professional accounting consultation session (30 minutes)" },
+    { name: "CPA Consultation - 1 Hour", price: 250, description: "Comprehensive accounting consultation session (1 hour)" },
+    { name: "Digital Accounting Guidelines Package", price: 9.99, description: "Practical digital solutions for everyday business accounting challenges" }
   ];
 
   const handleCustomService = () => {
@@ -202,6 +203,25 @@ export default function Payment() {
     }
   };
 
+  // Check if coming from digital guidelines page
+  useEffect(() => {
+    const guidelinesClientSecret = localStorage.getItem('guidelines_client_secret');
+    const guidelinesEmail = localStorage.getItem('guidelines_email');
+    
+    if (guidelinesClientSecret && guidelinesEmail) {
+      setSelectedService({
+        name: "Digital Accounting Guidelines Package",
+        price: 9.99,
+        description: "Practical digital solutions for everyday business accounting challenges"
+      });
+      setClientSecret(guidelinesClientSecret);
+      
+      // Clear localStorage
+      localStorage.removeItem('guidelines_client_secret');
+      localStorage.removeItem('guidelines_email');
+    }
+  }, []);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
@@ -295,7 +315,7 @@ export default function Payment() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Duration:</span>
-                  <span className="font-medium">1 Hour</span>
+                  <span className="font-medium">30 Minutes</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Cost:</span>

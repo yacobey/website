@@ -5,9 +5,9 @@ import { DollarSign, Clock, Shield, CheckCircle } from "lucide-react";
 
 const services = [
   {
-    name: "CPA Consultation - 30 Minutes",
-    price: 99,
-    description: "Professional accounting consultation session",
+    name: "Free CPA Consultation - 30 Minutes",
+    price: 0,
+    description: "Complimentary professional accounting consultation session",
     features: [
       "Expert CPA guidance and advice",
       "Tax planning strategies discussion",
@@ -17,9 +17,9 @@ const services = [
     ]
   },
   {
-    name: "Free CPA Consultation - 1 Hour",
-    price: 0,
-    description: "Complimentary comprehensive accounting consultation session",
+    name: "CPA Consultation - 1 Hour",
+    price: 250,
+    description: "Comprehensive accounting consultation session",
     features: [
       "In-depth financial analysis",
       "Detailed tax planning strategies", 
@@ -40,7 +40,7 @@ export default function ServicesPayment() {
             CPA Consultation Services
           </h2>
           <p className="text-lg text-gray-600 mb-8">
-            Get professional accounting advice with transparent pricing. Book and pay securely online.
+            Professional accounting advice with transparent pricing. Start with a free consultation or book extended time.
           </p>
           
           <div className="flex justify-center gap-8 mb-8">

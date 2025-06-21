@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Shield, Award } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
+import { Link } from "wouter";
 
 export default function Hero() {
   const handleGetFreeConsultation = () => {
@@ -25,18 +26,17 @@ export default function Hero() {
               Comprehensive accounting, tax preparation, and financial services for individuals, small businesses, corporations, and specialized industries. Enhanced with AI-powered tools and secure file sharing solutions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/payment">
+                <Button className="bg-white text-primary hover:bg-gray-50 px-8 py-3 rounded-lg font-semibold text-lg transition-colors">
+                  Pay Online Now
+                </Button>
+              </Link>
               <Button 
                 onClick={handleGetFreeConsultation}
-                className="bg-white text-primary hover:bg-gray-50 px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
-              >
-                Get Free Consultation
-              </Button>
-              <Button 
-                onClick={handleViewServices}
                 variant="outline"
                 className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
               >
-                View Services
+                Get Free Consultation
               </Button>
             </div>
             <div className="flex items-center gap-6 mt-8 text-blue-100">

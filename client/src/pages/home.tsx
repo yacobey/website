@@ -1,6 +1,7 @@
 import Header from "@/components/header";
 import Hero from "@/components/hero";
 import Services from "@/components/services";
+import ServicesPayment from "@/components/services-payment";
 import AIToolsSection from "@/components/ai-tools-section";
 import Testimonials from "@/components/testimonials";
 import BlogPreview from "@/components/blog-preview";
@@ -14,6 +15,7 @@ export default function Home() {
       <Header />
       <Hero />
       <Services />
+      <ServicesPayment />
       <AIToolsSection />
       <Testimonials />
       <BlogPreview />

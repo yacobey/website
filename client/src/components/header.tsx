@@ -54,10 +54,16 @@ export default function Header() {
             </div>
           </nav>
           
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center space-x-4">
+            <Link href="/payment">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                Pay Online
+              </Button>
+            </Link>
             <Button 
               onClick={handleScheduleConsultation}
-              className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg font-semibold transition-colors"
+              variant="outline"
+              className="px-4 py-2 rounded-lg font-medium transition-colors"
             >
               Schedule Consultation
             </Button>

@@ -2,6 +2,12 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema, insertChatMessageSchema } from "@shared/schema";
+import Stripe from "stripe";
+
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
+}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -94,6 +100,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(history);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch chat history" });
+    }
+  });
+
+  // Stripe payment routes
+  app.post("/api/create-payment-intent", async (req, res) => {
+    try {
+      const { amount, description = "CPA Services" } = req.body;
+      
+      if (!amount || amount < 50) {
+        return res.status(400).json({ error: "Amount must be at least $0.50" });
+      }
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(amount * 100), // Convert to cents
+        currency: "usd",
+        description,
+        metadata: {
+          service: description,
+          timestamp: new Date().toISOString()
+        }
+      });
+
+      res.json({ 
+        clientSecret: paymentIntent.client_secret,
+        amount: amount
+      });
+    } catch (error: any) {
+      console.error("Stripe payment intent error:", error);
+      res
+        .status(500)
+        .json({ error: "Error creating payment intent: " + error.message });
+    }
+  });
+
+  // Get payment intent status
+  app.get("/api/payment-intent/:id", async (req, res) => {
+    try {
+      const paymentIntent = await stripe.paymentIntents.retrieve(req.params.id);
+      res.json({
+        status: paymentIntent.status,
+        amount: paymentIntent.amount / 100,
+        description: paymentIntent.description
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
     }
   });
 

@@ -24,6 +24,7 @@ export default function Header() {
     { href: "/#advisory", label: "Advisory" },
     { href: "/#loan-help", label: "Loan Help" },
     { href: "/ai-tools", label: "AI Tools" },
+    { href: "/resources", label: "AI Resources" },
     { href: "/digital-guides", label: "Digital Guides" },
     { href: "/dashboard", label: "Dashboard" },
     { href: "/blog", label: "Blog" },

@@ -10,6 +10,7 @@ import Home from "@/pages/home";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
 import AITools from "@/pages/ai-tools";
+import AIToolsAffiliate from "@/pages/ai-tools-affiliate";
 import Partners from "@/pages/partners";
 import Payment from "@/pages/payment";
 import PaymentSuccess from "@/pages/payment-success";
@@ -27,6 +28,8 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/ai-tools" component={AITools} />
+      <Route path="/ai-tools-affiliate" component={AIToolsAffiliate} />
+      <Route path="/resources" component={AIToolsAffiliate} />
       <Route path="/partners" component={Partners} />
       <Route path="/payment" component={Payment} />
       <Route path="/payment-success" component={PaymentSuccess} />

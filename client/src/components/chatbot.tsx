@@ -14,6 +14,11 @@ interface ChatMessage {
   type: 'user' | 'bot';
   message: string;
   timestamp: Date;
+  context?: {
+    suggestedActions?: string[];
+    intent?: string;
+    businessType?: string;
+  };
 }
 
 export default function Chatbot() {
@@ -21,6 +26,12 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [sessionId] = useState(() => nanoid());
+  const [conversationStage, setConversationStage] = useState<'greeting' | 'exploring' | 'details' | 'conversion'>('greeting');
+  const [userContext, setUserContext] = useState<{
+    businessType?: string;
+    serviceInterest?: string[];
+    urgency?: string;
+  }>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -55,8 +66,14 @@ export default function Chatbot() {
         id: nanoid(),
         type: 'bot',
         message: data.response,
-        timestamp: new Date()
+        timestamp: new Date(),
+        context: data.context
       }]);
+      
+      // Update conversation stage based on response context
+      if (data.context?.intent) {
+        updateConversationStage(data.context.intent);
+      }
     },
     onError: () => {
       setMessages(prev => [...prev, {
@@ -105,6 +122,27 @@ export default function Chatbot() {
       case "consultation":
         message = "I'd like to schedule a consultation";
         break;
+      case "tax_help":
+        message = "I need help with tax preparation";
+        break;
+      case "bookkeeping":
+        message = "Tell me about your bookkeeping services";
+        break;
+      case "business_advisory":
+        message = "I need business advisory services";
+        break;
+      case "audit":
+        message = "Do you provide audit services?";
+        break;
+      case "small_business":
+        message = "Services for small businesses";
+        break;
+      case "individual_taxes":
+        message = "Individual tax preparation";
+        break;
+      case "financial_planning":
+        message = "Financial planning and advisory";
+        break;
     }
     
     if (message) {
@@ -116,6 +154,31 @@ export default function Chatbot() {
       }]);
       chatMutation.mutate(message);
       trackEvent('click', `chatbot_quick_action_${action}`, 'chatbot');
+    }
+  };
+
+  const updateConversationStage = (intent: string) => {
+    if (intent.includes('service') || intent.includes('pricing')) {
+      setConversationStage('exploring');
+    } else if (intent.includes('consultation') || intent.includes('schedule')) {
+      setConversationStage('conversion');
+    } else if (intent.includes('tax') || intent.includes('bookkeeping')) {
+      setConversationStage('details');
+    }
+  };
+
+  const getTypingMessage = () => {
+    switch (conversationStage) {
+      case 'greeting':
+        return "Getting ready to help...";
+      case 'exploring':
+        return "Analyzing your needs...";
+      case 'details':
+        return "Preparing detailed information...";
+      case 'conversion':
+        return "Checking availability...";
+      default:
+        return "Typing...";
     }
   };
 
@@ -188,15 +251,22 @@ export default function Chatbot() {
             {chatMutation.isPending && (
               <div className="flex gap-2">
                 <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Bot className="text-primary w-4 h-4" />
+                  <Bot className="text-primary w-4 h-4 animate-pulse" />
                 </div>
                 <div className="bg-gray-100 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">Typing...</p>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    {getTypingMessage()}
+                    <span className="flex space-x-1">
+                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                    </span>
+                  </p>
                 </div>
               </div>
             )}
 
-            {/* Quick Action Buttons - Only show if no messages yet or after initial message */}
+            {/* Quick Action Buttons - Show different sets based on conversation stage */}
             {messages.length <= 1 && (
               <div className="flex flex-wrap gap-2 ml-10">
                 <Button
@@ -222,6 +292,44 @@ export default function Chatbot() {
                   className="text-xs bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
                 >
                   Book Consultation
+                </Button>
+              </div>
+            )}
+
+            {/* Service-specific quick actions after initial interaction */}
+            {messages.length > 1 && messages.length <= 3 && (
+              <div className="flex flex-wrap gap-1 ml-10">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleQuickAction('tax_help')}
+                  className="text-xs bg-green-50 text-green-700 border-green-200 hover:bg-green-100"
+                >
+                  Tax Help
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleQuickAction('bookkeeping')}
+                  className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100"
+                >
+                  Bookkeeping
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleQuickAction('business_advisory')}
+                  className="text-xs bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100"
+                >
+                  Advisory
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleQuickAction('small_business')}
+                  className="text-xs bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100"
+                >
+                  Small Business
                 </Button>
               </div>
             )}

@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema, insertChatMessageSchema } from "@shared/schema";
+import { generateAIResponse, analyzeUserIntent, updateUserPreferences } from "./ai-service";
 import Stripe from "stripe";
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -106,8 +107,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { sessionId, message } = req.body;
       
-      // Generate a simple response (you can enhance this with AI)
-      const response = generateChatResponse(message);
+      let response: string;
+      
+      // Try to use AI service first, fallback to rule-based responses
+      if (process.env.OPENAI_API_KEY) {
+        try {
+          // Analyze user intent and update preferences
+          const intent = analyzeUserIntent(message);
+          if (Object.keys(intent).length > 0) {
+            updateUserPreferences(sessionId, intent);
+          }
+          
+          response = await generateAIResponse(sessionId, message);
+        } catch (aiError) {
+          console.error("AI service error, falling back to rule-based response:", aiError);
+          response = generateChatResponse(message);
+        }
+      } else {
+        response = generateChatResponse(message);
+      }
       
       // Save both user message and bot response
       await storage.createChatMessage({
@@ -407,39 +425,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
 }
 
 function generateChatResponse(message: string): string {
-  // Simple keyword-based responses
-  if (message.includes('service') || message.includes('what do you do')) {
-    return "We offer comprehensive CPA services including tax preparation, bookkeeping, payroll services, business formation, financial planning, and audit services. Would you like to know more about any specific service?";
+  const lowerMessage = message.toLowerCase();
+  
+  // Greeting responses
+  if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+    return "Hello! Welcome to ProBalance CPA. I'm here to help with your accounting and tax questions. What can I assist you with today?";
   }
   
-  if (message.includes('price') || message.includes('cost') || message.includes('fee')) {
-    return "Our pricing varies based on the services you need. We offer competitive rates and free consultations. Would you like to schedule a consultation to discuss your specific needs and get a custom quote?";
+  // Services overview
+  if (lowerMessage.includes('service') || lowerMessage.includes('what do you do') || lowerMessage.includes('what services')) {
+    return "ProBalance CPA offers comprehensive financial services:\n\n• Tax Preparation & Planning (Individual & Business)\n• Bookkeeping & Financial Statements\n• Business Advisory & Consulting\n• Audit & Assurance Services\n• Payroll Processing\n• Business Formation & Structure\n• Financial Planning & Analysis\n• AI-Powered Financial Tools\n\nWhich service interests you most?";
   }
   
-  if (message.includes('tax') || message.includes('taxes')) {
-    return "We provide expert tax preparation and planning services for individuals and businesses. Our team stays up-to-date with the latest tax laws to maximize your savings. We can help with tax returns, quarterly filings, and year-round tax planning.";
+  // Tax-related questions
+  if (lowerMessage.includes('tax') && (lowerMessage.includes('help') || lowerMessage.includes('preparation') || lowerMessage.includes('filing'))) {
+    return "Our tax specialists can help you with:\n\n• Individual tax returns (1040, schedules)\n• Business tax returns (1120, 1065, 1120S)\n• Quarterly estimated tax payments\n• Tax planning strategies\n• IRS representation and audit support\n• State and local tax compliance\n\nWe stay current with all tax law changes to maximize your savings. Would you like to schedule a free consultation?";
   }
   
-  if (message.includes('bookkeeping') || message.includes('accounting')) {
-    return "Our bookkeeping and accounting services ensure your financial records are accurate and up-to-date. We handle daily transactions, reconciliations, financial statements, and compliance reporting so you can focus on growing your business.";
+  // Bookkeeping specific
+  if (lowerMessage.includes('bookkeeping') || lowerMessage.includes('books') || lowerMessage.includes('financial statements')) {
+    return "Our bookkeeping services include:\n\n• Daily transaction recording\n• Bank & credit card reconciliation\n• Accounts payable/receivable management\n• Monthly financial statements\n• Cash flow analysis\n• QuickBooks setup and training\n• Payroll processing\n\nWe ensure accuracy and compliance so you can focus on growing your business. Need help getting started?";
   }
   
-  if (message.includes('consultation') || message.includes('meeting') || message.includes('appointment')) {
-    return "I'd be happy to help you schedule a free consultation! You can use the 'Schedule Consultation' button on our website, or provide your contact information and we'll reach out to you within 24 hours.";
+  // Business advisory
+  if (lowerMessage.includes('business advisory') || lowerMessage.includes('consulting') || lowerMessage.includes('business advice')) {
+    return "Our business advisory services help you make informed decisions:\n\n• Financial analysis and KPI tracking\n• Business valuation and planning\n• Cash flow forecasting\n• Growth strategy development\n• Risk management assessment\n• Technology integration planning\n\nWe work with businesses across all industries. What specific challenges are you facing?";
   }
   
-  if (message.includes('ai') || message.includes('calculator') || message.includes('tool')) {
-    return "Our AI-powered tools include a custom calculator builder and pre-built calculators for taxes, ROI analysis, and cash flow tracking. These tools help you make informed financial decisions. Would you like to try our calculator builder?";
+  // Small business focus
+  if (lowerMessage.includes('small business') || lowerMessage.includes('startup') || lowerMessage.includes('entrepreneur')) {
+    return "We specialize in helping small businesses succeed:\n\n• Business formation (LLC, Corp, Partnership)\n• Initial bookkeeping setup\n• Tax structure optimization\n• Cash flow management\n• Financial planning for growth\n• Technology recommendations\n\nMany small business owners save 15-30% on taxes with proper planning. Ready to optimize your business finances?";
   }
   
-  if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
-    return "Hello! Welcome to ProBalance CPA. I'm here to help answer your questions about our accounting services. How can I assist you today?";
+  // Individual tax services
+  if (lowerMessage.includes('individual') || lowerMessage.includes('personal') || lowerMessage.includes('1040')) {
+    return "Our individual tax services cover:\n\n• Standard and itemized deductions\n• Self-employment income (Schedule C)\n• Rental property income (Schedule E)\n• Investment income and capital gains\n• Retirement planning strategies\n• Multi-state tax situations\n\nFree consultation to review your situation and identify tax-saving opportunities. When would you like to meet?";
   }
   
-  if (message.includes('help')) {
-    return "I'm here to help! I can answer questions about our CPA services, pricing, AI tools, or help you schedule a consultation. What would you like to know more about?";
+  // Pricing and consultation
+  if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('fee') || lowerMessage.includes('consultation')) {
+    return "Our pricing is transparent and competitive:\n\n• FREE 30-minute consultation\n• $250 for 1-hour comprehensive consultation\n• Custom pricing for ongoing services\n• No hidden fees or surprises\n\nMany clients save more in taxes than they pay in fees. The free consultation helps us understand your needs and provide accurate pricing. Schedule yours today!";
   }
   
-  // Default response
-  return "Thank you for your question! For detailed information about our services, I'd recommend scheduling a free consultation with one of our CPAs. They can provide personalized advice based on your specific needs. You can schedule online or call us at (555) 123-4567.";
+  // AI and tools
+  if (lowerMessage.includes('ai') || lowerMessage.includes('calculator') || lowerMessage.includes('tool') || lowerMessage.includes('technology')) {
+    return "Our AI-powered tools give you instant financial insights:\n\n• Custom Calculator Builder (create any financial calculator)\n• Tax Planning Calculators\n• ROI and Investment Analysis\n• Cash Flow Projections\n• Break-even Analysis\n\nPlus, we recommend the best accounting software and AI tools for your business. Want to try our calculator builder?";
+  }
+  
+  // Audit services
+  if (lowerMessage.includes('audit') || lowerMessage.includes('assurance') || lowerMessage.includes('review')) {
+    return "Our audit and assurance services provide credibility:\n\n• Financial statement audits\n• Reviews and compilations\n• Internal control assessments\n• Compliance audits\n• Due diligence for acquisitions\n\nRequired for loans, investors, or regulatory compliance. What type of assurance service do you need?";
+  }
+  
+  // Payroll questions
+  if (lowerMessage.includes('payroll') || lowerMessage.includes('employees') || lowerMessage.includes('wages')) {
+    return "Our payroll services handle everything:\n\n• Bi-weekly, monthly, or custom pay schedules\n• Tax withholdings and deposits\n• W-2 and 1099 preparation\n• State unemployment and workers' comp\n• Direct deposit and pay stubs\n• Compliance with labor laws\n\nAutomate your payroll and avoid costly penalties. How many employees do you have?";
+  }
+  
+  // Contact and scheduling
+  if (lowerMessage.includes('schedule') || lowerMessage.includes('appointment') || lowerMessage.includes('meeting') || lowerMessage.includes('contact')) {
+    return "Ready to get started? Here's how to connect:\n\n• Book a FREE consultation online\n• Call us at (301) 640-8549\n• Email through our contact form\n• Same-day response guaranteed\n\nOur CPAs are available for virtual or in-person meetings. What works best for your schedule?";
+  }
+  
+  // Help and general questions
+  if (lowerMessage.includes('help') || lowerMessage.includes('question') || lowerMessage.includes('more info')) {
+    return "I'm here to help! I can provide information about:\n\n• Our CPA services and expertise\n• Pricing and consultation options\n• Tax planning strategies\n• Business advisory services\n• AI tools and calculators\n• Scheduling appointments\n\nWhat specific question can I answer for you?";
+  }
+  
+  // Default response with helpful options
+  return "Thanks for reaching out! I can help you with information about our CPA services, pricing, or schedule a consultation.\n\nPopular topics:\n• Tax preparation and planning\n• Bookkeeping and financial statements\n• Business advisory services\n• Free consultation scheduling\n\nWhat would you like to know more about?";
 }

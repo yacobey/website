@@ -1,4 +1,6 @@
 import { contacts, blogPosts, calculators, chatMessages, users, type Contact, type BlogPost, type Calculator, type ChatMessage, type User, type InsertContact, type InsertBlogPost, type InsertCalculator, type InsertChatMessage, type InsertUser } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   // User methods
@@ -211,4 +213,107 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Database Storage Implementation
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  async createContact(insertContact: InsertContact): Promise<Contact> {
+    const [contact] = await db
+      .insert(contacts)
+      .values({
+        ...insertContact,
+        status: "new"
+      })
+      .returning();
+    return contact;
+  }
+
+  async getContacts(): Promise<Contact[]> {
+    return await db.select().from(contacts).orderBy(contacts.createdAt);
+  }
+
+  async getContact(id: number): Promise<Contact | undefined> {
+    const [contact] = await db.select().from(contacts).where(eq(contacts.id, id));
+    return contact || undefined;
+  }
+
+  async updateContactStatus(id: number, status: string): Promise<Contact | undefined> {
+    const [contact] = await db
+      .update(contacts)
+      .set({ status })
+      .where(eq(contacts.id, id))
+      .returning();
+    return contact || undefined;
+  }
+
+  async getBlogPosts(): Promise<BlogPost[]> {
+    return await db.select().from(blogPosts).orderBy(blogPosts.publishedAt);
+  }
+
+  async getBlogPost(slug: string): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    return post || undefined;
+  }
+
+  async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
+    const [post] = await db
+      .insert(blogPosts)
+      .values({
+        ...insertPost,
+        status: "published"
+      })
+      .returning();
+    return post;
+  }
+
+  async getCalculators(): Promise<Calculator[]> {
+    return await db.select().from(calculators).orderBy(calculators.createdAt);
+  }
+
+  async getCalculator(id: number): Promise<Calculator | undefined> {
+    const [calculator] = await db.select().from(calculators).where(eq(calculators.id, id));
+    return calculator || undefined;
+  }
+
+  async createCalculator(insertCalculator: InsertCalculator): Promise<Calculator> {
+    const [calculator] = await db
+      .insert(calculators)
+      .values(insertCalculator)
+      .returning();
+    return calculator;
+  }
+
+  async createChatMessage(insertMessage: InsertChatMessage): Promise<ChatMessage> {
+    const [message] = await db
+      .insert(chatMessages)
+      .values(insertMessage)
+      .returning();
+    return message;
+  }
+
+  async getChatHistory(sessionId: string): Promise<ChatMessage[]> {
+    return await db
+      .select()
+      .from(chatMessages)
+      .where(eq(chatMessages.sessionId, sessionId))
+      .orderBy(chatMessages.createdAt);
+  }
+}
+
+export const storage = new DatabaseStorage();

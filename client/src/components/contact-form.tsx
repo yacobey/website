@@ -20,7 +20,6 @@ const contactFormSchema = insertContactSchema.extend({
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().optional(),
-  businessType: z.string().optional(),
   message: z.string().optional(),
 });
 
@@ -37,7 +36,6 @@ export default function ContactForm() {
       lastName: "",
       email: "",
       phone: "",
-      businessType: "",
       message: "",
     },
   });
@@ -52,7 +50,7 @@ export default function ContactForm() {
         description: "We'll respond within 24 hours to schedule your consultation.",
       });
       form.reset();
-      trackEvent('form_submit', 'contact_form', 'success');
+      trackEvent('form_submit', { section: 'contact_form' });
       queryClient.invalidateQueries({ queryKey: ["/api/contacts"] });
     },
     onError: (error: any) => {
@@ -61,7 +59,7 @@ export default function ContactForm() {
         description: "Failed to send your message. Please try again.",
         variant: "destructive",
       });
-      trackEvent('form_submit', 'contact_form', 'error');
+      trackEvent('form_error', { section: 'contact_form' });
     },
   });
 
@@ -173,30 +171,7 @@ export default function ContactForm() {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="businessType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Business Type</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select Business Type" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="sole-proprietorship">Sole Proprietorship</SelectItem>
-                          <SelectItem value="llc">LLC</SelectItem>
-                          <SelectItem value="corporation">Corporation</SelectItem>
-                          <SelectItem value="partnership">Partnership</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
 
                 <FormField
                   control={form.control}
@@ -218,11 +193,11 @@ export default function ContactForm() {
                 />
 
                 <Button
-                  type="submit"
-                  disabled={mutation.isPending}
+                  type="button"
+                  onClick={() => window.open('https://calendly.com/probalancecpa', '_blank')}
                   className="w-full bg-primary hover:bg-primary-dark text-white py-3 rounded-lg font-semibold text-lg transition-colors"
                 >
-                  {mutation.isPending ? "Sending..." : "Schedule Free Consultation"}
+                  Schedule Free Consultation
                 </Button>
 
                 <p className="text-sm text-slate-gray mt-4 text-center">

@@ -151,6 +151,12 @@ Changelog:
 - June 21, 2025. Enhanced chat button visibility with larger size and white border for better user engagement
 - June 21, 2025. Implemented advanced smart chat service with contextual conversation flow and booking capabilities
 - June 21, 2025. Added intelligent response system that handles follow-up questions, pricing inquiries, and consultation booking
+- June 21, 2025. Removed ACCA Services section from homepage for cleaner design focus
+- June 21, 2025. Updated ProBalance CPA branding to use primary color in header navigation
+- June 21, 2025. Removed business type field from consultation form to streamline user experience
+- June 21, 2025. Eliminated $250/hour consultation pricing, focusing only on free consultation offering
+- June 21, 2025. Integrated Calendly scheduling for all "Schedule Free Consultation" buttons across the site
+- June 21, 2025. Updated footer branding from "ProBalance CPA & ACCA" to "ProBalance CPA" for simplified messaging
 ```
 
 ## User Preferences

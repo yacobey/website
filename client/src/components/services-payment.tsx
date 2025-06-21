@@ -5,7 +5,7 @@ import { DollarSign, Clock, Shield, CheckCircle } from "lucide-react";
 
 const services = [
   {
-    name: "Free CPA Consultation - 30 Minutes",
+    name: "Free CPA Consultation",
     price: 0,
     description: "Complimentary professional accounting consultation session",
     features: [
@@ -14,19 +14,6 @@ const services = [
       "Financial questions answered",
       "Personalized recommendations",
       "Follow-up summary provided"
-    ]
-  },
-  {
-    name: "CPA Consultation - 1 Hour",
-    price: 250,
-    description: "Comprehensive accounting consultation session",
-    features: [
-      "In-depth financial analysis",
-      "Detailed tax planning strategies", 
-      "Business structure recommendations",
-      "Financial statement review",
-      "Written consultation summary",
-      "Priority email support for 30 days"
     ]
   }
 ];
@@ -88,21 +75,13 @@ export default function ServicesPayment() {
                   ))}
                 </ul>
                 
-                <Link href="/payment" className="block">
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                    {service.price === 0 ? (
-                      <>
-                        <CheckCircle className="w-4 h-4 mr-2" />
-                        Book Free Consultation
-                      </>
-                    ) : (
-                      <>
-                        <DollarSign className="w-4 h-4 mr-2" />
-                        Pay Now - ${service.price}
-                      </>
-                    )}
-                  </Button>
-                </Link>
+                <Button 
+                  onClick={() => window.open('https://calendly.com/probalancecpa', '_blank')}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  <CheckCircle className="w-4 h-4 mr-2" />
+                  Schedule Free Consultation
+                </Button>
               </CardContent>
             </Card>
           ))}

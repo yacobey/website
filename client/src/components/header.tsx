@@ -10,8 +10,7 @@ export default function Header() {
 
   const handleScheduleConsultation = () => {
     trackEvent('schedule_consultation_click', { section: 'header' });
-    // In a real app, this would open a scheduling modal or redirect to scheduling page
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    window.open('https://calendly.com/probalancecpa', '_blank');
   };
 
   const handleMobileMenuToggle = () => {
@@ -35,7 +34,7 @@ export default function Header() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <Link href="/">
-                <h1 className="text-2xl font-bold text-gray-900 cursor-pointer">
+                <h1 className="text-2xl font-bold text-primary cursor-pointer">
                   ProBalance CPA
                 </h1>
               </Link>

@@ -17,9 +17,9 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-2xl font-bold mb-4">ProBalance CPA & FCCA</h3>
+            <h3 className="text-2xl font-bold mb-4">ProBalance CPA & ACCA</h3>
             <p className="text-gray-300 mb-6">
-              Professional CPA and FCCA qualified accounting services for businesses worldwide. International expertise for your financial success.
+              Professional CPA and ACCA qualified accounting services for businesses worldwide. International expertise for your financial success.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
@@ -94,7 +94,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2 text-gray-300">
               <Award className="text-success w-5 h-5" />
-              <span>FCCA Qualified</span>
+              <span>ACCA Fellow (FCCA)</span>
             </div>
           </div>
         </div>

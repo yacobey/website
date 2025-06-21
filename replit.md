@@ -144,6 +144,9 @@ Changelog:
 - June 21, 2025. Enhanced AI Assistant with sophisticated conversation management, contextual responses, and OpenAI integration
 - June 21, 2025. Added intelligent quick actions, conversation stage tracking, and dynamic typing indicators
 - June 21, 2025. Implemented comprehensive CPA-specific knowledge base with detailed service information and tax guidance
+- June 21, 2025. Removed Digital Guidelines package completely from website and navigation
+- June 21, 2025. Updated professional credentials to correctly show ACCA qualification with Fellow status (FCCA)
+- June 21, 2025. Added comprehensive ACCA Services section showcasing international financial expertise
 ```
 
 ## User Preferences

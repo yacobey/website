@@ -36,7 +36,7 @@ export default function Header() {
             <div className="flex-shrink-0">
               <Link href="/">
                 <h1 className="text-2xl font-bold text-primary cursor-pointer">
-                  ProBalance CPA & FCCA
+                  ProBalance CPA & ACCA
                 </h1>
               </Link>
             </div>

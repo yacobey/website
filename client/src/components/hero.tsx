@@ -20,10 +20,10 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-              Expert CPA & FCCA Services for Global Financial Excellence
+              Expert CPA & ACCA Services for Global Financial Excellence
             </h1>
             <p className="text-xl mb-8 text-blue-100">
-              Comprehensive accounting, tax preparation, international financial reporting, and business advisory services. US CPA expertise combined with global FCCA qualification for international standards and complex financial structures.
+              Comprehensive accounting, tax preparation, international financial reporting, and business advisory services. US CPA expertise combined with ACCA qualification (Fellow status) for international standards and complex financial structures.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/payment">
@@ -47,7 +47,7 @@ export default function Hero() {
 
               <div className="flex items-center gap-2">
                 <Award className="w-5 h-5 text-success" />
-                <span>FCCA Qualified</span>
+                <span>ACCA Fellow (FCCA)</span>
               </div>
 
               <div className="flex items-center gap-2">

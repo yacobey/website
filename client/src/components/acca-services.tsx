@@ -55,13 +55,13 @@ const fccaServices = [
   }
 ];
 
-export default function FCCAServices() {
+export default function ACCAServices() {
   const handleLearnMore = (service: string) => {
-    trackEvent('fcca_service_click', { service_name: service, section: 'fcca_services' });
+    trackEvent('acca_service_click', { service_name: service, section: 'acca_services' });
   };
 
   const handleConsultation = () => {
-    trackEvent('fcca_consultation_click', { section: 'fcca_services' });
+    trackEvent('acca_consultation_click', { section: 'acca_services' });
   };
 
   return (
@@ -71,21 +71,21 @@ export default function FCCAServices() {
           <div className="flex items-center justify-center gap-3 mb-4">
             <Award className="w-8 h-8 text-blue-600" />
             <h2 className="text-3xl font-bold text-gray-900">
-              FCCA Qualified Professional Services
+              ACCA Qualified Professional Services
             </h2>
           </div>
           <p className="text-lg text-gray-600 mb-6">
-            Fellow of the Association of Chartered Certified Accountants - Global expertise for complex financial needs
+            Association of Chartered Certified Accountants qualification with Fellow status (FCCA) - Global expertise for complex financial needs
           </p>
           
           <div className="max-w-4xl mx-auto mb-8">
             <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-3">What is FCCA?</h3>
+                <h3 className="text-xl font-semibold mb-3">What is ACCA with Fellow Status?</h3>
                 <p className="text-blue-100 leading-relaxed">
-                  FCCA (Fellow of the Association of Chartered Certified Accountants) is the highest level of ACCA qualification, 
-                  representing advanced expertise in international accounting standards, complex financial reporting, and global business practices. 
-                  This qualification enables comprehensive support for multinational corporations, international taxation, and complex financial structures.
+                  ACCA (Association of Chartered Certified Accountants) is a globally recognized professional accounting qualification. 
+                  Fellow status (FCCA) represents the highest level of achievement, demonstrating advanced expertise in international 
+                  accounting standards, complex financial reporting, and global business practices for multinational corporations and complex financial structures.
                 </p>
               </CardContent>
             </Card>

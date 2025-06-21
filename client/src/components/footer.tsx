@@ -94,7 +94,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2 text-gray-300">
               <Award className="text-success w-5 h-5" />
-              <span>ACCA Fellow (FCCA)</span>
+              <span>Fellow member of the <a href="https://www.accaglobal.com" target="_blank" rel="noopener noreferrer" className="hover:text-white underline">Association of Chartered Certified Accountants</a></span>
             </div>
           </div>
         </div>

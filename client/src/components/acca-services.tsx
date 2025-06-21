@@ -75,7 +75,7 @@ export default function ACCAServices() {
             </h2>
           </div>
           <p className="text-lg text-gray-600 mb-6">
-            Association of Chartered Certified Accountants qualification with Fellow status (FCCA) - Global expertise for complex financial needs
+            Fellow member of the <a href="https://www.accaglobal.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Association of Chartered Certified Accountants</a> - Global expertise for complex financial needs
           </p>
           
           <div className="max-w-4xl mx-auto mb-8">
@@ -155,7 +155,7 @@ export default function ACCAServices() {
             </h3>
             <p className="text-gray-600 mb-6 max-w-2xl">
               Whether you're expanding globally, need IFRS compliance, or require complex international tax planning, 
-              our FCCA qualification ensures you receive world-class professional guidance.
+              ProBalance CPA ensures you receive world-class professional guidance.
             </p>
             <div className="space-y-3">
               <Link href="/payment">
@@ -164,7 +164,7 @@ export default function ACCAServices() {
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3"
                   onClick={handleConsultation}
                 >
-                  Schedule FCCA Consultation
+                  International Consultation
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>

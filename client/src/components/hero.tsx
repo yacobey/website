@@ -23,7 +23,7 @@ export default function Hero() {
               Expert CPA & ACCA Services for Global Financial Excellence
             </h1>
             <p className="text-xl mb-8 text-blue-100">
-              Comprehensive accounting, tax preparation, international financial reporting, and business advisory services. US CPA expertise combined with ACCA qualification (Fellow status) for international standards and complex financial structures.
+              Comprehensive accounting, tax preparation, international financial reporting, and business advisory services. US CPA expertise combined with Fellow member of the <a href="https://www.accaglobal.com" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-white underline">Association of Chartered Certified Accountants</a> for international standards and complex financial structures.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/payment">

@@ -253,14 +253,14 @@ export default function Chatbot() {
                   <Bot className="text-primary w-4 h-4 animate-pulse" />
                 </div>
                 <div className="bg-gray-100 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                  <div className="text-sm text-gray-500 flex items-center gap-2">
                     {getTypingMessage()}
                     <span className="flex space-x-1">
                       <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
                       <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
                       <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                     </span>
-                  </p>
+                  </div>
                 </div>
               </div>
             )}

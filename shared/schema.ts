@@ -164,7 +164,6 @@ export type PersonalizedRecommendation = typeof personalizedRecommendations.$inf
 export type InsertCareerApplication = z.infer<typeof insertCareerApplicationSchema>;
 export type CareerApplication = typeof careerApplications.$inferSelect;
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+export const insertUserSchema = createInsertSchema(users).omit({
+  id: true,
 });

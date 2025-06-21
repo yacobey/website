@@ -7,6 +7,7 @@ import {
   userPurchases,
   userProgress,
   personalizedRecommendations,
+  careerApplications,
   type Contact,
   type BlogPost,
   type Calculator,
@@ -15,6 +16,7 @@ import {
   type UserPurchase,
   type UserProgress,
   type PersonalizedRecommendation,
+  type CareerApplication,
   type InsertContact,
   type InsertBlogPost,
   type InsertCalculator,
@@ -23,6 +25,7 @@ import {
   type InsertUserPurchase,
   type InsertUserProgress,
   type InsertPersonalizedRecommendation,
+  type InsertCareerApplication,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, isNull } from "drizzle-orm";
@@ -122,8 +125,7 @@ export class MemStorage implements IStorage {
         excerpt: "Understanding the latest tax law changes can save your business thousands. Here's what you need to prepare for this tax season...",
         content: "Tax season is upon us, and 2024 brings several important changes that small business owners need to understand...",
         category: "Tax Planning",
-        author: "ProBalance CPA Team",
-        status: "published"
+        author: "ProBalance CPA Team"
       },
       {
         title: "Cash Flow Management: 5 Strategies for Small Business Success",
@@ -131,8 +133,7 @@ export class MemStorage implements IStorage {
         excerpt: "Master your cash flow with these proven strategies that have helped hundreds of small businesses thrive in any economic climate...",
         content: "Cash flow is the lifeblood of any business. Here are five proven strategies to master your cash flow management...",
         category: "Financial Planning",
-        author: "ProBalance CPA Team",
-        status: "published"
+        author: "ProBalance CPA Team"
       },
       {
         title: "Digital Transformation: How AI is Revolutionizing Accounting",
@@ -140,8 +141,7 @@ export class MemStorage implements IStorage {
         excerpt: "Discover how artificial intelligence and automation are changing the accounting landscape and what it means for your business...",
         content: "The accounting industry is experiencing a digital transformation like never before. AI and automation are changing how we work...",
         category: "Technology",
-        author: "ProBalance CPA Team",
-        status: "published"
+        author: "ProBalance CPA Team"
       }
     ];
 
@@ -221,7 +221,7 @@ export class MemStorage implements IStorage {
       title: insertPost.title,
       slug: insertPost.slug,
       content: insertPost.content,
-      status: insertPost.status || "published",
+      status: "published",
       excerpt: insertPost.excerpt,
       category: insertPost.category,
       author: insertPost.author,
@@ -272,10 +272,15 @@ export class MemStorage implements IStorage {
   async createUserPurchase(insertPurchase: InsertUserPurchase): Promise<UserPurchase> {
     const id = this.currentPurchaseId++;
     const purchase: UserPurchase = {
-      ...insertPurchase,
       id,
-      purchaseDate: new Date(),
+      email: insertPurchase.email,
+      productType: insertPurchase.productType,
+      productName: insertPurchase.productName,
+      amount: insertPurchase.amount,
+      stripePaymentIntentId: insertPurchase.stripePaymentIntentId ?? null,
       status: insertPurchase.status || "completed",
+      purchaseDate: new Date(),
+      accessExpiresAt: insertPurchase.accessExpiresAt ?? null,
     };
     this.userPurchases.set(id, purchase);
     return purchase;
@@ -360,6 +365,11 @@ export class MemStorage implements IStorage {
       submittedAt: new Date(),
       updatedAt: new Date(),
       status: insertApplication.status || "new",
+      notes: insertApplication.notes || null,
+      coverLetter: insertApplication.coverLetter || null,
+      resumeUrl: insertApplication.resumeUrl || null,
+      linkedinUrl: insertApplication.linkedinUrl || null,
+      portfolioUrl: insertApplication.portfolioUrl || null,
     };
     this.careerApplications.set(id, application);
     return application;

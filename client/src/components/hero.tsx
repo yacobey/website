@@ -10,60 +10,56 @@ export default function Hero() {
   };
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-4xl lg:text-5xl font-semibold text-gray-900 mb-6 leading-tight">
             Professional CPA Services
           </h1>
-          <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Expert accounting, tax preparation, and business advisory services with global expertise through our Fellow member of the <a href="https://www.accaglobal.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Association of Chartered Certified Accountants</a>.
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Expert accounting, tax preparation, and business advisory services. Get professional guidance for your financial needs.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
-            <Link href="/payment">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-10 py-4 text-lg font-semibold rounded-lg shadow-sm hover:shadow-md transition-all">
-                Pay Online Now
-              </Button>
-            </Link>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16">
             <Button 
               onClick={handleGetFreeConsultation}
-              variant="outline" 
               size="lg"
-              className="border-2 border-gray-200 text-gray-700 hover:border-primary hover:text-primary px-10 py-4 text-lg font-semibold rounded-lg transition-all"
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-3 text-base font-medium rounded-md transition-colors"
             >
-              Free Consultation
+              Schedule Free Consultation
             </Button>
+            <Link href="/payment">
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="border border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-3 text-base font-medium rounded-md transition-colors"
+              >
+                Pay Online
+              </Button>
+            </Link>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 max-w-2xl mx-auto">
             <div className="text-center">
-              <div className="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-7 h-7 text-primary" />
+              <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                <CheckCircle className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">CPA Certified</h3>
-              <p className="text-sm text-gray-600">Licensed professional expertise</p>
+              <h3 className="font-medium text-gray-900 mb-1">CPA Certified</h3>
+              <p className="text-sm text-gray-600">Licensed professional</p>
             </div>
             <div className="text-center">
-              <div className="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-7 h-7 text-primary" />
+              <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Shield className="w-6 h-6 text-green-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Secure Platform</h3>
-              <p className="text-sm text-gray-600">Bank-level security</p>
+              <h3 className="font-medium text-gray-900 mb-1">Secure Service</h3>
+              <p className="text-sm text-gray-600">Confidential & protected</p>
             </div>
             <div className="text-center">
-              <div className="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Users className="w-7 h-7 text-primary" />
+              <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Clock className="w-6 h-6 text-orange-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Personal Service</h3>
-              <p className="text-sm text-gray-600">Dedicated support</p>
-            </div>
-            <div className="text-center">
-              <div className="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Clock className="w-7 h-7 text-primary" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Always Available</h3>
-              <p className="text-sm text-gray-600">Year-round support</p>
+              <h3 className="font-medium text-gray-900 mb-1">Quick Response</h3>
+              <p className="text-sm text-gray-600">Same-day available</p>
             </div>
           </div>
         </div>

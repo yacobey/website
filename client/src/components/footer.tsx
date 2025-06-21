@@ -13,13 +13,13 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-charcoal text-white py-16">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
+    <footer className="bg-gray-900 text-white py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="text-2xl font-bold mb-4">ProBalance CPA</h3>
-            <p className="text-gray-300 mb-6">
-              Professional CPA accounting services for businesses worldwide. Expert financial solutions for your success.
+            <h3 className="text-xl font-semibold mb-4">ProBalance CPA</h3>
+            <p className="text-gray-400 mb-6 text-sm leading-relaxed">
+              Professional accounting and tax services for individuals and businesses nationwide.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
@@ -35,13 +35,13 @@ export default function Footer() {
           </div>
           
           <div>
-            <h4 className="text-lg font-semibold mb-4">Services</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li><a href="#services" className="hover:text-white transition-colors">Tax Preparation</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">Bookkeeping</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">Payroll Services</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">Business Formation</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">Financial Planning</a></li>
+            <h4 className="text-lg font-medium mb-4">Services</h4>
+            <ul className="space-y-2 text-gray-400 text-sm">
+              <li><a href="/tax" className="hover:text-white transition-colors">Tax Services</a></li>
+              <li><a href="/bookkeeping" className="hover:text-white transition-colors">Bookkeeping</a></li>
+              <li><a href="/audit" className="hover:text-white transition-colors">Audit Services</a></li>
+              <li><a href="/advisory" className="hover:text-white transition-colors">Advisory</a></li>
+              <li><a href="/ai-tools" className="hover:text-white transition-colors">AI Tools</a></li>
             </ul>
           </div>
           

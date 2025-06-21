@@ -157,6 +157,12 @@ Changelog:
 - June 21, 2025. Eliminated $250/hour consultation pricing, focusing only on free consultation offering
 - June 21, 2025. Integrated Calendly scheduling for all "Schedule Free Consultation" buttons across the site
 - June 21, 2025. Updated footer branding from "ProBalance CPA & ACCA" to "ProBalance CPA" for simplified messaging
+- June 21, 2025. Transformed website design to match taxchecklist.com aesthetic with cleaner, more minimal styling
+- June 21, 2025. Updated color scheme to use softer, more professional grays and refined typography
+- June 21, 2025. Simplified hero section with reduced padding, smaller buttons, and cleaner trust indicators
+- June 21, 2025. Redesigned services section with smaller cards, subtle borders, and improved spacing
+- June 21, 2025. Updated header navigation with border styling instead of shadow and refined button designs
+- June 21, 2025. Modernized contact form and footer with cleaner layouts and improved visual hierarchy
 ```
 
 ## User Preferences

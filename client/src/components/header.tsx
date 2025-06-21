@@ -28,13 +28,13 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <Link href="/">
-                <h1 className="text-2xl font-bold text-primary cursor-pointer">
+                <h1 className="text-xl font-semibold text-gray-900 cursor-pointer">
                   ProBalance CPA
                 </h1>
               </Link>
@@ -42,12 +42,12 @@ export default function Header() {
           </div>
           
           <nav className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+            <div className="ml-10 flex items-baseline space-x-6">
               {navItems.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="text-slate-gray hover:text-primary transition-colors font-medium"
+                  className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
                 >
                   {item.label}
                 </a>
@@ -55,19 +55,23 @@ export default function Header() {
             </div>
           </nav>
           
-          <div className="hidden md:flex items-center space-x-4">
-            <Link href="/payment">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                Pay Online
-              </Button>
-            </Link>
+          <div className="hidden md:flex items-center space-x-3">
             <Button 
               onClick={handleScheduleConsultation}
-              variant="outline"
-              className="px-4 py-2 rounded-lg font-medium transition-colors"
+              size="sm"
+              className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
             >
               Schedule Consultation
             </Button>
+            <Link href="/payment">
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Pay Online
+              </Button>
+            </Link>
           </div>
           
           <div className="md:hidden">

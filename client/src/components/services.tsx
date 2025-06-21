@@ -68,12 +68,12 @@ export default function Services() {
   };
 
   return (
-    <section id="services" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Comprehensive CPA Services</h2>
-          <p className="text-xl text-slate-gray max-w-3xl mx-auto">
-            From individual tax preparation to enterprise-level financial services, we serve clients across all industries with specialized expertise, secure technology, and strategic partnerships.
+    <section id="services" className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-semibold mb-4">Our Services</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Professional accounting and tax services for individuals and businesses.
           </p>
         </div>
         
@@ -81,17 +81,17 @@ export default function Services() {
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
-              <Card key={index} className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+              <Card key={index} className="bg-white p-6 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
                 <CardContent className="p-0">
-                  <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                    <IconComponent className="text-primary text-2xl w-8 h-8" />
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <IconComponent className="text-primary w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
-                  <p className="text-slate-gray mb-6">{service.description}</p>
+                  <h3 className="text-lg font-medium mb-3 text-gray-900">{service.title}</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">{service.description}</p>
                   <Button 
                     variant="link"
                     onClick={() => handleLearnMore(service.eventName)}
-                    className="text-primary font-semibold hover:text-primary-dark transition-colors p-0"
+                    className="text-primary font-medium hover:text-primary/80 transition-colors p-0 text-sm"
                   >
                     Learn More <ArrowRight className="ml-1 w-4 h-4" />
                   </Button>

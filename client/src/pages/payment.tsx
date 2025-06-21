@@ -96,7 +96,7 @@ const ServiceSelector = ({ onServiceSelect }: { onServiceSelect: (service: any) 
 
   const predefinedServices = [
     { name: "CPA Consultation - 30 Minutes", price: 99, description: "Professional accounting consultation session (30 minutes)" },
-    { name: "CPA Consultation - 1 Hour", price: 250, description: "Comprehensive accounting consultation session (1 hour)" }
+    { name: "Free CPA Consultation - 1 Hour", price: 0, description: "Complimentary comprehensive accounting consultation session (1 hour)" }
   ];
 
   const handleCustomService = () => {
@@ -179,6 +179,14 @@ export default function Payment() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleServiceSelect = async (service: any) => {
+    setSelectedService(service);
+    
+    // If it's a free consultation, skip payment processing
+    if (service.price === 0) {
+      setClientSecret("free_consultation");
+      return;
+    }
+    
     setIsLoading(true);
     try {
       const response = await apiRequest("POST", "/api/create-payment-intent", { 
@@ -187,7 +195,6 @@ export default function Payment() {
       });
       const data = await response.json();
       setClientSecret(data.clientSecret);
-      setSelectedService(service);
     } catch (error) {
       console.error("Error creating payment intent:", error);
     } finally {
@@ -252,6 +259,101 @@ export default function Payment() {
                 <ServiceSelector onServiceSelect={handleServiceSelect} />
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle free consultation booking
+  if (selectedService && selectedService.price === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="w-8 h-8 text-green-600" />
+              </div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Free Consultation Booked!</h1>
+              <p className="text-lg text-gray-600">
+                Your complimentary CPA consultation has been reserved
+              </p>
+            </div>
+
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle>Consultation Details</CardTitle>
+                <CardDescription>
+                  Your free consultation session is confirmed
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Service:</span>
+                  <span className="font-medium">{selectedService.name}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Duration:</span>
+                  <span className="font-medium">1 Hour</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Cost:</span>
+                  <span className="font-medium text-green-600">FREE</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle>What Happens Next?</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
+                  <div>
+                    <h3 className="font-medium">Scheduling Confirmation</h3>
+                    <p className="text-sm text-gray-600">
+                      We'll contact you within 24 hours to schedule your free consultation at your convenience.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <div>
+                    <h3 className="font-medium">Preparation Materials</h3>
+                    <p className="text-sm text-gray-600">
+                      You'll receive an email with suggested documents to prepare for maximum consultation value.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="flex gap-4 justify-center">
+              <Button 
+                onClick={() => {
+                  setSelectedService(null);
+                  setClientSecret("");
+                }}
+                variant="outline"
+              >
+                Book Another Service
+              </Button>
+              <Button>
+                Contact Us
+              </Button>
+            </div>
+
+            <div className="mt-8 text-center">
+              <h3 className="font-semibold text-gray-900 mb-2">Questions?</h3>
+              <div className="space-y-2 text-sm">
+                <p><strong>Phone:</strong> (301) 640-8549</p>
+                <p><strong>Email:</strong> info@probalancecpa.com</p>
+                <p><strong>Hours:</strong> Monday - Friday, 9 AM - 6 PM EST</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

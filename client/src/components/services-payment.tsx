@@ -17,9 +17,9 @@ const services = [
     ]
   },
   {
-    name: "CPA Consultation - 1 Hour",
-    price: 250,
-    description: "Comprehensive accounting consultation session",
+    name: "Free CPA Consultation - 1 Hour",
+    price: 0,
+    description: "Complimentary comprehensive accounting consultation session",
     features: [
       "In-depth financial analysis",
       "Detailed tax planning strategies", 
@@ -66,8 +66,12 @@ export default function ServicesPayment() {
                 <div className="flex justify-between items-start mb-2">
                   <CardTitle className="text-xl">{service.name}</CardTitle>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-primary">${service.price}</div>
-                    <div className="text-sm text-gray-500">one-time fee</div>
+                    <div className="text-2xl font-bold text-primary">
+                      {service.price === 0 ? "FREE" : `$${service.price}`}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {service.price === 0 ? "complimentary" : "one-time fee"}
+                    </div>
                   </div>
                 </div>
                 <CardDescription className="text-gray-600">
@@ -86,8 +90,17 @@ export default function ServicesPayment() {
                 
                 <Link href="/payment" className="block">
                   <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                    <DollarSign className="w-4 h-4 mr-2" />
-                    Pay Now - ${service.price}
+                    {service.price === 0 ? (
+                      <>
+                        <CheckCircle className="w-4 h-4 mr-2" />
+                        Book Free Consultation
+                      </>
+                    ) : (
+                      <>
+                        <DollarSign className="w-4 h-4 mr-2" />
+                        Pay Now - ${service.price}
+                      </>
+                    )}
                   </Button>
                 </Link>
               </CardContent>

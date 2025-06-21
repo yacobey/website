@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema, insertChatMessageSchema } from "@shared/schema";
 import { generateAIResponse, analyzeUserIntent, updateUserPreferences } from "./ai-service";
+import { getSmartResponse } from "./smart-chat-service";
 import Stripe from "stripe";
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -120,11 +121,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           response = await generateAIResponse(sessionId, message);
         } catch (aiError) {
-          console.error("AI service error, falling back to rule-based response:", aiError);
-          response = generateChatResponse(message);
+          console.error("AI service error, falling back to smart chat service:", aiError);
+          const smartResponse = getSmartResponse(sessionId, message);
+          response = smartResponse.response;
         }
       } else {
-        response = generateChatResponse(message);
+        // Use smart chat service as primary fallback
+        const smartResponse = getSmartResponse(sessionId, message);
+        response = smartResponse.response;
       }
       
       // Save both user message and bot response

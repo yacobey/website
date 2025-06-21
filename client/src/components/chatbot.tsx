@@ -237,7 +237,7 @@ export default function Chatbot() {
                     ? 'bg-primary text-white ml-8' 
                     : 'bg-gray-100 text-charcoal'
                 }`}>
-                  <p className="text-sm">{msg.message}</p>
+                  <span className="text-sm">{msg.message}</span>
                 </div>
                 {msg.type === 'user' && (
                   <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">

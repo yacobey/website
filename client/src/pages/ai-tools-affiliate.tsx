@@ -87,7 +87,7 @@ const bonusTools = [
   { name: "Calendar.ly", useCase: "AI-powered scheduling and client booking", link: "#" },
 ];
 
-export default function AIToolsAffiliate() {
+export default function AIResources() {
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star

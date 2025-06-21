@@ -1,0 +1,265 @@
+ 1. NEW NAVBAR PAGES (Revised Order):
+Bookkeeping
+
+Tax
+
+Audit
+
+Advisory
+
+AI Tools
+
+AI Resources (Digital Products for Sale)
+
+Blog
+
+Dashboard
+(❌ Remove “Digital Guides” & “Contact” from navbar)
+
+📘 2. Bookkeeping Services Page (bookkeeping.html)
+Headline:
+
+“Complete Bookkeeping Solutions for Every Stage of Your Business”
+
+Services to List:
+
+Monthly Bookkeeping & Reconciliation
+
+Chart of Accounts Design & Cleanup
+
+General Ledger Maintenance
+
+Month-End Closing & Financial Reporting
+
+Accounts Payable & Receivable Tracking
+
+Payroll Journal Entries
+
+Client Portal Access for Uploads
+
+Catch-Up Bookkeeping for Prior Years
+
+QuickBooks Online / Xero Integration
+
+Payroll Setup & Sync (via ADP)
+
+🔗 Partner with ADP Payroll →
+
+📗 3. Tax Services Page (tax.html)
+Headline:
+
+“Proactive Tax Strategies to Optimize Your Bottom Line”
+
+Services to List:
+
+Individual & Corporate Tax Preparation
+
+Strategic Tax Planning & Forecast Modeling
+
+Estimated Tax Management
+
+IRS Notice Response & Representation
+
+Year-End Tax Optimization Consults
+
+Retirement Plan Tax Structuring (Solo 401(k), SEP)
+
+1099 & Contractor Compliance
+
+Augusta Rule Consultation
+
+Real Estate & Asset Depreciation Planning
+
+📕 4. Audit Services Page (audit.html)
+Headline:
+
+“Independent Audit & Assurance Services Built on GAAS & Trust”
+
+Services to List:
+
+GAAP-Based Financial Statement Audits
+
+Single Audits (2 CFR Part 200 / Uniform Guidance)
+
+Nonprofit & Government Audit Engagements
+
+Reviews & Compilations
+
+Audit Readiness Assessment (Internal Controls, GL Review)
+
+Employee Benefit Plan (401k, 403b) Audits
+
+Risk Assessment & Internal Audit Support
+
+Yellow Book & Program-Specific Performance Audits
+
+📘 5. Advisory Services Page (advisory.html)
+Headline:
+
+“CFO-Level Strategic Insights Without the Overhead”
+
+Services to List:
+
+Fractional CFO & Controller Services
+
+Budgeting, Forecasting, and Financial Modeling
+
+Financial KPI Dashboards & Custom Reports
+
+Accounting Workflow Optimization (SOPs, AI Tools)
+
+M&A Due Diligence & Deal Support
+
+Tax Structure Optimization for Scaling
+
+AI-Powered Advisory Tools & Automation
+
+Capital Access Support:
+
+We evaluate funding needs, prepare SBA-compliant financial packages, and match you with vetted lenders to help secure the right business loan at the right time.
+
+🛠️ 6. AI Tools Page (ai-tools.html)
+✅ Already generated HTML download here – integrate that page and update links with your affiliate codes.
+
+💸 7. AI Resources Page (ai-resources.html)
+Purpose: A digital storefront to sell downloadable templates, guides, calculators, and checklists.
+
+Suggested Sections:
+
+📂 “Monthly Bookkeeping Spreadsheet” — $9
+
+🧾 “SBA Loan Application Package Template” — $19
+
+📊 “Cash Flow Projection Tool (Excel)” — $14
+
+📘 “Year-End Tax Planning Checklist” — $12
+
+🔍 “Audit-Readiness Toolkit” — $25
+
+📥 Include this download pack:
+👉 CPA_Resources_Pack.zip
+
+Use Gumroad or Lemon Squeezy buttons.
+
+📰 8. Blog Fixes
+Convert all markdown (##, etc.) to HTML with:
+
+<h2> for headlines
+
+<p> for paragraphs
+
+Embed icons, charts, and images
+
+Add blog cards to /blog landing page
+
+Include callouts like:
+
+💡 "Did you know the Augusta Rule allows you to earn tax-free rental income up to 14 days/year?"
+
+🎨 9. Design & Readability Fix
+Change hero section gradients to:
+
+css
+Copy
+Edit
+background: linear-gradient(to right, #2196F3, #1E88E5);
+color: white;
+Or use solid-color modern blocks with bold white text
+
+✅ Apply across all pages to ensure legibility
+✅ Remove white-on-white gradients
+
+🧾 BONUS: Affiliate Income Strategy
+Embed affiliate links for:
+
+ADP Payroll: #your-adp-link
+
+QuickBooks Online: #your-qbo-link
+
+Jasper AI, Grammarly, Zapier, Docyt, MindBridge, etc.
+
+Sell downloadable resources on the AI Resources page
+
+Let me know if you want me to:
+
+Deliver ready-made HTML for any of the above pages
+
+Create a live mockup
+
+Generate embedded checkout code for Gumroad products
+
+Just say the word and I’ll move to next step.
+
+
+
+
+
+
+
+
+You said:
+Generate embedded checkout code for Gumroad products
+
+
+ChatGPT said:
+Here is ready-to-use embedded Gumroad checkout code for each of your digital products. Just replace the YOUR_PRODUCT_ID with the actual product ID or link from your Gumroad dashboard.
+
+✅ Gumroad Embedded Checkout Code for Each Product
+1. Monthly Bookkeeping Spreadsheet — $9
+html
+Copy
+Edit
+<a class="gumroad-button" href="https://gum.co/YOUR_PRODUCT_ID">Buy Monthly Bookkeeping Spreadsheet - $9</a>
+<script src="https://gumroad.com/js/gumroad.js"></script>
+2. SBA Loan Application Package Template — $19
+html
+Copy
+Edit
+<a class="gumroad-button" href="https://gum.co/YOUR_PRODUCT_ID">Get SBA Loan Package Template - $19</a>
+<script src="https://gumroad.com/js/gumroad.js"></script>
+3. Cash Flow Projection Tool (Excel) — $14
+html
+Copy
+Edit
+<a class="gumroad-button" href="https://gum.co/YOUR_PRODUCT_ID">Download Cash Flow Projection Tool - $14</a>
+<script src="https://gumroad.com/js/gumroad.js"></script>
+4. Year-End Tax Planning Checklist — $12
+html
+Copy
+Edit
+<a class="gumroad-button" href="https://gum.co/YOUR_PRODUCT_ID">Year-End Tax Planning Checklist - $12</a>
+<script src="https://gumroad.com/js/gumroad.js"></script>
+5. Audit-Readiness Toolkit — $25
+html
+Copy
+Edit
+<a class="gumroad-button" href="https://gum.co/YOUR_PRODUCT_ID">Get Audit-Readiness Toolkit - $25</a>
+<script src="https://gumroad.com/js/gumroad.js"></script>
+🛒 Optional Button Styling (CSS)
+You can add this to your site’s <style> block or CSS file:
+
+css
+Copy
+Edit
+.gumroad-button {
+  display: inline-block;
+  background-color: #2196F3;
+  color: white !important;
+  padding: 12px 24px;
+  margin: 10px 0;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.gumroad-button:hover {
+  background-color: #1976D2;
+}
+📥 Where to Get Product ID:
+Go to Gumroad.com/products
+
+Click your product → Click “Share”
+
+Copy the URL — Example: https://gumroad.com/l/my-product
+→ The ID is the part after /l/ → my-product
+

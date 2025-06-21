@@ -19,16 +19,14 @@ export default function Header() {
   };
 
   const navItems = [
-    { href: "/#services", label: "Tax Services" },
-    { href: "/#audit", label: "Audit" },
-    { href: "/#advisory", label: "Advisory" },
-    { href: "/#loan-help", label: "Loan Help" },
+    { href: "/bookkeeping", label: "Bookkeeping" },
+    { href: "/tax", label: "Tax" },
+    { href: "/audit", label: "Audit" },
+    { href: "/advisory", label: "Advisory" },
     { href: "/ai-tools", label: "AI Tools" },
-    { href: "/resources", label: "AI Resources" },
-    { href: "/digital-guides", label: "Digital Guides" },
-    { href: "/dashboard", label: "Dashboard" },
+    { href: "/ai-resources", label: "AI Resources" },
     { href: "/blog", label: "Blog" },
-    { href: "/#contact", label: "Contact" },
+    { href: "/dashboard", label: "Dashboard" },
   ];
 
   return (

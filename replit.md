@@ -128,6 +128,9 @@ Changelog:
 - June 21, 2025. Added Stripe payment processing for online service payments
 - June 21, 2025. Created secure payment portal with predefined and custom service options
 - June 21, 2025. Enhanced website with prominent "Pay Online" functionality throughout
+- June 21, 2025. Completed personalized digital guidelines dashboard with user progress tracking
+- June 21, 2025. Added comprehensive careers page with application tracking system
+- June 21, 2025. Implemented career application management for HR team to track and manage candidates
 ```
 
 ## User Preferences

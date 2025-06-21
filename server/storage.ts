@@ -62,6 +62,12 @@ export interface IStorage {
   createPersonalizedRecommendation(recommendation: InsertPersonalizedRecommendation): Promise<PersonalizedRecommendation>;
   getUserRecommendations(email: string): Promise<PersonalizedRecommendation[]>;
   dismissRecommendation(id: number): Promise<void>;
+  
+  // Career methods
+  createCareerApplication(application: InsertCareerApplication): Promise<CareerApplication>;
+  getCareerApplications(): Promise<CareerApplication[]>;
+  getCareerApplication(id: number): Promise<CareerApplication | undefined>;
+  updateCareerApplicationStatus(id: number, status: string, notes?: string): Promise<CareerApplication | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -73,6 +79,7 @@ export class MemStorage implements IStorage {
   private userPurchases: Map<number, UserPurchase>;
   private userProgress: Map<number, UserProgress>;
   private personalizedRecommendations: Map<number, PersonalizedRecommendation>;
+  private careerApplications: Map<number, CareerApplication>;
   private currentId: number;
   private currentContactId: number;
   private currentBlogId: number;
@@ -81,6 +88,7 @@ export class MemStorage implements IStorage {
   private currentPurchaseId: number;
   private currentProgressId: number;
   private currentRecommendationId: number;
+  private currentCareerApplicationId: number;
 
   constructor() {
     this.users = new Map();
@@ -91,6 +99,7 @@ export class MemStorage implements IStorage {
     this.userPurchases = new Map();
     this.userProgress = new Map();
     this.personalizedRecommendations = new Map();
+    this.careerApplications = new Map();
     this.currentId = 1;
     this.currentContactId = 1;
     this.currentBlogId = 1;
@@ -99,6 +108,7 @@ export class MemStorage implements IStorage {
     this.currentPurchaseId = 1;
     this.currentProgressId = 1;
     this.currentRecommendationId = 1;
+    this.currentCareerApplicationId = 1;
     
     this.initializeSampleData();
   }
@@ -341,6 +351,42 @@ export class MemStorage implements IStorage {
       this.personalizedRecommendations.set(id, recommendation);
     }
   }
+
+  async createCareerApplication(insertApplication: InsertCareerApplication): Promise<CareerApplication> {
+    const id = this.currentCareerApplicationId++;
+    const application: CareerApplication = {
+      ...insertApplication,
+      id,
+      submittedAt: new Date(),
+      updatedAt: new Date(),
+      status: insertApplication.status || "new",
+    };
+    this.careerApplications.set(id, application);
+    return application;
+  }
+
+  async getCareerApplications(): Promise<CareerApplication[]> {
+    return Array.from(this.careerApplications.values())
+      .sort((a, b) => (b.submittedAt?.getTime() || 0) - (a.submittedAt?.getTime() || 0));
+  }
+
+  async getCareerApplication(id: number): Promise<CareerApplication | undefined> {
+    return this.careerApplications.get(id);
+  }
+
+  async updateCareerApplicationStatus(id: number, status: string, notes?: string): Promise<CareerApplication | undefined> {
+    const application = this.careerApplications.get(id);
+    if (application) {
+      application.status = status;
+      application.updatedAt = new Date();
+      if (notes !== undefined) {
+        application.notes = notes;
+      }
+      this.careerApplications.set(id, application);
+      return application;
+    }
+    return undefined;
+  }
 }
 
 // Database Storage Implementation
@@ -519,6 +565,39 @@ export class DatabaseStorage implements IStorage {
       .update(personalizedRecommendations)
       .set({ dismissedAt: new Date() })
       .where(eq(personalizedRecommendations.id, id));
+  }
+
+  async createCareerApplication(insertApplication: InsertCareerApplication): Promise<CareerApplication> {
+    const [application] = await db
+      .insert(careerApplications)
+      .values(insertApplication)
+      .returning();
+    return application;
+  }
+
+  async getCareerApplications(): Promise<CareerApplication[]> {
+    return await db.select().from(careerApplications)
+      .orderBy(desc(careerApplications.submittedAt));
+  }
+
+  async getCareerApplication(id: number): Promise<CareerApplication | undefined> {
+    const [application] = await db.select().from(careerApplications)
+      .where(eq(careerApplications.id, id));
+    return application;
+  }
+
+  async updateCareerApplicationStatus(id: number, status: string, notes?: string): Promise<CareerApplication | undefined> {
+    const updateData: any = { status, updatedAt: new Date() };
+    if (notes !== undefined) {
+      updateData.notes = notes;
+    }
+    
+    const [application] = await db
+      .update(careerApplications)
+      .set(updateData)
+      .where(eq(careerApplications.id, id))
+      .returning();
+    return application;
   }
 }
 

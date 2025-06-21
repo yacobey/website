@@ -84,6 +84,24 @@ export const personalizedRecommendations = pgTable("personalized_recommendations
   dismissedAt: timestamp("dismissed_at"),
 });
 
+export const careerApplications = pgTable("career_applications", {
+  id: serial("id").primaryKey(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  position: text("position").notNull(),
+  experience: text("experience").notNull(),
+  coverLetter: text("cover_letter"),
+  resumeUrl: text("resume_url"),
+  linkedinUrl: text("linkedin_url"),
+  portfolioUrl: text("portfolio_url"),
+  status: text("status").default("new").notNull(),
+  notes: text("notes"),
+  submittedAt: timestamp("submitted_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export const insertContactSchema = createInsertSchema(contacts).omit({
   id: true,
   createdAt: true,
@@ -121,6 +139,12 @@ export const insertPersonalizedRecommendationSchema = createInsertSchema(persona
   createdAt: true,
 });
 
+export const insertCareerApplicationSchema = createInsertSchema(careerApplications).omit({
+  id: true,
+  submittedAt: true,
+  updatedAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertContact = z.infer<typeof insertContactSchema>;
@@ -137,6 +161,8 @@ export type InsertUserProgress = z.infer<typeof insertUserProgressSchema>;
 export type UserProgress = typeof userProgress.$inferSelect;
 export type InsertPersonalizedRecommendation = z.infer<typeof insertPersonalizedRecommendationSchema>;
 export type PersonalizedRecommendation = typeof personalizedRecommendations.$inferSelect;
+export type InsertCareerApplication = z.infer<typeof insertCareerApplicationSchema>;
+export type CareerApplication = typeof careerApplications.$inferSelect;
 
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,

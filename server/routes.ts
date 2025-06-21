@@ -352,6 +352,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Career application endpoints
+  app.post("/api/career-applications", async (req, res) => {
+    try {
+      const application = await storage.createCareerApplication(req.body);
+      res.json(application);
+    } catch (error) {
+      console.error("Error creating career application:", error);
+      res.status(500).json({ message: "Failed to submit career application" });
+    }
+  });
+
+  app.get("/api/career-applications", async (req, res) => {
+    try {
+      const applications = await storage.getCareerApplications();
+      res.json(applications);
+    } catch (error) {
+      console.error("Error fetching career applications:", error);
+      res.status(500).json({ message: "Failed to fetch career applications" });
+    }
+  });
+
+  app.get("/api/career-applications/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const application = await storage.getCareerApplication(id);
+      if (!application) {
+        return res.status(404).json({ message: "Application not found" });
+      }
+      res.json(application);
+    } catch (error) {
+      console.error("Error fetching career application:", error);
+      res.status(500).json({ message: "Failed to fetch career application" });
+    }
+  });
+
+  app.patch("/api/career-applications/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { status, notes } = req.body;
+      const application = await storage.updateCareerApplicationStatus(id, status, notes);
+      if (!application) {
+        return res.status(404).json({ message: "Application not found" });
+      }
+      res.json(application);
+    } catch (error) {
+      console.error("Error updating career application:", error);
+      res.status(500).json({ message: "Failed to update career application" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

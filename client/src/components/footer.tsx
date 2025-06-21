@@ -52,7 +52,7 @@ export default function Footer() {
               <li><a href="/ai-tools" className="hover:text-white transition-colors">Tax Calculators</a></li>
               <li><a href="/ai-tools" className="hover:text-white transition-colors">Financial Tools</a></li>
               <li><a href="/blog" className="hover:text-white transition-colors">Blog</a></li>
-              <li><a href="/blog" className="hover:text-white transition-colors">Resource Center</a></li>
+              <li><a href="/careers" className="hover:text-white transition-colors">Careers</a></li>
             </ul>
           </div>
           

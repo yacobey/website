@@ -24,6 +24,7 @@ export default function Header() {
     { href: "/digital-guides", label: "Digital Guides" },
     { href: "/dashboard", label: "Dashboard" },
     { href: "/partners", label: "Partners" },
+    { href: "/careers", label: "Careers" },
     { href: "/blog", label: "Blog" },
     { href: "/#contact", label: "Contact" },
   ];

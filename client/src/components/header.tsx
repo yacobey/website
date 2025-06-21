@@ -9,7 +9,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleScheduleConsultation = () => {
-    trackEvent('click', 'schedule_consultation', 'header');
+    trackEvent('schedule_consultation_click', { section: 'header' });
     // In a real app, this would open a scheduling modal or redirect to scheduling page
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -26,7 +26,6 @@ export default function Header() {
     { href: "/ai-tools", label: "AI Tools" },
     { href: "/ai-resources", label: "AI Resources" },
     { href: "/blog", label: "Blog" },
-    { href: "/dashboard", label: "Dashboard" },
   ];
 
   return (
@@ -37,7 +36,7 @@ export default function Header() {
             <div className="flex-shrink-0">
               <Link href="/">
                 <h1 className="text-2xl font-bold text-primary cursor-pointer">
-                  ProBalance CPA
+                  ProBalance CPA & FCCA
                 </h1>
               </Link>
             </div>

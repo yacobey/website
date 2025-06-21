@@ -2,7 +2,7 @@ import Header from "@/components/header";
 import Hero from "@/components/hero";
 import Services from "@/components/services";
 import ServicesPayment from "@/components/services-payment";
-import DigitalGuidelines from "@/components/digital-guidelines";
+import FCCAServices from "@/components/fcca-services";
 import AIToolsSection from "@/components/ai-tools-section";
 import Testimonials from "@/components/testimonials";
 import BlogPreview from "@/components/blog-preview";
@@ -17,7 +17,7 @@ export default function Home() {
       <Hero />
       <Services />
       <ServicesPayment />
-      <DigitalGuidelines />
+      <FCCAServices />
       <AIToolsSection />
       <Testimonials />
       <BlogPreview />

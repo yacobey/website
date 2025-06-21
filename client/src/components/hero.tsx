@@ -5,12 +5,12 @@ import { Link } from "wouter";
 
 export default function Hero() {
   const handleGetFreeConsultation = () => {
-    trackEvent('click', 'get_free_consultation', 'hero');
+    trackEvent('get_free_consultation_click', { section: 'hero' });
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleViewServices = () => {
-    trackEvent('click', 'view_services', 'hero');
+    trackEvent('view_services_click', { section: 'hero' });
     document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -20,10 +20,10 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-              Expert CPA Services for Individuals, Businesses & Industries
+              Expert CPA & FCCA Services for Global Financial Excellence
             </h1>
             <p className="text-xl mb-8 text-blue-100">
-              Comprehensive accounting, tax preparation, and financial services for individuals, small businesses, corporations, and specialized industries. Enhanced with AI-powered tools and secure file sharing solutions.
+              Comprehensive accounting, tax preparation, international financial reporting, and business advisory services. US CPA expertise combined with global FCCA qualification for international standards and complex financial structures.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/payment">
@@ -39,10 +39,20 @@ export default function Hero() {
                 Get Free Consultation
               </Button>
             </div>
-            <div className="flex items-center gap-6 mt-8 text-blue-100">
+            <div className="grid grid-cols-2 gap-4 mt-8 text-blue-100">
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-success" />
                 <span>CPA Certified</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-success" />
+                <span>FCCA Qualified</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-success" />
+                <span>International Standards</span>
               </div>
 
               <div className="flex items-center gap-2">

@@ -87,7 +87,7 @@ export default function Chatbot() {
 
   const handleToggleChat = () => {
     setIsOpen(!isOpen);
-    trackEvent('click', 'chatbot_toggle', isOpen ? 'close' : 'open');
+    trackEvent('chatbot_toggle', { action: isOpen ? 'close' : 'open' });
   };
 
   const handleSendMessage = () => {
@@ -107,7 +107,7 @@ export default function Chatbot() {
     
     // Send to API
     chatMutation.mutate(userMessage);
-    trackEvent('chat_message', 'chatbot', 'user_message');
+    trackEvent('chat_message_sent', { section: 'chatbot' });
   };
 
   const handleQuickAction = (action: string) => {
@@ -153,7 +153,7 @@ export default function Chatbot() {
         timestamp: new Date()
       }]);
       chatMutation.mutate(message);
-      trackEvent('click', `chatbot_quick_action_${action}`, 'chatbot');
+      trackEvent('chatbot_quick_action', { action, section: 'chatbot' });
     }
   };
 

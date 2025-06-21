@@ -1,0 +1,66 @@
+🎯 OBJECTIVE:
+Turn the website into a modern, conversion-optimized CPA & Advisory firm site that promotes action, trust, and tech-savvy service.
+
+🔹 NAVIGATION BAR:
+Keep existing structure.
+
+Add “Advisory” tab next to “Audit”.
+
+Add “Loan Help” tab for business funding services.
+
+Highlight “Schedule Consultation” with a green CTA style (differentiate it from "Pay Online").
+
+🔹 HERO SECTION (Revamp content + style):
+New Heading:
+“Tax, Audit & Advisory Experts for Growth-Focused Businesses”
+
+Subheading:
+"20+ years of CPA experience. Powered by AI. Committed to your financial clarity, compliance, and growth."
+
+CTA Buttons:
+“🧾 Get Audit-Ready”
+
+“💼 Book a Free Consultation”
+
+🔹 SERVICES SECTION (Update the tiles):
+Keep the layout, but enhance the text for impact. Here’s the improved content:
+
+Tax Services
+→ Strategic tax planning & preparation for all sectors including healthcare, tech, retail, and real estate.
+
+Bookkeeping & Accounting
+→ Accurate books, monthly reports, and insights to help you focus on what you do best—growing your business.
+
+Audit, Review & Compilation
+→ Independent financial statement services that ensure compliance, clarity, and readiness for scrutiny.
+
+Secure File Sharing
+→ Bank-grade file portal for encrypted document exchange with clients.
+
+AI Financial Calculators
+→ Run loan analysis, cash flow projections, depreciation schedules, and more with custom AI tools.
+
+Industry Specialization
+→ Tailored solutions for healthcare, tech startups, restaurants, nonprofits, and professional firms.
+
+Loan & Funding Help 🆕
+→ We help business owners get SBA, line of credit, or working capital funding. Includes document prep, projections, and lender matching.
+
+Advisory Services 🆕
+→ CFO-level strategic insights, financial health reviews, and proactive tax-saving roadmaps.
+
+🔹 ADDITIONS TO IMPLEMENT:
+Add testimonial slider (“Hear from clients who trust ProBalance CPA”)
+
+Add visual trust indicators (CPA logo, 20+ Years badge, AI-powered tools badge)
+
+Use a modern blue-white gradient with soft shadows for sections
+
+Make layout mobile-first and responsive
+
+🔹 INTEGRATIONS:
+Ensure that the “Pay Online” and “Schedule Consultation” buttons open forms or embedded Stripe/Calendly.
+
+Add a “Client Dashboard” button linking to login (if live).
+
+Please update the live site layout, CSS and HTML as needed. I want something that feels like a tech-forward CPA advisory brand—trustworthy, powerful, and built for business owners who expect more than just taxes.

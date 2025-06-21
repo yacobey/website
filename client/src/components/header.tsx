@@ -19,12 +19,13 @@ export default function Header() {
   };
 
   const navItems = [
-    { href: "/#services", label: "Services" },
+    { href: "/#services", label: "Tax Services" },
+    { href: "/#audit", label: "Audit" },
+    { href: "/#advisory", label: "Advisory" },
+    { href: "/#loan-help", label: "Loan Help" },
     { href: "/ai-tools", label: "AI Tools" },
     { href: "/digital-guides", label: "Digital Guides" },
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/partners", label: "Partners" },
-    { href: "/careers", label: "Careers" },
     { href: "/blog", label: "Blog" },
     { href: "/#contact", label: "Contact" },
   ];

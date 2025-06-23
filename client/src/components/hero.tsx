@@ -17,7 +17,7 @@ export default function Hero() {
             Professional CPA Services
           </h1>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Expert accounting, tax preparation, and business advisory services. Get professional guidance for your financial needs.
+            Expert bookkeeping, accounting, tax preparation, audits, review and compilation engagements, and business advisory services. Get professional guidance for your financial needs. Call or book appointment.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16">

@@ -6,7 +6,7 @@ import { Link } from "wouter";
 export default function Hero() {
   const handleGetFreeConsultation = () => {
     trackEvent('get_free_consultation_click', { section: 'hero' });
-    window.open('https://calendly.com/probalancecpa', '_blank');
+    window.open('https://calendly.com/lenoxcpa', '_blank');
   };
 
   return (

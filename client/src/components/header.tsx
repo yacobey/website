@@ -10,7 +10,7 @@ export default function Header() {
 
   const handleScheduleConsultation = () => {
     trackEvent('schedule_consultation_click', { section: 'header' });
-    window.open('https://calendly.com/probalancecpa', '_blank');
+    window.open('https://calendly.com/lenoxcpa', '_blank');
   };
 
   const handleMobileMenuToggle = () => {
@@ -35,7 +35,7 @@ export default function Header() {
             <div className="flex-shrink-0">
               <Link href="/">
                 <h1 className="text-xl font-semibold text-gray-900 cursor-pointer">
-                  ProBalance CPA
+                  Lenox CPA
                 </h1>
               </Link>
             </div>

@@ -1,8 +1,8 @@
-# ProBalance CPA - Full-Stack Web Application
+# Lenox CPA - Full-Stack Web Application
 
 ## Overview
 
-ProBalance CPA is a comprehensive full-stack web application designed for a CPA firm serving individuals, businesses across all industries, and specialized sectors. The application combines traditional accounting services with innovative AI-powered financial tools, secure file sharing solutions, and strategic technology partnerships for complete client engagement and lead generation capabilities.
+Lenox CPA is a comprehensive full-stack web application designed for a CPA firm serving individuals, businesses across all industries, and specialized sectors. The application combines traditional accounting services with innovative AI-powered financial tools, secure file sharing solutions, and strategic technology partnerships for complete client engagement and lead generation capabilities.
 
 ## System Architecture
 
@@ -152,11 +152,12 @@ Changelog:
 - June 21, 2025. Implemented advanced smart chat service with contextual conversation flow and booking capabilities
 - June 21, 2025. Added intelligent response system that handles follow-up questions, pricing inquiries, and consultation booking
 - June 21, 2025. Removed ACCA Services section from homepage for cleaner design focus
-- June 21, 2025. Updated ProBalance CPA branding to use primary color in header navigation
+- June 21, 2025. Updated header branding to use primary color in navigation
 - June 21, 2025. Removed business type field from consultation form to streamline user experience
 - June 21, 2025. Eliminated $250/hour consultation pricing, focusing only on free consultation offering
 - June 21, 2025. Integrated Calendly scheduling for all "Schedule Free Consultation" buttons across the site
 - June 21, 2025. Updated footer branding from "ProBalance CPA & ACCA" to "ProBalance CPA" for simplified messaging
+- January 18, 2025. Changed business name from ProBalance CPA to Lenox CPA throughout website and all branding
 - June 21, 2025. Transformed website design to match taxchecklist.com aesthetic with cleaner, more minimal styling
 - June 21, 2025. Updated color scheme to use softer, more professional grays and refined typography
 - June 21, 2025. Simplified hero section with reduced padding, smaller buttons, and cleaner trust indicators

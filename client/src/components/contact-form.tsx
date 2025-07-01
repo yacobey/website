@@ -97,7 +97,7 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">Email</p>
-                  <p className="text-gray-600">info@probalancecpa.com</p>
+                  <p className="text-gray-600">info@lenoxcpa.com</p>
                 </div>
               </div>
               
@@ -197,7 +197,7 @@ export default function ContactForm() {
 
                 <Button
                   type="button"
-                  onClick={() => window.open('https://calendly.com/probalancecpa', '_blank')}
+                  onClick={() => window.open('https://calendly.com/lenoxcpa', '_blank')}
                   className="w-full bg-primary hover:bg-primary-dark text-white py-3 rounded-lg font-semibold text-lg transition-colors"
                 >
                   Schedule Free Consultation

@@ -61,39 +61,7 @@ export default function SEODashboard() {
   const [, setLocation] = useLocation();
   const { isAuthenticated, isLoading, logout } = useAuth();
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      setLocation('/admin-login');
-    }
-  }, [isAuthenticated, isLoading, setLocation]);
-
-  // Show loading while checking authentication
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-gray-600">Checking authentication...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Redirect if not authenticated (render nothing while redirecting)
-  if (!isAuthenticated) {
-    return null;
-  }
-
-  const handleLogout = () => {
-    logout();
-    setLocation('/admin-login');
-    toast({
-      title: "Logged out",
-      description: "You have been successfully logged out.",
-    });
-  };
-
+  // Always call useQuery hook regardless of authentication state
   const { data: seoData, isLoading: isDataLoading, error } = useQuery<SEOPageData[]>({
     queryKey: ['/api/seo-data'],
     queryFn: async () => {
@@ -103,8 +71,10 @@ export default function SEODashboard() {
       }
       return response.json();
     },
+    enabled: isAuthenticated, // Only run query if authenticated
   });
 
+  // Always call useMutation hook regardless of authentication state
   const { mutate: updateSEO, isPending } = useMutation({
     mutationFn: async (data: Partial<SEOPageData>) => {
       const response = await fetch(`/api/seo-data/${selectedPage}`, {
@@ -141,6 +111,13 @@ export default function SEODashboard() {
     },
   });
 
+  // All hooks called consistently, now handle authentication redirects
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      setLocation('/admin-login');
+    }
+  }, [isAuthenticated, isLoading, setLocation]);
+
   const currentPageData = seoData?.find(page => page.page === selectedPage);
 
   useEffect(() => {
@@ -148,6 +125,15 @@ export default function SEODashboard() {
       setFormData(currentPageData);
     }
   }, [currentPageData, editMode]);
+
+  const handleLogout = () => {
+    logout();
+    setLocation('/admin-login');
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
+  };
 
   const handleSave = () => {
     console.log('Saving SEO data for page:', selectedPage, formData);
@@ -157,6 +143,23 @@ export default function SEODashboard() {
   const handleInputChange = (field: keyof SEOPageData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
+
+  // Show loading while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-gray-600">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect if not authenticated (render nothing while redirecting)
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const getPageStatus = (page: string) => {
     const pageData = seoData?.find(p => p.page === page);
@@ -197,7 +200,14 @@ export default function SEODashboard() {
               </p>
             </div>
             <Button
-              onClick={handleLogout}
+              onClick={() => {
+                logout();
+                setLocation('/admin-login');
+                toast({
+                  title: "Logged out",
+                  description: "You have been successfully logged out.",
+                });
+              }}
               variant="outline"
               size="sm"
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900"

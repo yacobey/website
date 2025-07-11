@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
+import { Helmet } from "react-helmet";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
@@ -54,8 +55,24 @@ export default function BlogPost() {
             </div>
           </div>
         ) : post ? (
-          <article className="py-20">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <>
+            <Helmet>
+              <title>{post.title} | Lenox CPA Financial Insights</title>
+              <meta name="description" content={post.excerpt} />
+              <meta name="keywords" content={`${post.category.toLowerCase()}, CPA advice, financial planning, tax tips, accounting insights`} />
+              <meta property="og:title" content={`${post.title} | Lenox CPA`} />
+              <meta property="og:description" content={post.excerpt} />
+              <meta property="og:type" content="article" />
+              <meta property="og:url" content={`https://lenoxcpa.com/blog/${post.slug}`} />
+              <meta property="article:author" content={post.author} />
+              <meta property="article:section" content={post.category} />
+              <meta property="article:published_time" content={post.createdAt} />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:title" content={`${post.title} | Lenox CPA`} />
+              <meta name="twitter:description" content={post.excerpt} />
+            </Helmet>
+            <article className="py-20">
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
               <Link href="/blog">
                 <Button variant="outline" className="mb-8">
                   <ArrowLeft className="w-4 h-4 mr-2" />
@@ -107,8 +124,9 @@ export default function BlogPost() {
                   </Button>
                 </Link>
               </div>
-            </div>
-          </article>
+              </div>
+            </article>
+          </>
         ) : null}
       </div>
       

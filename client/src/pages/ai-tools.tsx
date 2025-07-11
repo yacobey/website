@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import CalculatorBuilder from "@/components/calculator-builder";
@@ -16,6 +17,15 @@ import { Sparkles, Zap, Target, Calendar } from "lucide-react";
 export default function AITools() {
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>AI-Powered Financial Calculators & Tools | Lenox CPA</title>
+        <meta name="description" content="Free AI-powered financial calculators including tax calculator, ROI analyzer, cash flow tracker, loan calculator, and custom calculator builder. Professional CPA-approved tools." />
+        <meta name="keywords" content="financial calculators, tax calculator, ROI calculator, cash flow tracker, loan calculator, AI financial tools, CPA calculators" />
+        <meta property="og:title" content="AI-Powered Financial Calculators | Lenox CPA" />
+        <meta property="og:description" content="Free professional financial calculators and AI-powered tools for tax planning, investment analysis, and business decisions." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lenoxcpa.com/ai-tools" />
+      </Helmet>
       <Header />
       
       <div className="pt-16">

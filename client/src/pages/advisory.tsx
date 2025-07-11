@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { TrendingUp, BarChart3, DollarSign, Target, Zap, Users } from "lucide-react";
@@ -62,6 +63,15 @@ const cfoServices = [
 export default function Advisory() {
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>Business Advisory & Fractional CFO Services | Lenox CPA</title>
+        <meta name="description" content="Strategic business advisory services including fractional CFO, financial planning, M&A support, and workflow optimization. Get CFO-level insights without the overhead." />
+        <meta name="keywords" content="fractional CFO, business advisory, financial planning, M&A due diligence, strategic planning, CFO services" />
+        <meta property="og:title" content="Business Advisory & Fractional CFO Services | Lenox CPA" />
+        <meta property="og:description" content="Strategic business advisory services and fractional CFO solutions to accelerate growth and optimize operations." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lenoxcpa.com/advisory" />
+      </Helmet>
       <Header />
       
       {/* Hero Section */}

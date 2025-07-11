@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { CheckCircle, FileText, BarChart3, Users, ArrowRight } from "lucide-react";
@@ -58,6 +59,15 @@ const services = [
 export default function Bookkeeping() {
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>Professional Bookkeeping Services | Lenox CPA</title>
+        <meta name="description" content="Complete bookkeeping solutions including monthly reconciliation, financial reporting, chart of accounts setup, and payroll management for businesses of all sizes." />
+        <meta name="keywords" content="bookkeeping services, monthly bookkeeping, financial reporting, chart of accounts, payroll, reconciliation, QuickBooks" />
+        <meta property="og:title" content="Professional Bookkeeping Services | Lenox CPA" />
+        <meta property="og:description" content="Accurate, reliable bookkeeping services that grow with your business. Monthly reconciliation and financial reporting." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lenoxcpa.com/bookkeeping" />
+      </Helmet>
       <Header />
       
       {/* Hero Section */}

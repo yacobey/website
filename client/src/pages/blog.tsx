@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
+import { Helmet } from "react-helmet";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,6 +15,15 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>Financial Insights & Tax Tips Blog | Lenox CPA</title>
+        <meta name="description" content="Expert financial insights, tax tips, and accounting strategies from certified CPAs. Stay informed with the latest tax law changes and financial planning advice." />
+        <meta name="keywords" content="tax tips, financial insights, accounting blog, CPA advice, tax law changes, financial planning" />
+        <meta property="og:title" content="Financial Insights & Tax Tips Blog | Lenox CPA" />
+        <meta property="og:description" content="Expert financial insights and tax tips from certified CPAs. Latest tax law changes and financial planning strategies." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lenoxcpa.com/blog" />
+      </Helmet>
       <Header />
       
       <div className="pt-16">

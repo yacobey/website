@@ -6,6 +6,7 @@ import { insertContactSchema, insertChatMessageSchema, insertSeoDataSchema } fro
 import { generateAIResponse, analyzeUserIntent, updateUserPreferences } from "./ai-service";
 import { getSmartResponse } from "./smart-chat-service";
 import { addPerformanceRoutes } from "./routes-performance";
+import { cleanupSeoData, validateRobotsDirective } from "./seo-cleanup";
 import Stripe from "stripe";
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -375,7 +376,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Middleware to set dynamic X-Robots-Tag header for all page requests
+  // Middleware to set clean X-Robots-Tag header for all page requests
   app.use(async (req, res, next) => {
     // Skip API routes and static assets
     if (req.path.startsWith('/api/') || req.path.includes('.') || req.path.startsWith('/assets')) {
@@ -390,8 +391,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const seoData = await storage.getSeoDataByPage(pageName);
       
       if (seoData && seoData.metaRobots && seoData.metaRobots.trim()) {
-        // Set X-Robots-Tag header based on database
-        res.set('X-Robots-Tag', seoData.metaRobots);
+        // Clean and validate the metaRobots value
+        const cleanRobots = seoData.metaRobots
+          .split(',')
+          .map(directive => directive.trim())
+          .filter(directive => directive && !directive.includes('undefined'))
+          .filter((directive, index, arr) => arr.indexOf(directive) === index) // Remove duplicates
+          .join(', ');
+        
+        if (cleanRobots && cleanRobots !== 'none') {
+          res.set('X-Robots-Tag', cleanRobots);
+        } else {
+          res.set('X-Robots-Tag', 'index, follow');
+        }
       } else {
         // Set default robots tag for pages without specific SEO data
         res.set('X-Robots-Tag', 'index, follow');
@@ -445,6 +457,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error generating robots.txt:", error);
       res.status(500).json({ message: "Failed to generate robots.txt" });
+    }
+  });
+
+  // SEO cleanup endpoint
+  app.post("/api/seo-cleanup", async (req, res) => {
+    try {
+      const result = await cleanupSeoData();
+      res.json(result);
+    } catch (error) {
+      console.error("Error during SEO cleanup:", error);
+      res.status(500).json({ message: "SEO cleanup failed", error: error.message });
     }
   });
 

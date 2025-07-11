@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Shield, FileCheck, Search, Award, Users, Building } from "lucide-react";
@@ -66,6 +67,18 @@ const auditTypes = [
 export default function Audit() {
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>Professional Audit Services - Financial Statement Audits | Lenox CPA</title>
+        <meta name="description" content="Independent audit and assurance services following GAAS standards. Financial statement audits, compliance audits, reviews, and compilations for businesses and nonprofits." />
+        <meta name="keywords" content="audit services, financial statement audit, GAAS, compliance audit, review and compilation, nonprofit audit, government audit" />
+        <meta property="og:title" content="Professional Audit Services - Financial Statement Audits | Lenox CPA" />
+        <meta property="og:description" content="Independent audit and assurance services following GAAS standards. Providing stakeholders confidence in financial reporting." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lenoxcpa.com/audit" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Professional Audit Services | Lenox CPA" />
+        <meta name="twitter:description" content="Independent audit and assurance services following GAAS standards for businesses and nonprofits." />
+      </Helmet>
       <Header />
       
       {/* Hero Section */}

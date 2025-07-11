@@ -23,6 +23,11 @@ export default function Blog() {
         <meta property="og:description" content="Expert financial insights and tax tips from certified CPAs. Latest tax law changes and financial planning strategies." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://lenoxcpa.com/blog" />
+        <meta property="og:site_name" content="Lenox CPA" />
+        <meta property="og:image" content="https://lenoxcpa.com/og-image-blog.jpg" />
+        <meta property="og:image:alt" content="Lenox CPA Financial Insights Blog" />
+        <meta name="twitter:image" content="https://lenoxcpa.com/og-image-blog.jpg" />
+        <link rel="canonical" href="https://lenoxcpa.com/blog" />
       </Helmet>
       <Header />
       

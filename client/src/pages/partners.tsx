@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -139,6 +140,18 @@ export default function Partners() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>Technology Partners & Business Solutions | Lenox CPA</title>
+        <meta name="description" content="Curated partnerships with leading financial, AI, and SaaS solutions. Streamline operations, enhance security, and grow your business with the best tools." />
+        <meta name="keywords" content="business partnerships, technology solutions, financial software, SaaS solutions, business tools, CPA technology partners" />
+        <meta property="og:title" content="Technology Partners & Business Solutions | Lenox CPA" />
+        <meta property="og:description" content="Curated partnerships with leading financial, AI, and SaaS solutions to help streamline operations and grow your business." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lenoxcpa.com/partners" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Technology Partners & Solutions | Lenox CPA" />
+        <meta name="twitter:description" content="Leading financial, AI, and SaaS solutions to help streamline operations and grow your business." />
+      </Helmet>
       {/* Header */}
       <section className="bg-gradient-to-r from-primary to-primary-dark text-white py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

@@ -25,6 +25,11 @@ export default function AITools() {
         <meta property="og:description" content="Free professional financial calculators and AI-powered tools for tax planning, investment analysis, and business decisions." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://lenoxcpa.com/ai-tools" />
+        <meta property="og:site_name" content="Lenox CPA" />
+        <meta property="og:image" content="https://lenoxcpa.com/og-image-ai-tools.jpg" />
+        <meta property="og:image:alt" content="AI-Powered Financial Calculators by Lenox CPA" />
+        <meta name="twitter:image" content="https://lenoxcpa.com/og-image-ai-tools.jpg" />
+        <link rel="canonical" href="https://lenoxcpa.com/ai-tools" />
       </Helmet>
       <Header />
       

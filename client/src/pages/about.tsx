@@ -1,9 +1,13 @@
 import DynamicSEO from "@/components/dynamic-seo";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import Chatbot from "@/components/chatbot";
 
 export default function About() {
   return (
     <>
       <DynamicSEO page="about" />
+      <Header />
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 py-16">
           {/* Hero Section */}
@@ -118,6 +122,8 @@ export default function About() {
           </div>
         </div>
       </div>
+      <Footer />
+      <Chatbot />
     </>
   );
 }

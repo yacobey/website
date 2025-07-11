@@ -56,18 +56,36 @@ export default function SEODashboard() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: seoData, isLoading } = useQuery<SEOPageData[]>({
+  const { data: seoData, isLoading, error } = useQuery<SEOPageData[]>({
     queryKey: ['/api/seo-data'],
+    queryFn: async () => {
+      const response = await fetch('/api/seo-data');
+      if (!response.ok) {
+        throw new Error('Failed to fetch SEO data');
+      }
+      return response.json();
+    },
   });
 
   const { mutate: updateSEO, isPending } = useMutation({
     mutationFn: async (data: Partial<SEOPageData>) => {
-      return apiRequest(`/api/seo-data/${selectedPage}`, {
+      const response = await fetch(`/api/seo-data/${selectedPage}`, {
         method: 'PUT',
-        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
+      
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || 'Failed to update SEO data');
+      }
+      
+      return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log('SEO update successful:', data);
       queryClient.invalidateQueries({ queryKey: ['/api/seo-data'] });
       setEditMode(false);
       toast({
@@ -75,10 +93,11 @@ export default function SEODashboard() {
         description: "Page SEO data has been successfully updated.",
       });
     },
-    onError: () => {
+    onError: (error) => {
+      console.error('SEO update failed:', error);
       toast({
         title: "Update Failed",
-        description: "Failed to update SEO data. Please try again.",
+        description: `Failed to update SEO data: ${error.message}`,
         variant: "destructive",
       });
     },
@@ -93,6 +112,7 @@ export default function SEODashboard() {
   }, [currentPageData, editMode]);
 
   const handleSave = () => {
+    console.log('Saving SEO data for page:', selectedPage, formData);
     updateSEO(formData);
   };
 
@@ -184,6 +204,13 @@ export default function SEODashboard() {
                   <CardContent className="p-8 text-center">
                     <div className="animate-spin w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full mx-auto"></div>
                     <p className="mt-4 text-gray-600">Loading SEO data...</p>
+                  </CardContent>
+                </Card>
+              ) : error ? (
+                <Card>
+                  <CardContent className="p-8 text-center">
+                    <div className="text-red-600 mb-4">⚠️ Error loading SEO data</div>
+                    <p className="text-gray-600">Please refresh the page or contact support if the issue persists.</p>
                   </CardContent>
                 </Card>
               ) : (

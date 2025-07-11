@@ -476,8 +476,7 @@ export default function SEODashboard() {
                               id="title"
                               value={formData.title || ''}
                               onChange={(e) => handleInputChange('title', e.target.value)}
-                              placeholder="Enter page title (50-60 characters recommended)"
-                              maxLength={60}
+                              placeholder="Enter page title"
                             />
                           ) : (
                             <div className="p-3 bg-gray-50 rounded-lg">
@@ -485,7 +484,7 @@ export default function SEODashboard() {
                             </div>
                           )}
                           <p className="text-sm text-gray-500 mt-1">
-                            Current length: {(editMode ? formData.title : currentPageData?.title)?.length || 0}/60
+                            Current length: {(editMode ? formData.title : currentPageData?.title)?.length || 0} characters
                           </p>
                         </div>
 
@@ -496,8 +495,7 @@ export default function SEODashboard() {
                               id="description"
                               value={formData.description || ''}
                               onChange={(e) => handleInputChange('description', e.target.value)}
-                              placeholder="Enter page description (150-160 characters recommended)"
-                              maxLength={160}
+                              placeholder="Enter page description"
                               rows={3}
                             />
                           ) : (
@@ -506,7 +504,7 @@ export default function SEODashboard() {
                             </div>
                           )}
                           <p className="text-sm text-gray-500 mt-1">
-                            Current length: {(editMode ? formData.description : currentPageData?.description)?.length || 0}/160
+                            Current length: {(editMode ? formData.description : currentPageData?.description)?.length || 0} characters
                           </p>
                         </div>
 

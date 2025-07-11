@@ -49,7 +49,7 @@ interface SEOPageData {
 }
 
 const defaultPages = [
-  'home', 'blog', 'ai-tools', 'advisory', 'bookkeeping', 
+  'home', 'about', 'blog', 'ai-tools', 'advisory', 'bookkeeping', 
   'tax', 'audit', 'partners', 'ai-tools-affiliate'
 ];
 

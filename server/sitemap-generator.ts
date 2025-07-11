@@ -8,7 +8,12 @@ interface SitemapUrl {
 }
 
 export async function generateSitemap(): Promise<string> {
-  const baseUrl = 'https://selamcpa.com';
+  // Use the actual domain - Replit domain in development, custom domain in production
+  const baseUrl = process.env.NODE_ENV === 'production' && process.env.CUSTOM_DOMAIN 
+    ? `https://${process.env.CUSTOM_DOMAIN}`
+    : process.env.REPLIT_DOMAINS 
+    ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}`
+    : 'https://selamcpa.com';
   const urls: SitemapUrl[] = [];
 
   // Static pages
@@ -69,7 +74,12 @@ ${urls.map(url => `  <url>
 }
 
 export function generateRobotsTxt(): string {
-  const baseUrl = 'https://selamcpa.com';
+  // Use the actual domain - Replit domain in development, custom domain in production
+  const baseUrl = process.env.NODE_ENV === 'production' && process.env.CUSTOM_DOMAIN 
+    ? `https://${process.env.CUSTOM_DOMAIN}`
+    : process.env.REPLIT_DOMAINS 
+    ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}`
+    : 'https://selamcpa.com';
   
   return `User-agent: *
 Allow: /

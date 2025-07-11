@@ -32,6 +32,7 @@ const Careers = React.lazy(() => import("@/pages/careers"));
 const SEODashboard = React.lazy(() => import("@/pages/seo-dashboard"));
 const AdminLogin = React.lazy(() => import("@/pages/admin-login"));
 const IndexingControl = React.lazy(() => import("@/pages/indexing-control"));
+const IndexingStatus = React.lazy(() => import("@/pages/indexing-status"));
 
 function Router() {
   useAnalytics();
@@ -60,6 +61,7 @@ function Router() {
           <Route path="/admin-login" component={AdminLogin} />
           <Route path="/seo-dashboard" component={SEODashboard} />
           <Route path="/indexing-control" component={IndexingControl} />
+          <Route path="/indexing-status" component={IndexingStatus} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>

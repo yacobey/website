@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -22,7 +24,8 @@ import {
   AlertCircle,
   Save,
   Eye,
-  Edit3
+  Edit3,
+  LogOut
 } from "lucide-react";
 
 interface SEOPageData {
@@ -55,8 +58,43 @@ export default function SEODashboard() {
   const [formData, setFormData] = useState<Partial<SEOPageData>>({});
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
+  const { isAuthenticated, isLoading, logout } = useAuth();
 
-  const { data: seoData, isLoading, error } = useQuery<SEOPageData[]>({
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      setLocation('/admin-login');
+    }
+  }, [isAuthenticated, isLoading, setLocation]);
+
+  // Show loading while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-gray-600">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect if not authenticated (render nothing while redirecting)
+  if (!isAuthenticated) {
+    return null;
+  }
+
+  const handleLogout = () => {
+    logout();
+    setLocation('/admin-login');
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
+  };
+
+  const { data: seoData, isLoading: isDataLoading, error } = useQuery<SEOPageData[]>({
     queryKey: ['/api/seo-data'],
     queryFn: async () => {
       const response = await fetch('/api/seo-data');
@@ -148,14 +186,25 @@ export default function SEODashboard() {
       
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-              <Search className="w-8 h-8 text-blue-600" />
-              SEO Management Dashboard
-            </h1>
-            <p className="text-gray-600">
-              Manage meta titles, descriptions, Open Graph tags, and other SEO metadata for all website pages.
-            </p>
+          <div className="mb-8 flex justify-between items-start">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                <Search className="w-8 h-8 text-blue-600" />
+                SEO Management Dashboard
+              </h1>
+              <p className="text-gray-600">
+                Manage meta titles, descriptions, Open Graph tags, and other SEO metadata for all website pages.
+              </p>
+            </div>
+            <Button
+              onClick={handleLogout}
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+            >
+              <LogOut className="w-4 h-4" />
+              Logout
+            </Button>
           </div>
 
           <div className="grid lg:grid-cols-4 gap-6">
@@ -199,7 +248,7 @@ export default function SEODashboard() {
 
             {/* Main Content Area */}
             <div className="lg:col-span-3">
-              {isLoading ? (
+              {isDataLoading ? (
                 <Card>
                   <CardContent className="p-8 text-center">
                     <div className="animate-spin w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full mx-auto"></div>

@@ -289,6 +289,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin authentication routes
+  app.post("/api/admin/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      
+      // Simple authentication - in production, use proper password hashing
+      const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
+      const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'lenoxcpa2025';
+      
+      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        const token = Buffer.from(`${username}:${Date.now()}`).toString('base64');
+        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+        
+        res.json({
+          success: true,
+          token,
+          expires: expires.toISOString(),
+          message: "Login successful"
+        });
+      } else {
+        res.status(401).json({
+          success: false,
+          message: "Invalid username or password"
+        });
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   // SEO Data routes
   app.get("/api/seo-data", async (req, res) => {
     try {

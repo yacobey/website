@@ -519,17 +519,40 @@ export default function SEODashboard() {
                       {/* Advanced Tab */}
                       <TabsContent value="advanced" className="space-y-4">
                         <div>
-                          <Label htmlFor="metaRobots">Meta Robots</Label>
+                          <Label htmlFor="metaRobots">Meta Robots & X-Robots-Tag</Label>
                           {editMode ? (
-                            <Input
-                              id="metaRobots"
-                              value={formData.metaRobots || ''}
-                              onChange={(e) => handleInputChange('metaRobots', e.target.value)}
-                              placeholder="index, follow"
-                            />
+                            <div className="space-y-3">
+                              <Select
+                                value={formData.metaRobots || ''}
+                                onValueChange={(value) => handleInputChange('metaRobots', value)}
+                              >
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select robots directive" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="">Default (index, follow)</SelectItem>
+                                  <SelectItem value="noindex, nofollow">No Index, No Follow</SelectItem>
+                                  <SelectItem value="index, nofollow">Index, No Follow</SelectItem>
+                                  <SelectItem value="noindex, follow">No Index, Follow</SelectItem>
+                                  <SelectItem value="index, follow">Index, Follow</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <div className="p-3 bg-blue-50 rounded-lg text-sm">
+                                <p className="font-medium text-blue-900 mb-1">Auto-sets both:</p>
+                                <p className="text-blue-700">• Meta robots tag in HTML</p>
+                                <p className="text-blue-700">• X-Robots-Tag HTTP header</p>
+                              </div>
+                            </div>
                           ) : (
-                            <div className="p-3 bg-gray-50 rounded-lg">
-                              {currentPageData?.metaRobots || 'index, follow'}
+                            <div className="space-y-2">
+                              <div className="p-3 bg-gray-50 rounded-lg">
+                                <span className="font-medium">Current Setting: </span>
+                                {currentPageData?.metaRobots || 'Default (index, follow)'}
+                              </div>
+                              <div className="p-3 bg-green-50 rounded-lg text-sm">
+                                <p className="font-medium text-green-900">HTTP Header Output:</p>
+                                <code className="text-green-700">X-Robots-Tag: {currentPageData?.metaRobots || 'index, follow'}</code>
+                              </div>
                             </div>
                           )}
                         </div>

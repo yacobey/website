@@ -54,7 +54,7 @@ function getDefaultSEO(page: string): SEOData {
       twitterDescription: "Professional CPA services with expert bookkeeping, tax preparation, audits, and business advisory.",
       twitterImage: "https://lenoxcpa.com/og-image.jpg",
       canonicalUrl: "https://lenoxcpa.com",
-      metaRobots: "index, follow",
+      metaRobots: "",
     },
     blog: {
       title: "Financial Insights & CPA Expertise Blog | Lenox CPA",
@@ -68,7 +68,7 @@ function getDefaultSEO(page: string): SEOData {
       twitterDescription: "Expert insights on taxes, accounting, business finance, and financial planning.",
       twitterImage: "https://lenoxcpa.com/og-blog.jpg",
       canonicalUrl: "https://lenoxcpa.com/blog",
-      metaRobots: "index, follow",
+      metaRobots: "",
     },
     'ai-tools': {
       title: "AI-Powered Financial Calculators & Tools | Lenox CPA",
@@ -82,7 +82,7 @@ function getDefaultSEO(page: string): SEOData {
       twitterDescription: "Advanced AI-powered financial calculators and business planning tools.",
       twitterImage: "https://lenoxcpa.com/og-ai-tools.jpg",
       canonicalUrl: "https://lenoxcpa.com/ai-tools",
-      metaRobots: "index, follow",
+      metaRobots: "",
     },
   };
 
@@ -98,6 +98,6 @@ function getDefaultSEO(page: string): SEOData {
     twitterDescription: `Professional CPA services and financial expertise for ${page}.`,
     twitterImage: "https://lenoxcpa.com/og-image.jpg",
     canonicalUrl: `https://lenoxcpa.com/${page}`,
-    metaRobots: "index, follow",
+    metaRobots: "",
   };
 }

@@ -320,6 +320,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+
+
   // SEO Data routes
   app.get("/api/seo-data", async (req, res) => {
     try {
@@ -369,6 +371,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Error updating SEO data:", error);
       res.status(500).json({ message: "Failed to update SEO data" });
     }
+  });
+
+  // Middleware to set dynamic X-Robots-Tag header for all page requests
+  app.use(async (req, res, next) => {
+    // Skip API routes and static assets
+    if (req.path.startsWith('/api/') || req.path.includes('.') || req.path.startsWith('/assets')) {
+      return next();
+    }
+
+    try {
+      // Extract page name from URL
+      const pageName = req.path === '/' ? 'home' : req.path.slice(1).split('/')[0];
+      
+      // Try to get SEO data for this page
+      const seoData = await storage.getSeoDataByPage(pageName);
+      
+      if (seoData && seoData.metaRobots && seoData.metaRobots.trim()) {
+        // Set X-Robots-Tag header based on database
+        res.set('X-Robots-Tag', seoData.metaRobots);
+      } else {
+        // Set default robots tag for pages without specific SEO data
+        res.set('X-Robots-Tag', 'index, follow');
+      }
+    } catch (error) {
+      // If SEO data lookup fails, set default header
+      res.set('X-Robots-Tag', 'index, follow');
+    }
+    
+    next();
   });
 
   const httpServer = createServer(app);

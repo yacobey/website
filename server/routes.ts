@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertContactSchema, insertChatMessageSchema } from "@shared/schema";
+import { insertContactSchema, insertChatMessageSchema, insertSeoDataSchema } from "@shared/schema";
 import { generateAIResponse, analyzeUserIntent, updateUserPreferences } from "./ai-service";
 import { getSmartResponse } from "./smart-chat-service";
 import Stripe from "stripe";
@@ -286,6 +286,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating career application:", error);
       res.status(500).json({ message: "Failed to update career application" });
+    }
+  });
+
+  // SEO Data routes
+  app.get("/api/seo-data", async (req, res) => {
+    try {
+      const seoData = await storage.getSeoData();
+      res.json(seoData);
+    } catch (error) {
+      console.error("Error fetching SEO data:", error);
+      res.status(500).json({ message: "Failed to fetch SEO data" });
+    }
+  });
+
+  app.get("/api/seo-data/:page", async (req, res) => {
+    try {
+      const page = req.params.page;
+      const seoData = await storage.getSeoDataByPage(page);
+      if (!seoData) {
+        return res.status(404).json({ message: "SEO data not found for this page" });
+      }
+      res.json(seoData);
+    } catch (error) {
+      console.error("Error fetching SEO data:", error);
+      res.status(500).json({ message: "Failed to fetch SEO data" });
+    }
+  });
+
+  app.post("/api/seo-data", async (req, res) => {
+    try {
+      const validatedData = insertSeoDataSchema.parse(req.body);
+      const seoData = await storage.createSeoData(validatedData);
+      res.json(seoData);
+    } catch (error) {
+      console.error("Error creating SEO data:", error);
+      res.status(500).json({ message: "Failed to create SEO data" });
+    }
+  });
+
+  app.put("/api/seo-data/:page", async (req, res) => {
+    try {
+      const page = req.params.page;
+      const updateData = req.body;
+      const seoData = await storage.updateSeoData(page, updateData);
+      if (!seoData) {
+        return res.status(404).json({ message: "SEO data not found for this page" });
+      }
+      res.json(seoData);
+    } catch (error) {
+      console.error("Error updating SEO data:", error);
+      res.status(500).json({ message: "Failed to update SEO data" });
     }
   });
 

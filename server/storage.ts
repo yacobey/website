@@ -8,6 +8,7 @@ import {
   userProgress,
   personalizedRecommendations,
   careerApplications,
+  seoData,
   type Contact,
   type BlogPost,
   type Calculator,
@@ -17,6 +18,7 @@ import {
   type UserProgress,
   type PersonalizedRecommendation,
   type CareerApplication,
+  type SeoData,
   type InsertContact,
   type InsertBlogPost,
   type InsertCalculator,
@@ -26,6 +28,7 @@ import {
   type InsertUserProgress,
   type InsertPersonalizedRecommendation,
   type InsertCareerApplication,
+  type InsertSeoData,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, isNull } from "drizzle-orm";
@@ -71,6 +74,12 @@ export interface IStorage {
   getCareerApplications(): Promise<CareerApplication[]>;
   getCareerApplication(id: number): Promise<CareerApplication | undefined>;
   updateCareerApplicationStatus(id: number, status: string, notes?: string): Promise<CareerApplication | undefined>;
+  
+  // SEO methods
+  getSeoData(): Promise<SeoData[]>;
+  getSeoDataByPage(page: string): Promise<SeoData | undefined>;
+  createSeoData(seoData: InsertSeoData): Promise<SeoData>;
+  updateSeoData(page: string, seoData: Partial<InsertSeoData>): Promise<SeoData | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -608,6 +617,35 @@ export class DatabaseStorage implements IStorage {
       .where(eq(careerApplications.id, id))
       .returning();
     return application;
+  }
+
+  // SEO methods
+  async getSeoData(): Promise<SeoData[]> {
+    return await db.select().from(seoData)
+      .orderBy(seoData.page);
+  }
+
+  async getSeoDataByPage(page: string): Promise<SeoData | undefined> {
+    const [data] = await db.select().from(seoData)
+      .where(eq(seoData.page, page));
+    return data || undefined;
+  }
+
+  async createSeoData(insertSeoData: InsertSeoData): Promise<SeoData> {
+    const [data] = await db
+      .insert(seoData)
+      .values(insertSeoData)
+      .returning();
+    return data;
+  }
+
+  async updateSeoData(page: string, updateSeoData: Partial<InsertSeoData>): Promise<SeoData | undefined> {
+    const [data] = await db
+      .update(seoData)
+      .set({ ...updateSeoData, lastUpdated: new Date() })
+      .where(eq(seoData.page, page))
+      .returning();
+    return data || undefined;
   }
 }
 

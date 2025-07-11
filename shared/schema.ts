@@ -102,6 +102,25 @@ export const careerApplications = pgTable("career_applications", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+export const seoData = pgTable("seo_data", {
+  id: serial("id").primaryKey(),
+  page: text("page").notNull().unique(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  keywords: text("keywords"),
+  ogTitle: text("og_title"),
+  ogDescription: text("og_description"),
+  ogImage: text("og_image"),
+  ogImageAlt: text("og_image_alt"),
+  twitterTitle: text("twitter_title"),
+  twitterDescription: text("twitter_description"),
+  twitterImage: text("twitter_image"),
+  canonicalUrl: text("canonical_url"),
+  metaRobots: text("meta_robots").default("index, follow"),
+  structuredData: text("structured_data"),
+  lastUpdated: timestamp("last_updated").defaultNow().notNull(),
+});
+
 export const insertContactSchema = createInsertSchema(contacts).omit({
   id: true,
   createdAt: true,
@@ -145,6 +164,11 @@ export const insertCareerApplicationSchema = createInsertSchema(careerApplicatio
   updatedAt: true,
 });
 
+export const insertSeoDataSchema = createInsertSchema(seoData).omit({
+  id: true,
+  lastUpdated: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertContact = z.infer<typeof insertContactSchema>;
@@ -163,6 +187,8 @@ export type InsertPersonalizedRecommendation = z.infer<typeof insertPersonalized
 export type PersonalizedRecommendation = typeof personalizedRecommendations.$inferSelect;
 export type InsertCareerApplication = z.infer<typeof insertCareerApplicationSchema>;
 export type CareerApplication = typeof careerApplications.$inferSelect;
+export type InsertSeoData = z.infer<typeof insertSeoDataSchema>;
+export type SeoData = typeof seoData.$inferSelect;
 
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,

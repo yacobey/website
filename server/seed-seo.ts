@@ -135,6 +135,21 @@ const seoPages = [
     twitterImage: "https://selamcpa.com/og-image-ai-affiliate.jpg",
     canonicalUrl: "https://selamcpa.com/ai-tools-affiliate",
     metaRobots: "index, follow"
+  },
+  {
+    page: "about",
+    title: "About Selam CPA | Licensed CPA with 20+ Years Experience",
+    description: "Learn about Yacob Tewelde, licensed CPA (Maryland & California) and ACCA Fellow with over 20 years of experience serving clients from startups to global organizations.",
+    keywords: "about selam cpa, yacob tewelde cpa, licensed cpa maryland california, acca fellow, 20 years experience, professional accounting services",
+    ogTitle: "About Selam CPA | Expert CPA Services",
+    ogDescription: "Founded by Yacob Tewelde, licensed CPA with 20+ years experience. Professional accounting services with clarity and confidence.",
+    ogImage: "https://selamcpa.com/og-image-about.jpg",
+    ogImageAlt: "Selam CPA About Us - Professional Accounting Services",
+    twitterTitle: "About Selam CPA | Expert CPA",
+    twitterDescription: "Licensed CPA with 20+ years experience serving clients nationwide.",
+    twitterImage: "https://selamcpa.com/og-image-about.jpg",
+    canonicalUrl: "https://selamcpa.com/about",
+    metaRobots: "index, follow"
   }
 ];
 

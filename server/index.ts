@@ -1,9 +1,24 @@
 import express, { type Request, Response, NextFunction } from "express";
 import helmet from "helmet";
+import compression from "compression";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+
+// Performance middleware - compression
+app.use(compression({
+  level: 6, // Good balance between compression and speed
+  threshold: 1024, // Only compress files larger than 1KB
+  filter: (req, res) => {
+    // Don't compress if request includes 'x-no-compression'
+    if (req.headers['x-no-compression']) {
+      return false;
+    }
+    // Use compression filter
+    return compression.filter(req, res);
+  }
+}));
 
 // Security middleware
 app.use(helmet({
@@ -21,8 +36,29 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false
 }));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// Performance optimizations for body parsing
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: false, limit: '10mb' }));
+
+// Performance headers
+app.use((req, res, next) => {
+  // Cache static assets
+  if (req.url.match(/\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year
+  } else if (req.url.match(/\.(html|htm)$/)) {
+    res.setHeader('Cache-Control', 'public, max-age=300'); // 5 minutes for HTML
+  } else if (req.url.startsWith('/api/')) {
+    // API responses - short cache for dynamic content
+    res.setHeader('Cache-Control', 'public, max-age=60'); // 1 minute
+  }
+  
+  // Performance headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  
+  next();
+});
 
 app.use((req, res, next) => {
   const start = Date.now();

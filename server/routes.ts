@@ -5,6 +5,7 @@ import { generateSitemap, generateRobotsTxt } from "./sitemap-generator";
 import { insertContactSchema, insertChatMessageSchema, insertSeoDataSchema } from "@shared/schema";
 import { generateAIResponse, analyzeUserIntent, updateUserPreferences } from "./ai-service";
 import { getSmartResponse } from "./smart-chat-service";
+import { addPerformanceRoutes } from "./routes-performance";
 import Stripe from "stripe";
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -446,6 +447,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to generate robots.txt" });
     }
   });
+
+  // Add performance monitoring routes
+  addPerformanceRoutes(app);
 
   const httpServer = createServer(app);
   return httpServer;

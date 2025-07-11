@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import DynamicSEO from "@/components/dynamic-seo";
@@ -6,6 +7,8 @@ import Footer from "@/components/footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, ArrowRight } from "lucide-react";
+import { BlogSkeleton } from "@/components/performance/suspense-fallback";
+import { LazyImage } from "@/components/ui/lazy-image";
 import type { BlogPost } from "@shared/schema";
 
 export default function Blog() {
@@ -37,26 +40,16 @@ export default function Blog() {
         <section className="py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {isLoading ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[...Array(6)].map((_, i) => (
-                  <Card key={i} className="overflow-hidden">
-                    <div className="h-48 bg-gray-200 animate-pulse" />
-                    <CardContent className="p-6">
-                      <div className="h-4 bg-gray-200 animate-pulse mb-4" />
-                      <div className="h-6 bg-gray-200 animate-pulse mb-3" />
-                      <div className="h-20 bg-gray-200 animate-pulse" />
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              <BlogSkeleton />
             ) : posts && posts.length > 0 ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {posts.map((post) => (
                   <Card key={post.id} className="overflow-hidden hover:shadow-md transition-shadow">
-                    <img
+                    <LazyImage
                       src={`https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300`}
                       alt={post.title}
                       className="w-full h-48 object-cover"
+                      placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5Y2EzYWYiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkxvYWRpbmcuLi48L3RleHQ+PC9zdmc+"
                     />
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 text-sm text-slate-gray mb-3">

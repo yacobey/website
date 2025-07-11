@@ -376,45 +376,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Middleware to set clean X-Robots-Tag header for all page requests
-  app.use(async (req, res, next) => {
-    // Skip API routes and static assets
-    if (req.path.startsWith('/api/') || req.path.includes('.') || req.path.startsWith('/assets')) {
-      return next();
-    }
-
-    try {
-      // Extract page name from URL
-      const pageName = req.path === '/' ? 'home' : req.path.slice(1).split('/')[0];
-      
-      // Try to get SEO data for this page
-      const seoData = await storage.getSeoDataByPage(pageName);
-      
-      if (seoData && seoData.metaRobots && seoData.metaRobots.trim()) {
-        // Clean and validate the metaRobots value
-        const cleanRobots = seoData.metaRobots
-          .split(',')
-          .map(directive => directive.trim())
-          .filter(directive => directive && !directive.includes('undefined'))
-          .filter((directive, index, arr) => arr.indexOf(directive) === index) // Remove duplicates
-          .join(', ');
-        
-        if (cleanRobots && cleanRobots !== 'none') {
-          res.set('X-Robots-Tag', cleanRobots);
-        } else {
-          res.set('X-Robots-Tag', 'index, follow');
-        }
-      } else {
-        // Set default robots tag for pages without specific SEO data
-        res.set('X-Robots-Tag', 'index, follow');
-      }
-    } catch (error) {
-      // If SEO data lookup fails, set default header
-      res.set('X-Robots-Tag', 'index, follow');
-    }
-    
-    next();
-  });
+  // Note: X-Robots-Tag header middleware removed per user request
+  // SEO robots directives are now handled only via HTML meta tags
 
   // Sitemap and robots.txt routes
   app.get("/sitemap.xml", async (req, res) => {

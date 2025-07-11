@@ -57,6 +57,9 @@ export default function SEODashboard() {
   const [selectedPage, setSelectedPage] = useState('home');
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState<Partial<SEOPageData>>({});
+  const [activeTab, setActiveTab] = useState('pages');
+  const [sitemapContent, setSitemapContent] = useState('');
+  const [robotsContent, setRobotsContent] = useState('');
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [, setLocation] = useLocation();
@@ -126,6 +129,21 @@ export default function SEODashboard() {
       setFormData(currentPageData);
     }
   }, [currentPageData, editMode]);
+
+  // Fetch sitemap and robots content
+  useEffect(() => {
+    if (activeTab === 'technical') {
+      fetch('/api/sitemap')
+        .then(res => res.json())
+        .then(data => setSitemapContent(data.content))
+        .catch(err => console.error('Error fetching sitemap:', err));
+      
+      fetch('/api/robots')
+        .then(res => res.json())
+        .then(data => setRobotsContent(data.content))
+        .catch(err => console.error('Error fetching robots.txt:', err));
+    }
+  }, [activeTab]);
 
   const handleLogout = () => {
     logout();
@@ -395,15 +413,22 @@ export default function SEODashboard() {
                   </CardContent>
                 </Card>
               ) : (
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-xl capitalize flex items-center gap-2">
-                        <FileText className="w-5 h-5" />
-                        {selectedPage.replace('-', ' ')} Page SEO
-                      </CardTitle>
-                      <div className="flex gap-2">
-                        {!editMode ? (
+                <Tabs value={activeTab} onValueChange={setActiveTab}>
+                  <TabsList className="mb-6">
+                    <TabsTrigger value="pages">Page SEO</TabsTrigger>
+                    <TabsTrigger value="technical">Technical SEO</TabsTrigger>
+                  </TabsList>
+
+                  <TabsContent value="pages">
+                    <Card>
+                      <CardHeader>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-xl capitalize flex items-center gap-2">
+                            <FileText className="w-5 h-5" />
+                            {selectedPage.replace('-', ' ')} Page SEO
+                          </CardTitle>
+                          <div className="flex gap-2">
+                            {!editMode ? (
                           <Button
                             onClick={() => setEditMode(true)}
                             variant="outline"
@@ -706,6 +731,202 @@ export default function SEODashboard() {
                     </Tabs>
                   </CardContent>
                 </Card>
+                  </TabsContent>
+
+                  <TabsContent value="technical">
+                    <div className="space-y-6">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center gap-2">
+                            <FileText className="w-5 h-5" />
+                            Sitemap.xml Management
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <p className="text-sm text-gray-600">
+                                  Auto-generated sitemap includes all pages and blog posts
+                                </p>
+                                <p className="text-xs text-blue-600 mt-1">
+                                  Accessible at: /sitemap.xml
+                                </p>
+                              </div>
+                              <div className="flex gap-2">
+                                <Button
+                                  onClick={() => window.open('/sitemap.xml', '_blank')}
+                                  variant="outline"
+                                  size="sm"
+                                >
+                                  <Eye className="w-4 h-4 mr-2" />
+                                  View Live
+                                </Button>
+                                <Button
+                                  onClick={async () => {
+                                    try {
+                                      const response = await fetch('/api/sitemap');
+                                      const data = await response.json();
+                                      setSitemapContent(data.content);
+                                      toast({
+                                        title: "Refreshed",
+                                        description: "Sitemap content updated",
+                                      });
+                                    } catch (error) {
+                                      toast({
+                                        title: "Error",
+                                        description: "Failed to refresh sitemap",
+                                        variant: "destructive",
+                                      });
+                                    }
+                                  }}
+                                  size="sm"
+                                >
+                                  🔄 Refresh
+                                </Button>
+                              </div>
+                            </div>
+                            
+                            <div>
+                              <Label>Current Sitemap Content (Preview)</Label>
+                              <Textarea
+                                value={sitemapContent}
+                                readOnly
+                                className="font-mono text-xs h-64 bg-gray-50"
+                                placeholder="Loading sitemap content..."
+                              />
+                              <p className="text-xs text-gray-500 mt-2">
+                                ℹ️ Sitemap is auto-generated from database content and cannot be manually edited.
+                                To add/remove pages, update your page routing and database.
+                              </p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center gap-2">
+                            <FileText className="w-5 h-5" />
+                            Robots.txt Management  
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <p className="text-sm text-gray-600">
+                                  Controls which pages search engines can crawl
+                                </p>
+                                <p className="text-xs text-blue-600 mt-1">
+                                  Accessible at: /robots.txt
+                                </p>
+                              </div>
+                              <div className="flex gap-2">
+                                <Button
+                                  onClick={() => window.open('/robots.txt', '_blank')}
+                                  variant="outline"
+                                  size="sm"
+                                >
+                                  <Eye className="w-4 h-4 mr-2" />
+                                  View Live
+                                </Button>
+                                <Button
+                                  onClick={async () => {
+                                    try {
+                                      const response = await fetch('/api/robots');
+                                      const data = await response.json();
+                                      setRobotsContent(data.content);
+                                      toast({
+                                        title: "Refreshed",
+                                        description: "Robots.txt content updated",
+                                      });
+                                    } catch (error) {
+                                      toast({
+                                        title: "Error", 
+                                        description: "Failed to refresh robots.txt",
+                                        variant: "destructive",
+                                      });
+                                    }
+                                  }}
+                                  size="sm"
+                                >
+                                  🔄 Refresh
+                                </Button>
+                              </div>
+                            </div>
+                            
+                            <div>
+                              <Label>Current Robots.txt Content (Preview)</Label>
+                              <Textarea
+                                value={robotsContent}
+                                readOnly
+                                className="font-mono text-xs h-48 bg-gray-50"
+                                placeholder="Loading robots.txt content..."
+                              />
+                              <p className="text-xs text-gray-500 mt-2">
+                                ℹ️ Robots.txt is auto-generated. It includes your sitemap URL and blocks admin areas.
+                                Individual page crawling is controlled via the "Meta Robots" settings in Page SEO.
+                              </p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center gap-2">
+                            <Globe className="w-5 h-5" />
+                            Technical SEO Status
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                              <div className="flex items-center gap-2 mb-2">
+                                <CheckCircle className="w-5 h-5 text-green-600" />
+                                <span className="font-medium text-green-900">Sitemap Active</span>
+                              </div>
+                              <p className="text-sm text-green-700">
+                                Auto-generated sitemap is available and includes all published content
+                              </p>
+                            </div>
+                            
+                            <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                              <div className="flex items-center gap-2 mb-2">
+                                <CheckCircle className="w-5 h-5 text-green-600" />
+                                <span className="font-medium text-green-900">Robots.txt Active</span>
+                              </div>
+                              <p className="text-sm text-green-700">
+                                Robots.txt is configured to guide search engine crawling
+                              </p>
+                            </div>
+                            
+                            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Globe className="w-5 h-5 text-blue-600" />
+                                <span className="font-medium text-blue-900">Dynamic Control</span>
+                              </div>
+                              <p className="text-sm text-blue-700">
+                                Page-level SEO settings automatically update technical configurations
+                              </p>
+                            </div>
+                            
+                            <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                              <div className="flex items-center gap-2 mb-2">
+                                <AlertCircle className="w-5 h-5 text-yellow-600" />
+                                <span className="font-medium text-yellow-900">Submit to Search Engines</span>
+                              </div>
+                              <p className="text-sm text-yellow-700">
+                                Remember to submit your sitemap to Google Search Console and Bing Webmaster Tools
+                              </p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </TabsContent>
+                </Tabs>
               )}
             </div>
           </div>

@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { generateSitemap, generateRobotsTxt } from "./sitemap-generator";
 import { insertContactSchema, insertChatMessageSchema, insertSeoDataSchema } from "@shared/schema";
 import { generateAIResponse, analyzeUserIntent, updateUserPreferences } from "./ai-service";
 import { getSmartResponse } from "./smart-chat-service";
@@ -400,6 +401,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     next();
+  });
+
+  // Sitemap and robots.txt routes
+  app.get("/sitemap.xml", async (req, res) => {
+    try {
+      const sitemap = await generateSitemap();
+      res.set('Content-Type', 'text/xml');
+      res.send(sitemap);
+    } catch (error) {
+      console.error("Error generating sitemap:", error);
+      res.status(500).send("Error generating sitemap");
+    }
+  });
+
+  app.get("/robots.txt", (req, res) => {
+    try {
+      const robots = generateRobotsTxt();
+      res.set('Content-Type', 'text/plain');
+      res.send(robots);
+    } catch (error) {
+      console.error("Error generating robots.txt:", error);
+      res.status(500).send("Error generating robots.txt");
+    }
+  });
+
+  // SEO management API for sitemap and robots.txt
+  app.get("/api/sitemap", async (req, res) => {
+    try {
+      const sitemap = await generateSitemap();
+      res.json({ content: sitemap });
+    } catch (error) {
+      console.error("Error generating sitemap:", error);
+      res.status(500).json({ message: "Failed to generate sitemap" });
+    }
+  });
+
+  app.get("/api/robots", (req, res) => {
+    try {
+      const robots = generateRobotsTxt();
+      res.json({ content: robots });
+    } catch (error) {
+      console.error("Error generating robots.txt:", error);
+      res.status(500).json({ message: "Failed to generate robots.txt" });
+    }
   });
 
   const httpServer = createServer(app);

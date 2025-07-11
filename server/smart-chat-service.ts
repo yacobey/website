@@ -149,7 +149,7 @@ function handleBookingRequest(state: ConversationState, userMessage: string): {
 To book your consultation:
 📞 **Call us directly**: (301) 640-8549
 💻 **Online booking**: Visit our payment portal at /payment and select "Consultation"
-📧 **Email**: Send details to info@probalancecpa.com
+📧 **Email**: Send details to info@selamcpa.com
 
 Our consultations are:
 • Completely FREE for 30 minutes
@@ -472,7 +472,7 @@ function handleServicesOverview(state: ConversationState, userMessage: string): 
   nextStage?: string;
 } {
   return {
-    response: `Welcome! ProBalance CPA offers comprehensive financial services:
+    response: `Welcome! Selam CPA offers comprehensive financial services:
 
 **Core Services:**
 🏢 **Tax Services** - Individual & business tax preparation, planning, and representation
@@ -518,7 +518,7 @@ function handleGeneralInquiry(state: ConversationState, userMessage: string): {
 
 **Quick options:**
 📞 Call us: (301) 640-8549
-📧 Email: info@probalancecpa.com
+📧 Email: info@selamcpa.com
 💻 Online payment: Visit /payment
 
 What would you like to know about?`,

@@ -16,7 +16,7 @@ const testimonials: Testimonial[] = [
     name: "Sarah Chen",
     title: "CEO",
     company: "TechStart Solutions",
-    content: "ProBalance CPA transformed our financial management. Their AI-powered tools and strategic advisory helped us secure $2M in funding. The team's expertise in tech startups is unmatched.",
+    content: "Selam CPA transformed our financial management. Their AI-powered tools and strategic advisory helped us secure $2M in funding. The team's expertise in tech startups is unmatched.",
     rating: 5,
   },
   {
@@ -24,7 +24,7 @@ const testimonials: Testimonial[] = [
     name: "Dr. Michael Rodriguez",
     title: "Practice Owner",
     company: "Rodriguez Family Medicine",
-    content: "As a healthcare practice, we needed specialized accounting expertise. ProBalance CPA's industry knowledge and proactive tax planning saved us over $50K last year.",
+    content: "As a healthcare practice, we needed specialized accounting expertise. Selam CPA's industry knowledge and proactive tax planning saved us over $50K last year.",
     rating: 5,
   },
   {
@@ -32,7 +32,7 @@ const testimonials: Testimonial[] = [
     name: "Jennifer Walsh",
     title: "Founder",
     company: "Walsh Consulting Group",
-    content: "The audit-ready financial statements and CFO-level insights from ProBalance CPA gave us the confidence to expand into three new markets. Their advisory services are exceptional.",
+    content: "The audit-ready financial statements and CFO-level insights from Selam CPA gave us the confidence to expand into three new markets. Their advisory services are exceptional.",
     rating: 5,
   },
   {
@@ -40,7 +40,7 @@ const testimonials: Testimonial[] = [
     name: "Robert Kim",
     title: "Director",
     company: "Kim & Associates",
-    content: "ProBalance CPA's loan assistance program was instrumental in securing our SBA loan. They handled all documentation and projections professionally, making the process seamless.",
+    content: "Selam CPA's loan assistance program was instrumental in securing our SBA loan. They handled all documentation and projections professionally, making the process seamless.",
     rating: 5,
   },
 ];
@@ -94,7 +94,7 @@ export default function TestimonialsSlider() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Hear from Clients Who Trust ProBalance CPA
+            Hear from Clients Who Trust Selam CPA
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Discover how we've helped businesses achieve financial clarity and growth

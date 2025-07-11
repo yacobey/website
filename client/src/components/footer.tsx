@@ -65,7 +65,7 @@ export default function Footer() {
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
-                info@probalancecpa.com
+                info@selamcpa.com
               </p>
               <p className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
@@ -100,7 +100,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-600 pt-8 text-center text-gray-400">
-          <p>&copy; {currentYear} ProBalance CPA. All rights reserved. | 
+          <p>&copy; {currentYear} Selam CPA. All rights reserved. | 
             <a href="#" className="hover:text-white transition-colors ml-1">Privacy Policy</a> | 
             <a href="#" className="hover:text-white transition-colors ml-1">Terms of Service</a>
           </p>

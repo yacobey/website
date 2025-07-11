@@ -7,7 +7,7 @@ export default function Testimonials() {
       name: "Michael Chen",
       title: "Owner, Chen's Kitchen",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100",
-      testimonial: "ProBalance CPA has been instrumental in our business growth. Their tax planning saved us thousands, and the AI calculator tools help us make better financial decisions daily."
+      testimonial: "Selam CPA has been instrumental in our business growth. Their tax planning saved us thousands, and the AI calculator tools help us make better financial decisions daily."
     },
     {
       name: "Sarah Martinez",

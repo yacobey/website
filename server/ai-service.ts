@@ -41,7 +41,7 @@ export async function generateAIResponse(sessionId: string, userMessage: string)
   });
 
   try {
-    const systemPrompt = `You are a professional AI assistant for ProBalance CPA, a comprehensive accounting firm. You help potential clients understand our services and guide them toward scheduling consultations.
+    const systemPrompt = `You are a professional AI assistant for Selam CPA, a comprehensive accounting firm. You help potential clients understand our services and guide them toward scheduling consultations.
 
 ABOUT PROBALANCE CPA:
 - Full-service CPA firm serving individuals, small businesses, and enterprises

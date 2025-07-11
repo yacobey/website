@@ -411,12 +411,12 @@ function generateChatResponse(message: string): string {
   
   // Greeting responses
   if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
-    return "Hello! Welcome to ProBalance CPA. I'm here to help with your accounting and tax questions. What can I assist you with today?";
+    return "Hello! Welcome to Selam CPA. I'm here to help with your accounting and tax questions. What can I assist you with today?";
   }
   
   // Services overview
   if (lowerMessage.includes('service') || lowerMessage.includes('what do you do') || lowerMessage.includes('what services')) {
-    return "ProBalance CPA offers comprehensive financial services:\n\n• Tax Preparation & Planning (Individual & Business)\n• Bookkeeping & Financial Statements\n• Business Advisory & Consulting\n• Audit & Assurance Services\n• Payroll Processing\n• Business Formation & Structure\n• Financial Planning & Analysis\n• AI-Powered Financial Tools\n\nWhich service interests you most?";
+    return "Selam CPA offers comprehensive financial services:\n\n• Tax Preparation & Planning (Individual & Business)\n• Bookkeeping & Financial Statements\n• Business Advisory & Consulting\n• Audit & Assurance Services\n• Payroll Processing\n• Business Formation & Structure\n• Financial Planning & Analysis\n• AI-Powered Financial Tools\n\nWhich service interests you most?";
   }
   
   // Tax-related questions

@@ -34,7 +34,7 @@ export default function PaymentSuccess() {
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Payment Successful!</h1>
             <p className="text-lg text-gray-600">
-              Thank you for choosing ProBalance CPA
+              Thank you for choosing Selam CPA
             </p>
           </div>
 
@@ -125,7 +125,7 @@ export default function PaymentSuccess() {
             </p>
             <div className="space-y-2 text-sm">
               <p><strong>Phone:</strong> (301) 640-8549</p>
-              <p><strong>Email:</strong> info@probalancecpa.com</p>
+              <p><strong>Email:</strong> info@selamcpa.com</p>
               <p><strong>Hours:</strong> Monday - Friday, 9 AM - 6 PM EST</p>
             </div>
           </div>

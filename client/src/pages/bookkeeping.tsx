@@ -153,7 +153,7 @@ export default function Bookkeeping() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Why Choose ProBalance CPA for Bookkeeping?
+                Why Choose Selam CPA for Bookkeeping?
               </h2>
             </div>
 

@@ -155,7 +155,7 @@ export default function ACCAServices() {
             </h3>
             <p className="text-gray-600 mb-6 max-w-2xl">
               Whether you're expanding globally, need IFRS compliance, or require complex international tax planning, 
-              ProBalance CPA ensures you receive world-class professional guidance.
+              Selam CPA ensures you receive world-class professional guidance.
             </p>
             <div className="space-y-3">
               <Link href="/payment">

@@ -92,7 +92,7 @@ export default function Careers() {
                 Application Submitted!
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300">
-                Thank you for your interest in joining ProBalance CPA. We've received your application 
+                Thank you for your interest in joining Selam CPA. We've received your application 
                 and will review it carefully. Our team will get back to you within 5-7 business days.
               </p>
             </div>
@@ -130,7 +130,7 @@ export default function Careers() {
             Join Our Expert Team
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            ProBalance CPA is looking for talented accounting professionals who share our commitment 
+            Selam CPA is looking for talented accounting professionals who share our commitment 
             to excellence and innovation. Join our team and help shape the future of accounting services.
           </p>
         </div>
@@ -180,7 +180,7 @@ export default function Careers() {
             <CardHeader>
               <CardTitle className="text-2xl">Submit Your Application</CardTitle>
               <CardDescription>
-                Fill out the form below to apply for a position at ProBalance CPA. All fields marked with * are required.
+                Fill out the form below to apply for a position at Selam CPA. All fields marked with * are required.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -312,7 +312,7 @@ export default function Careers() {
                           />
                         </FormControl>
                         <FormDescription>
-                          Please include your relevant experience, career goals, and why you want to join ProBalance CPA.
+                          Please include your relevant experience, career goals, and why you want to join Selam CPA.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -354,7 +354,7 @@ export default function Careers() {
                   <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                     <h4 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">Resume Submission</h4>
                     <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                      Please email your resume to <strong>careers@probalancecpa.com</strong> with the subject line 
+                      Please email your resume to <strong>careers@selamcpa.com</strong> with the subject line 
                       "Application - [Position Name] - [Your Name]". Make sure to submit this form first to ensure 
                       we can match your resume with your application.
                     </p>
@@ -378,7 +378,7 @@ export default function Careers() {
           <p className="text-gray-600 dark:text-gray-300">
             Questions about career opportunities? 
             <br />
-            Email us at <strong>careers@probalancecpa.com</strong> or call <strong>(301) 640-8549</strong>
+            Email us at <strong>careers@selamcpa.com</strong> or call <strong>(301) 640-8549</strong>
           </p>
         </div>
       </div>

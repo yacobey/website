@@ -35,9 +35,9 @@ New depreciation schedules affect various asset classes, particularly technology
 
 **Don't wait until the last minute.** Early preparation ensures you capture every available deduction and avoid costly mistakes.
 
-**Ready to maximize your tax savings?** Contact ProBalance CPA today for a comprehensive tax review and planning session. Our expert team will identify overlooked deductions and create a strategic plan for your business.`,
+**Ready to maximize your tax savings?** Contact Selam CPA today for a comprehensive tax review and planning session. Our expert team will identify overlooked deductions and create a strategic plan for your business.`,
       category: "Tax Planning",
-      author: "ProBalance CPA Team",
+      author: "Selam CPA Team",
       status: "published"
     },
     {
@@ -99,9 +99,9 @@ Self-employed individuals can deduct 100% of health insurance premiums for thems
 - Create a strategic tax plan
 - Provide ongoing support throughout the year
 
-Don't let another tax season pass without maximizing your savings. Contact ProBalance CPA now for a comprehensive business tax review.`,
+Don't let another tax season pass without maximizing your savings. Contact Selam CPA now for a comprehensive business tax review.`,
       category: "Tax Planning",
-      author: "ProBalance CPA Team",
+      author: "Selam CPA Team",
       status: "published"
     },
     {
@@ -180,11 +180,11 @@ Clean, professionally prepared financial statements signal serious business mana
 - Gather supporting documentation
 - Practice your presentation
 
-**Ready to secure financing for your business?** ProBalance CPA specializes in preparing loan-ready financial statements that get approved. Our clients achieve 85% higher approval rates with our comprehensive preparation process.
+**Ready to secure financing for your business?** Selam CPA specializes in preparing loan-ready financial statements that get approved. Our clients achieve 85% higher approval rates with our comprehensive preparation process.
 
 Contact us today to review your financial statements and create a winning loan application strategy.`,
       category: "Financial Planning",
-      author: "ProBalance CPA Team",
+      author: "Selam CPA Team",
       status: "published"
     },
     {
@@ -281,7 +281,7 @@ Different industries require specific protections:
 ### Competitive Advantage
 Clients increasingly choose service providers based on security capabilities. Strong security becomes a differentiator.
 
-## ProBalance CPA Security Solutions
+## Selam CPA Security Solutions
 
 We provide enterprise-grade security including:
 - Bank-level encrypted client portal
@@ -290,11 +290,11 @@ We provide enterprise-grade security including:
 - Compliance support
 - Staff and client training
 
-**Don't wait for a security incident to take action.** Contact ProBalance CPA today to implement bulletproof security for your financial data. Our comprehensive security assessment identifies vulnerabilities and creates a customized protection plan for your business.
+**Don't wait for a security incident to take action.** Contact Selam CPA today to implement bulletproof security for your financial data. Our comprehensive security assessment identifies vulnerabilities and creates a customized protection plan for your business.
 
 Protect your business, protect your clients, protect your future.`,
       category: "Security",
-      author: "ProBalance CPA Team",
+      author: "Selam CPA Team",
       status: "published"
     },
     {
@@ -429,16 +429,16 @@ Modern businesses use:
 - Scenario planning software
 - Integrated accounting systems
 
-**Ready to master your break-even analysis?** ProBalance CPA provides comprehensive financial analysis services including:
+**Ready to master your break-even analysis?** Selam CPA provides comprehensive financial analysis services including:
 - Break-even calculations and modeling
 - Pricing strategy development
 - Cost optimization planning
 - Performance monitoring systems
 - Strategic planning support
 
-Don't guess about your business performance—know your numbers. Contact ProBalance CPA today for a complete break-even analysis and strategic planning session that will transform how you make business decisions.`,
+Don't guess about your business performance—know your numbers. Contact Selam CPA today for a complete break-even analysis and strategic planning session that will transform how you make business decisions.`,
       category: "Financial Planning",
-      author: "ProBalance CPA Team",
+      author: "Selam CPA Team",
       status: "published"
     },
     {
@@ -478,7 +478,7 @@ Healthcare practices must handle:
 - Research and development credits
 - Retirement plan contributions
 
-**Healthcare accounting requires specialized expertise.** Contact ProBalance CPA for industry-specific financial management that optimizes reimbursements and ensures compliance.
+**Healthcare accounting requires specialized expertise.** Contact Selam CPA for industry-specific financial management that optimizes reimbursements and ensures compliance.
 
 ## Real Estate Industry Accounting
 
@@ -598,7 +598,7 @@ All industries benefit from:
 - Performance monitoring setup
 - Strategic planning integration
 
-**Industry expertise makes the difference between surviving and thriving.** ProBalance CPA specializes in healthcare, real estate, and technology accounting with deep industry knowledge and proven strategies.
+**Industry expertise makes the difference between surviving and thriving.** Selam CPA specializes in healthcare, real estate, and technology accounting with deep industry knowledge and proven strategies.
 
 Our industry-specific services include:
 - Specialized tax planning and compliance
@@ -607,9 +607,9 @@ Our industry-specific services include:
 - Performance benchmarking
 - Strategic growth planning
 
-Ready to optimize your industry-specific accounting? Contact ProBalance CPA today for a comprehensive industry analysis and strategic planning session tailored to your business sector.`,
+Ready to optimize your industry-specific accounting? Contact Selam CPA today for a comprehensive industry analysis and strategic planning session tailored to your business sector.`,
       category: "Industry Insights",
-      author: "ProBalance CPA Team",
+      author: "Selam CPA Team",
       status: "published"
     }
   ];

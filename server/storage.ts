@@ -134,7 +134,7 @@ export class MemStorage implements IStorage {
         excerpt: "Understanding the latest tax law changes can save your business thousands. Here's what you need to prepare for this tax season...",
         content: "Tax season is upon us, and 2024 brings several important changes that small business owners need to understand...",
         category: "Tax Planning",
-        author: "ProBalance CPA Team"
+        author: "Selam CPA Team"
       },
       {
         title: "Cash Flow Management: 5 Strategies for Small Business Success",
@@ -142,7 +142,7 @@ export class MemStorage implements IStorage {
         excerpt: "Master your cash flow with these proven strategies that have helped hundreds of small businesses thrive in any economic climate...",
         content: "Cash flow is the lifeblood of any business. Here are five proven strategies to master your cash flow management...",
         category: "Financial Planning",
-        author: "ProBalance CPA Team"
+        author: "Selam CPA Team"
       },
       {
         title: "Digital Transformation: How AI is Revolutionizing Accounting",
@@ -150,7 +150,7 @@ export class MemStorage implements IStorage {
         excerpt: "Discover how artificial intelligence and automation are changing the accounting landscape and what it means for your business...",
         content: "The accounting industry is experiencing a digital transformation like never before. AI and automation are changing how we work...",
         category: "Technology",
-        author: "ProBalance CPA Team"
+        author: "Selam CPA Team"
       }
     ];
 

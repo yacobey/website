@@ -97,7 +97,7 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">Email</p>
-                  <p className="text-gray-600">info@lenoxcpa.com</p>
+                  <p className="text-gray-600">info@selamcpa.com</p>
                 </div>
               </div>
               

@@ -72,8 +72,8 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Helmet>
-        <title>Admin Login | Lenox CPA</title>
-        <meta name="description" content="Admin login for Lenox CPA dashboard access." />
+        <title>Admin Login | Selam CPA</title>
+        <meta name="description" content="Admin login for Selam CPA dashboard access." />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       

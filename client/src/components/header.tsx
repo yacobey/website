@@ -38,7 +38,7 @@ export default function Header() {
             <div className="flex-shrink-0">
               <Link href="/">
                 <h1 className="text-xl font-semibold text-gray-900 cursor-pointer">
-                  Lenox CPA
+                  Selam CPA
                 </h1>
               </Link>
             </div>

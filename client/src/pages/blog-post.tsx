@@ -57,18 +57,18 @@ export default function BlogPost() {
         ) : post ? (
           <>
             <Helmet>
-              <title>{post.title} | Lenox CPA Financial Insights</title>
+              <title>{post.title} | Selam CPA Financial Insights</title>
               <meta name="description" content={post.excerpt} />
               <meta name="keywords" content={`${post.category.toLowerCase()}, CPA advice, financial planning, tax tips, accounting insights`} />
-              <meta property="og:title" content={`${post.title} | Lenox CPA`} />
+              <meta property="og:title" content={`${post.title} | Selam CPA`} />
               <meta property="og:description" content={post.excerpt} />
               <meta property="og:type" content="article" />
-              <meta property="og:url" content={`https://lenoxcpa.com/blog/${post.slug}`} />
+              <meta property="og:url" content={`https://selamcpa.com/blog/${post.slug}`} />
               <meta property="article:author" content={post.author} />
               <meta property="article:section" content={post.category} />
               <meta property="article:published_time" content={post.createdAt} />
               <meta name="twitter:card" content="summary_large_image" />
-              <meta name="twitter:title" content={`${post.title} | Lenox CPA`} />
+              <meta name="twitter:title" content={`${post.title} | Selam CPA`} />
               <meta name="twitter:description" content={post.excerpt} />
             </Helmet>
             <article className="py-20">

@@ -182,7 +182,7 @@ export default function SEODashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Helmet>
-        <title>SEO Management Dashboard | Lenox CPA</title>
+        <title>SEO Management Dashboard | Selam CPA</title>
         <meta name="description" content="Manage SEO metadata, Open Graph tags, and Twitter cards for all website pages." />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
@@ -508,7 +508,7 @@ export default function SEODashboard() {
                               id="canonical"
                               value={formData.canonicalUrl || ''}
                               onChange={(e) => handleInputChange('canonicalUrl', e.target.value)}
-                              placeholder="https://lenoxcpa.com/page-url"
+                              placeholder="https://selamcpa.com/page-url"
                             />
                           ) : (
                             <div className="p-3 bg-gray-50 rounded-lg">
@@ -560,7 +560,7 @@ export default function SEODashboard() {
                               id="ogImage"
                               value={formData.ogImage || ''}
                               onChange={(e) => handleInputChange('ogImage', e.target.value)}
-                              placeholder="https://lenoxcpa.com/og-image.jpg"
+                              placeholder="https://selamcpa.com/og-image.jpg"
                             />
                           ) : (
                             <div className="p-3 bg-gray-50 rounded-lg">
@@ -628,7 +628,7 @@ export default function SEODashboard() {
                               id="twitterImage"
                               value={formData.twitterImage || ''}
                               onChange={(e) => handleInputChange('twitterImage', e.target.value)}
-                              placeholder="https://lenoxcpa.com/twitter-image.jpg"
+                              placeholder="https://selamcpa.com/twitter-image.jpg"
                             />
                           ) : (
                             <div className="p-3 bg-gray-50 rounded-lg">

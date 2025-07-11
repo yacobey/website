@@ -1,8 +1,8 @@
-# Lenox CPA - Full-Stack Web Application
+# Selam CPA - Full-Stack Web Application
 
 ## Overview
 
-Lenox CPA is a comprehensive full-stack web application designed for a CPA firm serving individuals, businesses across all industries, and specialized sectors. The application combines traditional accounting services with innovative AI-powered financial tools, secure file sharing solutions, and strategic technology partnerships for complete client engagement and lead generation capabilities.
+Selam CPA is a comprehensive full-stack web application designed for a CPA firm serving individuals, businesses across all industries, and specialized sectors. The application combines traditional accounting services with innovative AI-powered financial tools, secure file sharing solutions, and strategic technology partnerships for complete client engagement and lead generation capabilities.
 
 ## System Architecture
 
@@ -158,6 +158,7 @@ Changelog:
 - June 21, 2025. Integrated Calendly scheduling for all "Schedule Free Consultation" buttons across the site
 - June 21, 2025. Updated footer branding from "ProBalance CPA & ACCA" to "ProBalance CPA" for simplified messaging
 - January 18, 2025. Changed business name from ProBalance CPA to Lenox CPA throughout website and all branding
+- January 11, 2025. Updated business name from Lenox CPA to Selam CPA throughout website and all branding
 - June 21, 2025. Transformed website design to match taxchecklist.com aesthetic with cleaner, more minimal styling
 - June 21, 2025. Updated color scheme to use softer, more professional grays and refined typography
 - June 21, 2025. Simplified hero section with reduced padding, smaller buttons, and cleaner trust indicators

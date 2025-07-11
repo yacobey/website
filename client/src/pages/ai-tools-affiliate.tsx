@@ -103,15 +103,15 @@ export default function AIResources() {
   return (
     <div className="min-h-screen bg-white">
       <Helmet>
-        <title>AI Tools for CPAs - Professional Software Recommendations | Lenox CPA</title>
+        <title>AI Tools for CPAs - Professional Software Recommendations | Selam CPA</title>
         <meta name="description" content="CPA-approved AI tools and software recommendations for accounting firms. Automate workflows, improve accuracy, and save time with professionally-vetted solutions." />
         <meta name="keywords" content="AI tools for CPAs, accounting software, CPA software recommendations, AI accounting tools, automation tools, bookkeeping software" />
-        <meta property="og:title" content="AI Tools for CPAs - Professional Software Recommendations | Lenox CPA" />
+        <meta property="og:title" content="AI Tools for CPAs - Professional Software Recommendations | Selam CPA" />
         <meta property="og:description" content="Professionally-vetted AI tools and software to automate workflows, improve accuracy, and save time for accounting firms." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://lenoxcpa.com/ai-tools-affiliate" />
+        <meta property="og:url" content="https://selamcpa.com/ai-tools-affiliate" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="AI Tools for CPAs | Lenox CPA" />
+        <meta name="twitter:title" content="AI Tools for CPAs | Selam CPA" />
         <meta name="twitter:description" content="CPA-approved AI tools and software recommendations for accounting firms and businesses." />
       </Helmet>
       <Header />

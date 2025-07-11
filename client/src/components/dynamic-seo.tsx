@@ -29,7 +29,7 @@ export default function DynamicSEO({ page, customTitle, customDescription }: Dyn
       <meta property="og:description" content={seoData.ogDescription} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={seoData.canonicalUrl} />
-      <meta property="og:site_name" content="Lenox CPA" />
+      <meta property="og:site_name" content="Selam CPA" />
       <meta property="og:image" content={seoData.ogImage} />
       <meta property="og:image:alt" content={seoData.ogImageAlt} />
       

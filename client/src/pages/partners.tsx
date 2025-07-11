@@ -141,15 +141,15 @@ export default function Partners() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Helmet>
-        <title>Technology Partners & Business Solutions | Lenox CPA</title>
+        <title>Technology Partners & Business Solutions | Selam CPA</title>
         <meta name="description" content="Curated partnerships with leading financial, AI, and SaaS solutions. Streamline operations, enhance security, and grow your business with the best tools." />
         <meta name="keywords" content="business partnerships, technology solutions, financial software, SaaS solutions, business tools, CPA technology partners" />
-        <meta property="og:title" content="Technology Partners & Business Solutions | Lenox CPA" />
+        <meta property="og:title" content="Technology Partners & Business Solutions | Selam CPA" />
         <meta property="og:description" content="Curated partnerships with leading financial, AI, and SaaS solutions to help streamline operations and grow your business." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://lenoxcpa.com/partners" />
+        <meta property="og:url" content="https://selamcpa.com/partners" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Technology Partners & Solutions | Lenox CPA" />
+        <meta name="twitter:title" content="Technology Partners & Solutions | Selam CPA" />
         <meta name="twitter:description" content="Leading financial, AI, and SaaS solutions to help streamline operations and grow your business." />
       </Helmet>
       {/* Header */}

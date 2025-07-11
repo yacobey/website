@@ -70,13 +70,13 @@ export default function Tax() {
   return (
     <div className="min-h-screen bg-white">
       <Helmet>
-        <title>Tax Preparation & Strategic Tax Planning | Lenox CPA</title>
+        <title>Tax Preparation & Strategic Tax Planning | Selam CPA</title>
         <meta name="description" content="Professional tax preparation and strategic tax planning for individuals and businesses. Minimize tax liability with proactive strategies and expert preparation." />
         <meta name="keywords" content="tax preparation, tax planning, individual taxes, corporate taxes, IRS representation, estimated taxes, tax optimization" />
-        <meta property="og:title" content="Tax Preparation & Strategic Tax Planning | Lenox CPA" />
+        <meta property="og:title" content="Tax Preparation & Strategic Tax Planning | Selam CPA" />
         <meta property="og:description" content="Expert tax preparation and proactive tax planning strategies to optimize your bottom line and minimize liability." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://lenoxcpa.com/tax" />
+        <meta property="og:url" content="https://selamcpa.com/tax" />
       </Helmet>
       <Header />
       

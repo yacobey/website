@@ -22,9 +22,7 @@ export default function DynamicSEO({ page, customTitle, customDescription }: Dyn
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={seoData.keywords} />
-      {seoData.metaRobots && seoData.metaRobots.trim() && (
-        <meta name="robots" content={seoData.metaRobots} />
-      )}
+      <meta name="robots" content={seoData.metaRobots || 'index, follow'} />
       
       {/* Open Graph tags */}
       <meta property="og:title" content={seoData.ogTitle} />

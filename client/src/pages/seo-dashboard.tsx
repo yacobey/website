@@ -530,17 +530,17 @@ export default function SEODashboard() {
                                   <SelectValue placeholder="Select robots directive" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="">Default (index, follow)</SelectItem>
-                                  <SelectItem value="noindex, nofollow">No Index, No Follow</SelectItem>
-                                  <SelectItem value="index, nofollow">Index, No Follow</SelectItem>
-                                  <SelectItem value="noindex, follow">No Index, Follow</SelectItem>
-                                  <SelectItem value="index, follow">Index, Follow</SelectItem>
+                                  <SelectItem value="index, follow">✅ Index, Follow (Visible in Google)</SelectItem>
+                                  <SelectItem value="noindex, nofollow">❌ No Index, No Follow (Hidden from Google)</SelectItem>
+                                  <SelectItem value="index, nofollow">⚠️ Index, No Follow (Visible but no link following)</SelectItem>
+                                  <SelectItem value="noindex, follow">⚠️ No Index, Follow (Hidden but follow links)</SelectItem>
                                 </SelectContent>
                               </Select>
                               <div className="p-3 bg-blue-50 rounded-lg text-sm">
                                 <p className="font-medium text-blue-900 mb-1">Auto-sets both:</p>
                                 <p className="text-blue-700">• Meta robots tag in HTML</p>
                                 <p className="text-blue-700">• X-Robots-Tag HTTP header</p>
+                                <p className="text-orange-700 mt-2 font-medium">⚠️ Choose "Index, Follow" to make pages visible in Google</p>
                               </div>
                             </div>
                           ) : (

@@ -23,6 +23,7 @@ import DashboardPage from "@/pages/dashboard";
 import Careers from "@/pages/careers";
 import SEODashboard from "@/pages/seo-dashboard";
 import AdminLogin from "@/pages/admin-login";
+import IndexingControl from "@/pages/indexing-control";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -49,6 +50,7 @@ function Router() {
       <Route path="/careers" component={Careers} />
       <Route path="/admin-login" component={AdminLogin} />
       <Route path="/seo-dashboard" component={SEODashboard} />
+      <Route path="/indexing-control" component={IndexingControl} />
       <Route component={NotFound} />
     </Switch>
   );

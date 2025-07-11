@@ -217,6 +217,109 @@ export default function SEODashboard() {
             </Button>
           </div>
 
+          {/* Google Indexing Quick Actions */}
+          <Card className="mb-8 border-blue-200 bg-blue-50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Globe className="h-5 w-5 text-blue-600" />
+                Google Indexing Control
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {seoData && (
+                    <>
+                      <div className="text-center p-4 bg-white rounded-lg border">
+                        <div className="text-2xl font-bold text-green-600">
+                          {seoData.filter((page: any) => !page.metaRobots?.includes('noindex')).length}
+                        </div>
+                        <div className="text-sm text-gray-600">Pages Visible in Google</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg border">
+                        <div className="text-2xl font-bold text-red-600">
+                          {seoData.filter((page: any) => page.metaRobots?.includes('noindex')).length}
+                        </div>
+                        <div className="text-sm text-gray-600">Pages Hidden from Google</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg border">
+                        <div className="text-2xl font-bold text-gray-600">
+                          {seoData.length}
+                        </div>
+                        <div className="text-sm text-gray-600">Total Pages</div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                
+                <div className="flex gap-4 justify-center">
+                  <Button
+                    onClick={async () => {
+                      try {
+                        for (const page of seoData || []) {
+                          await fetch(`/api/seo-data/${page.page}`, {
+                            method: "PUT",
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ metaRobots: 'index, follow' }),
+                          });
+                        }
+                        queryClient.invalidateQueries({ queryKey: ['/api/seo-data'] });
+                        toast({
+                          title: "Success",
+                          description: "All pages are now visible in Google!",
+                        });
+                      } catch (error) {
+                        toast({
+                          title: "Error",
+                          description: "Failed to update pages",
+                          variant: "destructive",
+                        });
+                      }
+                    }}
+                    className="bg-green-600 hover:bg-green-700"
+                  >
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    ✅ Make All Pages Visible in Google
+                  </Button>
+                  
+                  <Button
+                    onClick={async () => {
+                      try {
+                        for (const page of seoData || []) {
+                          await fetch(`/api/seo-data/${page.page}`, {
+                            method: "PUT",
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ metaRobots: 'noindex, nofollow' }),
+                          });
+                        }
+                        queryClient.invalidateQueries({ queryKey: ['/api/seo-data'] });
+                        toast({
+                          title: "Success",
+                          description: "All pages are now hidden from Google",
+                        });
+                      } catch (error) {
+                        toast({
+                          title: "Error",
+                          description: "Failed to update pages",
+                          variant: "destructive",
+                        });
+                      }
+                    }}
+                    variant="destructive"
+                  >
+                    <Globe className="h-4 w-4 mr-2" />
+                    ❌ Hide All Pages from Google
+                  </Button>
+                </div>
+                
+                <div className="text-sm text-blue-700 bg-blue-100 p-3 rounded-lg">
+                  <strong>💡 Quick Fix:</strong> Click "✅ Make All Pages Visible in Google" to ensure Google can find and index your website. 
+                  Changes take effect immediately, but Google may take days to update their search index.
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           <div className="grid lg:grid-cols-4 gap-6">
             {/* Page Selection Sidebar */}
             <div className="lg:col-span-1">
@@ -230,6 +333,9 @@ export default function SEODashboard() {
                 <CardContent className="space-y-2">
                   {defaultPages.map((page) => {
                     const status = getPageStatus(page);
+                    const pageData = seoData?.find(p => p.page === page);
+                    const isVisible = !pageData?.metaRobots?.includes('noindex');
+                    
                     return (
                       <button
                         key={page}
@@ -237,18 +343,33 @@ export default function SEODashboard() {
                           setSelectedPage(page);
                           setEditMode(false);
                         }}
-                        className={`w-full p-3 rounded-lg text-left transition-colors flex items-center justify-between ${
+                        className={`w-full p-3 rounded-lg text-left transition-colors ${
                           selectedPage === page
                             ? 'bg-blue-100 text-blue-900 border border-blue-200'
                             : 'hover:bg-gray-100'
                         }`}
                       >
-                        <span className="font-medium capitalize">
-                          {page.replace('-', ' ')}
-                        </span>
-                        <Badge variant={status.color as any} className="text-xs">
-                          {status.status}
-                        </Badge>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-medium capitalize">
+                            {page.replace('-', ' ')}
+                          </span>
+                          <Badge variant={status.color as any} className="text-xs">
+                            {status.status}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-1 text-xs">
+                          {isVisible ? (
+                            <span className="flex items-center gap-1 text-green-600">
+                              <CheckCircle className="h-3 w-3" />
+                              Visible in Google
+                            </span>
+                          ) : (
+                            <span className="flex items-center gap-1 text-red-600">
+                              <AlertCircle className="h-3 w-3" />
+                              Hidden from Google
+                            </span>
+                          )}
+                        </div>
                       </button>
                     );
                   })}

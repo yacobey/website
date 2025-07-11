@@ -48,6 +48,7 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-gray-300">
+              <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
               <li><a href="/ai-tools" className="hover:text-white transition-colors">AI Calculator Builder</a></li>
               <li><a href="/ai-tools" className="hover:text-white transition-colors">Tax Calculators</a></li>
               <li><a href="/ai-tools" className="hover:text-white transition-colors">Financial Tools</a></li>

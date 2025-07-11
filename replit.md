@@ -161,6 +161,7 @@ Changelog:
 - January 11, 2025. Updated business name from Lenox CPA to Selam CPA throughout website and all branding
 - January 11, 2025. Changed email address from info@probalancecpa.com to info@selamcpa.com across all pages and components
 - January 11, 2025. Updated all team references from "ProBalance CPA Team" to "Selam CPA Team" in testimonials and content
+- January 11, 2025. Created About Us page featuring founder Yacob Tewelde (licensed CPA with 20+ years experience, ACCA Fellow) and added to footer navigation
 - June 21, 2025. Transformed website design to match taxchecklist.com aesthetic with cleaner, more minimal styling
 - June 21, 2025. Updated color scheme to use softer, more professional grays and refined typography
 - June 21, 2025. Simplified hero section with reduced padding, smaller buttons, and cleaner trust indicators

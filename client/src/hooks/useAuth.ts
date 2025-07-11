@@ -21,7 +21,10 @@ export function useAuth() {
     const token = localStorage.getItem('admin_token');
     const expires = localStorage.getItem('admin_expires');
     
+    console.log('Checking auth status:', { token: !!token, expires });
+    
     if (!token || !expires) {
+      console.log('No token or expires found');
       setAuthState({
         isAuthenticated: false,
         isLoading: false,
@@ -47,6 +50,7 @@ export function useAuth() {
     }
 
     // Token is valid
+    console.log('Token is valid, setting authenticated state');
     setAuthState({
       isAuthenticated: true,
       isLoading: false,

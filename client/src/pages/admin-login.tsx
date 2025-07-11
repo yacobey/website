@@ -38,13 +38,18 @@ export default function AdminLogin() {
         localStorage.setItem('admin_token', data.token);
         localStorage.setItem('admin_expires', data.expires);
         
+        console.log('Login successful, token stored:', data.token);
+        
         toast({
           title: "Login Successful",
           description: "Welcome to the admin dashboard.",
         });
         
-        // Redirect to SEO dashboard
-        setLocation('/seo-dashboard');
+        // Add a small delay to ensure storage is complete
+        setTimeout(() => {
+          // Redirect to SEO dashboard
+          window.location.href = '/seo-dashboard';
+        }, 500);
       } else {
         const error = await response.json();
         toast({

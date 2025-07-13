@@ -20,27 +20,34 @@ export default function DomainSetup() {
   const setupSteps = [
     {
       step: 1,
+      title: "Get Replit Permissions",
+      description: "Upgrade to Replit Hacker ($7/month) or Pro plan for custom domain access",
+      status: "required",
+      action: "Upgrade your Replit plan for domain permissions"
+    },
+    {
+      step: 2,
       title: "Purchase Domain",
       description: "Buy selamcpa.com from a registrar like GoDaddy or Namecheap",
       status: "pending",
       action: "Purchase selamcpa.com domain"
     },
     {
-      step: 2,
+      step: 3,
       title: "Configure DNS",
       description: "Add A and CNAME records pointing to your Replit project",
       status: "pending",
       action: "Set up DNS records in domain registrar"
     },
     {
-      step: 3,
+      step: 4,
       title: "Connect in Replit",
       description: "Add custom domain in your Replit project settings",
       status: "pending",
       action: "Connect domain in Replit dashboard"
     },
     {
-      step: 4,
+      step: 5,
       title: "Set Environment Variable",
       description: "Add CUSTOM_DOMAIN=selamcpa.com to Replit secrets",
       status: "pending",
@@ -159,6 +166,16 @@ export default function DomainSetup() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
+                    <Alert className="mb-4">
+                      <Shield className="h-4 w-4" />
+                      <AlertDescription>
+                        <strong>Need Permissions?</strong> Custom domains require a paid Replit plan (Hacker $7/month or Pro $20/month). 
+                        <a href="https://replit.com/pricing" target="_blank" className="text-blue-600 hover:underline ml-1">
+                          Upgrade here <ExternalLink className="w-3 h-3 inline" />
+                        </a>
+                      </AlertDescription>
+                    </Alert>
+                    
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <h4 className="font-semibold mb-2">A Record (Root Domain)</h4>
                       <div className="grid grid-cols-3 gap-4 text-sm">
@@ -166,7 +183,7 @@ export default function DomainSetup() {
                           <span className="font-medium">Name:</span> @
                         </div>
                         <div>
-                          <span className="font-medium">Value:</span> [Replit IP from dashboard]
+                          <span className="font-medium">Value:</span> [Get IP from Replit dashboard]
                         </div>
                         <div>
                           <span className="font-medium">TTL:</span> 300

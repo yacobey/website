@@ -184,6 +184,7 @@ Changelog:
 - January 11, 2025. Set all meta robots directives to "index, follow" for maximum search visibility
 - January 11, 2025. Removed character limits on meta titles and descriptions in SEO dashboard
 - January 11, 2025. Prepared domain configuration for connecting custom domain selamcpa.com
+- January 11, 2025. Confirmed user already owns selamcpa.com domain and needs Core plan upgrade for deployment and custom domain connection
 ```
 
 ## User Preferences

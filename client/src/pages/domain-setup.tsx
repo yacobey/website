@@ -20,34 +20,41 @@ export default function DomainSetup() {
   const setupSteps = [
     {
       step: 1,
-      title: "Get Replit Permissions",
-      description: "Upgrade to Replit Core ($25/month) or Teams plan for custom domain access",
+      title: "Deploy Your App",
+      description: "Custom domains require a DEPLOYED app (not just development). Deploy via Replit Deployments.",
       status: "required",
-      action: "Upgrade your Replit plan for domain permissions"
+      action: "Deploy your app using Replit Deployments feature"
     },
     {
       step: 2,
+      title: "Get Replit Core/Teams",
+      description: "Upgrade to Core ($20/month) or Teams plan for deployment features",
+      status: "required",
+      action: "Upgrade to access deployment and domain features"
+    },
+    {
+      step: 3,
       title: "Purchase Domain",
       description: "Buy selamcpa.com from a registrar like GoDaddy or Namecheap",
       status: "pending",
       action: "Purchase selamcpa.com domain"
     },
     {
-      step: 3,
+      step: 4,
       title: "Configure DNS",
-      description: "Add A and CNAME records pointing to your Replit project",
+      description: "Add A and TXT records from your deployment settings",
       status: "pending",
       action: "Set up DNS records in domain registrar"
     },
     {
-      step: 4,
-      title: "Connect in Replit",
-      description: "Add custom domain in your Replit project settings",
+      step: 5,
+      title: "Connect in Deployment",
+      description: "Add custom domain in your Replit Deployment settings (not project settings)",
       status: "pending",
-      action: "Connect domain in Replit dashboard"
+      action: "Connect domain via Deployments tab"
     },
     {
-      step: 5,
+      step: 6,
       title: "Set Environment Variable",
       description: "Add CUSTOM_DOMAIN=selamcpa.com to Replit secrets",
       status: "pending",
@@ -169,7 +176,7 @@ export default function DomainSetup() {
                     <Alert className="mb-4">
                       <Shield className="h-4 w-4" />
                       <AlertDescription>
-                        <strong>Need Permissions?</strong> Custom domains require a paid Replit plan (Core $25/month or Teams $40/user/month). 
+                        <strong>Need Deployment?</strong> Custom domains require a DEPLOYED app with Core plan ($20/month) or Teams ($35/user/month). 
                         <a href="https://replit.com/pricing" target="_blank" className="text-blue-600 hover:underline ml-1">
                           Upgrade here <ExternalLink className="w-3 h-3 inline" />
                         </a>

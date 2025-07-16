@@ -5,12 +5,13 @@ You don't have permission to add a custom domain to your Replit project.
 
 ## Solutions to Get Domain Permissions
 
-### Option 1: Upgrade to Replit Pro/Teams
+### Option 1: Upgrade to Replit Core or Teams Plan
 **Most Common Solution:**
 - Custom domains require a paid Replit plan
 - Go to: https://replit.com/pricing
-- Choose "Hacker Plan" ($7/month) or "Pro Plan" ($20/month)
-- Both include custom domain features
+- **Replit Core**: $25/month (individual plan with domain support)
+- **Teams**: $40/user/month (for businesses)
+- Note: Replit removed the "Hacker" plan in 2025
 
 ### Option 2: Check Your Current Plan
 1. Go to your Replit dashboard
@@ -56,17 +57,19 @@ If you can't upgrade immediately, you can:
 2. Point it to your Replit URL
 3. This gives you a cleaner URL while you plan the upgrade
 
-## Cost Breakdown
-- **Hacker Plan**: $7/month - Includes custom domains
-- **Pro Plan**: $20/month - Includes custom domains + more features
-- **Domain Registration**: $10-15/year (separate cost)
+## Cost Breakdown (2025 Pricing)
+- **Replit Core**: $25/month (includes custom domains + $25 usage credits)
+- **Teams Plan**: $40/user/month (for businesses)
+- **Domain Registration**: $10-15/year (separate cost from GoDaddy, Namecheap, etc.)
+- **Total for individual**: ~$315/year for hosting + domain
 
-## Benefits of Upgrading
-- Custom domains
-- Better performance
-- More storage
+## Benefits of Upgrading to Core/Teams
+- Custom domains for professional branding
+- $25/$40 monthly usage credits included
+- Better performance and reliability
+- AI Assistant and Agent access
 - Priority support
-- Always-on deployments
+- Advanced deployment options
 
 ## Next Steps
 1. Choose a Replit plan that includes custom domains

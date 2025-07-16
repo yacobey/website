@@ -21,7 +21,7 @@ export default function DomainSetup() {
     {
       step: 1,
       title: "Get Replit Permissions",
-      description: "Upgrade to Replit Hacker ($7/month) or Pro plan for custom domain access",
+      description: "Upgrade to Replit Core ($25/month) or Teams plan for custom domain access",
       status: "required",
       action: "Upgrade your Replit plan for domain permissions"
     },
@@ -169,7 +169,7 @@ export default function DomainSetup() {
                     <Alert className="mb-4">
                       <Shield className="h-4 w-4" />
                       <AlertDescription>
-                        <strong>Need Permissions?</strong> Custom domains require a paid Replit plan (Hacker $7/month or Pro $20/month). 
+                        <strong>Need Permissions?</strong> Custom domains require a paid Replit plan (Core $25/month or Teams $40/user/month). 
                         <a href="https://replit.com/pricing" target="_blank" className="text-blue-600 hover:underline ml-1">
                           Upgrade here <ExternalLink className="w-3 h-3 inline" />
                         </a>

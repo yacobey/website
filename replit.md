@@ -194,6 +194,7 @@ Changelog:
 - January 11, 2025. User reports permission issues adding domain despite having administrative access and Core plan
 - January 11, 2025. User resolved domain connection issue and requesting verification of current status
 - January 11, 2025. Domain verification successful: selamcpa.com responding with SSL but showing 404 error - deployment routing issue
+- January 11, 2025. User shows screenshot: Domain connection shows "Failed" status in Replit deployment settings - need to retry connection
 ```
 
 ## User Preferences

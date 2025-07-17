@@ -191,6 +191,7 @@ Changelog:
 - January 11, 2025. User connected selamcpa.com domain through deployment settings
 - January 11, 2025. Domain currently in "verifying" status awaiting DNS propagation (5 minutes to 48 hours)
 - January 11, 2025. Domain verification failed - investigating DNS configuration issues
+- January 11, 2025. User reports permission issues adding domain despite having administrative access and Core plan
 ```
 
 ## User Preferences

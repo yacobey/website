@@ -186,6 +186,7 @@ Changelog:
 - January 11, 2025. Prepared domain configuration for connecting custom domain selamcpa.com
 - January 11, 2025. Confirmed user already owns selamcpa.com domain and needs Core plan upgrade for deployment and custom domain connection
 - January 11, 2025. User can see deployments interface but gets permission error when trying to connect custom domain - confirms need for Core plan upgrade
+- January 11, 2025. User already has Core plan but still cannot add custom domain - investigating deployment requirements
 ```
 
 ## User Preferences

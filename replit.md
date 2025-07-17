@@ -196,6 +196,7 @@ Changelog:
 - January 11, 2025. Domain verification successful: selamcpa.com responding with SSL but showing 404 error - deployment routing issue
 - January 11, 2025. User shows screenshot: Domain connection shows "Failed" status in Replit deployment settings - need to retry connection
 - January 11, 2025. Domain verification successful but showing cached content from previous website instead of Replit app - DNS cache clearing needed
+- January 11, 2025. Replit temporary domain (probalancecpa.replit.app) works correctly, custom domain (selamcpa.com) still showing cached content - DNS propagation in progress
 ```
 
 ## User Preferences

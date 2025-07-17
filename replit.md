@@ -190,6 +190,7 @@ Changelog:
 - January 11, 2025. User successfully deployed website using Autoscale deployment
 - January 11, 2025. User connected selamcpa.com domain through deployment settings
 - January 11, 2025. Domain currently in "verifying" status awaiting DNS propagation (5 minutes to 48 hours)
+- January 11, 2025. Domain verification failed - investigating DNS configuration issues
 ```
 
 ## User Preferences

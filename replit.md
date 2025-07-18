@@ -198,6 +198,7 @@ Changelog:
 - January 11, 2025. Domain verification successful but showing cached content from previous website instead of Replit app - DNS cache clearing needed
 - January 11, 2025. Replit temporary domain (probalancecpa.replit.app) works correctly, custom domain (selamcpa.com) still showing cached content - DNS propagation in progress
 - January 18, 2025. User confirms temporary domain works but custom domain selamcpa.com still shows old website - need DNS cache clearing solutions
+- January 18, 2025. Added custom domain routing middleware to force no-cache headers and ensure selamcpa.com serves same content as temporary domain
 ```
 
 ## User Preferences

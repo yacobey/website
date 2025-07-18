@@ -40,16 +40,41 @@ app.use(helmet({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
+// Custom domain routing middleware
+app.use((req, res, next) => {
+  // Ensure selamcpa.com is treated the same as the temporary domain
+  const host = req.get('host');
+  if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
+    // Force no-cache for custom domain to prevent old content
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    
+    // Add custom domain identification headers
+    res.setHeader('X-Custom-Domain', 'selamcpa.com');
+    res.setHeader('X-Domain-Status', 'active');
+    
+    // Log custom domain requests for debugging
+    console.log(`Custom domain request: ${req.method} ${req.url} from ${host}`);
+  }
+  next();
+});
+
 // Performance headers
 app.use((req, res, next) => {
-  // Cache static assets
-  if (req.url.match(/\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year
-  } else if (req.url.match(/\.(html|htm)$/)) {
-    res.setHeader('Cache-Control', 'public, max-age=300'); // 5 minutes for HTML
-  } else if (req.url.startsWith('/api/')) {
-    // API responses - short cache for dynamic content
-    res.setHeader('Cache-Control', 'public, max-age=60'); // 1 minute
+  // Cache static assets (except for custom domain)
+  const host = req.get('host');
+  const isCustomDomain = host === 'selamcpa.com' || host === 'www.selamcpa.com';
+  
+  if (!isCustomDomain) {
+    if (req.url.match(/\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year
+    } else if (req.url.match(/\.(html|htm)$/)) {
+      res.setHeader('Cache-Control', 'public, max-age=300'); // 5 minutes for HTML
+    } else if (req.url.startsWith('/api/')) {
+      // API responses - short cache for dynamic content
+      res.setHeader('Cache-Control', 'public, max-age=60'); // 1 minute
+    }
   }
   
   // Performance headers

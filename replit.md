@@ -200,6 +200,7 @@ Changelog:
 - January 18, 2025. User confirms temporary domain works but custom domain selamcpa.com still shows old website - need DNS cache clearing solutions
 - January 18, 2025. Added custom domain routing middleware to force no-cache headers and ensure selamcpa.com serves same content as temporary domain
 - January 18, 2025. Implemented aggressive cache bypass system with comprehensive anti-cache headers to force selamcpa.com to serve fresh Replit content
+- January 18, 2025. Issue persists: Custom domain still showing old content, investigating DNS routing vs Replit deployment connection
 ```
 
 ## User Preferences

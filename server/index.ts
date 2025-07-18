@@ -40,31 +40,22 @@ app.use(helmet({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
-// Custom domain routing middleware - AGGRESSIVE CACHE BYPASS
+// Custom domain routing middleware - FORCE REPLIT CONTENT
 app.use((req, res, next) => {
   const host = req.get('host');
   
-  // Force all requests to be treated as coming from Replit deployment
+  // Detect if request is coming from custom domain
   if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
-    // Aggressive anti-cache headers
+    // Log every request to debug routing
+    console.log(`🔍 CUSTOM DOMAIN: ${req.method} ${req.url} from ${host}`);
+    console.log(`🔍 Headers: ${JSON.stringify(req.headers)}`);
+    
+    // Force fresh content headers
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
-    res.setHeader('Last-Modified', new Date().toUTCString());
-    res.setHeader('ETag', `"${Date.now()}"`);
-    
-    // Override any CDN/proxy caching
-    res.setHeader('Surrogate-Control', 'no-store');
-    res.setHeader('X-Accel-Expires', '0');
-    res.setHeader('Vary', 'Origin');
-    
-    // Custom headers for identification
-    res.setHeader('X-Custom-Domain', 'selamcpa.com');
-    res.setHeader('X-Replit-Force', 'true');
-    res.setHeader('X-Content-Source', 'replit-deployment');
-    
-    // Log ALL requests for debugging
-    console.log(`CUSTOM DOMAIN REQUEST: ${req.method} ${req.url} from ${host} - User-Agent: ${req.get('User-Agent')}`);
+    res.setHeader('X-Replit-Active', 'true');
+    res.setHeader('X-Custom-Domain-Active', 'selamcpa.com');
   }
   
   next();

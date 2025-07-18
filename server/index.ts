@@ -40,44 +40,58 @@ app.use(helmet({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
-// Custom domain routing middleware
+// Custom domain routing middleware - AGGRESSIVE CACHE BYPASS
 app.use((req, res, next) => {
-  // Ensure selamcpa.com is treated the same as the temporary domain
   const host = req.get('host');
+  
+  // Force all requests to be treated as coming from Replit deployment
   if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
-    // Force no-cache for custom domain to prevent old content
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    // Aggressive anti-cache headers
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
+    res.setHeader('Last-Modified', new Date().toUTCString());
+    res.setHeader('ETag', `"${Date.now()}"`);
     
-    // Add custom domain identification headers
+    // Override any CDN/proxy caching
+    res.setHeader('Surrogate-Control', 'no-store');
+    res.setHeader('X-Accel-Expires', '0');
+    res.setHeader('Vary', 'Origin');
+    
+    // Custom headers for identification
     res.setHeader('X-Custom-Domain', 'selamcpa.com');
-    res.setHeader('X-Domain-Status', 'active');
+    res.setHeader('X-Replit-Force', 'true');
+    res.setHeader('X-Content-Source', 'replit-deployment');
     
-    // Log custom domain requests for debugging
-    console.log(`Custom domain request: ${req.method} ${req.url} from ${host}`);
+    // Log ALL requests for debugging
+    console.log(`CUSTOM DOMAIN REQUEST: ${req.method} ${req.url} from ${host} - User-Agent: ${req.get('User-Agent')}`);
   }
+  
   next();
 });
 
-// Performance headers
+// Performance headers with custom domain override
 app.use((req, res, next) => {
-  // Cache static assets (except for custom domain)
   const host = req.get('host');
   const isCustomDomain = host === 'selamcpa.com' || host === 'www.selamcpa.com';
   
-  if (!isCustomDomain) {
+  if (isCustomDomain) {
+    // For custom domain, force no cache on EVERYTHING
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+  } else {
+    // Normal caching for temporary domain
     if (req.url.match(/\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year
     } else if (req.url.match(/\.(html|htm)$/)) {
       res.setHeader('Cache-Control', 'public, max-age=300'); // 5 minutes for HTML
     } else if (req.url.startsWith('/api/')) {
-      // API responses - short cache for dynamic content
       res.setHeader('Cache-Control', 'public, max-age=60'); // 1 minute
     }
   }
   
-  // Performance headers
+  // Security headers
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('X-XSS-Protection', '1; mode=block');

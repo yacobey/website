@@ -40,22 +40,25 @@ app.use(helmet({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
-// Custom domain routing middleware - FORCE REPLIT CONTENT
+// Custom domain routing middleware with SSL redirect
 app.use((req, res, next) => {
   const host = req.get('host');
+  const protocol = req.get('x-forwarded-proto') || req.protocol;
   
-  // Detect if request is coming from custom domain
+  // Force HTTPS redirect for custom domain
+  if ((host === 'selamcpa.com' || host === 'www.selamcpa.com') && protocol !== 'https') {
+    console.log(`🔒 Redirecting to HTTPS: ${host}${req.url}`);
+    return res.redirect(301, `https://${host}${req.url}`);
+  }
+  
+  // Custom domain optimization
   if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
-    // Log every request to debug routing
-    console.log(`🔍 CUSTOM DOMAIN: ${req.method} ${req.url} from ${host}`);
-    console.log(`🔍 Headers: ${JSON.stringify(req.headers)}`);
+    console.log(`✅ CUSTOM DOMAIN HTTPS: ${req.method} ${req.url} from ${host}`);
     
-    // Force fresh content headers
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-    res.setHeader('X-Replit-Active', 'true');
-    res.setHeader('X-Custom-Domain-Active', 'selamcpa.com');
+    // Set security headers for custom domain
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    res.setHeader('X-Custom-Domain-SSL', 'active');
+    res.setHeader('X-Replit-SSL', 'enabled');
   }
   
   next();

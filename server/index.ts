@@ -40,25 +40,39 @@ app.use(helmet({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
-// Custom domain routing middleware with SSL redirect
+// Enhanced SSL and security middleware
 app.use((req, res, next) => {
   const host = req.get('host');
   const protocol = req.get('x-forwarded-proto') || req.protocol;
+  const forwardedHost = req.get('x-forwarded-host');
   
-  // Force HTTPS redirect for custom domain
-  if ((host === 'selamcpa.com' || host === 'www.selamcpa.com') && protocol !== 'https') {
-    console.log(`🔒 Redirecting to HTTPS: ${host}${req.url}`);
+  // Log SSL status for debugging
+  console.log(`SSL Debug - Host: ${host}, Protocol: ${protocol}, Forwarded-Host: ${forwardedHost}`);
+  
+  // Force HTTPS redirect for all domains
+  if (protocol !== 'https' && !req.url.startsWith('/health')) {
+    console.log(`🔒 SSL Redirect: ${protocol}://${host}${req.url} → https://${host}${req.url}`);
     return res.redirect(301, `https://${host}${req.url}`);
   }
   
-  // Custom domain optimization
-  if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
-    console.log(`✅ CUSTOM DOMAIN HTTPS: ${req.method} ${req.url} from ${host}`);
+  // Enhanced security headers for HTTPS
+  if (protocol === 'https') {
+    // HSTS (HTTP Strict Transport Security)
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
     
-    // Set security headers for custom domain
-    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-    res.setHeader('X-Custom-Domain-SSL', 'active');
-    res.setHeader('X-Replit-SSL', 'enabled');
+    // SSL/TLS Security Headers
+    res.setHeader('X-SSL-Enabled', 'true');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    // Custom domain identification
+    if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
+      res.setHeader('X-Custom-Domain-SSL', 'active');
+      res.setHeader('X-Certificate-Status', 'secured');
+      console.log(`✅ SECURE CUSTOM DOMAIN: ${req.method} ${req.url}`);
+    }
   }
   
   next();

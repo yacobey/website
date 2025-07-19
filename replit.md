@@ -205,6 +205,8 @@ Changelog:
 - January 18, 2025. Added SSL redirect middleware and security headers for custom domain HTTPS enforcement
 - January 18, 2025. SSL certificate issue identified: selamcpa.com serving replit.app certificate instead of custom domain certificate
 - January 18, 2025. Created SSL troubleshooting guide - certificate mismatch requires domain reconnection in Replit deployment
+- January 18, 2025. URGENT: User experiencing SSL certificate installation failure - selamcpa.com still showing "Not secure"
+- January 18, 2025. Created urgent SSL fix guide - requires manual domain disconnection/reconnection in Replit deployment settings
 ```
 
 ## User Preferences

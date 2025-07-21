@@ -53,8 +53,8 @@ app.use((req, res, next) => {
     console.log(`🔧 Action Required: Regenerate SSL certificate in Replit deployment settings`);
   }
   
-  // Force HTTPS redirect for all domains
-  if (protocol !== 'https' && !req.url.startsWith('/health')) {
+  // Force HTTPS redirect only for custom domain (prevent development redirect loop)
+  if (protocol !== 'https' && !req.url.startsWith('/health') && (host === 'selamcpa.com' || host === 'www.selamcpa.com')) {
     console.log(`🔒 SSL Redirect: ${protocol}://${host}${req.url} → https://${host}${req.url}`);
     return res.redirect(301, `https://${host}${req.url}`);
   }

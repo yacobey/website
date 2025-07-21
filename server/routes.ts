@@ -7,6 +7,7 @@ import { generateAIResponse, analyzeUserIntent, updateUserPreferences } from "./
 import { getSmartResponse } from "./smart-chat-service";
 import { addPerformanceRoutes } from "./routes-performance";
 import { cleanupSeoData, validateRobotsDirective } from "./seo-cleanup";
+import { SSLValidator } from "./ssl-validator";
 import Stripe from "stripe";
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -436,6 +437,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Add performance monitoring routes
   addPerformanceRoutes(app);
+
+  // SSL certificate validation endpoint
+  app.get('/api/ssl-status/:domain', async (req, res) => {
+    try {
+      const domain = req.params.domain;
+      const sslCheck = await SSLValidator.checkDomainSSL(domain);
+      res.json(sslCheck);
+    } catch (error) {
+      console.error('SSL validation error:', error);
+      res.status(500).json({ 
+        status: 'error', 
+        details: { 
+          valid: false, 
+          errors: ['SSL validation failed'] 
+        } 
+      });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;

@@ -46,8 +46,10 @@ app.use((req, res, next) => {
   const protocol = req.get('x-forwarded-proto') || req.protocol;
   const forwardedHost = req.get('x-forwarded-host');
   
-  // Log SSL status for debugging
-  console.log(`SSL Debug - Host: ${host}, Protocol: ${protocol}, Forwarded-Host: ${forwardedHost}`);
+  // Log SSL status for debugging (only for custom domain)
+  if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
+    console.log(`🔍 SSL Debug - Host: ${host}, Protocol: ${protocol}, Forwarded-Host: ${forwardedHost}`);
+  }
   
   // Force HTTPS redirect for all domains
   if (protocol !== 'https' && !req.url.startsWith('/health')) {

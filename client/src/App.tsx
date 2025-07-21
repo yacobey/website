@@ -8,6 +8,7 @@ import { initGA } from "@/lib/analytics";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { ErrorBoundary } from "@/components/performance/error-boundary";
 import { SuspenseFallback } from "@/components/performance/suspense-fallback";
+import { SSLStatusChecker } from "@/components/ssl-status-checker";
 
 // Critical pages (load immediately)
 import Home from "@/pages/home";
@@ -65,6 +66,7 @@ function Router() {
           <Route component={NotFound} />
         </Switch>
       </Suspense>
+      <SSLStatusChecker />
     </ErrorBoundary>
   );
 }

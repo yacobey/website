@@ -19,7 +19,7 @@ export function SSLStatusChecker() {
           setCertificateInfo('SSL certificate valid for selamcpa.com');
         } else {
           setSSLStatus('insecure');
-          setCertificateInfo('Certificate name mismatch - regeneration required');
+          setCertificateInfo('Certificate needs to be recreated for selamcpa.com');
         }
       } else if (isHTTPS) {
         setSSLStatus('secure');
@@ -68,7 +68,7 @@ export function SSLStatusChecker() {
         ) : (
           <>
             <AlertTriangle className="w-4 h-4" />
-            <span>Cert Mismatch</span>
+            <span>Fix Needed</span>
           </>
         )}
       </div>

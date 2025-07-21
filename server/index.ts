@@ -49,6 +49,8 @@ app.use((req, res, next) => {
   // Log SSL status for debugging (only for custom domain)
   if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
     console.log(`🔍 SSL Debug - Host: ${host}, Protocol: ${protocol}, Forwarded-Host: ${forwardedHost}`);
+    console.log(`⚠️  SSL Certificate Mismatch - Certificate not issued for ${host}`);
+    console.log(`🔧 Action Required: Regenerate SSL certificate in Replit deployment settings`);
   }
   
   // Force HTTPS redirect for all domains

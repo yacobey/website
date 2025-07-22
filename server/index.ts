@@ -46,11 +46,12 @@ app.use((req, res, next) => {
   const protocol = req.get('x-forwarded-proto') || req.protocol;
   const forwardedHost = req.get('x-forwarded-host');
   
-  // Domain transfer monitoring
+  // Domain connection monitoring for selamcpa.com
   if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
-    console.log(`🌐 Domain Transfer Active - Host: ${host}, Protocol: ${protocol}, Secure: ${protocol === 'https'}`);
+    console.log(`🔗 DOMAIN CONNECTION: ${host} → Selam CPA deployment`);
+    console.log(`🔒 Security: ${protocol === 'https' ? 'SECURE' : 'REDIRECTING TO HTTPS'}`);
     if (protocol === 'https') {
-      console.log(`✅ LIVE ON CUSTOM DOMAIN: Selam CPA website active at ${host}`);
+      console.log(`✅ SUCCESS: selamcpa.com serving current Selam CPA website`);
     }
   }
   

@@ -46,11 +46,11 @@ app.use((req, res, next) => {
   const protocol = req.get('x-forwarded-proto') || req.protocol;
   const forwardedHost = req.get('x-forwarded-host');
   
-  // SSL status monitoring for custom domain
+  // Domain transfer monitoring
   if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
-    console.log(`🔒 SSL Monitor - Host: ${host}, Protocol: ${protocol}, Secure: ${protocol === 'https'}`);
+    console.log(`🌐 Domain Transfer Active - Host: ${host}, Protocol: ${protocol}, Secure: ${protocol === 'https'}`);
     if (protocol === 'https') {
-      console.log(`✅ SECURE CONNECTION: SSL active for ${host}`);
+      console.log(`✅ LIVE ON CUSTOM DOMAIN: Selam CPA website active at ${host}`);
     }
   }
   

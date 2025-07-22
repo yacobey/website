@@ -79,6 +79,21 @@ app.use((req, res, next) => {
     }
   }
   
+  // URGENT: Cache busting for custom domain showing old content
+  if (host === 'selamcpa.com' || host === 'www.selamcpa.com') {
+    res.set({
+      'Cache-Control': 'no-cache, no-store, must-revalidate, private, max-age=0',
+      'Pragma': 'no-cache', 
+      'Expires': '0',
+      'Last-Modified': new Date().toUTCString(),
+      'ETag': `"fresh-${Date.now()}"`,
+      'Vary': 'Accept-Encoding, User-Agent, Cache-Control',
+      'X-Cache-Bypass': 'true',
+      'X-Fresh-Content': new Date().toISOString()
+    });
+    console.log(`🔄 CACHE BYPASS: Forcing fresh content for ${host} - ${new Date().toISOString()}`);
+  }
+
   next();
 });
 

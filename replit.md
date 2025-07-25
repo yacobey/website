@@ -223,6 +223,7 @@ Changelog:
 - January 25, 2025. Added Contact page to main navigation menu and footer for improved user experience
 - January 25, 2025. Added Google Search Console verification meta tag for search console setup
 - January 25, 2025. Updated sitemap.xml URLs from probalancecpa.replit.app to selamcpa.com domain
+- January 25, 2025. RESOLVED: SSL certificate issue fixed - selamcpa.com now has valid Let's Encrypt certificate and is fully secure
 ```
 
 ## User Preferences

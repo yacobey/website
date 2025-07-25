@@ -219,6 +219,8 @@ Changelog:
 - January 25, 2025. Updated all contact information: email to selamcpa25@gmail.com, location to "Remote Services Based in Maryland"
 - January 25, 2025. Added tagline "We offer remote accounting solutions – Wherever you are, we've got you covered"
 - January 25, 2025. Updated contact information across all pages, chatbot, and payment forms
+- January 25, 2025. Added canonical tags to tax, audit, partners, and ai-tools-affiliate pages for SEO optimization
+- January 25, 2025. Added Contact page to main navigation menu and footer for improved user experience
 ```
 
 ## User Preferences

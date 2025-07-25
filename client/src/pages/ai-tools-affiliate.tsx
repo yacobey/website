@@ -106,6 +106,7 @@ export default function AIResources() {
         <title>AI Tools for CPAs - Professional Software Recommendations | Selam CPA</title>
         <meta name="description" content="CPA-approved AI tools and software recommendations for accounting firms. Automate workflows, improve accuracy, and save time with professionally-vetted solutions." />
         <meta name="keywords" content="AI tools for CPAs, accounting software, CPA software recommendations, AI accounting tools, automation tools, bookkeeping software" />
+        <link rel="canonical" href="https://selamcpa.com/ai-tools-affiliate" />
         <meta property="og:title" content="AI Tools for CPAs - Professional Software Recommendations | Selam CPA" />
         <meta property="og:description" content="Professionally-vetted AI tools and software to automate workflows, improve accuracy, and save time for accounting firms." />
         <meta property="og:type" content="website" />

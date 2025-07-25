@@ -71,6 +71,7 @@ export default function Audit() {
         <title>Professional Audit Services - Financial Statement Audits | Selam CPA</title>
         <meta name="description" content="Independent audit and assurance services following GAAS standards. Financial statement audits, compliance audits, reviews, and compilations for businesses and nonprofits." />
         <meta name="keywords" content="audit services, financial statement audit, GAAS, compliance audit, review and compilation, nonprofit audit, government audit" />
+        <link rel="canonical" href="https://selamcpa.com/audit" />
         <meta property="og:title" content="Professional Audit Services - Financial Statement Audits | Selam CPA" />
         <meta property="og:description" content="Independent audit and assurance services following GAAS standards. Providing stakeholders confidence in financial reporting." />
         <meta property="og:type" content="website" />

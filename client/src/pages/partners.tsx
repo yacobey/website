@@ -144,6 +144,7 @@ export default function Partners() {
         <title>Technology Partners & Business Solutions | Selam CPA</title>
         <meta name="description" content="Curated partnerships with leading financial, AI, and SaaS solutions. Streamline operations, enhance security, and grow your business with the best tools." />
         <meta name="keywords" content="business partnerships, technology solutions, financial software, SaaS solutions, business tools, CPA technology partners" />
+        <link rel="canonical" href="https://selamcpa.com/partners" />
         <meta property="og:title" content="Technology Partners & Business Solutions | Selam CPA" />
         <meta property="og:description" content="Curated partnerships with leading financial, AI, and SaaS solutions to help streamline operations and grow your business." />
         <meta property="og:type" content="website" />

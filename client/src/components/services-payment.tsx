@@ -76,7 +76,7 @@ export default function ServicesPayment() {
                 </ul>
                 
                 <Button 
-                  onClick={() => window.open('https://calendly.com/lenoxcpa', '_blank')}
+                  onClick={() => window.open('https://calendly.com/selamcpa25', '_blank')}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                 >
                   <CheckCircle className="w-4 h-4 mr-2" />

@@ -212,6 +212,9 @@ Changelog:
 - January 18, 2025. Updated SSL status checker to show "Secure" status as user confirmed SSL certificate has been successfully installed
 - January 18, 2025. URGENT: SSL certificate installation failure - selamcpa.com still showing "Not secure"
 - January 18, 2025. Created urgent SSL fix guide - requires manual domain disconnection/reconnection in Replit deployment settings
+- January 25, 2025. Updated all Calendly links from lenoxcpa to selamcpa25 across entire website
+- January 25, 2025. Changed all "Schedule Free Consultation" and "Schedule Consultation" buttons to use new Calendly link
+- January 25, 2025. Updated admin password reference from lenoxcpa2025 to selamcpa2025 for consistency
 ```
 
 ## User Preferences

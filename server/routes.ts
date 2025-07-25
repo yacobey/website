@@ -300,7 +300,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Simple authentication - in production, use proper password hashing
       const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-      const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'lenoxcpa2025';
+      const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'selamcpa2025';
       
       if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
         const token = Buffer.from(`${username}:${Date.now()}`).toString('base64');

@@ -10,7 +10,7 @@ export default function Header() {
 
   const handleScheduleConsultation = () => {
     trackEvent('schedule_consultation_click', { section: 'header' });
-    window.open('https://calendly.com/lenoxcpa', '_blank');
+    window.open('https://calendly.com/selamcpa25', '_blank');
   };
 
   const handleMobileMenuToggle = () => {

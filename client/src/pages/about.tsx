@@ -111,7 +111,7 @@ export default function About() {
                 Let's discuss how we can help your business make informed decisions and achieve sustainable growth.
               </p>
               <a
-                href="https://calendly.com/selamcpa/consultation"
+                href="https://calendly.com/selamcpa25"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors"

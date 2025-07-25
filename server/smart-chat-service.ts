@@ -149,7 +149,7 @@ function handleBookingRequest(state: ConversationState, userMessage: string): {
 To book your consultation:
 📞 **Call us directly**: (301) 640-8549
 💻 **Online booking**: Visit our payment portal at /payment and select "Consultation"
-📧 **Email**: Send details to info@selamcpa.com
+📧 **Email**: Send details to selamcpa25@gmail.com
 
 Our consultations are:
 • Completely FREE for 30 minutes
@@ -518,7 +518,7 @@ function handleGeneralInquiry(state: ConversationState, userMessage: string): {
 
 **Quick options:**
 📞 Call us: (301) 640-8549
-📧 Email: info@selamcpa.com
+📧 Email: selamcpa25@gmail.com
 💻 Online payment: Visit /payment
 
 What would you like to know about?`,

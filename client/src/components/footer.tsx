@@ -49,6 +49,7 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-gray-300">
               <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
+              <li><a href="/contact" className="hover:text-white transition-colors">Contact Us</a></li>
               <li><a href="/ai-tools" className="hover:text-white transition-colors">AI Calculator Builder</a></li>
               <li><a href="/ai-tools" className="hover:text-white transition-colors">Tax Calculators</a></li>
               <li><a href="/ai-tools" className="hover:text-white transition-colors">Financial Tools</a></li>
@@ -66,12 +67,12 @@ export default function Footer() {
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
-                info@selamcpa.com
+                selamcpa25@gmail.com
               </p>
               <p className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
-                <span>Virtual Office & Remote Services<br />
-                Serving clients nationwide</span>
+                <span>Remote Services Based in Maryland<br />
+                Wherever you are, we've got you covered</span>
               </p>
             </div>
           </div>

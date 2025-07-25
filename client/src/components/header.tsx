@@ -25,6 +25,7 @@ export default function Header() {
     { href: "/ai-tools", label: "AI Tools" },
     { href: "/ai-resources", label: "AI Resources" },
     { href: "/blog", label: "Blog" },
+    { href: "/contact", label: "Contact" },
   ];
 
   // Show admin link only when on seo-dashboard page

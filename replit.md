@@ -215,6 +215,10 @@ Changelog:
 - January 25, 2025. Updated all Calendly links from lenoxcpa to selamcpa25 across entire website
 - January 25, 2025. Changed all "Schedule Free Consultation" and "Schedule Consultation" buttons to use new Calendly link
 - January 25, 2025. Updated admin password reference from lenoxcpa2025 to selamcpa2025 for consistency
+- January 25, 2025. Created comprehensive Contact Us page with updated contact information
+- January 25, 2025. Updated all contact information: email to selamcpa25@gmail.com, location to "Remote Services Based in Maryland"
+- January 25, 2025. Added tagline "We offer remote accounting solutions – Wherever you are, we've got you covered"
+- January 25, 2025. Updated contact information across all pages, chatbot, and payment forms
 ```
 
 ## User Preferences

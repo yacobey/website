@@ -16,6 +16,7 @@ import NotFound from "@/pages/not-found";
 
 // Lazy load non-critical pages for better performance
 const About = React.lazy(() => import("@/pages/about"));
+const Contact = React.lazy(() => import("@/pages/contact"));
 const Blog = React.lazy(() => import("@/pages/blog"));
 const BlogPost = React.lazy(() => import("@/pages/blog-post"));
 const AITools = React.lazy(() => import("@/pages/ai-tools"));
@@ -44,6 +45,7 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/about" component={About} />
+          <Route path="/contact" component={Contact} />
           <Route path="/blog" component={Blog} />
           <Route path="/blog/:slug" component={BlogPost} />
           <Route path="/bookkeeping" component={Bookkeeping} />

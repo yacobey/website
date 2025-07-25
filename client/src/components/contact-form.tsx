@@ -97,7 +97,7 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">Email</p>
-                  <p className="text-gray-600">info@selamcpa.com</p>
+                  <p className="text-gray-600">selamcpa25@gmail.com</p>
                 </div>
               </div>
               
@@ -107,7 +107,7 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">Service Area</p>
-                  <p className="text-gray-600">Virtual Services Nationwide</p>
+                  <p className="text-gray-600">Remote Services Based in Maryland</p>
                 </div>
               </div>
             </div>

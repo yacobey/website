@@ -221,6 +221,7 @@ Changelog:
 - January 25, 2025. Updated contact information across all pages, chatbot, and payment forms
 - January 25, 2025. Added canonical tags to tax, audit, partners, and ai-tools-affiliate pages for SEO optimization
 - January 25, 2025. Added Contact page to main navigation menu and footer for improved user experience
+- January 25, 2025. Added Google Search Console verification meta tag for search console setup
 ```
 
 ## User Preferences

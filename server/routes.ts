@@ -385,6 +385,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const sitemap = await generateSitemap();
       res.set('Content-Type', 'text/xml');
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('Pragma', 'no-cache');
+      res.set('Expires', '0');
       res.send(sitemap);
     } catch (error) {
       console.error("Error generating sitemap:", error);
@@ -396,6 +399,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const robots = generateRobotsTxt();
       res.set('Content-Type', 'text/plain');
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('Pragma', 'no-cache');
+      res.set('Expires', '0');
       res.send(robots);
     } catch (error) {
       console.error("Error generating robots.txt:", error);

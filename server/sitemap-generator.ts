@@ -8,12 +8,8 @@ interface SitemapUrl {
 }
 
 export async function generateSitemap(): Promise<string> {
-  // Use custom domain selamcpa.com when available, fallback to Replit domain
-  const baseUrl = process.env.CUSTOM_DOMAIN === 'selamcpa.com'
-    ? `https://selamcpa.com`
-    : process.env.REPLIT_DOMAINS 
-    ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}`
-    : 'https://selamcpa.com';
+  // Always use selamcpa.com as the base URL
+  const baseUrl = 'https://selamcpa.com';
   const urls: SitemapUrl[] = [];
 
   // Static pages
@@ -74,12 +70,8 @@ ${urls.map(url => `  <url>
 }
 
 export function generateRobotsTxt(): string {
-  // Use custom domain selamcpa.com when available, fallback to Replit domain
-  const baseUrl = process.env.CUSTOM_DOMAIN === 'selamcpa.com'
-    ? `https://selamcpa.com`
-    : process.env.REPLIT_DOMAINS 
-    ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}`
-    : 'https://selamcpa.com';
+  // Always use selamcpa.com as the base URL
+  const baseUrl = 'https://selamcpa.com';
   
   return `User-agent: *
 Allow: /

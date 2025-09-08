@@ -76,7 +76,7 @@ export default function Services() {
   ];
 
   const handleLearnMore = (eventName: string) => {
-    trackEvent('click', eventName, 'services');
+    trackEvent(eventName, { section: 'services' });
     // In a real app, this would navigate to a detailed service page
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };

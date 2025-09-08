@@ -137,11 +137,12 @@
   
   /* Gradient shimmer effect */
   .shimmer{
-    background: linear-gradient(120deg, rgba(34,211,238,.35), rgba(167,139,250,.35) 35%, transparent 65%);
+    background: linear-gradient(120deg, rgba(34,211,238,0.8), rgba(167,139,250,0.9) 35%, rgba(129,103,205,0.7) 65%);
     background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
+    color: hsl(258, 89%, 66%);
+    -webkit-text-fill-color: transparent;
     animation: shine 3s ease-in-out infinite;
   }
 
@@ -381,11 +382,12 @@
   
   /* Gradient shimmer effect */
   .shimmer{
-    background: linear-gradient(120deg, rgba(34,211,238,.35), rgba(167,139,250,.35) 35%, transparent 65%);
+    background: linear-gradient(120deg, rgba(34,211,238,0.8), rgba(167,139,250,0.9) 35%, rgba(129,103,205,0.7) 65%);
     background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
+    color: hsl(258, 89%, 66%);
+    -webkit-text-fill-color: transparent;
     animation: shine 3s ease-in-out infinite;
   }
 

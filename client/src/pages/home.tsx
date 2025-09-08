@@ -2,8 +2,8 @@ import DynamicSEO from "@/components/dynamic-seo";
 import Header from "@/components/header";
 import Hero from "@/components/hero";
 import Services from "@/components/services";
-import ServicesPayment from "@/components/services-payment";
-import AIToolsSection from "@/components/ai-tools-section";
+import IndustryExpertise from "@/components/industry-expertise";
+import TrustIndicators from "@/components/trust-indicators";
 import Testimonials from "@/components/testimonials";
 import BlogPreview from "@/components/blog-preview";
 import ContactForm from "@/components/contact-form";
@@ -17,8 +17,8 @@ export default function Home() {
       <Header />
       <Hero />
       <Services />
-      <ServicesPayment />
-      <AIToolsSection />
+      <IndustryExpertise />
+      <TrustIndicators />
       <Testimonials />
       <BlogPreview />
       <ContactForm />

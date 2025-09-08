@@ -57,8 +57,8 @@ export default function Services() {
     },
     {
       icon: Calculator,
-      title: "Tax Compliance",
-      description: "Planning your taxes and keeping track of your compliance can help you stay in compliance with the most recent tax rules and regulations while lowering your tax burden.",
+      title: "Tax Planning & Strategy",
+      description: "Business & personal returns, entity selection, quarterly estimates, and customized tax‑planning strategies. Discover hidden deductions, structure your business smarter, and keep more of what you earn—book a call to ask about our tax strategies that many of our clients are profiting from.",
       href: "/tax"
     },
     {

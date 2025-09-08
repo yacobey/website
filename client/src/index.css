@@ -143,6 +143,16 @@
   --neutral-700: hsl(217, 19%, 27%);
   --neutral-800: hsl(215, 28%, 17%);
   --neutral-900: hsl(212, 35%, 9%);
+  
+  /* Vibrant Color Palette */
+  --electric-blue: hsl(217, 91%, 60%);
+  --vibrant-green: hsl(142, 76%, 36%);
+  --bright-orange: hsl(25, 95%, 53%);
+  --deep-purple: hsl(262, 83%, 58%);
+  --coral-pink: hsl(349, 89%, 60%);
+  --golden-yellow: hsl(45, 93%, 47%);
+  --teal-cyan: hsl(180, 77%, 47%);
+  --magenta: hsl(300, 76%, 72%);
 }
 
 .dark {
@@ -274,6 +284,32 @@
     background: linear-gradient(135deg, hsl(var(--neutral-50)) 0%, hsl(var(--neutral-100)) 100%);
   }
   
+  .bg-gradient-electric {
+    background: linear-gradient(135deg, hsl(var(--electric-blue)) 0%, hsl(var(--deep-purple)) 100%);
+  }
+  
+  .bg-gradient-vibrant {
+    background: linear-gradient(135deg, hsl(var(--vibrant-green)) 0%, hsl(var(--teal-cyan)) 100%);
+  }
+  
+  .bg-gradient-warm {
+    background: linear-gradient(135deg, hsl(var(--bright-orange)) 0%, hsl(var(--coral-pink)) 100%);
+  }
+  
+  .bg-gradient-sunset {
+    background: linear-gradient(135deg, hsl(var(--golden-yellow)) 0%, hsl(var(--bright-orange)) 100%);
+  }
+  
+  .bg-gradient-rainbow {
+    background: linear-gradient(135deg, 
+      hsl(var(--electric-blue)) 0%, 
+      hsl(var(--vibrant-green)) 20%, 
+      hsl(var(--golden-yellow)) 40%, 
+      hsl(var(--bright-orange)) 60%, 
+      hsl(var(--coral-pink)) 80%, 
+      hsl(var(--magenta)) 100%);
+  }
+  
   /* Modern shadow utilities */
   .shadow-primary {
     box-shadow: 0 4px 14px 0 hsl(var(--primary) / 0.15);
@@ -293,5 +329,100 @@
   
   .shadow-card-hover {
     box-shadow: 0 10px 25px -3px hsl(var(--neutral-900) / 0.1), 0 4px 6px -2px hsl(var(--neutral-900) / 0.05);
+  }
+  
+  .shadow-electric {
+    box-shadow: 0 8px 32px 0 hsl(var(--electric-blue) / 0.2);
+  }
+  
+  .shadow-vibrant {
+    box-shadow: 0 8px 32px 0 hsl(var(--vibrant-green) / 0.2);
+  }
+  
+  .shadow-warm {
+    box-shadow: 0 8px 32px 0 hsl(var(--bright-orange) / 0.2);
+  }
+  
+  .shadow-colorful {
+    box-shadow: 0 20px 40px -12px hsl(var(--electric-blue) / 0.25);
+  }
+  
+  /* Animation utilities */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-bounce-gentle {
+    animation: bounce-gentle 3s ease-in-out infinite;
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.8s ease-out;
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 1s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scale-in 0.5s ease-out;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes bounce-gentle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Hover animations */
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-8px);
+  }
+  
+  .hover-glow {
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .hover-glow:hover {
+    box-shadow: 0 0 30px hsl(var(--electric-blue) / 0.3);
   }
 }

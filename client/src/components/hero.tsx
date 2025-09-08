@@ -1,71 +1,67 @@
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Shield, Users, Clock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
-import { Link } from "wouter";
 
 export default function Hero() {
-  const handleGetFreeConsultation = () => {
-    trackEvent('get_free_consultation_click', { section: 'hero' });
+  const handleScheduleConsultation = () => {
+    trackEvent('schedule_consultation_click', { section: 'hero' });
     window.open('https://calendly.com/selamcpa25', '_blank');
   };
 
+  const handleGetInTouch = () => {
+    trackEvent('get_in_touch_click', { section: 'hero' });
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section className="relative py-20 lg:py-28 bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 overflow-hidden">
-      {/* Animated Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 via-purple-100/20 to-green-100/30"></div>
-      <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-electric rounded-full opacity-20 blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-vibrant rounded-full opacity-20 blur-3xl animate-bounce-gentle"></div>
-      <div className="absolute top-40 left-1/4 w-48 h-48 bg-gradient-warm rounded-full opacity-15 blur-3xl animate-pulse-slow"></div>
-      <div className="absolute bottom-40 right-1/3 w-56 h-56 bg-gradient-sunset rounded-full opacity-15 blur-3xl animate-float"></div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center animate-fade-in">
-          <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight animate-scale-in">
-            <span className="text-neutral-900">
-              Accounting, Bookkeeping & Tax—
-            </span>
-            <span className="shimmer font-extrabold">
-              done right
-            </span>
-            <span className="text-neutral-900">.</span>
-          </h1>
-          
-          <p className="text-xl lg:text-2xl text-neutral-700 mb-8 leading-relaxed max-w-4xl mx-auto animate-slide-up">
-            Stop wasting precious time on spreadsheets and surprise tax bills. We take the stress off your plate with crystal‑clear books, painless compliance, and strategies that actually put more cash in your pocket—so you can focus on running and growing your business.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-up">
-            <Button 
-              onClick={handleGetFreeConsultation}
-              size="lg"
-              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-12 py-5 text-xl font-bold rounded-2xl transition-all duration-500 shadow-[0_8px_30px_rgba(249,115,22,0.4)] hover:shadow-[0_12px_40px_rgba(239,68,68,0.5)] transform hover:scale-105 animate-pulse-slow border-2 border-orange-300 hover:border-red-300"
-            >
-              Free Consultation 🚀
-            </Button>
+    <section className="py-20 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left Side - Content */}
+          <div className="lg:pr-8">
+            <h1 className="text-5xl lg:text-6xl font-bold text-neutral-900 mb-8 leading-tight">
+              Accounting & Tax Services to Drive Strategic Growth and Financial Success
+            </h1>
+            <p className="text-xl text-neutral-600 mb-12 leading-relaxed max-w-2xl">
+              Empower your business with professional accounting, tax planning, and AI-powered financial solutions that drive growth, streamline processes, and create competitive advantages.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                onClick={handleScheduleConsultation}
+                className="bg-neutral-900 hover:bg-neutral-800 text-white px-8 py-4 text-lg font-medium rounded-lg flex items-center gap-2 group"
+              >
+                Book Your Free Consultation Today
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              
+              <Button 
+                onClick={handleGetInTouch}
+                variant="outline"
+                className="border-2 border-neutral-300 text-neutral-700 hover:bg-neutral-50 px-8 py-4 text-lg font-medium rounded-lg"
+              >
+                Get in Touch
+              </Button>
+            </div>
           </div>
 
-          {/* Trust indicators */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="group hover-lift animate-slide-up" style={{animationDelay: '0.2s'}}>
-              <div className="w-20 h-20 bg-gradient-electric rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-electric group-hover:shadow-colorful transition-all duration-500 group-hover:rotate-12">
-                <CheckCircle className="w-10 h-10 text-white" />
+          {/* Right Side - Professional Image */}
+          <div className="lg:pl-8">
+            <div className="relative">
+              <div className="bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-2xl p-8 lg:p-12">
+                <div className="bg-white rounded-xl p-8 shadow-lg">
+                  <div className="text-center">
+                    <div className="w-32 h-32 bg-neutral-900 rounded-full mx-auto mb-6 flex items-center justify-center">
+                      <span className="text-white text-4xl font-bold">S</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-neutral-900 mb-2">Selam CPA Team</h3>
+                    <p className="text-neutral-600 mb-4">Professional Accounting & Tax Services</p>
+                    <p className="text-sm text-neutral-500 leading-relaxed">
+                      Our passion is helping businesses harness the power of professional accounting and innovative AI solutions to tackle complex financial challenges and uncover new opportunities for growth and efficiency.
+                    </p>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">CPA Certified 🏆</h3>
-              <p className="text-neutral-600 font-medium">Licensed professional with 15+ years experience</p>
-            </div>
-            <div className="group hover-lift animate-slide-up" style={{animationDelay: '0.4s'}}>
-              <div className="w-20 h-20 bg-gradient-vibrant rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-vibrant group-hover:shadow-colorful transition-all duration-500 group-hover:rotate-12">
-                <Shield className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-lg font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-2">Bank-Level Security 🔒</h3>
-              <p className="text-neutral-600 font-medium">Your data protected with enterprise-grade encryption</p>
-            </div>
-            <div className="group hover-lift animate-slide-up" style={{animationDelay: '0.6s'}}>
-              <div className="w-20 h-20 bg-gradient-warm rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-warm group-hover:shadow-colorful transition-all duration-500 group-hover:rotate-12">
-                <Clock className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-lg font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-2">Same-Day Response ⚡</h3>
-              <p className="text-neutral-600 font-medium">Fast turnaround for urgent financial needs</p>
             </div>
           </div>
         </div>

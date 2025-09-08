@@ -103,32 +103,46 @@
 
 :root {
   --background: hsl(0, 0%, 100%);
-  --foreground: hsl(216, 13%, 13%);
+  --foreground: hsl(212, 15%, 12%);
   --muted: hsl(210, 40%, 98%);
   --muted-foreground: hsl(215, 16%, 47%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(216, 13%, 13%);
+  --popover-foreground: hsl(212, 15%, 12%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(216, 13%, 13%);
+  --card-foreground: hsl(212, 15%, 12%);
   --border: hsl(214, 32%, 91%);
   --input: hsl(214, 32%, 91%);
-  --primary: hsl(221, 83%, 53%);
+  --primary: hsl(212, 100%, 47%);
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(210, 40%, 98%);
-  --secondary-foreground: hsl(222, 84%, 5%);
-  --accent: hsl(210, 40%, 96%);
-  --accent-foreground: hsl(222, 84%, 5%);
+  --secondary-foreground: hsl(212, 15%, 12%);
+  --accent: hsl(147, 45%, 49%);
+  --accent-foreground: hsl(0, 0%, 100%);
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(221, 83%, 53%);
-  --radius: 0.5rem;
+  --ring: hsl(212, 100%, 47%);
+  --radius: 0.75rem;
   
-  /* Clean taxchecklist-inspired theme */
-  --text-dark: hsl(216, 13%, 13%);
+  /* Modern CPA Professional Theme */
+  --text-dark: hsl(212, 15%, 12%);
   --text-medium: hsl(215, 16%, 47%);
   --text-light: hsl(210, 16%, 82%);
   --bg-subtle: hsl(210, 40%, 98%);
   --bg-muted: hsl(220, 14%, 96%);
+  --primary-dark: hsl(212, 100%, 42%);
+  --primary-light: hsl(212, 100%, 97%);
+  --success: hsl(147, 45%, 49%);
+  --success-light: hsl(147, 45%, 97%);
+  --neutral-50: hsl(210, 20%, 98%);
+  --neutral-100: hsl(220, 14%, 96%);
+  --neutral-200: hsl(220, 13%, 91%);
+  --neutral-300: hsl(216, 12%, 84%);
+  --neutral-400: hsl(218, 11%, 65%);
+  --neutral-500: hsl(220, 9%, 46%);
+  --neutral-600: hsl(215, 14%, 34%);
+  --neutral-700: hsl(217, 19%, 27%);
+  --neutral-800: hsl(215, 28%, 17%);
+  --neutral-900: hsl(212, 35%, 9%);
 }
 
 .dark {
@@ -184,62 +198,100 @@
 
 @layer utilities {
   .text-primary {
-    color: hsl(207, 90%, 54%);
+    color: hsl(var(--primary));
   }
   
   .text-primary-dark {
-    color: hsl(207, 90%, 47%);
+    color: hsl(var(--primary-dark));
   }
   
   .text-success {
-    color: hsl(158, 64%, 52%);
+    color: hsl(var(--success));
   }
   
-  .text-charcoal {
-    color: hsl(220, 13%, 18%);
+  .text-neutral-900 {
+    color: hsl(var(--neutral-900));
   }
   
-  .text-slate-gray {
-    color: hsl(220, 9%, 46%);
+  .text-neutral-600 {
+    color: hsl(var(--neutral-600));
+  }
+  
+  .text-neutral-500 {
+    color: hsl(var(--neutral-500));
   }
   
   .bg-primary {
-    background-color: hsl(207, 90%, 54%);
+    background-color: hsl(var(--primary));
   }
   
   .bg-primary-dark {
-    background-color: hsl(207, 90%, 47%);
+    background-color: hsl(var(--primary-dark));
   }
   
   .bg-success {
-    background-color: hsl(158, 64%, 52%);
+    background-color: hsl(var(--success));
   }
   
-  .bg-charcoal {
-    background-color: hsl(220, 13%, 18%);
+  .bg-neutral-50 {
+    background-color: hsl(var(--neutral-50));
   }
   
-  .bg-slate-gray {
-    background-color: hsl(220, 9%, 46%);
+  .bg-neutral-900 {
+    background-color: hsl(var(--neutral-900));
   }
   
   .border-primary {
-    border-color: hsl(207, 90%, 54%);
+    border-color: hsl(var(--primary));
   }
   
   .hover\:bg-primary:hover {
-    background-color: hsl(207, 90%, 54%);
+    background-color: hsl(var(--primary));
   }
   
   .hover\:bg-primary-dark:hover {
-    background-color: hsl(207, 90%, 47%);
+    background-color: hsl(var(--primary-dark));
   }
   
   .hover\:text-primary:hover {
-    color: hsl(207, 90%, 54%);
+    color: hsl(var(--primary));
   }
   
   .hover\:text-primary-dark:hover {
-    color: hsl(207, 90%, 47%);
+    color: hsl(var(--primary-dark));
+  }
+  
+  /* Modern gradient utilities */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-dark)) 100%);
+  }
+  
+  .bg-gradient-success {
+    background: linear-gradient(135deg, hsl(var(--success)) 0%, hsl(147, 45%, 44%) 100%);
+  }
+  
+  .bg-gradient-subtle {
+    background: linear-gradient(135deg, hsl(var(--neutral-50)) 0%, hsl(var(--neutral-100)) 100%);
+  }
+  
+  /* Modern shadow utilities */
+  .shadow-primary {
+    box-shadow: 0 4px 14px 0 hsl(var(--primary) / 0.15);
+  }
+  
+  .shadow-success {
+    box-shadow: 0 4px 14px 0 hsl(var(--success) / 0.15);
+  }
+  
+  .shadow-modern {
+    box-shadow: 0 4px 24px -1px hsl(var(--neutral-900) / 0.08), 0 2px 8px -1px hsl(var(--neutral-900) / 0.04);
+  }
+  
+  .shadow-card {
+    box-shadow: 0 1px 3px 0 hsl(var(--neutral-900) / 0.1), 0 1px 2px 0 hsl(var(--neutral-900) / 0.06);
+  }
+  
+  .shadow-card-hover {
+    box-shadow: 0 10px 25px -3px hsl(var(--neutral-900) / 0.1), 0 4px 6px -2px hsl(var(--neutral-900) / 0.05);
   }
 }

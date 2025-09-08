@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { trackEvent } from "@/lib/analytics";
@@ -63,30 +63,25 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
-      <div className="absolute top-10 right-20 w-72 h-72 bg-gradient-electric rounded-full opacity-10 blur-3xl animate-float"></div>
-      <div className="absolute bottom-10 left-20 w-64 h-64 bg-gradient-vibrant rounded-full opacity-10 blur-3xl animate-bounce-gentle"></div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+    <section id="contact" className="py-20 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left Side - Text Content */}
-          <div className="animate-slide-up">
-            <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-8 leading-tight">
+          <div>
+            <h2 className="text-5xl lg:text-6xl font-bold text-neutral-900 mb-8 leading-tight">
               Let's <br />
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent">
-                discuss
-              </span> <br />
+              discuss <br />
               your <br />
               business
             </h2>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-md">
+            <p className="text-xl text-neutral-600 leading-relaxed max-w-md">
               We are ready to help you solve problems and raise your business to a new level.
             </p>
           </div>
 
           {/* Right Side - Contact Form */}
-          <div className="animate-slide-up" style={{animationDelay: '0.2s'}}>
-            <div className="bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-800 rounded-3xl p-8 shadow-2xl">
+          <div>
+            <div className="bg-white border border-neutral-200 rounded-lg p-8">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
@@ -99,10 +94,10 @@ export default function ContactForm() {
                             <Input 
                               placeholder="First Name*" 
                               {...field} 
-                              className="bg-transparent border-2 border-white/20 text-white placeholder:text-white/60 focus:border-white/40 focus:bg-white/5 h-14 rounded-xl"
+                              className="border-neutral-300 focus:border-neutral-500 h-12"
                             />
                           </FormControl>
-                          <FormMessage className="text-red-300" />
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
@@ -115,15 +110,15 @@ export default function ContactForm() {
                             <Input 
                               placeholder="Last Name*" 
                               {...field} 
-                              className="bg-transparent border-2 border-white/20 text-white placeholder:text-white/60 focus:border-white/40 focus:bg-white/5 h-14 rounded-xl"
+                              className="border-neutral-300 focus:border-neutral-500 h-12"
                             />
                           </FormControl>
-                          <FormMessage className="text-red-300" />
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
-
+                  
                   <FormField
                     control={form.control}
                     name="email"
@@ -131,50 +126,39 @@ export default function ContactForm() {
                       <FormItem>
                         <FormControl>
                           <Input 
-                            type="email" 
                             placeholder="Email*" 
+                            type="email" 
                             {...field} 
-                            className="bg-transparent border-2 border-white/20 text-white placeholder:text-white/60 focus:border-white/40 focus:bg-white/5 h-14 rounded-xl"
+                            className="border-neutral-300 focus:border-neutral-500 h-12"
                           />
                         </FormControl>
-                        <FormMessage className="text-red-300" />
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
-
+                  
                   <FormField
                     control={form.control}
                     name="message"
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Textarea
-                            rows={4}
-                            placeholder="Message*"
-                            {...field}
-                            className="bg-transparent border-2 border-white/20 text-white placeholder:text-white/60 focus:border-white/40 focus:bg-white/5 rounded-xl resize-none"
+                          <Textarea 
+                            placeholder="Tell us about your business needs*" 
+                            {...field} 
+                            rows={5}
+                            className="border-neutral-300 focus:border-neutral-500 resize-none"
                           />
                         </FormControl>
-                        <FormMessage className="text-red-300" />
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
 
-                  {/* reCAPTCHA Placeholder */}
-                  <div className="bg-white/10 border-2 border-white/20 rounded-xl p-4 flex items-center gap-3">
-                    <div className="w-6 h-6 border-2 border-white/40 rounded bg-white/5"></div>
-                    <span className="text-white/70 text-sm">I'm not a robot</span>
-                    <div className="ml-auto">
-                      <div className="w-8 h-8 bg-white/10 rounded flex items-center justify-center">
-                        <div className="w-4 h-4 bg-blue-400 rounded-sm"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <Button
-                    type="submit"
+                  <Button 
+                    type="submit" 
                     disabled={mutation.isPending}
-                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 h-14 text-lg font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                    className="w-full bg-neutral-900 hover:bg-neutral-800 text-white h-12 font-medium"
                   >
                     {mutation.isPending ? "Sending..." : "Send Message"}
                   </Button>

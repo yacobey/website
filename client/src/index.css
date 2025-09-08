@@ -136,32 +136,23 @@
   }
   
   /* Gradient shimmer effect */
-  .shimmer {
-    background: linear-gradient(
-      90deg,
-      var(--purple-primary) 0%,
-      var(--blue-accent) 25%,
-      var(--purple-primary) 50%,
-      var(--blue-accent) 75%,
-      var(--purple-primary) 100%
-    );
+  .shimmer{
+    background: linear-gradient(120deg, rgba(34,211,238,.35), rgba(167,139,250,.35) 35%, transparent 65%);
     background-size: 200% 100%;
-    background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmer 6s ease-in-out infinite;
+    background-clip: text;
+    color: transparent;
+    animation: shine 3s ease-in-out infinite;
   }
-  
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    50% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
+
+  @keyframes shine {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Respect reduced-motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .shimmer { animation: none; }
   }
 }
 

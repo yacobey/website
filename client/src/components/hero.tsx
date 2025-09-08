@@ -14,13 +14,20 @@ export default function Hero() {
   };
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 lg:py-28 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Side - Content */}
           <div className="lg:pr-8">
-            <h1 className="text-5xl lg:text-6xl font-bold text-neutral-900 mb-8 leading-tight">
-              Accounting & Tax Services to Drive Strategic Growth and Financial Success
+            <h1 className="text-5xl lg:text-7xl font-bold text-neutral-900 mb-8 leading-tight">
+              Professional Accounting & Tax Services to{" "}
+              <span className="text-purple-primary">
+                Drive Strategic Growth
+              </span>{" "}
+              and{" "}
+              <span className="text-purple-primary">
+                Financial Success
+              </span>
             </h1>
             <p className="text-xl text-neutral-600 mb-12 leading-relaxed max-w-2xl">
               Empower your business with professional accounting, tax planning, and AI-powered financial solutions that drive growth, streamline processes, and create competitive advantages.
@@ -45,21 +52,54 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Side - Professional Image */}
+          {/* Right Side - Professional Accounting Image */}
           <div className="lg:pl-8">
             <div className="relative">
-              <div className="bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-2xl p-8 lg:p-12">
-                <div className="bg-white rounded-xl p-8 shadow-lg">
-                  <div className="text-center">
-                    <div className="w-32 h-32 bg-neutral-900 rounded-full mx-auto mb-6 flex items-center justify-center">
-                      <span className="text-white text-4xl font-bold">S</span>
+              <div className="bg-gradient-to-br from-purple-100 to-blue-100 rounded-3xl p-8 lg:p-12 shadow-lg">
+                <div className="relative h-96 bg-white rounded-2xl p-8 shadow-inner overflow-hidden">
+                  {/* Accounting Visual Elements */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      {/* Calculator Icon */}
+                      <div className="w-24 h-24 bg-purple-gradient rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      
+                      {/* Financial Charts */}
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center text-sm text-neutral-600">
+                          <span>Revenue Growth</span>
+                          <span className="text-green-600 font-semibold">+24%</span>
+                        </div>
+                        <div className="w-full bg-neutral-200 rounded-full h-2">
+                          <div className="bg-purple-gradient h-2 rounded-full w-3/4"></div>
+                        </div>
+                        
+                        <div className="flex justify-between items-center text-sm text-neutral-600">
+                          <span>Tax Savings</span>
+                          <span className="text-blue-600 font-semibold">$25,000</span>
+                        </div>
+                        <div className="w-full bg-neutral-200 rounded-full h-2">
+                          <div className="bg-blue-accent h-2 rounded-full w-5/6"></div>
+                        </div>
+                        
+                        <div className="flex justify-between items-center text-sm text-neutral-600">
+                          <span>Process Efficiency</span>
+                          <span className="text-purple-primary font-semibold">+40%</span>
+                        </div>
+                        <div className="w-full bg-neutral-200 rounded-full h-2">
+                          <div className="bg-purple-primary h-2 rounded-full w-4/5"></div>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="text-2xl font-bold text-neutral-900 mb-2">Selam CPA Team</h3>
-                    <p className="text-neutral-600 mb-4">Professional Accounting & Tax Services</p>
-                    <p className="text-sm text-neutral-500 leading-relaxed">
-                      Our passion is helping businesses harness the power of professional accounting and innovative AI solutions to tackle complex financial challenges and uncover new opportunities for growth and efficiency.
-                    </p>
                   </div>
+                  
+                  {/* Floating Elements */}
+                  <div className="absolute top-4 right-4 w-8 h-8 bg-purple-primary rounded-full opacity-20"></div>
+                  <div className="absolute bottom-4 left-4 w-6 h-6 bg-blue-accent rounded-full opacity-30"></div>
+                  <div className="absolute top-1/2 right-8 w-4 h-4 bg-purple-gradient rounded-full opacity-40"></div>
                 </div>
               </div>
             </div>

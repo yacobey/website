@@ -21,11 +21,11 @@ export default function Hero() {
           <div className="lg:pr-8">
             <h1 className="text-5xl lg:text-7xl font-bold text-neutral-900 mb-8 leading-tight">
               Professional Bookkeeping, Accounting & Tax Services to{" "}
-              <span className="text-purple-primary">
+              <span className="shimmer">
                 Drive Strategic Growth
               </span>{" "}
               and{" "}
-              <span className="text-purple-primary">
+              <span className="shimmer">
                 Financial Success
               </span>
             </h1>

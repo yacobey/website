@@ -49,11 +49,7 @@ export default function FAQ() {
     },
     {
       question: "Do you work with businesses outside my state?",
-      answer: "Yes, we serve clients nationwide. With secure cloud-based systems and virtual meeting capabilities, we provide the same high-quality service regardless of your location. We're licensed in multiple states."
-    },
-    {
-      question: "What if I'm not satisfied with the service?",
-      answer: "We offer a 30-day satisfaction guarantee. If you're not completely satisfied with our work quality, we'll make it right or provide a full refund. Your success is our priority, and we stand behind our commitment to excellence."
+      answer: "Yes, we serve clients nationwide. With secure cloud-based systems and virtual meeting capabilities, we provide the same high-quality service regardless of your location."
     }
   ];
 

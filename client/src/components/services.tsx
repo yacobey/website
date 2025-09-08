@@ -46,7 +46,7 @@ export default function Services() {
     {
       icon: TrendingUp,
       title: "Accounting",
-      description: "As a leading CPA firm we cater to both simple and complex financial needs, ranging from bookkeeping, payroll, tax returns, accounts receivable, and much more. With our team of skilled professionals, you can trust that your financial records are in capable hands.",
+      description: "We cater to both simple and complex financial needs, ranging from bookkeeping, payroll, tax returns, accounts receivable, and much more. With our team of skilled professionals, you can trust that your financial records are in capable hands.",
       href: "/bookkeeping"
     },
     {
@@ -223,10 +223,10 @@ export default function Services() {
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center relative z-10 animate-fade-in">
           <h2 className="text-4xl font-bold text-white mb-6 animate-scale-in">
-            Accounting Services Crafted to Your Specifications ✨
+            Professional Accounting Services Tailored for You ✨
           </h2>
           <p className="text-xl text-blue-100 mb-8 leading-relaxed animate-slide-up">
-            As a leading CPA firm, Selam CPA is dedicated to providing exceptional financial services to professionals and businesses of all sizes and industries. We always strive for innovation and development to maintain our position at the top of our industry. Selam CPA functions on the foundations of trust, transparency, and quality of service.
+            Selam CPA is dedicated to providing exceptional financial services to professionals and businesses of all sizes and industries. We always strive for innovation and development to deliver the highest quality service. Our firm operates on the foundations of trust, transparency, and personalized client care.
           </p>
           <Button 
             onClick={() => {

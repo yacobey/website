@@ -20,7 +20,7 @@ export default function Hero() {
           {/* Left Side - Content */}
           <div className="lg:pr-8">
             <h1 className="text-5xl lg:text-7xl font-bold text-neutral-900 mb-8 leading-tight">
-              Professional Accounting & Tax Services to{" "}
+              Professional Bookkeeping, Accounting & Tax Services to{" "}
               <span className="text-purple-primary">
                 Drive Strategic Growth
               </span>{" "}

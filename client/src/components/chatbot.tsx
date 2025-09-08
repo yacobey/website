@@ -49,7 +49,7 @@ export default function Chatbot() {
         {
           id: nanoid(),
           type: 'bot',
-          message: "Hi! I'm your CPA assistant. How can I help you today?",
+          message: "Hi! We're your CPA team. How can we help you today?",
           timestamp: new Date()
         }
       ]);
@@ -79,7 +79,7 @@ export default function Chatbot() {
       setMessages(prev => [...prev, {
         id: nanoid(),
         type: 'bot',
-        message: "I'm sorry, I'm having trouble responding right now. Please try again or contact us directly at (555) 123-4567.",
+        message: "We're sorry, we're having trouble responding right now. Please try again or contact us directly at (555) 123-4567.",
         timestamp: new Date()
       }]);
     }

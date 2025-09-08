@@ -28,10 +28,10 @@ export default function Services() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-16">
           <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-            <span className="text-white text-sm font-medium">HOW I BRING VALUE</span>
+            <span className="text-white text-sm font-medium">HOW WE BRING VALUE</span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-            Services I Provide
+            Services We Provide
           </h2>
         </div>
 

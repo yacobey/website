@@ -29,7 +29,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 onClick={handleScheduleConsultation}
-                className="bg-neutral-900 hover:bg-neutral-800 text-white px-8 py-4 text-lg font-medium rounded-lg flex items-center gap-2 group"
+                className="bg-purple-gradient hover:bg-purple-dark text-white px-8 py-4 text-lg font-medium rounded-lg flex items-center gap-2 group shadow-lg"
               >
                 Book Your Free Consultation Today
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -38,7 +38,7 @@ export default function Hero() {
               <Button 
                 onClick={handleGetInTouch}
                 variant="outline"
-                className="border-2 border-neutral-300 text-neutral-700 hover:bg-neutral-50 px-8 py-4 text-lg font-medium rounded-lg"
+                className="border-2 border-purple-primary text-purple-primary hover:bg-purple-light px-8 py-4 text-lg font-medium rounded-lg"
               >
                 Get in Touch
               </Button>

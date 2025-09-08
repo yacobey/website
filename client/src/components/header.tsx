@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight } from "lucide-react";
@@ -7,6 +7,7 @@ import { trackEvent } from "@/lib/analytics";
 export default function Header() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   const handleGetInTouch = () => {
     trackEvent('get_in_touch_click', { section: 'header' });
@@ -16,6 +17,20 @@ export default function Header() {
   const handleMobileMenuToggle = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Dynamic button styling based on scroll position
+  // Assuming services section (purple background) starts around 600px
+  const isOnPurpleSection = scrollY > 600 && scrollY < 1200;
+  const buttonVariant = isOnPurpleSection ? "secondary" : "ghost";
+  const buttonClasses = isOnPurpleSection 
+    ? "bg-white text-purple-primary hover:bg-neutral-100 font-medium flex items-center gap-2 group border border-white/20"
+    : "text-neutral-900 hover:text-neutral-600 font-medium flex items-center gap-2 group";
 
   const navItems = [
     { href: "/bookkeeping", label: "Bookkeeping" },
@@ -30,7 +45,7 @@ export default function Header() {
   const showAdminLink = location === "/seo-dashboard";
 
   return (
-    <header className="bg-white border-b border-neutral-200 sticky top-0 z-50">
+    <header className="bg-white/95 backdrop-blur-lg border-b border-neutral-200/50 sticky top-0 z-50 transition-all duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -74,8 +89,8 @@ export default function Header() {
           <div className="hidden lg:flex items-center">
             <Button 
               onClick={handleGetInTouch}
-              variant="ghost"
-              className="text-neutral-900 hover:text-neutral-600 font-medium flex items-center gap-2 group"
+              variant={buttonVariant}
+              className={`${buttonClasses} transition-all duration-300`}
             >
               Get in Touch
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -96,7 +111,7 @@ export default function Header() {
         
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-6 border-t border-neutral-200 bg-white">
+          <div className="lg:hidden py-6 border-t border-neutral-200 bg-white/95 backdrop-blur-lg">
             <div className="flex flex-col space-y-4">
               {navItems.map((item) => (
                 <a

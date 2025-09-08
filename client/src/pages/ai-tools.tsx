@@ -26,26 +26,26 @@ export default function AITools() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-5xl mx-auto">
               <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-                AI-Powered Financial Tools & Calculators
+                AI Consultancy & Financial Intelligence
               </h1>
               <p className="text-xl text-blue-100 mb-8">
-                Create custom financial calculators with our AI Builder or use our comprehensive suite of pre-built tools for tax planning, investment analysis, and business decisions.
+                Transform your business with AI-powered financial insights, automated reporting, and intelligent decision-making tools. Our AI consultancy combines cutting-edge technology with CPA expertise to accelerate your growth.
               </p>
               <div className="grid md:grid-cols-3 gap-6 mt-12">
                 <div className="bg-white/10 p-6 rounded-lg">
                   <Sparkles className="w-8 h-8 text-yellow-300 mx-auto mb-3" />
-                  <h3 className="font-semibold mb-2">AI Builder</h3>
-                  <p className="text-sm text-blue-100">Create custom calculators instantly using natural language</p>
+                  <h3 className="font-semibold mb-2">AI Strategy Consulting</h3>
+                  <p className="text-sm text-blue-100">Custom AI solutions for financial automation and intelligent reporting</p>
                 </div>
                 <div className="bg-white/10 p-6 rounded-lg">
                   <Zap className="w-8 h-8 text-green-300 mx-auto mb-3" />
-                  <h3 className="font-semibold mb-2">Pre-Built Tools</h3>
-                  <p className="text-sm text-blue-100">Professional calculators for common financial scenarios</p>
+                  <h3 className="font-semibold mb-2">Intelligent Analytics</h3>
+                  <p className="text-sm text-blue-100">AI-powered insights that reveal hidden opportunities and risks</p>
                 </div>
                 <div className="bg-white/10 p-6 rounded-lg">
                   <Calendar className="w-8 h-8 text-blue-300 mx-auto mb-3" />
-                  <h3 className="font-semibold mb-2">Financial Calendar</h3>
-                  <p className="text-sm text-blue-100">Track important deadlines and tax dates</p>
+                  <h3 className="font-semibold mb-2">Automated Workflows</h3>
+                  <p className="text-sm text-blue-100">Streamline processes with AI-driven automation and monitoring</p>
                 </div>
               </div>
             </div>
@@ -57,10 +57,10 @@ export default function AITools() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <Badge className="mb-4 bg-blue-100 text-blue-800">AI Technology</Badge>
-                <h2 className="text-3xl font-bold mb-4">How Our AI Builder Works</h2>
+                <Badge className="mb-4 bg-blue-100 text-blue-800">AI Consultancy</Badge>
+                <h2 className="text-3xl font-bold mb-4">How Our AI Consultancy Transforms Your Business</h2>
                 <p className="text-xl text-gray-600">
-                  Transform your ideas into powerful financial calculators using simple, natural language
+                  Leverage artificial intelligence to automate accounting processes, generate intelligent insights, and make data-driven decisions that accelerate growth
                 </p>
               </div>
               
@@ -70,34 +70,34 @@ export default function AITools() {
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Target className="w-5 h-5 text-blue-500" />
-                        What You Can Create
+                        AI Solutions We Implement
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <ul className="space-y-3 text-gray-700">
                         <li className="flex items-start gap-2">
                           <span className="text-green-500 mt-1">✓</span>
-                          <span>Investment performance calculators</span>
+                          <span>Automated financial reporting and dashboards</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-green-500 mt-1">✓</span>
-                          <span>Custom loan and financing tools</span>
+                          <span>Predictive cash flow analysis</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-green-500 mt-1">✓</span>
-                          <span>Business valuation models</span>
+                          <span>Intelligent expense categorization</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-green-500 mt-1">✓</span>
-                          <span>Tax scenario planners</span>
+                          <span>Risk assessment and fraud detection</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-green-500 mt-1">✓</span>
-                          <span>Retirement planning tools</span>
+                          <span>Tax optimization strategies</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-green-500 mt-1">✓</span>
-                          <span>Industry-specific calculators</span>
+                          <span>Performance benchmarking and KPI tracking</span>
                         </li>
                       </ul>
                     </CardContent>
@@ -108,30 +108,30 @@ export default function AITools() {
                   <div className="bg-white p-6 rounded-lg shadow-sm border">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold">1</div>
-                      <h3 className="font-semibold">Describe Your Need</h3>
+                      <h3 className="font-semibold">Business Assessment</h3>
                     </div>
                     <p className="text-gray-600 text-sm">
-                      Simply type what you want: "Create a calculator for comparing investment options with compound interest"
+                      We analyze your current processes and identify opportunities for AI automation and intelligence
                     </p>
                   </div>
                   
                   <div className="bg-white p-6 rounded-lg shadow-sm border">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold">2</div>
-                      <h3 className="font-semibold">AI Generates Calculator</h3>
+                      <h3 className="font-semibold">Custom AI Implementation</h3>
                     </div>
                     <p className="text-gray-600 text-sm">
-                      Our AI creates input fields, formulas, and results display automatically based on your description
+                      Our team develops and deploys tailored AI solutions that integrate seamlessly with your existing systems
                     </p>
                   </div>
                   
                   <div className="bg-white p-6 rounded-lg shadow-sm border">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold">3</div>
-                      <h3 className="font-semibold">Use & Customize</h3>
+                      <h3 className="font-semibold">Ongoing Optimization</h3>
                     </div>
                     <p className="text-gray-600 text-sm">
-                      Start using your calculator immediately or request modifications to perfect it for your needs
+                      Continuous monitoring and refinement ensure your AI solutions evolve with your business needs
                     </p>
                   </div>
                 </div>

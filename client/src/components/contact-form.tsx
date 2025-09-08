@@ -80,7 +80,7 @@ export default function ContactForm() {
               business
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed max-w-md">
-              I am ready to help you solve problems and raise your business to a new level.
+              We are ready to help you solve problems and raise your business to a new level.
             </p>
           </div>
 

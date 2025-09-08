@@ -5,6 +5,7 @@ import Services from "@/components/services";
 import IndustryExpertise from "@/components/industry-expertise";
 import TrustIndicators from "@/components/trust-indicators";
 import Testimonials from "@/components/testimonials";
+import FAQ from "@/components/faq";
 import BlogPreview from "@/components/blog-preview";
 import ContactForm from "@/components/contact-form";
 import Footer from "@/components/footer";
@@ -20,6 +21,7 @@ export default function Home() {
       <IndustryExpertise />
       <TrustIndicators />
       <Testimonials />
+      <FAQ />
       <BlogPreview />
       <ContactForm />
       <Footer />

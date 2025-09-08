@@ -317,6 +317,26 @@
     background-clip: text;
   }
   
+  /* Gradient shimmer effect */
+  .shimmer{
+    background: linear-gradient(120deg, rgba(34,211,238,.35), rgba(167,139,250,.35) 35%, transparent 65%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 3s ease-in-out infinite;
+  }
+
+  @keyframes shine {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Respect reduced-motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .shimmer { animation: none; }
+  }
+  
   /* Modern shadow utilities */
   .shadow-primary {
     box-shadow: 0 4px 14px 0 hsl(var(--primary) / 0.15);

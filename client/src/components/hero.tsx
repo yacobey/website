@@ -24,14 +24,14 @@ export default function Hero() {
             <span className="text-neutral-900">
               Accounting, Bookkeeping & Tax—
             </span>
-            <span className="bg-gradient-to-r from-gray-800 via-blue-600 via-purple-600 to-yellow-400 bg-clip-text text-transparent font-extrabold">
+            <span className="shimmer font-extrabold">
               done right
             </span>
             <span className="text-neutral-900">.</span>
           </h1>
           
           <p className="text-xl lg:text-2xl text-neutral-700 mb-8 leading-relaxed max-w-4xl mx-auto animate-slide-up">
-            Stop wasting nights on spreadsheets and surprise tax bills. We take the stress off your plate with crystal‑clear books, painless compliance, and strategies that actually put more cash in your pocket—so you can focus on running and growing your business.
+            Stop wasting precious time on spreadsheets and surprise tax bills. We take the stress off your plate with crystal‑clear books, painless compliance, and strategies that actually put more cash in your pocket—so you can focus on running and growing your business.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-up">

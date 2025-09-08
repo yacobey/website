@@ -18,50 +18,28 @@ export default function Hero() {
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm border border-neutral-200 rounded-full text-sm font-medium text-neutral-700 mb-6 shadow-modern">
-            <Shield className="w-4 h-4 text-primary mr-2" />
-            Licensed CPA • Trusted by 500+ Clients
+          {/* Professional tagline */}
+          <div className="mb-6">
+            <p className="text-lg font-semibold text-primary mb-2">Advanced Accounting Solutions for Improved Financial Performance</p>
           </div>
           
-          <h1 className="text-5xl lg:text-7xl font-bold text-neutral-900 mb-6 leading-tight">
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Modern
-            </span>{' '}
+          <h1 className="text-4xl lg:text-6xl font-bold text-neutral-900 mb-6 leading-tight">
             <span className="font-['Playfair_Display'] font-bold">
-              CPA Services
-            </span>
-            <br />
-            <span className="text-4xl lg:text-5xl font-semibold text-neutral-700">
-              for the Digital Age
+              Professional CPA firm
+            </span>{' '}
+            <span className="text-neutral-700">
+              that provides a team of specialists and cutting-edge technology to keep clients on track toward their financial goals.
             </span>
           </h1>
-          
-          <p className="text-xl lg:text-2xl text-neutral-600 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
-            Transform your financial future with <span className="font-semibold text-neutral-900">expert accounting</span>, 
-            <span className="font-semibold text-neutral-900"> tax preparation</span>, and 
-            <span className="font-semibold text-neutral-900">AI-powered business insights</span>. 
-            Professional guidance you can trust.
-          </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Button 
               onClick={handleGetFreeConsultation}
               size="lg"
-              className="bg-gradient-primary hover:shadow-primary text-white px-10 py-4 text-lg font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-modern"
+              className="bg-primary hover:bg-primary-dark text-white px-10 py-4 text-lg font-semibold rounded-lg transition-all duration-300 shadow-modern"
             >
-              Get Free Consultation
-              <Users className="ml-2 w-5 h-5" />
+              Book A Consultation
             </Button>
-            <Link href="/payment">
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-2 border-neutral-300 bg-white/80 backdrop-blur-sm text-neutral-700 hover:bg-white hover:border-primary hover:text-primary px-10 py-4 text-lg font-semibold rounded-xl transition-all duration-300 shadow-card hover:shadow-card-hover"
-              >
-                Pay Securely Online
-              </Button>
-            </Link>
           </div>
 
           {/* Trust indicators */}

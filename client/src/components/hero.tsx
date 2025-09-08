@@ -20,29 +20,27 @@ export default function Hero() {
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
-          {/* Professional tagline */}
-          <div className="mb-6 animate-slide-up">
-            <div className="inline-block bg-gradient-electric text-white px-6 py-3 rounded-full text-lg font-semibold shadow-electric animate-pulse-slow">
-              Advanced Accounting Solutions for Improved Financial Performance
-            </div>
-          </div>
-          
-          <h1 className="text-4xl lg:text-6xl font-bold text-neutral-900 mb-6 leading-tight animate-scale-in">
-            <span className="font-['Playfair_Display'] font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent">
-              Professional CPA firm
-            </span>{' '}
-            <span className="text-neutral-700">
-              that provides a team of specialists and cutting-edge technology to keep clients on track toward their financial goals.
+          <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight animate-scale-in">
+            <span className="text-neutral-900">
+              Accounting, Bookkeeping & Tax—
             </span>
+            <span className="bg-gradient-to-r from-gray-800 via-blue-600 via-purple-600 to-yellow-400 bg-clip-text text-transparent font-extrabold">
+              done right
+            </span>
+            <span className="text-neutral-900">.</span>
           </h1>
+          
+          <p className="text-xl lg:text-2xl text-neutral-700 mb-8 leading-relaxed max-w-4xl mx-auto animate-slide-up">
+            Stop wasting nights on spreadsheets and surprise tax bills. We take the stress off your plate with crystal‑clear books, painless compliance, and strategies that actually put more cash in your pocket—so you can focus on running and growing your business.
+          </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-up">
             <Button 
               onClick={handleGetFreeConsultation}
               size="lg"
-              className="bg-gradient-electric hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 text-white px-10 py-4 text-lg font-semibold rounded-xl transition-all duration-500 shadow-electric hover:shadow-colorful transform hover:scale-105 hover-glow"
+              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-12 py-5 text-xl font-bold rounded-2xl transition-all duration-500 shadow-[0_8px_30px_rgba(249,115,22,0.4)] hover:shadow-[0_12px_40px_rgba(239,68,68,0.5)] transform hover:scale-105 animate-pulse-slow border-2 border-orange-300 hover:border-red-300"
             >
-              Book A Consultation ✨
+              Free Consultation 🚀
             </Button>
           </div>
 

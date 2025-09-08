@@ -22,8 +22,7 @@ export default function Header() {
     { href: "/tax", label: "Tax" },
     { href: "/audit", label: "Audit" },
     { href: "/advisory", label: "Advisory" },
-    { href: "/ai-tools", label: "AI Tools" },
-    { href: "/ai-resources", label: "AI Resources" },
+    { href: "/ai-tools", label: "AI Consultancy" },
     { href: "/blog", label: "Blog" },
     { href: "/contact", label: "Contact" },
   ];

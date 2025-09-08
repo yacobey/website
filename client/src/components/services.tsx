@@ -24,43 +24,40 @@ export default function Services() {
   ];
 
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <section className="py-20 bg-purple-gradient">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-16">
-          <h6 className="text-sm font-medium text-neutral-500 uppercase tracking-wider mb-4">
-            HOW WE BRING VALUE
-          </h6>
-          <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
-            Services We Provide
+          <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+            <span className="text-white text-sm font-medium">HOW I BRING VALUE</span>
+          </div>
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+            Services I Provide
           </h2>
         </div>
 
-        <div className="space-y-12">
+        <div className="grid md:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div key={index} className="flex flex-col lg:flex-row lg:items-start gap-8 py-8">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-neutral-900 rounded-full flex items-center justify-center">
-                  <Check className="w-5 h-5 text-white" />
+            <div key={index} className="bg-white rounded-2xl p-8 shadow-lg">
+              <div className="mb-6">
+                <div className="w-16 h-16 bg-blue-accent rounded-full flex items-center justify-center mb-6">
+                  <Check className="w-8 h-8 text-white" />
                 </div>
-              </div>
-              
-              <div className="flex-grow">
-                <h3 className="text-2xl font-bold text-neutral-900 mb-4">
+                
+                <h3 className="text-xl font-bold text-neutral-900 mb-4">
                   {service.title}
                 </h3>
-                <p className="text-lg text-neutral-600 leading-relaxed mb-6 max-w-3xl">
+                <p className="text-neutral-600 leading-relaxed mb-8">
                   {service.description}
                 </p>
-                
-                <Button 
-                  onClick={() => handleBookCall(service.title)}
-                  variant="ghost"
-                  className="text-neutral-900 hover:text-neutral-600 font-medium flex items-center gap-2 group p-0 h-auto"
-                >
-                  Book a call
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
               </div>
+              
+              <Button 
+                onClick={() => handleBookCall(service.title)}
+                className="w-full bg-purple-dark hover:bg-purple-primary text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center gap-2 group transition-all duration-300"
+              >
+                Book a call
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
             </div>
           ))}
         </div>

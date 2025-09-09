@@ -61,7 +61,7 @@ export default function Hero() {
                   <img 
                     src={consultationImage}
                     alt="Professional business consultation - financial experts discussing reports in modern office"
-                    className="w-full h-full object-cover rounded-2xl"
+                    className="w-full h-full object-contain rounded-2xl"
                   />
                   
                   {/* Overlay for branding */}

@@ -17,7 +17,7 @@ export default function Hero() {
   return (
     <section className="py-20 lg:py-28 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-stretch">
           {/* Left Side - Content */}
           <div className="lg:pr-8">
             <h1 className="text-5xl lg:text-7xl font-bold text-neutral-900 mb-8 leading-tight">
@@ -54,9 +54,9 @@ export default function Hero() {
           </div>
 
           {/* Right Side - Professional Business Consultation */}
-          <div className="lg:pl-8 flex items-stretch">
-            <div className="relative w-full">
-              <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-3xl p-3 shadow-xl h-full">
+          <div className="lg:pl-8 flex flex-col">
+            <div className="relative w-full flex-1">
+              <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-3xl p-3 shadow-xl h-full min-h-[600px]">
                 <div className="relative h-full overflow-hidden rounded-2xl">
                   <img 
                     src={consultationImage}

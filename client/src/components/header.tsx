@@ -66,19 +66,29 @@ export default function Header() {
           </div>
           
           <nav className="hidden lg:block">
-            <div className="flex items-center space-x-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="text-neutral-600 hover:text-neutral-900 transition-colors text-sm font-medium"
-                >
-                  {item.label}
-                </a>
-              ))}
+            <div className="flex items-center space-x-3">
+              {navItems.map((item, index) => {
+                const colors = [
+                  "bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-200",
+                  "bg-green-100 text-green-700 hover:bg-green-200 border-green-200", 
+                  "bg-purple-100 text-purple-700 hover:bg-purple-200 border-purple-200",
+                  "bg-orange-100 text-orange-700 hover:bg-orange-200 border-orange-200",
+                  "bg-pink-100 text-pink-700 hover:bg-pink-200 border-pink-200",
+                  "bg-indigo-100 text-indigo-700 hover:bg-indigo-200 border-indigo-200"
+                ];
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className={`${colors[index]} px-4 py-2 rounded-lg border transition-all duration-200 text-sm font-medium hover:scale-105 hover:shadow-md`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
               {showAdminLink && (
                 <Link href="/seo-dashboard">
-                  <span className="text-neutral-600 hover:text-neutral-900 transition-colors text-sm font-medium cursor-pointer">
+                  <span className="bg-gray-100 text-gray-700 hover:bg-gray-200 border-gray-200 px-4 py-2 rounded-lg border transition-all duration-200 text-sm font-medium hover:scale-105 hover:shadow-md cursor-pointer">
                     SEO Admin
                   </span>
                 </Link>
@@ -112,17 +122,27 @@ export default function Header() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden py-6 border-t border-neutral-200 bg-white/95 backdrop-blur-lg">
-            <div className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="text-neutral-700 hover:text-neutral-900 transition-colors font-medium"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
+            <div className="flex flex-col space-y-3">
+              {navItems.map((item, index) => {
+                const colors = [
+                  "bg-blue-100 text-blue-700 hover:bg-blue-200",
+                  "bg-green-100 text-green-700 hover:bg-green-200", 
+                  "bg-purple-100 text-purple-700 hover:bg-purple-200",
+                  "bg-orange-100 text-orange-700 hover:bg-orange-200",
+                  "bg-pink-100 text-pink-700 hover:bg-pink-200",
+                  "bg-indigo-100 text-indigo-700 hover:bg-indigo-200"
+                ];
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className={`${colors[index]} px-4 py-3 rounded-lg transition-colors font-medium text-center`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
               <div className="pt-4">
                 <Button 
                   onClick={() => {

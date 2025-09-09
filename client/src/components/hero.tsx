@@ -56,7 +56,7 @@ export default function Hero() {
           <div className="lg:pl-8">
             <div className="relative">
               <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-3xl p-6 shadow-xl">
-                <div className="relative h-96 bg-white rounded-2xl p-6 overflow-hidden">
+                <div className="relative h-full min-h-[500px] bg-white rounded-2xl p-6 overflow-hidden">
                   {/* Modern Dashboard Layout */}
                   <div className="space-y-4">
                     {/* Header with Profile */}

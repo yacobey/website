@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
+import consultationImage from "@assets/generated_images/Professional_business_consultation_meeting_dd13ce9b.png";
 
 export default function Hero() {
   const handleScheduleConsultation = () => {
@@ -58,7 +59,7 @@ export default function Hero() {
               <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-3xl p-3 shadow-xl h-full">
                 <div className="relative h-full overflow-hidden rounded-2xl">
                   <img 
-                    src="/attached_assets/generated_images/Professional_business_consultation_meeting_dd13ce9b.png"
+                    src={consultationImage}
                     alt="Professional business consultation - financial experts discussing reports in modern office"
                     className="w-full h-full object-cover rounded-2xl"
                   />

@@ -63,25 +63,49 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+    <section id="contact" className="py-32 bg-gradient-to-br from-purple-50 via-blue-50 to-green-50 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute top-20 right-32 w-80 h-80 bg-gradient-electric rounded-full opacity-10 blur-3xl animate-float"></div>
+      <div className="absolute bottom-20 left-32 w-72 h-72 bg-gradient-vibrant rounded-full opacity-10 blur-3xl animate-bounce-gentle"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
           {/* Left Side - Text Content */}
-          <div>
-            <h2 className="text-5xl lg:text-6xl font-bold text-neutral-900 mb-8 leading-tight">
+          <div className="animate-fade-in">
+            <h2 className="text-6xl lg:text-7xl font-bold text-neutral-900 mb-10 leading-tight">
               Let's <br />
-              discuss <br />
+              <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-green-600 bg-clip-text text-transparent">
+                discuss
+              </span> <br />
               your <br />
-              business
+              <span className="bg-gradient-to-r from-green-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
+                business
+              </span>
             </h2>
-            <p className="text-xl text-neutral-600 leading-relaxed max-w-md">
+            <p className="text-2xl text-neutral-600 leading-relaxed max-w-lg mb-8">
               We are ready to help you solve problems and raise your business to a new level.
             </p>
+            
+            {/* Trust indicators */}
+            <div className="flex flex-wrap gap-4">
+              <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span className="text-sm font-medium text-neutral-700">24hr Response</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2">
+                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span className="text-sm font-medium text-neutral-700">Free Consultation</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2">
+                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                <span className="text-sm font-medium text-neutral-700">Expert CPA Team</span>
+              </div>
+            </div>
           </div>
 
           {/* Right Side - Contact Form */}
-          <div>
-            <div className="bg-white border border-neutral-200 rounded-lg p-8">
+          <div className="animate-slide-up">
+            <div className="bg-white/90 backdrop-blur-sm border border-white/50 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-500">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
@@ -94,7 +118,7 @@ export default function ContactForm() {
                             <Input 
                               placeholder="First Name*" 
                               {...field} 
-                              className="border-neutral-300 focus:border-neutral-500 h-12"
+                              className="border-neutral-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 h-14 text-lg rounded-xl"
                             />
                           </FormControl>
                           <FormMessage />
@@ -110,7 +134,7 @@ export default function ContactForm() {
                             <Input 
                               placeholder="Last Name*" 
                               {...field} 
-                              className="border-neutral-300 focus:border-neutral-500 h-12"
+                              className="border-neutral-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 h-14 text-lg rounded-xl"
                             />
                           </FormControl>
                           <FormMessage />
@@ -129,7 +153,7 @@ export default function ContactForm() {
                             placeholder="Email*" 
                             type="email" 
                             {...field} 
-                            className="border-neutral-300 focus:border-neutral-500 h-12"
+                            className="border-neutral-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 h-14 text-lg rounded-xl"
                           />
                         </FormControl>
                         <FormMessage />
@@ -146,8 +170,8 @@ export default function ContactForm() {
                           <Textarea 
                             placeholder="Tell us about your business needs*" 
                             {...field} 
-                            rows={5}
-                            className="border-neutral-300 focus:border-neutral-500 resize-none"
+                            rows={6}
+                            className="border-neutral-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 resize-none text-lg rounded-xl"
                           />
                         </FormControl>
                         <FormMessage />
@@ -158,9 +182,21 @@ export default function ContactForm() {
                   <Button 
                     type="submit" 
                     disabled={mutation.isPending}
-                    className="w-full bg-purple-gradient hover:bg-purple-dark text-white h-12 font-medium"
+                    className="w-full bg-purple-gradient hover:bg-purple-dark text-white h-14 font-semibold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
                   >
-                    {mutation.isPending ? "Sending..." : "Send Message"}
+                    {mutation.isPending ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                        Sending...
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        Send Message
+                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                      </div>
+                    )}
                   </Button>
                 </form>
               </Form>

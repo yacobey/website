@@ -194,7 +194,7 @@ export default function Chatbot() {
       {/* Chat Button */}
       <Button
         onClick={handleToggleChat}
-        className="bg-primary hover:bg-primary/90 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border-4 border-white w-16 h-16 flex items-center justify-center"
+        className="bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border-4 border-white w-16 h-16 flex items-center justify-center"
       >
         {isOpen ? <X className="w-7 h-7" /> : <MessageCircle className="w-7 h-7" />}
       </Button>

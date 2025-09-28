@@ -494,6 +494,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Automated blog publishing task endpoint
+  app.get("/api/tasks/publish-monthly", async (req, res) => {
+    try {
+      // Token authentication
+      const token = req.query.token as string;
+      if (!token || token !== process.env.BLOG_TASK_TOKEN) {
+        return res.status(401).json({ message: "Unauthorized: Invalid or missing token" });
+      }
+
+      // Generate monthly blog content
+      const result = await generateMonthlyBlogPost();
+      
+      res.json({
+        success: true,
+        message: "Monthly blog post published successfully",
+        post: result
+      });
+    } catch (error) {
+      console.error("Error in monthly blog publishing task:", error);
+      res.status(500).json({ 
+        success: false,
+        message: "Failed to publish monthly blog post",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -51,13 +51,15 @@ export default function Header() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <Link href="/">
-                <div className="flex items-center cursor-pointer">
-                  <img 
-                    src="/img/logo-horizontal.svg" 
-                    alt="Selam CPA" 
-                    className="h-8 w-auto"
-                    data-testid="logo-horizontal"
-                  />
+                <div className="flex items-center space-x-3 cursor-pointer">
+                  <div className="w-8 h-8 bg-neutral-900 rounded flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">S</span>
+                  </div>
+                  <div>
+                    <h1 className="text-xl font-semibold text-neutral-900">
+                      Selam CPA
+                    </h1>
+                  </div>
                 </div>
               </Link>
             </div>

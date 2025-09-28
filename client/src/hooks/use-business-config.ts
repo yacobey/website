@@ -17,6 +17,14 @@ export interface BusinessConfig {
     address: string;
     hours: string;
   };
+  seo: {
+    socialImage: string;
+    socialImageAlt: string;
+    domain: string;
+  };
+  api: {
+    baseUrl: string;
+  };
 }
 
 export function useBusinessConfig() {

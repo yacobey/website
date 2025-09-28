@@ -9,6 +9,7 @@ import { useAnalytics } from "@/hooks/use-analytics";
 import { ErrorBoundary } from "@/components/performance/error-boundary";
 import { SuspenseFallback } from "@/components/performance/suspense-fallback";
 import { SSLStatusChecker } from "@/components/ssl-status-checker";
+import CPAChatbot from "@/components/cpa-chatbot";
 
 // Critical pages (load immediately)
 import Home from "@/pages/home";
@@ -73,6 +74,7 @@ function Router() {
         </Switch>
       </Suspense>
       <SSLStatusChecker />
+      <CPAChatbot />
     </ErrorBoundary>
   );
 }

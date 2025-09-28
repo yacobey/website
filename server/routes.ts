@@ -5,6 +5,7 @@ import { generateSitemap, generateRobotsTxt } from "./sitemap-generator";
 import { insertContactSchema, insertChatMessageSchema, insertSeoDataSchema } from "@shared/schema";
 import { generateAIResponse, analyzeUserIntent, updateUserPreferences } from "./ai-service";
 import { getSmartResponse } from "./smart-chat-service";
+import { getCPAChatResponse, generateWelcomeMessage, type ChatMessage } from "./lib/openai";
 import { addPerformanceRoutes } from "./routes-performance";
 import { cleanupSeoData, validateRobotsDirective } from "./seo-cleanup";
 import { SSLValidator } from "./ssl-validator";
@@ -829,6 +830,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error restoring content version:", error);
       res.status(500).json({ message: "Failed to restore content version" });
+    }
+  });
+
+  // Chatbot API routes
+  app.get("/api/chat/welcome", async (req, res) => {
+    try {
+      const welcomeResponse = await generateWelcomeMessage();
+      res.json(welcomeResponse);
+    } catch (error) {
+      console.error("Error generating welcome message:", error);
+      res.status(500).json({ 
+        message: "Welcome to Selam CPA! How can I help you today?",
+        suggestedActions: ["Schedule consultation", "Ask a question"]
+      });
+    }
+  });
+
+  app.post("/api/chat/message", async (req, res) => {
+    try {
+      const { messages, userContext } = req.body;
+      
+      if (!messages || !Array.isArray(messages)) {
+        return res.status(400).json({ 
+          message: "Invalid request format. Messages array is required." 
+        });
+      }
+
+      const response = await getCPAChatResponse(messages, userContext);
+      res.json(response);
+    } catch (error) {
+      console.error("Error processing chat message:", error);
+      res.status(500).json({ 
+        message: "I apologize, but I'm experiencing technical difficulties. Please call us at (301) 640-8549 for immediate assistance.",
+        suggestedActions: ["Call (301) 640-8549", "Try again"]
+      });
     }
   });
 

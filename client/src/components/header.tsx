@@ -38,7 +38,7 @@ export default function Header() {
             <Link href="/blog" data-testid="link-blog" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200">
               Blog
             </Link>
-            <Link href="/ai-tools" data-testid="link-agent" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200">
+            <Link href="/agent" data-testid="link-agent" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200">
               Agent
             </Link>
             <a 

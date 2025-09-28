@@ -6,7 +6,7 @@ import Footer from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, User, ArrowLeft } from "lucide-react";
-import { useBusinessConfig } from "@/hooks/useBusinessConfig";
+import { useBusinessConfig } from "@/hooks/use-business-config";
 import type { BlogPost } from "@shared/schema";
 
 export default function BlogPost() {

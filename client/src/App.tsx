@@ -36,6 +36,7 @@ const AdminLogin = React.lazy(() => import("@/pages/admin-login"));
 const IndexingControl = React.lazy(() => import("@/pages/indexing-control"));
 const IndexingStatus = React.lazy(() => import("@/pages/indexing-status"));
 const Agent = React.lazy(() => import("@/pages/agent"));
+const PaymentCancel = React.lazy(() => import("@/pages/payment-cancel"));
 
 function Router() {
   useAnalytics();
@@ -60,6 +61,7 @@ function Router() {
           <Route path="/partners" component={Partners} />
           <Route path="/payment" component={Payment} />
           <Route path="/payment-success" component={PaymentSuccess} />
+          <Route path="/payment-cancel" component={PaymentCancel} />
           <Route path="/dashboard" component={DashboardPage} />
           <Route path="/careers" component={Careers} />
           <Route path="/admin-login" component={AdminLogin} />

@@ -2,6 +2,7 @@ import DynamicSEO from "@/components/dynamic-seo";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { CheckCircle, FileText, BarChart3, Users, ArrowRight } from "lucide-react";
+import { CPAServiceStructuredData, WebPageStructuredData } from "@/components/structured-data";
 
 const services = [
   {
@@ -60,6 +61,39 @@ export default function Bookkeeping() {
   return (
     <div className="min-h-screen bg-white">
       <DynamicSEO page="bookkeeping" />
+      
+      <CPAServiceStructuredData
+        serviceName="Professional Bookkeeping Services"
+        description="Complete bookkeeping solutions for every stage of your business. From startups to established companies, we maintain accurate financial records so you can focus on what you do best."
+        url="https://selamcpa.com/bookkeeping"
+        additionalData={{
+          "serviceType": ["Monthly Bookkeeping", "Financial Reporting", "QuickBooks Setup", "Payroll Services"],
+          "audience": ["Small Businesses", "Startups", "Growing Companies"],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Bookkeeping Services",
+            "itemListElement": services.map(service => ({
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": service.title,
+                "description": service.description
+              }
+            }))
+          }
+        }}
+      />
+      
+      <WebPageStructuredData
+        name="Professional Bookkeeping Services | Selam CPA"
+        description="Complete bookkeeping solutions for every stage of your business. Professional financial record maintenance and reporting services."
+        url="https://selamcpa.com/bookkeeping"
+        breadcrumbs={[
+          { name: "Home", url: "https://selamcpa.com" },
+          { name: "Bookkeeping Services", url: "https://selamcpa.com/bookkeeping" }
+        ]}
+      />
+      
       <Header />
       
       {/* Hero Section */}

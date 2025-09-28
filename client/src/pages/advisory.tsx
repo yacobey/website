@@ -2,6 +2,7 @@ import DynamicSEO from "@/components/dynamic-seo";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { TrendingUp, BarChart3, DollarSign, Target, Zap, Users } from "lucide-react";
+import { CPAServiceStructuredData, WebPageStructuredData } from "@/components/structured-data";
 
 const services = [
   {
@@ -64,6 +65,39 @@ export default function Advisory() {
   return (
     <div className="min-h-screen bg-white">
       <DynamicSEO page="advisory" />
+      
+      <CPAServiceStructuredData
+        serviceName="Business Advisory & CFO Services"
+        description="CFO-level strategic insights without the overhead. Get strategic financial guidance, fractional CFO services, and business advisory to accelerate growth."
+        url="https://selamcpa.com/advisory"
+        additionalData={{
+          "serviceType": ["Fractional CFO", "Business Advisory", "Financial Planning", "M&A Support"],
+          "audience": ["Growing Businesses", "Entrepreneurs", "Scale-up Companies"],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Advisory Services",
+            "itemListElement": services.map(service => ({
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": service.title,
+                "description": service.description
+              }
+            }))
+          }
+        }}
+      />
+      
+      <WebPageStructuredData
+        name="Business Advisory & CFO Services | Selam CPA"
+        description="CFO-level strategic insights without the overhead. Strategic financial guidance and business advisory services for growing companies."
+        url="https://selamcpa.com/advisory"
+        breadcrumbs={[
+          { name: "Home", url: "https://selamcpa.com" },
+          { name: "Advisory Services", url: "https://selamcpa.com/advisory" }
+        ]}
+      />
+      
       <Header />
       
       {/* Hero Section */}

@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Shield, FileCheck, Search, Award, Users, Building } from "lucide-react";
+import { CPAServiceStructuredData, WebPageStructuredData } from "@/components/structured-data";
 
 const services = [
   {
@@ -80,6 +81,39 @@ export default function Audit() {
         <meta name="twitter:title" content="Professional Audit Services | Selam CPA" />
         <meta name="twitter:description" content="Independent audit and assurance services following GAAS standards for businesses and nonprofits." />
       </Helmet>
+      
+      <CPAServiceStructuredData
+        serviceName="Professional Audit & Assurance Services"
+        description="Independent audit and assurance services following GAAS standards. Professional audit services that provide stakeholders with confidence in your financial reporting."
+        url="https://selamcpa.com/audit"
+        additionalData={{
+          "serviceType": ["Financial Statement Audits", "Compliance Audits", "Nonprofit Audits", "Government Audits"],
+          "audience": ["Nonprofits", "Government Entities", "Businesses", "Employee Benefit Plans"],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Audit Services",
+            "itemListElement": services.map(service => ({
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": service.title,
+                "description": service.description
+              }
+            }))
+          }
+        }}
+      />
+      
+      <WebPageStructuredData
+        name="Professional Audit & Assurance Services | Selam CPA"
+        description="Independent audit and assurance services following GAAS standards. Providing stakeholders confidence in financial reporting."
+        url="https://selamcpa.com/audit"
+        breadcrumbs={[
+          { name: "Home", url: "https://selamcpa.com" },
+          { name: "Audit Services", url: "https://selamcpa.com/audit" }
+        ]}
+      />
+      
       <Header />
       
       {/* Hero Section */}

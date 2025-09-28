@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Calculator, TrendingUp, Shield, FileCheck, Lightbulb, Users } from "lucide-react";
+import { CPAServiceStructuredData, WebPageStructuredData } from "@/components/structured-data";
 
 const services = [
   {
@@ -79,6 +80,38 @@ export default function Tax() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://selamcpa.com/tax" />
       </Helmet>
+      
+      <CPAServiceStructuredData
+        serviceName="Tax Preparation & Planning Services"
+        description="Professional tax preparation and strategic tax planning for individuals and businesses. Minimize tax liability with proactive strategies and expert preparation."
+        url="https://selamcpa.com/tax"
+        additionalData={{
+          "serviceType": ["Tax Preparation", "Tax Planning", "IRS Representation", "Business Tax"],
+          "audience": ["Individual Taxpayers", "Small Businesses", "Corporations"],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Tax Services",
+            "itemListElement": services.map(service => ({
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": service.title,
+                "description": service.description
+              }
+            }))
+          }
+        }}
+      />
+      
+      <WebPageStructuredData
+        name="Tax Preparation & Strategic Tax Planning | Selam CPA"
+        description="Professional tax preparation and strategic tax planning for individuals and businesses. Minimize tax liability with proactive strategies and expert preparation."
+        url="https://selamcpa.com/tax"
+        breadcrumbs={[
+          { name: "Home", url: "https://selamcpa.com" },
+          { name: "Tax Services", url: "https://selamcpa.com/tax" }
+        ]}
+      />
       <Header />
       
       {/* Hero Section */}

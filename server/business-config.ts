@@ -24,7 +24,7 @@ export const businessConfig = {
 
   // SEO and Social Media
   seo: {
-    socialImage: process.env.VITE_SOCIAL_IMAGE || "/assets/stock_images/professional_account_4628fcdf.jpg",
+    socialImage: process.env.VITE_SOCIAL_IMAGE || "/img/social-share-1200x630.png",
     socialImageAlt: "Selam CPA - Professional Accounting & Tax Services",
     domain: process.env.FRONTEND_ORIGIN || "https://selamcpa.com"
   },

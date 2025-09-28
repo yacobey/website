@@ -59,6 +59,9 @@ export default function Header() {
                     <h1 className="text-xl font-semibold text-neutral-900">
                       Selam CPA
                     </h1>
+                    <p className="text-sm font-medium text-neutral-600">
+                      Grow With US!
+                    </p>
                   </div>
                 </div>
               </Link>

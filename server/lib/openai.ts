@@ -62,25 +62,54 @@ export async function getCPAChatResponse(
   userContext?: any
 ): Promise<CPAChatResponse> {
   try {
+    // Updated system prompt to specifically request JSON format
+    const systemPromptWithJSON = `${CPA_SYSTEM_PROMPT}
+
+IMPORTANT: Always respond in valid JSON format with this exact structure:
+{
+  "message": "your professional response here",
+  "suggestedActions": ["action1", "action2"],
+  "requiresFollowUp": false,
+  "leadData": {
+    "intent": "service_inquiry",
+    "urgency": "medium",
+    "serviceNeeded": "tax_preparation"
+  }
+}`;
+
     const response = await openai.chat.completions.create({
-      model: "gpt-5",
+      model: "gpt-4o", // Using stable model instead of gpt-5
       messages: [
-        { role: "system", content: CPA_SYSTEM_PROMPT },
+        { role: "system", content: systemPromptWithJSON },
         ...messages
       ],
       response_format: { type: "json_object" },
+      max_tokens: 1000,
     });
 
-    const result = JSON.parse(response.choices[0].message.content || "{}");
+    const content = response.choices[0].message.content;
+    if (!content) {
+      throw new Error("No response content from OpenAI");
+    }
+
+    const result = JSON.parse(content);
 
     return {
       message: result.message || "I'm here to help with your accounting and tax questions. How can I assist you today?",
-      suggestedActions: result.suggestedActions || [],
+      suggestedActions: result.suggestedActions || ["Schedule a consultation", "Ask another question"],
       requiresFollowUp: result.requiresFollowUp || false,
       leadData: result.leadData
     };
   } catch (error) {
     console.error("OpenAI API error:", error);
+    if (error instanceof Error) {
+      console.error("Error details:", {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      });
+    }
+    
     return {
       message: "I apologize, but I'm experiencing technical difficulties. Please call us at (301) 640-8549 for immediate assistance, or try again in a moment.",
       suggestedActions: ["Call (301) 640-8549", "Schedule a consultation"],

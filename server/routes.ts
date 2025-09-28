@@ -18,7 +18,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 }
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 import { z } from "zod";
-import { generateAIResponse } from "./ai-service";
+import { generateBlogContent, generateBlogMetadata } from "./ai-service";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission
@@ -534,46 +534,27 @@ async function generateMonthlyBlogPost() {
   
   // Topics relevant to CPA services and current time of year
   const seasonalTopics = getSeasonalCPATopics(currentDate.getMonth());
-  
-  const prompt = `As a professional CPA and content writer for Selam CPA, write a comprehensive blog post for ${monthName} ${year} that provides valuable insights to small business owners and individuals. 
-
-Focus on one of these timely topics: ${seasonalTopics.join(', ')}
-
-The blog post should:
-- Be 800-1200 words
-- Include actionable advice and tips
-- Reference current tax laws and regulations
-- Include relevant examples
-- Maintain a professional yet approachable tone
-- End with a call-to-action for consultation
-
-Structure: Introduction, 3-4 main sections with headers, and conclusion.
-
-Write the complete article content only, no meta descriptions or titles.`;
 
   try {
-    // Generate content using AI
-    const content = await generateAIResponse('blog-generation', prompt);
+    // Generate long-form blog content using dedicated blog AI function
+    const selectedTopic = seasonalTopics[0]; // Use first topic from seasonal list
+    const content = await generateBlogContent(selectedTopic, `${monthName} ${year}`);
     
-    // Generate title based on content
-    const titlePrompt = `Based on this blog content, create a compelling, SEO-friendly blog post title (max 60 characters): ${content.substring(0, 200)}...`;
-    const title = await generateAIResponse('title-generation', titlePrompt);
-    
-    // Generate excerpt
-    const excerptPrompt = `Create a compelling 2-sentence excerpt (max 160 characters) for this blog post: ${content.substring(0, 300)}...`;
-    const excerpt = await generateAIResponse('excerpt-generation', excerptPrompt);
+    // Generate title and excerpt based on content
+    const title = await generateBlogMetadata(content, 'title');
+    const excerpt = await generateBlogMetadata(content, 'excerpt');
     
     // Generate slug from title
-    const slug = generateSlug(title.replace(/['"]/g, ''));
+    const slug = generateSlug(title);
     
     // Determine category based on month
     const category = getMonthlyCategory(currentDate.getMonth());
     
     // Create blog post object
     const blogPost = {
-      title: title.replace(/['"]/g, ''),
+      title,
       slug,
-      excerpt: excerpt.replace(/['"]/g, ''),
+      excerpt,
       content,
       category,
       author: "Selam CPA Team"

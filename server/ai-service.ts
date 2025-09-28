@@ -117,6 +117,92 @@ export function getChatContext(sessionId: string): ChatContext | undefined {
   return conversationContexts.get(sessionId);
 }
 
+// Generate long-form blog content for CPA services
+export async function generateBlogContent(topic: string, monthYear: string): Promise<string> {
+  if (!openai) {
+    throw new Error('OpenAI API key not configured');
+  }
+
+  const blogSystemPrompt = `You are a professional CPA and expert content writer for Selam CPA, a comprehensive accounting firm. Write high-quality, authoritative blog content that demonstrates expertise and builds trust with potential clients.
+
+WRITING GUIDELINES:
+- Write 800-1200 words of comprehensive, valuable content
+- Use professional yet approachable tone
+- Include actionable advice and practical tips
+- Reference current tax laws and regulations when relevant
+- Use clear structure with headers and subheadings
+- End with a compelling call-to-action for consultation
+
+ABOUT SELAM CPA:
+- Full-service CPA firm serving individuals, small businesses, and enterprises
+- Services: Tax preparation/planning, bookkeeping, payroll, business advisory, audit/assurance
+- Specialties: AI-powered financial tools, technology integration, multi-industry expertise
+- Contact: (301) 640-8549 | Free 30-minute consultation available
+- Focus on tax savings, financial optimization, and practical business advice
+
+FORMAT REQUIREMENTS:
+- Use markdown headers (##, ###)
+- Include bullet points for lists
+- Write in clear, scannable sections
+- Include specific examples and scenarios
+- End with a professional call-to-action mentioning consultation services`;
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        { role: "system", content: blogSystemPrompt },
+        { role: "user", content: `Write a comprehensive blog post for ${monthYear} about: ${topic}. Focus on providing valuable insights for small business owners and individuals seeking accounting and tax guidance.` }
+      ],
+      max_tokens: 2000, // Allow for long-form content (800-1200 words)
+      temperature: 0.7
+    });
+
+    const content = response.choices[0].message.content;
+    if (!content) {
+      throw new Error('No content generated from OpenAI');
+    }
+
+    return content;
+  } catch (error) {
+    console.error('OpenAI blog generation error:', error);
+    throw new Error(`Failed to generate blog content: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+}
+
+// Generate blog metadata (title, excerpt) using focused prompts
+export async function generateBlogMetadata(content: string, type: 'title' | 'excerpt'): Promise<string> {
+  if (!openai) {
+    throw new Error('OpenAI API key not configured');
+  }
+
+  const prompts = {
+    title: `Based on this blog content, create a compelling, SEO-friendly blog post title (max 60 characters) that would appeal to small business owners and individuals seeking CPA services:\n\n${content.substring(0, 300)}...`,
+    excerpt: `Create a compelling 2-sentence excerpt (max 160 characters) that summarizes the key value of this blog post for potential CPA clients:\n\n${content.substring(0, 400)}...`
+  };
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        { role: "user", content: prompts[type] }
+      ],
+      max_tokens: 100,
+      temperature: 0.7
+    });
+
+    const result = response.choices[0].message.content;
+    if (!result) {
+      throw new Error(`No ${type} generated from OpenAI`);
+    }
+
+    return result.trim().replace(/['"]/g, '');
+  } catch (error) {
+    console.error(`OpenAI ${type} generation error:`, error);
+    throw new Error(`Failed to generate ${type}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+}
+
 // Clean up old conversations (run periodically)
 export function cleanupOldConversations() {
   const cutoffTime = new Date(Date.now() - 24 * 60 * 60 * 1000); // 24 hours ago

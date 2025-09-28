@@ -435,7 +435,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const result = await cleanupSeoData();
       res.json(result);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error during SEO cleanup:", error);
       res.status(500).json({ message: "SEO cleanup failed", error: error.message });
     }

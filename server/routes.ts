@@ -495,11 +495,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Automated blog publishing task endpoints
+  // Helper function to validate blog task authentication
+  const validateBlogTaskAuth = (req: any): boolean => {
+    // Check Authorization header (Bearer token)
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      return token === process.env.BLOG_TASK_TOKEN;
+    }
+    
+    // Check query parameter (fallback)
+    const queryToken = req.query.token as string;
+    return queryToken === process.env.BLOG_TASK_TOKEN;
+  };
+
+  // Automated blog publishing task endpoints (GET for backward compatibility)
   app.get("/api/tasks/publish-monthly", async (req, res) => {
     try {
-      const token = req.query.token as string;
-      if (!token || token !== process.env.BLOG_TASK_TOKEN) {
+      if (!validateBlogTaskAuth(req)) {
+        return res.status(401).json({ message: "Unauthorized: Invalid or missing token" });
+      }
+
+      const result = await generateScheduledBlogPost('monthly');
+      res.json({
+        success: true,
+        message: "Monthly blog post published successfully",
+        post: result
+      });
+    } catch (error) {
+      console.error("Error in monthly blog publishing task:", error);
+      res.status(500).json({ 
+        success: false,
+        message: "Failed to publish monthly blog post",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // POST endpoint for blog publishing (preferred method)
+  app.post("/api/tasks/publish-monthly", async (req, res) => {
+    try {
+      if (!validateBlogTaskAuth(req)) {
         return res.status(401).json({ message: "Unauthorized: Invalid or missing token" });
       }
 
@@ -578,7 +614,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/content-schedule", async (req, res) => {
     try {
-      const schedule = await storage.createContentSchedule(req.body);
+      const { contentType, frequency, nextRunDate, lastRunDate, isActive, topicCategories, publishTime } = req.body;
+      
+      // Validate required fields
+      if (!contentType || !frequency || !nextRunDate) {
+        return res.status(400).json({ message: "Missing required fields: contentType, frequency, nextRunDate" });
+      }
+      
+      // Convert date strings to Date objects
+      const scheduleData = {
+        contentType,
+        frequency,
+        nextRunDate: new Date(nextRunDate),
+        lastRunDate: lastRunDate ? new Date(lastRunDate) : undefined,
+        isActive: isActive !== undefined ? isActive : true,
+        topicCategories: topicCategories || [],
+        publishTime: publishTime || "09:00"
+      };
+      
+      // Validate that dates are valid
+      if (isNaN(scheduleData.nextRunDate.getTime())) {
+        return res.status(400).json({ message: "Invalid nextRunDate format" });
+      }
+      
+      if (scheduleData.lastRunDate && isNaN(scheduleData.lastRunDate.getTime())) {
+        return res.status(400).json({ message: "Invalid lastRunDate format" });
+      }
+      
+      const schedule = await storage.createContentSchedule(scheduleData);
       res.json(schedule);
     } catch (error) {
       console.error("Error creating content schedule:", error);
@@ -600,7 +663,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/content-analytics", async (req, res) => {
     try {
-      const analytics = await storage.createContentAnalytics(req.body);
+      const { blogPostId, views, uniqueViews, timeOnPage, bounceRate, socialShares, emailClicks, contactFormSubmissions } = req.body;
+      
+      // Validate required fields
+      if (!blogPostId) {
+        return res.status(400).json({ message: "Missing required field: blogPostId" });
+      }
+      
+      const analyticsData = {
+        blogPostId: parseInt(blogPostId),
+        views: views || 0,
+        uniqueViews: uniqueViews || 0,
+        timeOnPage: timeOnPage || 0,
+        bounceRate: bounceRate || null,
+        socialShares: socialShares || 0,
+        emailClicks: emailClicks || 0,
+        contactFormSubmissions: contactFormSubmissions || 0
+      };
+      
+      const analytics = await storage.createContentAnalytics(analyticsData);
       res.json(analytics);
     } catch (error) {
       console.error("Error creating content analytics:", error);

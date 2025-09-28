@@ -2,6 +2,7 @@ import { useLocation } from "wouter";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { useBusinessConfig } from "@/hooks/use-business-config";
+import StructuredData from "@/components/structured-data";
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -21,6 +22,57 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      <StructuredData
+        type="Organization"
+        data={{
+          "@type": ["AccountingService", "LocalBusiness"],
+          "name": "Selam CPA PLLC",
+          "alternateName": "Selam CPA",
+          "description": "Professional CPA firm providing tax preparation, bookkeeping, advisory, and audit services for individuals and businesses in MD, VA, DC Metro Area.",
+          "slogan": "CPA-Led Tax Strategy & Done-For-You Filing",
+          "foundingDate": "2020",
+          "url": "https://selamcpa.com",
+          "mainEntityOfPage": "https://selamcpa.com",
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "CPA Services",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Tax Preparation & Planning",
+                  "description": "Professional tax preparation and strategic tax planning services"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Bookkeeping Services",
+                  "description": "Complete bookkeeping solutions for businesses of all sizes"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Business Advisory",
+                  "description": "CFO-level strategic insights and business advisory services"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Audit & Assurance",
+                  "description": "Independent audit and assurance services following GAAS standards"
+                }
+              }
+            ]
+          }
+        }}
+      />
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <section className="text-center py-16 lg:py-24">

@@ -1,136 +1,95 @@
-import { useEffect, useState } from 'react';
-import { useSearch } from 'wouter';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Download, Mail, Calendar } from "lucide-react";
-import { Link } from "wouter";
+import { useBusinessConfig } from "@/hooks/use-business-config";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import { CheckCircle, FileText, Upload, Calendar } from "lucide-react";
 
 export default function PaymentSuccess() {
-  const search = useSearch();
-  const [paymentDetails, setPaymentDetails] = useState<any>(null);
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(search);
-    const paymentIntentId = urlParams.get('payment_intent');
-    
-    if (paymentIntentId) {
-      // In a real app, you'd fetch payment details from your API
-      setPaymentDetails({
-        id: paymentIntentId,
-        amount: 299, // This would come from your API
-        service: "Tax Return Preparation",
-        status: "succeeded"
-      });
-    }
-  }, [search]);
+  const { data: businessConfig } = useBusinessConfig();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-green-600" />
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-4xl mx-auto">
+          <header className="text-center mb-16">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-10 h-10 text-green-600" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Payment Successful!</h1>
-            <p className="text-lg text-gray-600">
-              Thank you for choosing Selam CPA
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              ✅ Payment received — let's get started
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Please complete the three quick steps below. This helps us begin immediately.
             </p>
-          </div>
+          </header>
 
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>Payment Confirmation</CardTitle>
-              <CardDescription>
-                Your payment has been processed successfully
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {paymentDetails && (
-                <>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Service:</span>
-                    <span className="font-medium">{paymentDetails.service}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Amount:</span>
-                    <span className="font-medium">${paymentDetails.amount}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Transaction ID:</span>
-                    <span className="font-mono text-sm">{paymentDetails.id}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Status:</span>
-                    <span className="font-medium text-green-600 capitalize">{paymentDetails.status}</span>
-                  </div>
-                </>
-              )}
-            </CardContent>
-          </Card>
-
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>What Happens Next?</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-blue-600 mt-0.5" />
-                <div>
-                  <h3 className="font-medium">Email Confirmation</h3>
-                  <p className="text-sm text-gray-600">
-                    You'll receive a receipt and service details via email within 5 minutes.
-                  </p>
+          <section className="grid md:grid-cols-3 gap-8" aria-label="Next steps">
+            <article className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                  <FileText className="w-5 h-5 text-blue-600" />
                 </div>
+                <h3 className="text-xl font-bold text-gray-900">1) Complete Intake Form</h3>
               </div>
-              
-              <div className="flex items-start gap-3">
-                <Calendar className="w-5 h-5 text-green-600 mt-0.5" />
-                <div>
-                  <h3 className="font-medium">Service Scheduling</h3>
-                  <p className="text-sm text-gray-600">
-                    Our team will contact you within 24 hours to schedule your service.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <Download className="w-5 h-5 text-purple-600 mt-0.5" />
-                <div>
-                  <h3 className="font-medium">Document Upload</h3>
-                  <p className="text-sm text-gray-600">
-                    Access our secure client portal to upload required documents.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Tell us about your situation so we can tailor your workplan and confirm required documents.
+              </p>
+              <a 
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 inline-block w-full text-center" 
+                href={businessConfig?.links.intakeForm} 
+                target="_blank" 
+                rel="noopener"
+                data-testid="intake-form-btn"
+              >
+                Open Intake Form
+              </a>
+            </article>
 
-          <div className="flex gap-4 justify-center">
-            <Link href="/">
-              <Button variant="outline">
-                Return to Home
-              </Button>
-            </Link>
-            <Button>
-              <Mail className="w-4 h-4 mr-2" />
-              Contact Us
-            </Button>
-          </div>
+            <article className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                  <Upload className="w-5 h-5 text-green-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900">2) Upload Documents Securely</h3>
+              </div>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Use our secure file-request link to send prior returns, W-2/1099s, statements, and bookkeeping exports.
+              </p>
+              <a 
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 inline-block w-full text-center" 
+                href={businessConfig?.links.secureUpload} 
+                target="_blank" 
+                rel="noopener"
+                data-testid="upload-docs-btn"
+              >
+                Upload Documents
+              </a>
+            </article>
 
-          <div className="mt-8 text-center">
-            <h3 className="font-semibold text-gray-900 mb-2">Need Help?</h3>
-            <p className="text-gray-600 mb-4">
-              Questions about your service or payment? We're here to help.
-            </p>
-            <div className="space-y-2 text-sm">
-              <p><strong>Phone:</strong> (301) 640-8549</p>
-              <p><strong>Email:</strong> selamcpa25@gmail.com</p>
-              <p><strong>Hours:</strong> Monday - Friday, 9 AM - 6 PM EST</p>
-            </div>
-          </div>
+            <article className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                  <Calendar className="w-5 h-5 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900">3) Book a Free Consultation</h3>
+              </div>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Meet briefly to confirm scope, timelines, and any open questions. (Virtual meeting.)
+              </p>
+              <a 
+                className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 inline-block w-full text-center" 
+                href={businessConfig?.links.calendly} 
+                target="_blank" 
+                rel="noopener"
+                data-testid="consultation-btn"
+              >
+                Book Free Consultation
+              </a>
+            </article>
+          </section>
         </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }

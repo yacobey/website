@@ -1,15 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, User, ArrowLeft } from "lucide-react";
+import { useBusinessConfig } from "@/hooks/useBusinessConfig";
 import type { BlogPost } from "@shared/schema";
 
 export default function BlogPost() {
   const { slug } = useParams();
+  const { data: businessConfig } = useBusinessConfig();
   const { data: post, isLoading, error } = useQuery<BlogPost>({
     queryKey: [`/api/blog/${slug}`],
   });
@@ -59,16 +61,14 @@ export default function BlogPost() {
             <Helmet>
               <title>{post.title} | Selam CPA Financial Insights</title>
               <meta name="description" content={post.excerpt} />
-              <meta name="keywords" content={`${post.category.toLowerCase()}, CPA advice, financial planning, tax tips, accounting insights`} />
-              <meta property="og:title" content={`${post.title} | Selam CPA`} />
-              <meta property="og:description" content={post.excerpt} />
+              <link rel="canonical" href={`${businessConfig?.seo.domain}/blog/${post.slug}`} />
               <meta property="og:type" content="article" />
-              <meta property="og:url" content={`https://selamcpa.com/blog/${post.slug}`} />
-              <meta property="article:author" content={post.author} />
-              <meta property="article:section" content={post.category} />
-              <meta property="article:published_time" content={post.createdAt} />
-              <meta name="twitter:card" content="summary_large_image" />
-              <meta name="twitter:title" content={`${post.title} | Selam CPA`} />
+              <meta property="og:title" content={post.title} />
+              <meta property="og:description" content={post.excerpt} />
+              <meta property="og:url" content={`${businessConfig?.seo.domain}/blog/${post.slug}`} />
+              <meta property="og:image" content={businessConfig?.seo.socialImage} />
+              <meta name="twitter:card" content="summary" />
+              <meta name="twitter:title" content={post.title} />
               <meta name="twitter:description" content={post.excerpt} />
             </Helmet>
             <article className="py-20">

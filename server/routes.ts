@@ -18,6 +18,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 }
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 import { z } from "zod";
+import { generateAIResponse } from "./ai-service";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission
@@ -523,6 +524,111 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   const httpServer = createServer(app);
   return httpServer;
+}
+
+// Generate monthly blog post content using AI
+async function generateMonthlyBlogPost() {
+  const currentDate = new Date();
+  const monthName = currentDate.toLocaleString('default', { month: 'long' });
+  const year = currentDate.getFullYear();
+  
+  // Topics relevant to CPA services and current time of year
+  const seasonalTopics = getSeasonalCPATopics(currentDate.getMonth());
+  
+  const prompt = `As a professional CPA and content writer for Selam CPA, write a comprehensive blog post for ${monthName} ${year} that provides valuable insights to small business owners and individuals. 
+
+Focus on one of these timely topics: ${seasonalTopics.join(', ')}
+
+The blog post should:
+- Be 800-1200 words
+- Include actionable advice and tips
+- Reference current tax laws and regulations
+- Include relevant examples
+- Maintain a professional yet approachable tone
+- End with a call-to-action for consultation
+
+Structure: Introduction, 3-4 main sections with headers, and conclusion.
+
+Write the complete article content only, no meta descriptions or titles.`;
+
+  try {
+    // Generate content using AI
+    const content = await generateAIResponse('blog-generation', prompt);
+    
+    // Generate title based on content
+    const titlePrompt = `Based on this blog content, create a compelling, SEO-friendly blog post title (max 60 characters): ${content.substring(0, 200)}...`;
+    const title = await generateAIResponse('title-generation', titlePrompt);
+    
+    // Generate excerpt
+    const excerptPrompt = `Create a compelling 2-sentence excerpt (max 160 characters) for this blog post: ${content.substring(0, 300)}...`;
+    const excerpt = await generateAIResponse('excerpt-generation', excerptPrompt);
+    
+    // Generate slug from title
+    const slug = generateSlug(title.replace(/['"]/g, ''));
+    
+    // Determine category based on month
+    const category = getMonthlyCategory(currentDate.getMonth());
+    
+    // Create blog post object
+    const blogPost = {
+      title: title.replace(/['"]/g, ''),
+      slug,
+      excerpt: excerpt.replace(/['"]/g, ''),
+      content,
+      category,
+      author: "Selam CPA Team"
+    };
+    
+    // Save to database
+    const savedPost = await storage.createBlogPost(blogPost);
+    
+    return savedPost;
+  } catch (error) {
+    console.error('Error generating monthly blog post:', error);
+    throw new Error(`Failed to generate blog post: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+}
+
+// Get seasonal CPA topics based on month
+function getSeasonalCPATopics(month: number): string[] {
+  const topicsByMonth = {
+    0: ['Year-End Tax Planning Strategies', 'W-2 and 1099 Preparation', 'Small Business Tax Deductions'], // January
+    1: ['Business Formation for the New Year', 'Quarterly Tax Estimates', 'Bookkeeping Best Practices'], // February  
+    2: ['Tax Season Preparation', 'Document Organization Tips', 'Common Tax Mistakes to Avoid'], // March
+    3: ['Post-Tax Season Business Review', 'Cash Flow Management', 'Financial Statement Analysis'], // April
+    4: ['Business Growth Strategies', 'Technology Integration for Accounting', 'Investment Planning'], // May
+    5: ['Mid-Year Financial Checkup', 'Payroll Best Practices', 'Business Advisory Services'], // June
+    6: ['Summer Business Planning', 'Audit Preparation Tips', 'Financial Risk Management'], // July
+    7: ['Business Formation and Structure', 'Tax-Advantaged Retirement Planning', 'Compliance Updates'], // August
+    8: ['Fall Financial Planning', 'Business Budgeting Strategies', 'Tax Law Changes'], // September
+    9: ['Quarterly Review and Planning', 'Business Insurance Considerations', 'Year-End Tax Strategies'], // October
+    10: ['Year-End Tax Planning', 'Small Business Deduction Strategies', 'Financial Year-End Cleanup'], // November
+    11: ['Tax Planning for Next Year', 'Business Goal Setting', 'Financial Statement Preparation'] // December
+  };
+  
+  return topicsByMonth[month as keyof typeof topicsByMonth] || topicsByMonth[0];
+}
+
+// Get category based on month
+function getMonthlyCategory(month: number): string {
+  const categories = {
+    0: 'Tax Planning', 1: 'Business Formation', 2: 'Tax Preparation', 3: 'Financial Analysis',
+    4: 'Business Growth', 5: 'Financial Planning', 6: 'Business Advisory', 7: 'Compliance',
+    8: 'Financial Planning', 9: 'Tax Strategy', 10: 'Tax Planning', 11: 'Year-End Planning'
+  };
+  
+  return categories[month as keyof typeof categories] || 'Business Advisory';
+}
+
+// Generate URL-friendly slug
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim()
+    .substring(0, 60);
 }
 
 function generateChatResponse(message: string): string {

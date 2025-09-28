@@ -1,0 +1,54 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+const phone = import.meta.env.VITE_PUBLIC_PHONE_DISPLAY as string;
+const calendly = import.meta.env.VITE_CALENDLY_URL as string;
+const API = import.meta.env.VITE_API_URL as string;
+
+export default function Home() {
+  const nav = useNavigate();
+
+  async function startTaxPrep() {
+    const price_id = "price_TAX_PREP_123"; // TODO: replace
+    const r = await fetch(`${API}/checkout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ price_id })
+    });
+    const data = await r.json();
+    if (data.url) window.location.href = data.url;
+  }
+
+  return (
+    <main className="wrap">
+      <section className="hero">
+        <h1>CPA-Led Tax Strategy & Done-For-You Filing</h1>
+        <p className="muted">Virtual firm based in Maryland. Proactive planning, precise compliance.</p>
+        <div className="actions">
+          <a href={calendly} target="_blank" rel="noopener" className="btn btn-ghost">Book Free Consultation</a>
+          <button onClick={startTaxPrep} className="btn btn-primary">Start Tax Prep</button>
+        </div>
+        <p className="phone muted">📞 <a href={`tel:${phone.replace(/[^\d+]/g, "")}`}>{phone}</a> — Virtual Receptionist (24/7)</p>
+      </section>
+
+      <section aria-labelledby="tax-strategy">
+        <h2 id="tax-strategy">Proactive Tax Strategy</h2>
+        <p>We don’t just file—we plan. We design a customized, compliant strategy mapped to your entity, income mix, and goals.</p>
+        <ul>
+          <li>Entity & compensation optimization</li>
+          <li>Accountable plan & reimbursements</li>
+          <li>Home rental (280A(g)) considerations</li>
+          <li>Timing, retirement, and credits planning</li>
+        </ul>
+        <a href={calendly} target="_blank" rel="noopener" className="btn btn-ghost">Book Free Consultation</a>
+      </section>
+
+      <section aria-labelledby="agent">
+        <h2 id="agent">SelamTax CPA Agent (Beta)</h2>
+        <p>Ask tax & bookkeeping questions and get step-by-step guidance. Try it free—subscribe to unlock full, actionable answers.</p>
+        <button className="btn" onClick={() => nav("/agent")}>Open SelamTax CPA Agent</button>
+      </section>
+    </main>
+  );
+}

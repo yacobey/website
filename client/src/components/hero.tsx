@@ -25,17 +25,17 @@ export default function Hero() {
           {/* Left Side - Content */}
           <div className="lg:pr-8">
             <h1 className="text-4xl lg:text-6xl font-bold text-neutral-900 mb-8 leading-tight">
-              Navigate Complex Tax Regulations{" "}
+              Drowning in Financial{" "}
               <span className="text-neutral-700">
-                with Confidence
+                Paperwork?
               </span>{" "}
               <br />
               <span className="text-2xl lg:text-4xl font-normal text-neutral-600 mt-4 block">
-                Expert CPA Services That Deliver Results
+                Get Your Time Back & Make Informed Decisions
               </span>
             </h1>
             <p className="text-xl text-neutral-600 mb-12 leading-relaxed">
-              Business owners trust us to optimize their tax strategy, maintain accurate financial records, and provide strategic guidance that reduces liability while maximizing growth opportunities.
+              Stop scrambling with spreadsheets and guessing about profitability. Our CPA services give you clean books, clear financial insights, and strategic guidance so you can focus on growing your business with confidence.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -44,7 +44,7 @@ export default function Hero() {
                 className="bg-neutral-900 hover:bg-neutral-800 text-white px-8 py-4 text-lg font-medium rounded-lg flex items-center gap-2 group shadow-lg"
                 data-testid="button-schedule-consultation"
               >
-                Schedule Your Strategic Consultation
+                Get Your Financial Health Checkup
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
@@ -54,7 +54,7 @@ export default function Hero() {
                 className="border-2 border-neutral-900 text-neutral-900 hover:bg-neutral-50 px-8 py-4 text-lg font-medium rounded-lg"
                 data-testid="button-get-in-touch"
               >
-                Discuss Your Needs
+                See How We Can Help
               </Button>
             </div>
           </div>
@@ -72,8 +72,8 @@ export default function Hero() {
                 
                 {/* Simple professional overlay */}
                 <div className="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg">
-                  <div className="text-sm font-semibold text-neutral-900">Expert Financial Guidance</div>
-                  <div className="text-xs text-neutral-600">Strategic tax planning and compliance solutions</div>
+                  <div className="text-sm font-semibold text-neutral-900">Clean Books, Clear Insights</div>
+                  <div className="text-xs text-neutral-600">Professional accounting that gives you back control</div>
                 </div>
               </div>
             </div>

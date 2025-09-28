@@ -129,6 +129,110 @@ export default function Advisory() {
         </div>
       </section>
 
+      {/* Professional Use Cases Section */}
+      <section className="py-16 bg-gradient-to-br from-slate-50 to-gray-100" aria-labelledby="finance-professional-advisory">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 id="finance-professional-advisory" className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Advisory Solutions for Finance Professionals
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              From fractional CFO services for growing companies to specialized M&A support for investment teams—we provide the strategic financial expertise that busy professionals and growing organizations need to make informed decisions.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* For Investment Professionals */}
+            <div className="professional-card hover-expandable bg-white rounded-lg shadow-md p-6 border border-gray-200" data-testid="investment-professionals-card">
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                  <BarChart3 className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900">Investment Teams</h3>
+                <p className="text-gray-600 mt-2">Due diligence and transaction support</p>
+              </div>
+              
+              <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-100">
+                <h4 className="font-medium text-gray-900 mb-2">Investment Pain Points We Solve:</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Financial due diligence and quality of earnings studies</li>
+                  <li>• Independent financial model validation</li>
+                  <li>• Management presentation fact-checking</li>
+                  <li>• Post-acquisition integration planning</li>
+                  <li>• Portfolio company financial analysis</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* For Bankers */}
+            <div className="professional-card hover-expandable bg-white rounded-lg shadow-md p-6 border border-gray-200" data-testid="bankers-card">
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                  <DollarSign className="w-6 h-6 text-green-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900">Banking & Lending</h3>
+                <p className="text-gray-600 mt-2">Credit analysis and borrower evaluation</p>
+              </div>
+              
+              <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-100">
+                <h4 className="font-medium text-gray-900 mb-2">Banking Challenges We Address:</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Independent borrower financial analysis</li>
+                  <li>• Cash flow projections and covenant testing</li>
+                  <li>• Industry-specific risk assessment</li>
+                  <li>• SBA loan documentation support</li>
+                  <li>• Workout and restructuring analysis</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* For Corporate Finance */}
+            <div className="professional-card hover-expandable bg-white rounded-lg shadow-md p-6 border border-gray-200" data-testid="corporate-finance-card">
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                  <Target className="w-6 h-6 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900">Corporate Finance</h3>
+                <p className="text-gray-600 mt-2">Strategic finance and capital planning</p>
+              </div>
+              
+              <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-100">
+                <h4 className="font-medium text-gray-900 mb-2">Corporate Finance Expertise:</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Capital structure optimization</li>
+                  <li>• Financial modeling for strategic initiatives</li>
+                  <li>• Acquisition analysis and integration</li>
+                  <li>• Performance improvement initiatives</li>
+                  <li>• Board reporting and KPI development</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-6">
+              <strong>Trusted by finance professionals:</strong> Former Big 4 experience, CPA credentials, and specialized expertise across industries including technology, healthcare, and professional services.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="#contact" 
+                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-8 py-3 text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 inline-block"
+                data-testid="professional-advisory-btn"
+              >
+                Schedule Strategic Consultation
+              </a>
+              <a 
+                href="/ai-tools" 
+                className="bg-transparent text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-8 py-3 text-lg font-semibold border border-blue-300 rounded-lg transition-all duration-200 inline-block"
+                data-testid="financial-tools-btn"
+              >
+                Try Financial Analysis Tools
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

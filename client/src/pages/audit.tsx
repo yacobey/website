@@ -174,6 +174,88 @@ export default function Audit() {
         </div>
       </section>
 
+      {/* Professional Use Cases Section */}
+      <section className="py-16 bg-gray-50" aria-labelledby="professional-use-cases">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 id="professional-use-cases" className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              For Audit Professionals & Finance Teams
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Whether you're a practicing auditor needing specialized expertise, a finance team preparing for audit, or seeking independent assurance opinions—our CPA-led audit practice provides the professional-grade support you need.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* For Auditors */}
+            <div className="professional-card hover-expandable bg-white rounded-lg shadow-md p-6 border border-gray-200" data-testid="auditor-use-cases">
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                  <Users className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900">Auditor Collaboration</h3>
+                <p className="text-gray-600 mt-2">Partner expertise for complex engagements</p>
+              </div>
+              
+              <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-100">
+                <h4 className="font-medium text-gray-900 mb-2">We Support Your Practice With:</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Second opinions on complex accounting treatments</li>
+                  <li>• Industry-specific expertise (nonprofit, government)</li>
+                  <li>• Overflow capacity during busy seasons</li>
+                  <li>• Documentation review and quality control</li>
+                  <li>• Technical consultation on GAAS applications</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* For CFOs */}
+            <div className="professional-card hover-expandable bg-white rounded-lg shadow-md p-6 border border-gray-200" data-testid="cfo-use-cases">
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                  <Building className="w-6 h-6 text-green-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900">CFO & Finance Teams</h3>
+                <p className="text-gray-600 mt-2">Audit readiness and compliance assurance</p>
+              </div>
+              
+              <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-100">
+                <h4 className="font-medium text-gray-900 mb-2">We Solve These Pain Points:</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Audit readiness assessments and preparation</li>
+                  <li>• Internal control design and testing</li>
+                  <li>• SOX compliance for emerging growth companies</li>
+                  <li>• Pre-audit financial statement reviews</li>
+                  <li>• Management representation guidance</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* For Controllers */}
+            <div className="professional-card hover-expandable bg-white rounded-lg shadow-md p-6 border border-gray-200" data-testid="controller-use-cases">
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                  <FileCheck className="w-6 h-6 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900">Controllers & Accounting</h3>
+                <p className="text-gray-600 mt-2">Technical accounting and compliance expertise</p>
+              </div>
+              
+              <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-100">
+                <h4 className="font-medium text-gray-900 mb-2">Professional Capabilities:</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Complex revenue recognition (ASC 606)</li>
+                  <li>• Lease accounting (ASC 842) implementation</li>
+                  <li>• Financial instruments and derivatives</li>
+                  <li>• Business combinations and M&A accounting</li>
+                  <li>• Technical accounting memorandums</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

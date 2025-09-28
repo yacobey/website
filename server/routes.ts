@@ -11,6 +11,7 @@ import { SSLValidator } from "./ssl-validator";
 import Stripe from "stripe";
 import paymentRouter from "./payment-router";
 import { getBusinessConfig } from "./business-config";
+import { getEnhancedSEODefaults } from "./seo-business-integration";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
@@ -342,10 +343,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/seo-data/:page", async (req, res) => {
     try {
       const page = req.params.page;
-      const seoData = await storage.getSeoDataByPage(page);
+      let seoData = await storage.getSeoDataByPage(page);
+      
       if (!seoData) {
-        return res.status(404).json({ message: "SEO data not found for this page" });
+        // Return enhanced default SEO data with business integration
+        const enhancedDefaults = getEnhancedSEODefaults(page);
+        seoData = {
+          id: 0,
+          page,
+          lastUpdated: new Date(),
+          metaRobots: "index, follow",
+          ...enhancedDefaults
+        };
+      } else {
+        // Enhance existing data with current business config for better consistency
+        const enhancedDefaults = getEnhancedSEODefaults(page);
+        seoData = {
+          ...seoData,
+          // Update image URLs if they're still pointing to old domain
+          ogImage: (seoData.ogImage && seoData.ogImage.includes('lenoxcpa.com')) ? enhancedDefaults.ogImage : seoData.ogImage,
+          twitterImage: (seoData.twitterImage && seoData.twitterImage.includes('lenoxcpa.com')) ? enhancedDefaults.twitterImage : seoData.twitterImage,
+          canonicalUrl: enhancedDefaults.canonicalUrl,
+          structuredData: page === 'home' && !seoData.structuredData ? enhancedDefaults.structuredData : seoData.structuredData
+        };
       }
+      
       res.json(seoData);
     } catch (error) {
       console.error("Error fetching SEO data:", error);

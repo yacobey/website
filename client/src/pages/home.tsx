@@ -262,20 +262,112 @@ export default function Home() {
         </section>
 
         <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl mb-16" aria-labelledby="agent">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 id="agent" className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              SelamTax CPA Agent (Beta)
-            </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Ask tax & bookkeeping questions and get step-by-step guidance. Try it free—subscribe to unlock full, actionable answers.
-            </p>
-            <button 
-              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-8 py-4 text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200" 
-              onClick={() => setLocation("/ai-tools")}
-              data-testid="agent-btn"
-            >
-              Open SelamTax CPA Agent
-            </button>
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 id="agent" className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                SelamTax CPA Agent (Beta)
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                AI-powered expertise for finance professionals. Ask complex tax & accounting questions and get step-by-step guidance from our specialized CPA agent.
+              </p>
+            </div>
+
+            {/* Professional Use Cases */}
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              {/* For Auditors */}
+              <div className="professional-card hover-expandable bg-white/90 backdrop-blur-sm rounded-lg shadow-md p-6 border border-white/50" data-testid="agent-auditors-card">
+                <div className="text-center mb-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                    <ShieldCheck className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">For Auditors</h3>
+                  <p className="text-gray-600 mt-2">AI guidance on complex audit procedures</p>
+                </div>
+                
+                <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-200">
+                  <h4 className="font-medium text-gray-900 mb-2">AI Solves These Challenges:</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Quick GAAS reference and application guidance</li>
+                    <li>• Draft audit procedures for unusual transactions</li>
+                    <li>• Explain complex accounting standards (ASC 606, 842)</li>
+                    <li>• Generate sample testing documentation</li>
+                    <li>• Industry-specific audit considerations</li>
+                  </ul>
+                  <div className="mt-3 text-center">
+                    <span className="text-xs text-blue-600 font-medium">Try: "Draft audit procedures for cryptocurrency holdings"</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* For Accountants */}
+              <div className="professional-card hover-expandable bg-white/90 backdrop-blur-sm rounded-lg shadow-md p-6 border border-white/50" data-testid="agent-accountants-card">
+                <div className="text-center mb-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                    <Calculator className="w-6 h-6 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">For Accountants</h3>
+                  <p className="text-gray-600 mt-2">Technical accounting AI assistant</p>
+                </div>
+                
+                <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-200">
+                  <h4 className="font-medium text-gray-900 mb-2">Professional Capabilities:</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Complex journal entry analysis and explanation</li>
+                    <li>• Tax code interpretation and compliance guidance</li>
+                    <li>• QuickBooks troubleshooting and setup help</li>
+                    <li>• Monthly close checklist generation</li>
+                    <li>• Client communication templates</li>
+                  </ul>
+                  <div className="mt-3 text-center">
+                    <span className="text-xs text-green-600 font-medium">Try: "Explain ASC 842 lease accounting treatment"</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* For Finance Professionals */}
+              <div className="professional-card hover-expandable bg-white/90 backdrop-blur-sm rounded-lg shadow-md p-6 border border-white/50" data-testid="agent-finance-card">
+                <div className="text-center mb-4">
+                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                    <TrendingUp className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">For Finance Teams</h3>
+                  <p className="text-gray-600 mt-2">Strategic financial analysis assistance</p>
+                </div>
+                
+                <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-200">
+                  <h4 className="font-medium text-gray-900 mb-2">Advanced Analytics Support:</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Financial model validation and error checking</li>
+                    <li>• M&A due diligence checklist creation</li>
+                    <li>• Cash flow forecasting methodology</li>
+                    <li>• KPI dashboard design recommendations</li>
+                    <li>• Investment analysis frameworks</li>
+                  </ul>
+                  <div className="mt-3 text-center">
+                    <span className="text-xs text-purple-600 font-medium">Try: "Create DCF model validation checklist"</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Section */}
+            <div className="text-center">
+              <p className="text-gray-700 mb-6">
+                <strong>Powered by OpenAI GPT-4 with CPA expertise:</strong> Get professional-grade answers backed by 15+ years of accounting experience and continuous learning from latest tax codes and standards.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-8 py-4 text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200" 
+                  onClick={() => setLocation("/ai-tools")}
+                  data-testid="agent-btn"
+                >
+                  Open SelamTax CPA Agent
+                </button>
+                <p className="text-sm text-gray-600 self-center">
+                  Free to try • Professional insights • Real-time guidance
+                </p>
+              </div>
+            </div>
           </div>
         </section>
       </main>

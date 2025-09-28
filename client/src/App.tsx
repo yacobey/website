@@ -10,6 +10,7 @@ import { ErrorBoundary } from "@/components/performance/error-boundary";
 import { SuspenseFallback } from "@/components/performance/suspense-fallback";
 import { SSLStatusChecker } from "@/components/ssl-status-checker";
 import CPAChatbot from "@/components/cpa-chatbot";
+import GDPRBanner from "@/components/gdpr-banner";
 
 // Critical pages (load immediately)
 import Home from "@/pages/home";
@@ -38,6 +39,7 @@ const IndexingControl = React.lazy(() => import("@/pages/indexing-control"));
 const IndexingStatus = React.lazy(() => import("@/pages/indexing-status"));
 const Agent = React.lazy(() => import("@/pages/agent"));
 const PaymentCancel = React.lazy(() => import("@/pages/payment-cancel"));
+const PrivacyPolicy = React.lazy(() => import("@/pages/privacy-policy"));
 
 function Router() {
   useAnalytics();
@@ -70,11 +72,13 @@ function Router() {
           <Route path="/indexing-control" component={IndexingControl} />
           <Route path="/indexing-status" component={IndexingStatus} />
           <Route path="/agent" component={Agent} />
+          <Route path="/privacy-policy" component={PrivacyPolicy} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>
       <SSLStatusChecker />
       <CPAChatbot />
+      <GDPRBanner />
     </ErrorBoundary>
   );
 }

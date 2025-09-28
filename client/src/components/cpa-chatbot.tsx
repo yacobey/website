@@ -31,6 +31,7 @@ export default function CPAChatbot() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [hasShownAutoPopup, setHasShownAutoPopup] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { data: businessConfig } = useBusinessConfig();
 
@@ -72,6 +73,21 @@ export default function CPAChatbot() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Auto-popup chatbot on first visit to showcase capabilities
+  useEffect(() => {
+    const hasVisited = localStorage.getItem("chatbot-introduced");
+    if (!hasVisited && !hasShownAutoPopup) {
+      // Show popup after 3 seconds to let page load
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        setHasShownAutoPopup(true);
+        localStorage.setItem("chatbot-introduced", "true");
+      }, 3000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [hasShownAutoPopup]);
 
   // Add welcome message when chatbot opens
   useEffect(() => {

@@ -11,6 +11,8 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { trackEvent } from "@/lib/analytics";
 import { insertContactSchema } from "@shared/schema";
+import { useBusinessConfig } from "@/hooks/use-business-config";
+import { Phone } from "lucide-react";
 
 const contactFormSchema = insertContactSchema.extend({
   firstName: z.string().min(1, "First name is required"),
@@ -24,6 +26,7 @@ type ContactFormData = z.infer<typeof contactFormSchema>;
 export default function ContactForm() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { data: businessConfig } = useBusinessConfig();
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
@@ -162,6 +165,21 @@ export default function ContactForm() {
                   >
                     {mutation.isPending ? "Sending..." : "Send Message"}
                   </Button>
+                  
+                  {businessConfig && (
+                    <div className="text-center pt-4 border-t border-gray-200">
+                      <p className="text-sm text-gray-600 mb-2">Prefer to call?</p>
+                      <div className="flex items-center justify-center gap-2">
+                        <Phone className="h-4 w-4 text-purple-600" />
+                        <a 
+                          href={`tel:${businessConfig.phone.e164}`}
+                          className="text-purple-600 hover:text-purple-700 font-medium"
+                        >
+                          {businessConfig.phone.display}
+                        </a>
+                      </div>
+                    </div>
+                  )}
                 </form>
               </Form>
             </div>

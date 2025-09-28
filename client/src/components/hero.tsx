@@ -1,12 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
+import { useBusinessConfig } from "@/hooks/use-business-config";
 import consultationImage from "@assets/generated_images/Professional_business_consultation_meeting_dd13ce9b.png";
 
 export default function Hero() {
+  const { data: businessConfig } = useBusinessConfig();
+
   const handleScheduleConsultation = () => {
     trackEvent('schedule_consultation_click', { section: 'hero' });
-    window.open('https://calendly.com/selamcpa25', '_blank');
+    const calendlyUrl = businessConfig?.links.calendly || 'https://calendly.com/selamcpa25';
+    window.open(calendlyUrl, '_blank');
   };
 
   const handleGetInTouch = () => {

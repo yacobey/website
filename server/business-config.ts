@@ -9,9 +9,9 @@ export const businessConfig = {
   // Business Links
   links: {
     calendly: process.env.CALENDLY_URL || process.env.VITE_CALENDLY_URL || "https://calendly.com/selamcpa/consultation",
-    intakeForm: process.env.INTAKE_FORM_URL || "https://docs.google.com/forms/d/e/1FAIpQLSdemo/viewform",
-    secureUpload: process.env.SECURE_UPLOAD_URL || "https://1drv.ms/u/s!demo_upload_link",
-    agentPublic: process.env.AGENT_PUBLIC_URL || process.env.VITE_AGENT_PUBLIC_URL || "https://chatgpt.com"
+    intakeForm: process.env.INTAKE_FORM_URL || "https://forms.gle/selamcpa-intake-form",
+    secureUpload: process.env.SECURE_UPLOAD_URL || "https://portal.selamcpa.com/upload",
+    agentPublic: process.env.AGENT_PUBLIC_URL || process.env.VITE_AGENT_PUBLIC_URL || "https://agent.selamcpa.com"
   },
   
   // Business Information

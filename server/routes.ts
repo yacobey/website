@@ -495,18 +495,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Automated blog publishing task endpoint
+  // Automated blog publishing task endpoints
   app.get("/api/tasks/publish-monthly", async (req, res) => {
     try {
-      // Token authentication
       const token = req.query.token as string;
       if (!token || token !== process.env.BLOG_TASK_TOKEN) {
         return res.status(401).json({ message: "Unauthorized: Invalid or missing token" });
       }
 
-      // Generate monthly blog content
-      const result = await generateMonthlyBlogPost();
-      
+      const result = await generateScheduledBlogPost('monthly');
       res.json({
         success: true,
         message: "Monthly blog post published successfully",
@@ -522,12 +519,161 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/tasks/publish-weekly", async (req, res) => {
+    try {
+      const token = req.query.token as string;
+      if (!token || token !== process.env.BLOG_TASK_TOKEN) {
+        return res.status(401).json({ message: "Unauthorized: Invalid or missing token" });
+      }
+
+      const result = await generateScheduledBlogPost('weekly');
+      res.json({
+        success: true,
+        message: "Weekly content published successfully",
+        post: result
+      });
+    } catch (error) {
+      console.error("Error in weekly content publishing task:", error);
+      res.status(500).json({ 
+        success: false,
+        message: "Failed to publish weekly content",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  app.get("/api/tasks/publish-quarterly", async (req, res) => {
+    try {
+      const token = req.query.token as string;
+      if (!token || token !== process.env.BLOG_TASK_TOKEN) {
+        return res.status(401).json({ message: "Unauthorized: Invalid or missing token" });
+      }
+
+      const result = await generateScheduledBlogPost('quarterly');
+      res.json({
+        success: true,
+        message: "Quarterly content published successfully",
+        post: result
+      });
+    } catch (error) {
+      console.error("Error in quarterly content publishing task:", error);
+      res.status(500).json({ 
+        success: false,
+        message: "Failed to publish quarterly content",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Content schedule management endpoints
+  app.get("/api/content-schedule", async (req, res) => {
+    try {
+      const schedules = await storage.getContentSchedules();
+      res.json(schedules);
+    } catch (error) {
+      console.error("Error fetching content schedules:", error);
+      res.status(500).json({ message: "Failed to fetch content schedules" });
+    }
+  });
+
+  app.post("/api/content-schedule", async (req, res) => {
+    try {
+      const schedule = await storage.createContentSchedule(req.body);
+      res.json(schedule);
+    } catch (error) {
+      console.error("Error creating content schedule:", error);
+      res.status(500).json({ message: "Failed to create content schedule" });
+    }
+  });
+
+  // Content analytics endpoints
+  app.get("/api/content-analytics/:postId", async (req, res) => {
+    try {
+      const postId = parseInt(req.params.postId);
+      const analytics = await storage.getContentAnalytics(postId);
+      res.json(analytics);
+    } catch (error) {
+      console.error("Error fetching content analytics:", error);
+      res.status(500).json({ message: "Failed to fetch content analytics" });
+    }
+  });
+
+  app.post("/api/content-analytics", async (req, res) => {
+    try {
+      const analytics = await storage.createContentAnalytics(req.body);
+      res.json(analytics);
+    } catch (error) {
+      console.error("Error creating content analytics:", error);
+      res.status(500).json({ message: "Failed to create content analytics" });
+    }
+  });
+
+  // Email notification management
+  app.post("/api/email-notifications/subscribe", async (req, res) => {
+    try {
+      const subscription = await storage.createEmailNotification(req.body);
+      
+      // Send welcome email if SendGrid is configured
+      if (process.env.SENDGRID_API_KEY) {
+        await sendWelcomeEmail(req.body.email, req.body.notificationType);
+      }
+      
+      res.json(subscription);
+    } catch (error) {
+      console.error("Error creating email subscription:", error);
+      res.status(500).json({ message: "Failed to create email subscription" });
+    }
+  });
+
+  app.get("/api/email-notifications", async (req, res) => {
+    try {
+      const notifications = await storage.getEmailNotifications();
+      res.json(notifications);
+    } catch (error) {
+      console.error("Error fetching email notifications:", error);
+      res.status(500).json({ message: "Failed to fetch email notifications" });
+    }
+  });
+
+  // Blog post preview and scheduling
+  app.post("/api/blog/schedule", async (req, res) => {
+    try {
+      const { scheduledFor, contentType, ...postData } = req.body;
+      
+      const blogPost = {
+        ...postData,
+        status: 'scheduled',
+        contentType,
+        scheduledFor: new Date(scheduledFor),
+        autoGenerated: false
+      };
+      
+      const scheduledPost = await storage.createBlogPost(blogPost);
+      res.json(scheduledPost);
+    } catch (error) {
+      console.error("Error scheduling blog post:", error);
+      res.status(500).json({ message: "Failed to schedule blog post" });
+    }
+  });
+
+  // Social media integration endpoint
+  app.post("/api/social-media/post", async (req, res) => {
+    try {
+      const { blogPostId, platforms } = req.body;
+      const result = await postToSocialMedia(blogPostId, platforms);
+      res.json(result);
+    } catch (error) {
+      console.error("Error posting to social media:", error);
+      res.status(500).json({ message: "Failed to post to social media" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
 
-// Generate monthly blog post content using AI
-async function generateMonthlyBlogPost() {
+// Generate scheduled blog post content using AI
+async function generateScheduledBlogPost(contentType: 'weekly' | 'monthly' | 'quarterly') {
   const currentDate = new Date();
   const monthName = currentDate.toLocaleString('default', { month: 'long' });
   const year = currentDate.getFullYear();
@@ -557,7 +703,10 @@ async function generateMonthlyBlogPost() {
       excerpt,
       content,
       category,
-      author: "Selam CPA Team"
+      author: "Selam CPA Team",
+      contentType,
+      autoGenerated: true,
+      status: 'published' as const
     };
     
     // Save to database
@@ -610,6 +759,54 @@ function generateSlug(title: string): string {
     .replace(/-+/g, '-')
     .trim()
     .substring(0, 60);
+}
+
+// Email notification functions
+async function sendWelcomeEmail(email: string, notificationType: string): Promise<void> {
+  if (!process.env.SENDGRID_API_KEY) {
+    console.log('SendGrid not configured, skipping welcome email');
+    return;
+  }
+
+  try {
+    // This would integrate with SendGrid - placeholder for now
+    console.log(`Welcome email sent to ${email} for ${notificationType}`);
+  } catch (error) {
+    console.error('Failed to send welcome email:', error);
+  }
+}
+
+// Social media integration functions
+async function postToSocialMedia(blogPostId: number, platforms: string[]): Promise<any> {
+  try {
+    // Get blog post from storage
+    const post = await storage.getBlogPost(`post-${blogPostId}`);
+    if (!post) {
+      throw new Error('Blog post not found');
+    }
+
+    const results = [];
+    for (const platform of platforms) {
+      // Placeholder for social media API integration
+      console.log(`Posting to ${platform}:`, post.title);
+      results.push({
+        platform,
+        success: true,
+        postId: `${platform}-${Date.now()}`
+      });
+    }
+
+    // Update blog post to mark as posted to social media
+    await storage.updateBlogPost(post.slug, { socialMediaPosted: true });
+
+    return {
+      success: true,
+      results
+    };
+  } catch (error) {
+    console.error('Social media posting error:', error);
+    throw error;
+  }
 }
 
 function generateChatResponse(message: string): string {

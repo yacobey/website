@@ -9,6 +9,9 @@ import {
   personalizedRecommendations,
   careerApplications,
   seoData,
+  contentSchedule,
+  contentAnalytics,
+  emailNotifications,
   type Contact,
   type BlogPost,
   type Calculator,
@@ -19,6 +22,9 @@ import {
   type PersonalizedRecommendation,
   type CareerApplication,
   type SeoData,
+  type ContentSchedule,
+  type ContentAnalytics,
+  type EmailNotification,
   type InsertContact,
   type InsertBlogPost,
   type InsertCalculator,
@@ -29,6 +35,9 @@ import {
   type InsertPersonalizedRecommendation,
   type InsertCareerApplication,
   type InsertSeoData,
+  type InsertContentSchedule,
+  type InsertContentAnalytics,
+  type InsertEmailNotification,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, isNull } from "drizzle-orm";
@@ -49,6 +58,7 @@ export interface IStorage {
   getBlogPosts(): Promise<BlogPost[]>;
   getBlogPost(slug: string): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+  updateBlogPost(slug: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined>;
   
   // Calculator methods
   getCalculators(): Promise<Calculator[]>;
@@ -80,6 +90,21 @@ export interface IStorage {
   getSeoDataByPage(page: string): Promise<SeoData | undefined>;
   createSeoData(seoData: InsertSeoData): Promise<SeoData>;
   updateSeoData(page: string, seoData: Partial<InsertSeoData>): Promise<SeoData | undefined>;
+  
+  // Content scheduling methods
+  getContentSchedules(): Promise<ContentSchedule[]>;
+  createContentSchedule(schedule: InsertContentSchedule): Promise<ContentSchedule>;
+  updateContentSchedule(id: number, updates: Partial<ContentSchedule>): Promise<ContentSchedule | undefined>;
+  
+  // Content analytics methods
+  getContentAnalytics(blogPostId: number): Promise<ContentAnalytics | undefined>;
+  createContentAnalytics(analytics: InsertContentAnalytics): Promise<ContentAnalytics>;
+  updateContentAnalytics(id: number, updates: Partial<ContentAnalytics>): Promise<ContentAnalytics | undefined>;
+  
+  // Email notification methods
+  getEmailNotifications(): Promise<EmailNotification[]>;
+  createEmailNotification(notification: InsertEmailNotification): Promise<EmailNotification>;
+  updateEmailNotification(id: number, updates: Partial<EmailNotification>): Promise<EmailNotification | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -646,6 +671,86 @@ export class DatabaseStorage implements IStorage {
       .where(eq(seoData.page, page))
       .returning();
     return data || undefined;
+  }
+
+  // Blog update method
+  async updateBlogPost(slug: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined> {
+    const [post] = await db
+      .update(blogPosts)
+      .set(updates)
+      .where(eq(blogPosts.slug, slug))
+      .returning();
+    return post || undefined;
+  }
+
+  // Content scheduling methods
+  async getContentSchedules(): Promise<ContentSchedule[]> {
+    return await db.select().from(contentSchedule)
+      .orderBy(contentSchedule.nextRunDate);
+  }
+
+  async createContentSchedule(insertSchedule: InsertContentSchedule): Promise<ContentSchedule> {
+    const [schedule] = await db
+      .insert(contentSchedule)
+      .values(insertSchedule)
+      .returning();
+    return schedule;
+  }
+
+  async updateContentSchedule(id: number, updates: Partial<ContentSchedule>): Promise<ContentSchedule | undefined> {
+    const [schedule] = await db
+      .update(contentSchedule)
+      .set(updates)
+      .where(eq(contentSchedule.id, id))
+      .returning();
+    return schedule || undefined;
+  }
+
+  // Content analytics methods
+  async getContentAnalytics(blogPostId: number): Promise<ContentAnalytics | undefined> {
+    const [analytics] = await db.select().from(contentAnalytics)
+      .where(eq(contentAnalytics.blogPostId, blogPostId));
+    return analytics || undefined;
+  }
+
+  async createContentAnalytics(insertAnalytics: InsertContentAnalytics): Promise<ContentAnalytics> {
+    const [analytics] = await db
+      .insert(contentAnalytics)
+      .values(insertAnalytics)
+      .returning();
+    return analytics;
+  }
+
+  async updateContentAnalytics(id: number, updates: Partial<ContentAnalytics>): Promise<ContentAnalytics | undefined> {
+    const [analytics] = await db
+      .update(contentAnalytics)
+      .set({ ...updates, lastUpdated: new Date() })
+      .where(eq(contentAnalytics.id, id))
+      .returning();
+    return analytics || undefined;
+  }
+
+  // Email notification methods
+  async getEmailNotifications(): Promise<EmailNotification[]> {
+    return await db.select().from(emailNotifications)
+      .orderBy(desc(emailNotifications.subscribedAt));
+  }
+
+  async createEmailNotification(insertNotification: InsertEmailNotification): Promise<EmailNotification> {
+    const [notification] = await db
+      .insert(emailNotifications)
+      .values(insertNotification)
+      .returning();
+    return notification;
+  }
+
+  async updateEmailNotification(id: number, updates: Partial<EmailNotification>): Promise<EmailNotification | undefined> {
+    const [notification] = await db
+      .update(emailNotifications)
+      .set(updates)
+      .where(eq(emailNotifications.id, id))
+      .returning();
+    return notification || undefined;
   }
 }
 

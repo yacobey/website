@@ -9,6 +9,7 @@ import { addPerformanceRoutes } from "./routes-performance";
 import { cleanupSeoData, validateRobotsDirective } from "./seo-cleanup";
 import { SSLValidator } from "./ssl-validator";
 import Stripe from "stripe";
+import paymentRouter from "./payment-router";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
@@ -443,6 +444,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Add performance monitoring routes
   addPerformanceRoutes(app);
+
+  // Add payment routes for subscriptions and one-time payments
+  app.use("/api/payments", paymentRouter);
 
   // SSL certificate validation endpoint
   app.get('/api/ssl-status/:domain', async (req, res) => {

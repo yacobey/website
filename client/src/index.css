@@ -517,3 +517,31 @@
     box-shadow: 0 0 30px hsl(var(--electric-blue) / 0.3);
   }
 }
+
+/* Hover-expandable content styling for professional sections */
+.hover-expandable {
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.hover-expandable-content {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.hover-expandable:hover .hover-expandable-content {
+  opacity: 1;
+  max-height: 200px;
+}
+
+.professional-card {
+  transform: scale(1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.professional-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}

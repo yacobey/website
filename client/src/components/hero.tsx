@@ -25,17 +25,17 @@ export default function Hero() {
           {/* Left Side - Content */}
           <div className="lg:pr-8">
             <h1 className="text-4xl lg:text-6xl font-bold text-neutral-900 mb-8 leading-tight">
-              Stressed About Taxes?{" "}
+              Navigate Complex Tax Regulations{" "}
               <span className="text-neutral-700">
-                Confused by Your Books?
+                with Confidence
               </span>{" "}
               <br />
               <span className="text-2xl lg:text-4xl font-normal text-neutral-600 mt-4 block">
-                We Fix It. Fast.
+                Expert CPA Services That Deliver Results
               </span>
             </h1>
             <p className="text-xl text-neutral-600 mb-12 leading-relaxed">
-              Stop losing sleep over tax deadlines and messy finances. We handle your books, cut your tax bill, and give you back your time - so you can focus on what you do best: running your business.
+              Business owners trust us to optimize their tax strategy, maintain accurate financial records, and provide strategic guidance that reduces liability while maximizing growth opportunities.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -44,7 +44,7 @@ export default function Hero() {
                 className="bg-neutral-900 hover:bg-neutral-800 text-white px-8 py-4 text-lg font-medium rounded-lg flex items-center gap-2 group shadow-lg"
                 data-testid="button-schedule-consultation"
               >
-                Get Your Free Tax Review (Save $500+)
+                Schedule Your Strategic Consultation
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
@@ -54,7 +54,7 @@ export default function Hero() {
                 className="border-2 border-neutral-900 text-neutral-900 hover:bg-neutral-50 px-8 py-4 text-lg font-medium rounded-lg"
                 data-testid="button-get-in-touch"
               >
-                Ask a Quick Question
+                Discuss Your Needs
               </Button>
             </div>
           </div>
@@ -72,8 +72,8 @@ export default function Hero() {
                 
                 {/* Simple professional overlay */}
                 <div className="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg">
-                  <div className="text-sm font-semibold text-neutral-900">✓ No More Tax Stress</div>
-                  <div className="text-xs text-neutral-600">Your books organized, taxes filed on time, money saved</div>
+                  <div className="text-sm font-semibold text-neutral-900">Expert Financial Guidance</div>
+                  <div className="text-xs text-neutral-600">Strategic tax planning and compliance solutions</div>
                 </div>
               </div>
             </div>

@@ -434,45 +434,53 @@ export default function Home() {
         <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl mb-16" aria-labelledby="agent">
           <div className="max-w-6xl mx-auto px-6 text-center">
             <h2 id="agent" className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-              SelamTax CPA Agent
+              Selam CPA Agent
             </h2>
             <p className="text-2xl text-gray-700 mb-8 max-w-4xl mx-auto font-medium">
-              Your 24/7 AI-powered CPA assistant with comprehensive tax and accounting expertise
+              Your 24/7 AI-powered CPA assistant empowering professionals across all business levels
             </p>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
+              <div className="bg-white rounded-lg p-6 shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <ShieldCheck className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-3">Audit Excellence</h3>
+                <p className="text-gray-600 text-sm">Assists auditors in efficiently performing comprehensive audits, risk assessments, and compliance verification</p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-3">CEO Strategic Solutions</h3>
+                <p className="text-gray-600 text-sm">Helps CEOs resolve financial pain points, optimize capital structure, and make data-driven strategic decisions</p>
+              </div>
+              
               <div className="bg-white rounded-lg p-6 shadow-md">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Calculator className="w-6 h-6 text-blue-600" />
                 </div>
-                <h3 className="font-bold text-gray-900 mb-3">Tax Strategy & Planning</h3>
-                <p className="text-gray-600 text-sm">Advanced tax optimization strategies, deduction identification, and year-round planning guidance</p>
+                <h3 className="font-bold text-gray-900 mb-3">Tax Optimization</h3>
+                <p className="text-gray-600 text-sm">Advanced tax strategies, multi-entity planning, and year-round optimization for maximum savings</p>
               </div>
               
               <div className="bg-white rounded-lg p-6 shadow-md">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <TrendingUp className="w-6 h-6 text-blue-600" />
                 </div>
-                <h3 className="font-bold text-gray-900 mb-3">Business Financial Analysis</h3>
-                <p className="text-gray-600 text-sm">Cash flow analysis, financial statement interpretation, and business performance insights</p>
-              </div>
-              
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <ShieldCheck className="w-6 h-6 text-blue-600" />
-                </div>
-                <h3 className="font-bold text-gray-900 mb-3">Compliance & Regulations</h3>
-                <p className="text-gray-600 text-sm">Real-time regulatory updates, compliance checking, and audit preparation assistance</p>
+                <h3 className="font-bold text-gray-900 mb-3">Financial Intelligence</h3>
+                <p className="text-gray-600 text-sm">CFO-level financial analysis, KPI tracking, budgeting, and performance management insights</p>
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 mb-8">
-              <p className="text-lg text-gray-700 mb-4">
-                <strong>Full CPA-level expertise available instantly:</strong> Complex tax scenarios, multi-state filings, 
-                business entity selection, retirement planning, estate considerations, and specialized industry guidance.
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-8 mb-8">
+              <p className="text-xl text-gray-700 mb-4">
+                <strong>Professional-grade expertise for every role:</strong> From startup founders navigating their first audit 
+                to seasoned CFOs optimizing complex corporate structures, our agent delivers CPA-level guidance tailored to your specific needs.
               </p>
-              <p className="text-blue-700 font-medium">
-                Free tier provides comprehensive answers • Pro subscription unlocks unlimited advanced features
+              <p className="text-blue-700 font-medium text-lg">
+                Instant access to comprehensive solutions • Advanced features unlock unlimited professional capabilities
               </p>
             </div>
             
@@ -481,7 +489,7 @@ export default function Home() {
               onClick={() => setLocation("/ai-tools")}
               data-testid="agent-btn"
             >
-              Access Your CPA Agent Now →
+              Access Selam CPA Agent Now →
             </button>
           </div>
         </section>

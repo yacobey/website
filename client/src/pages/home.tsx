@@ -82,7 +82,7 @@ export default function Home() {
             CPA-Led Tax Strategy & Done-For-You Filing
           </h1>
           <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-            Virtual firm based in Maryland. Proactive planning, precise compliance.
+            Virtual firm based in Maryland, serving businesses across all 50 US states. Proactive planning, precise compliance.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
             <a 

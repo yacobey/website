@@ -5,6 +5,7 @@ import { useBusinessConfig } from "@/hooks/use-business-config";
 import StructuredData from "@/components/structured-data";
 import { ShieldCheck, Calculator, TrendingUp, Heart, Home as HomeIcon, ShoppingBag, Users, Laptop, Wrench, ChevronDown, MessageCircle } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import welcomeBgImage from "@assets/stock_images/professional_account_c53b2b1e.jpg";
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -107,6 +108,54 @@ export default function Home() {
               {businessConfig?.phone.display}
             </a> — Virtual Receptionist (24/7)
           </p>
+        </section>
+
+        {/* Welcome Section */}
+        <section className="relative py-24 mb-16 overflow-hidden" aria-labelledby="welcome">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${welcomeBgImage})`
+            }}
+          ></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/85 via-gray-900/75 to-gray-900/85"></div>
+          <div className="relative max-w-6xl mx-auto px-6 text-center">
+            <h2 id="welcome" className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+              Welcome to Selam CPA
+            </h2>
+            <h3 className="text-2xl md:text-3xl font-semibold text-gray-200 mb-8">
+              A Certified Public Accounting Firm
+            </h3>
+            <div className="text-xl md:text-2xl text-gray-300 mb-12">
+              Tax Preparation, Tax Planning, Bookkeeping Services & AI Consultancy
+            </div>
+            
+            <div className="max-w-4xl mx-auto">
+              <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-8">
+                At Selam CPA, we provide comprehensive accounting, tax preparation, tax planning, 
+                bookkeeping, and AI consultancy services designed to help individuals and business owners achieve 
+                long-term financial success. Our goal is to empower clients with proactive strategies, clear guidance 
+                and accurate reporting so taxes and accounting feel stress-free. By delivering tailored, high-quality 
+                and cost-efficient solutions, we help our clients reduce tax liabilities, improve cash flow, and grow 
+                with confidence.
+              </p>
+              <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-12">
+                <strong>Based in Maryland and serving clients across all 50 US states,</strong> our mission is simple: 
+                to make every client more successful and prosperous through personalized tax, accounting, and AI-powered 
+                advisory support.
+              </p>
+            </div>
+
+            <a 
+              href={businessConfig?.links.calendly} 
+              target="_blank" 
+              rel="noopener"
+              className="inline-block bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+              data-testid="welcome-consultation-btn"
+            >
+              SCHEDULE A CONSULTATION →
+            </a>
+          </div>
         </section>
 
         <section className="py-16 bg-gray-50 rounded-xl mb-16" aria-labelledby="tax-strategy">

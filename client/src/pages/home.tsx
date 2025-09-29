@@ -1,6 +1,7 @@
 import { useLocation } from "wouter";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import TrustIndicators from "@/components/trust-indicators";
 import { useBusinessConfig } from "@/hooks/use-business-config";
 import StructuredData from "@/components/structured-data";
 import { ShieldCheck, Calculator, TrendingUp, Heart, Home as HomeIcon, ShoppingBag, Users, Laptop, Wrench, ChevronDown, MessageCircle } from "lucide-react";
@@ -442,34 +443,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Trusted Solutions & Integrations Section */}
-        <section className="py-16 bg-gray-50 mb-16" aria-labelledby="integrations">
-          <div className="max-w-6xl mx-auto px-6 text-center">
-            <h2 id="integrations" className="text-2xl font-bold text-gray-900 mb-8">
-              TRUSTED SOLUTIONS & INTEGRATIONS
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-              <div className="text-gray-600 font-medium" data-testid="xero-certified">
-                Xero Certified
-              </div>
-              <div className="text-gray-600 font-medium" data-testid="stripe-integration">
-                Stripe Integration
-              </div>
-              <div className="text-gray-600 font-medium" data-testid="gusto-payroll">
-                Gusto Payroll
-              </div>
-              <div className="text-gray-600 font-medium" data-testid="taxwise-certified">
-                TaxWise Certified
-              </div>
-              <div className="text-gray-600 font-medium" data-testid="shopify-partner">
-                Shopify Partner
-              </div>
-              <div className="text-gray-600 font-medium" data-testid="bill-expert">
-                Bill.com Expert
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Trusted Solutions & Integrations - Moving Banner */}
+        <TrustIndicators />
 
         {/* FAQ Section */}
         <section className="py-16 bg-white mb-16" aria-labelledby="faqs">

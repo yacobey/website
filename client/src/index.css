@@ -116,6 +116,8 @@
 
   /* Enhanced moving banner animation */
   .animate-banner-scroll {
+    display: flex;
+    width: fit-content;
     animation: bannerScroll 40s linear infinite;
     will-change: transform;
   }

@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 import TrustIndicators from "@/components/trust-indicators";
 import { useBusinessConfig } from "@/hooks/use-business-config";
 import StructuredData from "@/components/structured-data";
-import { ShieldCheck, Calculator, TrendingUp, Heart, Home as HomeIcon, ShoppingBag, Users, Laptop, Wrench, ChevronDown, MessageCircle } from "lucide-react";
+import { ShieldCheck, Calculator, TrendingUp, Heart, Home as HomeIcon, ShoppingBag, Users, Laptop, Wrench, ChevronDown, MessageCircle, Star, Quote } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import welcomeBgImage from "@assets/stock_images/professional_account_c53b2b1e.jpg";
 
@@ -502,6 +502,90 @@ export default function Home() {
 
         {/* Trusted Solutions & Integrations - Moving Banner */}
         <TrustIndicators />
+
+        {/* Testimonials Section */}
+        <section className="py-16 bg-gray-50 mb-16" aria-labelledby="testimonials">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 id="testimonials" className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                What Our Clients Say
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Join hundreds of satisfied clients who trust Selam CPA for their accounting and financial needs
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 mb-8">
+              {/* Testimonial 1 */}
+              <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                <div className="flex items-center mb-4">
+                  <Quote className="w-8 h-8 text-blue-600 mr-2" />
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  "Selam CPA transformed our accounting processes. Their AI-powered insights helped us identify cost savings we never knew existed. The team is responsive, professional, and truly understands our business needs."
+                </p>
+                <div className="border-t border-gray-200 pt-4">
+                  <div className="font-semibold text-gray-900">Sarah Johnson</div>
+                  <div className="text-blue-600 text-sm">Johnson Consulting LLC</div>
+                  <div className="text-xs text-gray-500">Professional Services</div>
+                </div>
+              </div>
+
+              {/* Testimonial 2 */}
+              <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                <div className="flex items-center mb-4">
+                  <Quote className="w-8 h-8 text-blue-600 mr-2" />
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  "Working with Selam CPA has been a game-changer for our family business. They helped us organize our books, reduce our tax liability, and understand our financials better. Truly professional service."
+                </p>
+                <div className="border-t border-gray-200 pt-4">
+                  <div className="font-semibold text-gray-900">Maria Rodriguez</div>
+                  <div className="text-blue-600 text-sm">Rosa's Bakery & Cafe</div>
+                  <div className="text-xs text-gray-500">Retail & Food Service</div>
+                </div>
+              </div>
+
+              {/* Testimonial 3 */}
+              <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                <div className="flex items-center mb-4">
+                  <Quote className="w-8 h-8 text-blue-600 mr-2" />
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  "The team at Selam CPA handles all our construction accounting needs expertly. Their understanding of industry-specific requirements and clean-up services saved us months of work. Excellent communication throughout."
+                </p>
+                <div className="border-t border-gray-200 pt-4">
+                  <div className="font-semibold text-gray-900">David Thompson</div>
+                  <div className="text-blue-600 text-sm">Thompson Construction</div>
+                  <div className="text-xs text-gray-500">Construction</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <Link href="/testimonials">
+                <button className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-3 rounded-lg font-semibold transition-colors inline-flex items-center" data-testid="view-all-testimonials-btn">
+                  View All Testimonials →
+                </button>
+              </Link>
+            </div>
+          </div>
+        </section>
 
         {/* FAQ Section */}
         <section className="py-16 bg-white mb-16" aria-labelledby="faqs">

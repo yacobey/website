@@ -185,15 +185,35 @@ export default function Home() {
                 </li>
               </ul>
             </div>
+            
+            {/* Consultation Process */}
+            <div className="bg-blue-50 rounded-lg p-6 mb-8 border border-blue-200">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">How Our Free Consultation Works</h3>
+              <div className="grid md:grid-cols-3 gap-4 text-center">
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mb-2">1</div>
+                  <p className="text-sm text-gray-700"><strong>Schedule Online</strong><br />Pick a convenient time that works for you</p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mb-2">2</div>
+                  <p className="text-sm text-gray-700"><strong>Strategy Discussion</strong><br />We'll analyze your situation and identify opportunities</p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mb-2">3</div>
+                  <p className="text-sm text-gray-700"><strong>Custom Plan</strong><br />Receive a tailored roadmap for your financial success</p>
+                </div>
+              </div>
+            </div>
+
             <div className="text-center">
               <a 
                 href={businessConfig?.links.calendly} 
                 target="_blank" 
                 rel="noopener" 
-                className="bg-transparent text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-8 py-3 text-lg font-semibold border border-blue-300 rounded-lg transition-all duration-200 inline-block"
+                className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
                 data-testid="consultation-btn-strategy"
               >
-                Book Free Consultation
+                BOOK FREE CONSULTATION →
               </a>
             </div>
           </div>

@@ -3,7 +3,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { useBusinessConfig } from "@/hooks/use-business-config";
 import StructuredData from "@/components/structured-data";
-import { ShieldCheck, Calculator, TrendingUp } from "lucide-react";
+import { ShieldCheck, Calculator, TrendingUp, Heart, Home as HomeIcon, ShoppingBag, Users, Laptop, Wrench } from "lucide-react";
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -242,6 +242,117 @@ export default function Home() {
                   </a>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Our Experience Across Industries Section */}
+        <section className="py-16 bg-white mb-16" aria-labelledby="industries">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 id="industries" className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                Our Experience Across Industries
+              </h2>
+              <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+                With a proven track record of achievement, Selam CPA is proud to have worked with clients in 
+                a variety of industries. Due to the experience of our team, we are able to provide specialized 
+                solutions that are tailored to the particular requirements of each client company.
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {/* Healthcare */}
+              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="healthcare-industry">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Heart className="w-8 h-8 text-red-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Healthcare</h3>
+                <p className="text-gray-600 text-sm">
+                  Specialized accounting for medical practices, clinics, and healthcare providers
+                </p>
+              </div>
+
+              {/* Real Estate */}
+              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="realestate-industry">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <HomeIcon className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Real Estate</h3>
+                <p className="text-gray-600 text-sm">
+                  Expert financial services for real estate professionals and property management
+                </p>
+              </div>
+
+              {/* Retail & Wholesale */}
+              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="retail-industry">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <ShoppingBag className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Retail & Wholesale</h3>
+                <p className="text-gray-600 text-sm">
+                  Comprehensive accounting solutions for retail businesses and wholesale distributors
+                </p>
+              </div>
+
+              {/* Professional Services */}
+              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="professional-industry">
+                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Professional Services</h3>
+                <p className="text-gray-600 text-sm">
+                  Tailored financial management for law firms, consultants, and service providers
+                </p>
+              </div>
+
+              {/* Technology Startups */}
+              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="tech-industry">
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Laptop className="w-8 h-8 text-orange-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Technology Startups</h3>
+                <p className="text-gray-600 text-sm">
+                  Financial guidance for emerging technology companies and software businesses
+                </p>
+              </div>
+
+              {/* Construction */}
+              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="construction-industry">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Wrench className="w-8 h-8 text-gray-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Construction</h3>
+                <p className="text-gray-600 text-sm">
+                  Specialized accounting for contractors, builders, and construction companies
+                </p>
+              </div>
+            </div>
+
+            {/* Industry-Specific Financial Solutions */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Industry-Specific Financial Solutions
+              </h3>
+              <p className="text-gray-600 max-w-4xl mx-auto mb-6">
+                We assist businesses with specialized accounting solutions across all industries. From construction project cost 
+                analysis to healthcare practice management, real estate cash flow optimization to technology startup financial 
+                planning, we provide the expertise you need. Our inventory and cash management techniques help retail and 
+                wholesale enterprises thrive. Regardless of the sector, Selam CPA is committed to assisting with our clients' economic 
+                prosperity.
+              </p>
+              <p className="text-gray-700">
+                If you are ready to work with one of the best CPA firms, 
+                <a 
+                  href={businessConfig?.links.calendly} 
+                  target="_blank" 
+                  rel="noopener"
+                  className="text-blue-600 hover:text-blue-800 font-medium ml-1"
+                  data-testid="contact-team-link"
+                >
+                  contact our team
+                </a> 
+                {" "}right now for your consultation.
+              </p>
             </div>
           </div>
         </section>

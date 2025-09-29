@@ -79,38 +79,6 @@ export default function Home() {
       />
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <section className="text-center py-16 lg:py-24">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            CPA-Led Tax Strategy & Done-For-You Filing
-          </h1>
-          <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-            Virtual firm based in Maryland, serving businesses across all 50 US states. Proactive planning, precise compliance.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-            <a 
-              href={businessConfig?.links.calendly} 
-              target="_blank" 
-              rel="noopener" 
-              className="bg-transparent text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-8 py-4 text-lg font-semibold border border-blue-300 rounded-lg transition-all duration-200"
-              data-testid="consultation-btn"
-            >
-              Book Free Consultation
-            </a>
-            <button 
-              onClick={startTaxPrep} 
-              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-8 py-4 text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
-              data-testid="tax-prep-btn"
-            >
-              Start Tax Prep
-            </button>
-          </div>
-          <p className="text-gray-500 text-lg">
-            📞 <a href={`tel:${businessConfig?.phone.e164}`} className="text-blue-600 hover:text-blue-800 transition-colors" data-testid="phone-link-hero">
-              {businessConfig?.phone.display}
-            </a> — Virtual Receptionist (24/7)
-          </p>
-        </section>
-
         {/* Welcome Section */}
         <section className="relative py-28 mb-16 overflow-hidden" aria-labelledby="welcome">
           <div 
@@ -160,6 +128,38 @@ export default function Home() {
               </a> — Virtual Receptionist (24/7)
             </p>
           </div>
+        </section>
+
+        <section className="text-center py-16 lg:py-24">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            CPA-Led Tax Strategy & Done-For-You Filing
+          </h1>
+          <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+            Virtual firm based in Maryland, serving businesses across all 50 US states. Proactive planning, precise compliance.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+            <a 
+              href={businessConfig?.links.calendly} 
+              target="_blank" 
+              rel="noopener" 
+              className="bg-transparent text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-8 py-4 text-lg font-semibold border border-blue-300 rounded-lg transition-all duration-200"
+              data-testid="consultation-btn"
+            >
+              Book Free Consultation
+            </a>
+            <button 
+              onClick={startTaxPrep} 
+              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-8 py-4 text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+              data-testid="tax-prep-btn"
+            >
+              Start Tax Prep
+            </button>
+          </div>
+          <p className="text-gray-500 text-lg">
+            📞 <a href={`tel:${businessConfig?.phone.e164}`} className="text-blue-600 hover:text-blue-800 transition-colors" data-testid="phone-link-hero">
+              {businessConfig?.phone.display}
+            </a> — Virtual Receptionist (24/7)
+          </p>
         </section>
 
         <section className="py-16 bg-gray-50 rounded-xl mb-16" aria-labelledby="tax-strategy">

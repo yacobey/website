@@ -3,7 +3,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { useBusinessConfig } from "@/hooks/use-business-config";
 import StructuredData from "@/components/structured-data";
-import { ShieldCheck, Calculator, TrendingUp, Heart, Home as HomeIcon, ShoppingBag, Users, Laptop, Wrench } from "lucide-react";
+import { ShieldCheck, Calculator, TrendingUp, Heart, Home as HomeIcon, ShoppingBag, Users, Laptop, Wrench, ChevronDown, MessageCircle } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -400,6 +401,143 @@ export default function Home() {
               <div className="text-gray-600 font-medium" data-testid="bill-expert">
                 Bill.com Expert
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-16 bg-white mb-16" aria-labelledby="faqs">
+          <div className="max-w-4xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center mb-4">
+                <MessageCircle className="w-8 h-8 text-blue-600 mr-2" />
+                <h2 id="faqs" className="text-3xl md:text-4xl font-bold text-blue-600">
+                  Frequently Asked Questions
+                </h2>
+              </div>
+              <p className="text-xl text-gray-600">
+                Get instant answers to common questions about our accounting services, AI consultancy, and how we can help your business thrive.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {/* FAQ 1 */}
+              <Collapsible>
+                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors" data-testid="faq-tools">
+                  <span className="font-semibold text-gray-900">Which tools do you support?</span>
+                  <ChevronDown className="w-5 h-5 text-gray-500" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="p-4 text-gray-600">
+                  We work with all major accounting software including QuickBooks Online, Xero, Wave, and FreshBooks. We're also certified in specialized tools like Bill.com for AP automation, Gusto for payroll, and various industry-specific platforms. If you're using something different, we can likely accommodate or help you transition to a better solution.
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* FAQ 2 */}
+              <Collapsible>
+                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors" data-testid="faq-cleanups">
+                  <span className="font-semibold text-gray-900">Do you do clean-ups?</span>
+                  <ChevronDown className="w-5 h-5 text-gray-500" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="p-4 text-gray-600">
+                  Yes! We specialize in cleaning up messy books. Whether you're months behind, have categorization issues, or need multi-year catch-up work, we can get your financials accurate and current. We'll also set up proper systems to prevent future issues.
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* FAQ 3 */}
+              <Collapsible>
+                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors" data-testid="faq-nonprofits">
+                  <span className="font-semibold text-gray-900">Can you work with nonprofits?</span>
+                  <ChevronDown className="w-5 h-5 text-gray-500" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="p-4 text-gray-600">
+                  Absolutely! We have extensive experience with nonprofit accounting, including fund accounting, grant tracking, Form 990 preparation, and compliance requirements. We understand the unique needs of nonprofits and can help with donor management and restricted fund reporting.
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* FAQ 4 */}
+              <Collapsible>
+                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors" data-testid="faq-get-started">
+                  <span className="font-semibold text-gray-900">How do we get started?</span>
+                  <ChevronDown className="w-5 h-5 text-gray-500" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="p-4 text-gray-600">
+                  Simple! Book a free consultation where we'll discuss your needs, current situation, and goals. We'll then provide a custom proposal with transparent pricing. Once you're ready to move forward, we'll handle the setup and transition process for you.
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* FAQ 5 */}
+              <Collapsible>
+                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors" data-testid="faq-monthly-service">
+                  <span className="font-semibold text-gray-900">What's included in your monthly bookkeeping service?</span>
+                  <ChevronDown className="w-5 h-5 text-gray-500" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="p-4 text-gray-600">
+                  Our monthly service includes transaction categorization, bank reconciliation, financial statement preparation (P&L, Balance Sheet, Cash Flow), accounts payable/receivable management, and monthly close procedures. You'll also get a monthly financial review call and access to real-time reports.
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* FAQ 6 */}
+              <Collapsible>
+                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors" data-testid="faq-payroll-taxes">
+                  <span className="font-semibold text-gray-900">Do you handle payroll and taxes?</span>
+                  <ChevronDown className="w-5 h-5 text-gray-500" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="p-4 text-gray-600">
+                  Yes! We handle business and personal tax preparation, quarterly estimated payments, and payroll processing through our Gusto partnership. We also provide tax planning throughout the year to minimize your liability and ensure compliance.
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* FAQ 7 */}
+              <Collapsible>
+                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors" data-testid="faq-catch-up">
+                  <span className="font-semibold text-gray-900">How quickly can you catch up my books?</span>
+                  <ChevronDown className="w-5 h-5 text-gray-500" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="p-4 text-gray-600">
+                  Timeline depends on complexity and how far behind you are. Most clean-up projects take 2-4 weeks for a full year of transactions. We prioritize getting you current quickly so you can make informed business decisions. We'll provide a realistic timeline during our consultation.
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* FAQ 8 */}
+              <Collapsible>
+                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors" data-testid="faq-ai-consultancy">
+                  <span className="font-semibold text-gray-900">What makes your AI consultancy different?</span>
+                  <ChevronDown className="w-5 h-5 text-gray-500" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="p-4 text-gray-600">
+                  We combine deep accounting expertise with practical AI implementation. Rather than just talking about AI, we actually implement solutions that work in real businesses. We focus on automating repetitive tasks, improving accuracy, and providing better financial insights through intelligent data analysis.
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* FAQ 9 */}
+              <Collapsible>
+                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors" data-testid="faq-remote-work">
+                  <span className="font-semibold text-gray-900">Do you work with businesses outside my state?</span>
+                  <ChevronDown className="w-5 h-5 text-gray-500" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="p-4 text-gray-600">
+                  Yes! While we're based in Maryland, we provide remote services to businesses across all 50 states. Our cloud-based approach means we can work with you anywhere in the US. We're experienced with multi-state tax requirements and compliance.
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
+
+            {/* Still Have Questions */}
+            <div className="mt-12 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Still Have Questions?
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Our team is here to help! Get personalized answers and discover how we can streamline your accounting and boost your business growth.
+              </p>
+              <a 
+                href={businessConfig?.links.calendly} 
+                target="_blank" 
+                rel="noopener"
+                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-8 py-3 rounded-lg font-semibold transition-all duration-200 inline-flex items-center"
+                data-testid="faq-contact-btn"
+              >
+                Contact Our Team
+              </a>
             </div>
           </div>
         </section>

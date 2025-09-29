@@ -112,47 +112,53 @@ export default function Home() {
         </section>
 
         {/* Welcome Section */}
-        <section className="relative py-24 mb-16 overflow-hidden" aria-labelledby="welcome">
+        <section className="relative py-28 mb-16 overflow-hidden" aria-labelledby="welcome">
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
               backgroundImage: `url(${welcomeBgImage})`
             }}
           ></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/85 via-gray-900/75 to-gray-900/85"></div>
-          <div className="relative max-w-6xl mx-auto px-6 text-center">
-            <h2 id="welcome" className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-12">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/80 to-gray-900/90"></div>
+          <div className="relative max-w-7xl mx-auto px-6 text-center">
+            <h2 id="welcome" className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
               Welcome to Selam CPA
             </h2>
-            <div className="text-xl md:text-2xl text-blue-200 mb-12 font-medium">
-              Your Financial Success Partner • Tax Excellence • AI-Driven Solutions
+            <div className="text-2xl md:text-3xl text-blue-200 mb-16 font-semibold">
+              CPA-Led Tax Strategy & Done-For-You Filing
             </div>
             
-            <div className="max-w-4xl mx-auto">
-              <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-8">
-                Transform your financial future with expert guidance that goes beyond traditional accounting. 
-                We combine decades of tax expertise with cutting-edge AI technology to unlock hidden savings, 
-                streamline your processes, and accelerate your business growth.
-              </p>
-              <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-8">
-                From proactive tax strategies that save you thousands to intelligent automation that frees up your time, 
-                we're here to turn your financial challenges into competitive advantages.
-              </p>
-              <p className="text-lg md:text-xl text-blue-100 leading-relaxed mb-12 font-medium">
-                <strong>Serving ambitious businesses nationwide from our Maryland headquarters</strong> — 
-                because great financial strategy knows no boundaries.
+            <div className="max-w-5xl mx-auto mb-16">
+              <p className="text-xl md:text-2xl text-gray-200 leading-relaxed mb-8 font-medium">
+                Virtual firm based in Maryland, serving businesses across all 50 US states. 
+                Proactive planning, precise compliance.
               </p>
             </div>
 
-            <a 
-              href={businessConfig?.links.calendly} 
-              target="_blank" 
-              rel="noopener"
-              className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
-              data-testid="welcome-consultation-btn"
-            >
-              START YOUR FINANCIAL TRANSFORMATION →
-            </a>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
+              <a 
+                href={businessConfig?.links.calendly} 
+                target="_blank" 
+                rel="noopener"
+                className="bg-transparent text-blue-300 hover:text-white hover:bg-blue-600 border-2 border-blue-300 hover:border-blue-600 font-bold px-8 py-4 text-lg rounded-lg transition-all duration-200 transform hover:scale-105"
+                data-testid="welcome-consultation-btn"
+              >
+                Book Free Consultation
+              </a>
+              <button 
+                onClick={startTaxPrep}
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                data-testid="welcome-tax-prep-btn"
+              >
+                Start Tax Prep
+              </button>
+            </div>
+
+            <p className="text-gray-300 text-xl">
+              📞 <a href={`tel:${businessConfig?.phone.e164}`} className="text-blue-300 hover:text-blue-200 transition-colors" data-testid="welcome-phone-link">
+                {businessConfig?.phone.display}
+              </a> — Virtual Receptionist (24/7)
+            </p>
           </div>
         </section>
 
@@ -425,20 +431,57 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl mb-16" aria-labelledby="agent">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 id="agent" className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              SelamTax CPA Agent (Beta)
+        <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl mb-16" aria-labelledby="agent">
+          <div className="max-w-6xl mx-auto px-6 text-center">
+            <h2 id="agent" className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+              SelamTax CPA Agent
             </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Ask tax & bookkeeping questions and get step-by-step guidance. Try it free—subscribe to unlock full, actionable answers.
+            <p className="text-2xl text-gray-700 mb-8 max-w-4xl mx-auto font-medium">
+              Your 24/7 AI-powered CPA assistant with comprehensive tax and accounting expertise
             </p>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+              <div className="bg-white rounded-lg p-6 shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Calculator className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-3">Tax Strategy & Planning</h3>
+                <p className="text-gray-600 text-sm">Advanced tax optimization strategies, deduction identification, and year-round planning guidance</p>
+              </div>
+              
+              <div className="bg-white rounded-lg p-6 shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <TrendingUp className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-3">Business Financial Analysis</h3>
+                <p className="text-gray-600 text-sm">Cash flow analysis, financial statement interpretation, and business performance insights</p>
+              </div>
+              
+              <div className="bg-white rounded-lg p-6 shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <ShieldCheck className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-3">Compliance & Regulations</h3>
+                <p className="text-gray-600 text-sm">Real-time regulatory updates, compliance checking, and audit preparation assistance</p>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 mb-8">
+              <p className="text-lg text-gray-700 mb-4">
+                <strong>Full CPA-level expertise available instantly:</strong> Complex tax scenarios, multi-state filings, 
+                business entity selection, retirement planning, estate considerations, and specialized industry guidance.
+              </p>
+              <p className="text-blue-700 font-medium">
+                Free tier provides comprehensive answers • Pro subscription unlocks unlimited advanced features
+              </p>
+            </div>
+            
             <button 
-              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-8 py-4 text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200" 
+              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-12 py-5 text-xl font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105" 
               onClick={() => setLocation("/ai-tools")}
               data-testid="agent-btn"
             >
-              Open SelamTax CPA Agent
+              Access Your CPA Agent Now →
             </button>
           </div>
         </section>

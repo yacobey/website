@@ -1,4 +1,4 @@
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import TrustIndicators from "@/components/trust-indicators";
@@ -330,70 +330,82 @@ export default function Home() {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
               {/* Healthcare */}
-              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="healthcare-industry">
-                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Heart className="w-8 h-8 text-red-600" />
+              <Link href="/contact">
+                <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center cursor-pointer" data-testid="healthcare-industry">
+                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Heart className="w-8 h-8 text-red-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Healthcare</h3>
+                  <p className="text-gray-600 text-sm">
+                    Specialized accounting for medical practices, clinics, and healthcare providers
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Healthcare</h3>
-                <p className="text-gray-600 text-sm">
-                  Specialized accounting for medical practices, clinics, and healthcare providers
-                </p>
-              </div>
+              </Link>
 
               {/* Real Estate */}
-              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="realestate-industry">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <HomeIcon className="w-8 h-8 text-green-600" />
+              <Link href="/contact">
+                <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center cursor-pointer" data-testid="realestate-industry">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <HomeIcon className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Real Estate</h3>
+                  <p className="text-gray-600 text-sm">
+                    Expert financial services for real estate professionals and property management
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Real Estate</h3>
-                <p className="text-gray-600 text-sm">
-                  Expert financial services for real estate professionals and property management
-                </p>
-              </div>
+              </Link>
 
               {/* Retail & Wholesale */}
-              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="retail-industry">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <ShoppingBag className="w-8 h-8 text-blue-600" />
+              <Link href="/contact">
+                <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center cursor-pointer" data-testid="retail-industry">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <ShoppingBag className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Retail & Wholesale</h3>
+                  <p className="text-gray-600 text-sm">
+                    Comprehensive accounting solutions for retail businesses and wholesale distributors
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Retail & Wholesale</h3>
-                <p className="text-gray-600 text-sm">
-                  Comprehensive accounting solutions for retail businesses and wholesale distributors
-                </p>
-              </div>
+              </Link>
 
               {/* Professional Services */}
-              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="professional-industry">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-purple-600" />
+              <Link href="/contact">
+                <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center cursor-pointer" data-testid="professional-industry">
+                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-8 h-8 text-purple-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Professional Services</h3>
+                  <p className="text-gray-600 text-sm">
+                    Tailored financial management for law firms, consultants, and service providers
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Professional Services</h3>
-                <p className="text-gray-600 text-sm">
-                  Tailored financial management for law firms, consultants, and service providers
-                </p>
-              </div>
+              </Link>
 
               {/* Technology Startups */}
-              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="tech-industry">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Laptop className="w-8 h-8 text-orange-600" />
+              <Link href="/contact">
+                <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center cursor-pointer" data-testid="tech-industry">
+                  <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Laptop className="w-8 h-8 text-orange-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Technology Startups</h3>
+                  <p className="text-gray-600 text-sm">
+                    Financial guidance for emerging technology companies and software businesses
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Technology Startups</h3>
-                <p className="text-gray-600 text-sm">
-                  Financial guidance for emerging technology companies and software businesses
-                </p>
-              </div>
+              </Link>
 
               {/* Construction */}
-              <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center" data-testid="construction-industry">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Wrench className="w-8 h-8 text-gray-600" />
+              <Link href="/contact">
+                <div className="industry-card bg-white rounded-lg shadow-md p-6 border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300 text-center cursor-pointer" data-testid="construction-industry">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Wrench className="w-8 h-8 text-gray-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Construction</h3>
+                  <p className="text-gray-600 text-sm">
+                    Specialized accounting for contractors, builders, and construction companies
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Construction</h3>
-                <p className="text-gray-600 text-sm">
-                  Specialized accounting for contractors, builders, and construction companies
-                </p>
-              </div>
+              </Link>
             </div>
 
             {/* Industry-Specific Financial Solutions */}

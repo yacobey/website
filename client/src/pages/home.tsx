@@ -80,53 +80,47 @@ export default function Home() {
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Welcome Section */}
-        <section className="relative py-28 mb-16 overflow-hidden" aria-labelledby="welcome">
+        <section className="relative py-24 mb-16 overflow-hidden" aria-labelledby="welcome">
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
               backgroundImage: `url(${welcomeBgImage})`
             }}
           ></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/80 to-gray-900/90"></div>
-          <div className="relative max-w-7xl mx-auto px-6 text-center">
-            <h2 id="welcome" className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/85 via-gray-900/75 to-gray-900/85"></div>
+          <div className="relative max-w-6xl mx-auto px-6 text-center">
+            <h2 id="welcome" className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-12">
               Welcome to Selam CPA
             </h2>
-            <div className="text-2xl md:text-3xl text-blue-200 mb-16 font-semibold">
-              CPA-Led Tax Strategy & Done-For-You Filing
+            <div className="text-xl md:text-2xl text-blue-200 mb-12 font-medium">
+              Your Financial Success Partner • Tax Excellence • AI-Driven Solutions
             </div>
             
-            <div className="max-w-5xl mx-auto mb-16">
-              <p className="text-xl md:text-2xl text-gray-200 leading-relaxed mb-8 font-medium">
-                Virtual firm based in Maryland, serving businesses across all 50 US states. 
-                Proactive planning, precise compliance.
+            <div className="max-w-4xl mx-auto">
+              <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-8">
+                Transform your financial future with expert guidance that goes beyond traditional accounting. 
+                We combine decades of tax expertise with cutting-edge AI technology to unlock hidden savings, 
+                streamline your processes, and accelerate your business growth.
+              </p>
+              <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-8">
+                From proactive tax strategies that save you thousands to intelligent automation that frees up your time, 
+                we're here to turn your financial challenges into competitive advantages.
+              </p>
+              <p className="text-lg md:text-xl text-blue-100 leading-relaxed mb-12 font-medium">
+                <strong>Serving ambitious businesses nationwide from our Maryland headquarters</strong> — 
+                because great financial strategy knows no boundaries.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
-              <a 
-                href={businessConfig?.links.calendly} 
-                target="_blank" 
-                rel="noopener"
-                className="bg-transparent text-blue-300 hover:text-white hover:bg-blue-600 border-2 border-blue-300 hover:border-blue-600 font-bold px-8 py-4 text-lg rounded-lg transition-all duration-200 transform hover:scale-105"
-                data-testid="welcome-consultation-btn"
-              >
-                Book Free Consultation
-              </a>
-              <button 
-                onClick={startTaxPrep}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
-                data-testid="welcome-tax-prep-btn"
-              >
-                Start Tax Prep
-              </button>
-            </div>
-
-            <p className="text-gray-300 text-xl">
-              📞 <a href={`tel:${businessConfig?.phone.e164}`} className="text-blue-300 hover:text-blue-200 transition-colors" data-testid="welcome-phone-link">
-                {businessConfig?.phone.display}
-              </a> — Virtual Receptionist (24/7)
-            </p>
+            <a 
+              href={businessConfig?.links.calendly} 
+              target="_blank" 
+              rel="noopener"
+              className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+              data-testid="welcome-consultation-btn"
+            >
+              START YOUR FINANCIAL TRANSFORMATION →
+            </a>
           </div>
         </section>
 

@@ -8,10 +8,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link href="/" aria-label="Selam CPA" className="flex-shrink-0">
-            <div className="flex items-center space-x-4 cursor-pointer">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center shadow-md">
-                <span className="text-white font-bold text-lg">S</span>
-              </div>
+            <div className="flex items-center cursor-pointer">
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
                   Selam CPA

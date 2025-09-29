@@ -113,6 +113,30 @@
       transform: translateX(-50%);
     }
   }
+
+  /* Enhanced moving banner animation */
+  .animate-banner-scroll {
+    animation: bannerScroll 40s linear infinite;
+    will-change: transform;
+  }
+
+  .animation-paused {
+    animation-play-state: paused;
+  }
+
+  @keyframes bannerScroll {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  /* Smooth banner hover effects */
+  .animate-banner-scroll:hover {
+    animation-play-state: paused;
+  }
   
   /* Purple gradient backgrounds */
   .bg-purple-gradient {

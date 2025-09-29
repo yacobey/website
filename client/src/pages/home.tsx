@@ -152,6 +152,100 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Services We Provide Section */}
+        <section className="py-16 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl mb-16" aria-labelledby="services">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <div className="inline-block bg-purple-500/30 text-purple-100 px-4 py-2 rounded-full text-sm font-medium mb-4">
+                HOW WE BRING VALUE
+              </div>
+              <h2 id="services" className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Services We Provide
+              </h2>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Bookkeeping & Accounting */}
+              <div className="service-card bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition-all duration-300" data-testid="bookkeeping-service">
+                <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4">
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-lg">✓</span>
+                  </div>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">
+                  Bookkeeping & Accounting
+                </h3>
+                <p className="text-gray-600 mb-6 text-center">
+                  Complete monthly bookkeeping, financial statements, and accounts management. Designed for businesses who want accurate, up-to-date financial records without the complexity.
+                </p>
+                <div className="text-center">
+                  <a 
+                    href={businessConfig?.links.calendly} 
+                    target="_blank" 
+                    rel="noopener"
+                    className="bg-purple-600 text-white hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold transition-colors inline-flex items-center"
+                    data-testid="book-call-bookkeeping"
+                  >
+                    Book a call →
+                  </a>
+                </div>
+              </div>
+
+              {/* Tax Planning & Strategy */}
+              <div className="service-card bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition-all duration-300" data-testid="tax-service">
+                <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4">
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-lg">✓</span>
+                  </div>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">
+                  Tax Planning & Strategy
+                </h3>
+                <p className="text-gray-600 mb-6 text-center">
+                  Business & personal returns, entity selection, quarterly estimates, and customized tax-planning strategies. Discover hidden deductions, structure your business smarter, and keep more of what you earn.
+                </p>
+                <div className="text-center">
+                  <a 
+                    href={businessConfig?.links.calendly} 
+                    target="_blank" 
+                    rel="noopener"
+                    className="bg-purple-600 text-white hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold transition-colors inline-flex items-center"
+                    data-testid="book-call-tax"
+                  >
+                    Book a call →
+                  </a>
+                </div>
+              </div>
+
+              {/* AI Consultancy & Financial Tools */}
+              <div className="service-card bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition-all duration-300" data-testid="ai-service">
+                <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4">
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-lg">✓</span>
+                  </div>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">
+                  AI Consultancy & Financial Tools
+                </h3>
+                <p className="text-gray-600 mb-6 text-center">
+                  Get hands-on assistance to integrate Artificial Intelligence into your financial processes. From automating reporting to intelligent data analysis, we work alongside you to implement solutions that actually work.
+                </p>
+                <div className="text-center">
+                  <a 
+                    href={businessConfig?.links.calendly} 
+                    target="_blank" 
+                    rel="noopener"
+                    className="bg-purple-600 text-white hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold transition-colors inline-flex items-center"
+                    data-testid="book-call-ai"
+                  >
+                    Book a call →
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl mb-16" aria-labelledby="agent">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h2 id="agent" className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">

@@ -95,3 +95,32 @@ All external service links configured in `server/business-config.ts`:
 - Intake form URL (configurable via INTAKE_FORM_URL env var)
 - Secure upload portal URL (configurable via SECURE_UPLOAD_URL env var)
 - Agent public URL (configurable via AGENT_PUBLIC_URL env var)
+
+### Blog Content Updates (November 2025)
+- **New Blog Posts**: Added 6 comprehensive, SEO-optimized blog posts (2000+ words each):
+  1. AI-Powered Financial Planning: Transform Your Business Budget in 2025
+  2. Cybersecurity for Small Businesses: Protect Your Financial Data in 2025
+  3. Zero-Based Budgeting: The Ultimate Guide for Small Business Success
+  4. Cash Flow Forecasting: Predict and Prevent Financial Crisis
+  5. Cloud Accounting Revolution: Why Modern Businesses Are Ditching Desktop Software
+  6. Small Business Tax Credits You're Missing in 2025
+- **Content Strategy**: Posts focus on financial planning, budgeting, security, technology, and tax planning
+- **SEO Optimization**: All posts include strategic keywords, practical examples, case studies, and clear CTAs
+- **Target Audience**: Small business owners, finance professionals, entrepreneurs seeking accounting expertise
+
+### Automatic Blog Generation System
+The application includes an automated blog post generation system:
+- **AI-Powered Content**: Uses OpenAI to generate high-quality blog posts based on seasonal CPA topics
+- **Scheduling Endpoints**:
+  - `/api/tasks/publish-monthly` - Generates monthly blog content
+  - `/api/tasks/publish-weekly` - Generates weekly content updates
+  - `/api/tasks/publish-quarterly` - Generates quarterly industry insights
+- **Authentication**: Requires `BLOG_TASK_TOKEN` environment variable for secure access
+- **Seasonal Topics**: Automatically selects relevant topics based on current month (tax season, year-end planning, etc.)
+- **Content Features**:
+  - Auto-generates title, excerpt, and full content
+  - Assigns appropriate category based on topic
+  - Creates SEO-friendly slugs
+  - Maintains content backup versions
+  - Tracks auto-generated status in database
+- **Integration**: Can be triggered by external schedulers (cron jobs, Replit scheduled tasks) for regular content updates

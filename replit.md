@@ -32,11 +32,32 @@ Preferred communication style: Simple, everyday language.
 
 ### Key Features and Components
 - **Database Schema**: Users, Contacts, Blog Posts, Calculators, Chat Messages.
-- **API Endpoints**: Contact, Blog, Calculator Tools, Chat.
-- **Frontend Pages**: Home, Blog, AI Tools, Partners, Individual Blog Posts.
-- **AI-Powered Features**: Calculator Builder (from natural language prompts), pre-built calculators (Tax, ROI, Cash Flow), Chatbot integration, curated technology partnerships.
+- **API Endpoints**: Contact, Blog, Calculator Tools, Chat, Payment (Stripe).
+- **Frontend Pages**: Home, Blog, AI Tools, Partners, Agent, Individual Blog Posts, Testimonials.
+- **AI-Powered Features**: 
+  - Calculator Builder (from natural language prompts)
+  - Pre-built calculators (Tax, ROI, Cash Flow, Break-Even, Loan, Depreciation)
+  - AI Agent with lifetime access model ($29.99 one-time payment)
+  - Chatbot integration
+  - Curated technology partnerships
+- **Payment Integration**:
+  - Stripe integration for one-time payments
+  - Agent page: $29.99 one-time payment for lifetime full access
+  - Cookie-based access verification (scpa cookie)
+  - Payment status tracking via Stripe checkout sessions
+- **Homepage Enhancements**:
+  - Clickable industry cards (Healthcare, Real Estate, Retail, Professional Services, Technology, Construction) linking to contact page
+  - Featured testimonials section with 3 client testimonials
+  - Link to full testimonials page
+- **Agent Page Features**:
+  - Comprehensive content about AI agent capabilities
+  - Target audience descriptions (Entrepreneurs, CFOs, Controllers, Accountants, Auditors)
+  - What the agent provides (Expert Guidance, Audit Procedures, Risk Assessment Templates, Financial Analysis)
+  - 7+ example questions users can ask
+  - Free vs. Paid access modes with clear UI distinction
+  - Embedded agent iframe with fallback link
 - **UI/UX Decisions**: Clean, modern aesthetic with professional gray color scheme and refined typography, responsive design, enhanced navigation, trust indicators, and conversion-optimized forms.
-- **Technical Implementations**: Form validation with Zod, data persistence via Drizzle, real-time updates with TanStack Query, session management for chat, analytics tracking.
+- **Technical Implementations**: Form validation with Zod, data persistence via Drizzle, real-time updates with TanStack Query, session management for chat, analytics tracking, Stripe payment processing.
 - **Security & SEO**: Helmet security middleware with CSP, comprehensive SEO optimization with `react-helmet` (dynamic meta titles, descriptions, Open Graph tags), page-specific SEO, dynamic blog post SEO, secure admin login for SEO dashboard, canonical tags, Google Search Console verification.
 - **Performance**: Server compression, lazy loading, performance monitoring, caching strategies, database query optimizations, React performance enhancements (Suspense, Error boundaries, skeleton loading).
 
@@ -47,6 +68,30 @@ Preferred communication style: Simple, everyday language.
 - **Styling**: Tailwind CSS, PostCSS, Lucide React, React Icons
 - **Development Tools**: TypeScript, ESLint/Prettier, Drizzle Kit, Vite
 - **UI/UX Libraries**: shadcn/ui, Radix UI, React Hook Form, Date-fns
-- **Payment Processing**: Stripe
-- **Scheduling**: Calendly
+- **Payment Processing**: Stripe (for one-time payments and access control)
+- **Scheduling**: Calendly (consultation booking)
 - **AI Integration**: OpenAI (for AI Assistant)
+
+## Recent Changes (November 2025)
+
+### Agent Page Redesign
+- **Payment Model Change**: Converted from subscription to one-time payment ($29.99 for lifetime access)
+- **Enhanced Content**: Added comprehensive sections explaining:
+  - Who benefits from the agent (Business Owners, Finance Professionals, Auditors)
+  - What the agent provides (Guidance, Audit Procedures, Risk Assessments, Financial Analysis)
+  - 7+ example questions demonstrating capabilities
+- **Backend Updates**: Modified `server/payment-router.ts` to handle one-time payments instead of subscriptions
+- **Access Control**: Payment verification checks completed Stripe checkout sessions with metadata
+- **UI Improvements**: Redesigned free vs. paid mode banners with clear pricing display
+
+### Homepage Improvements
+- **Interactive Industry Cards**: All 6 industry cards now clickable, linking to contact page for industry-specific inquiries
+- **Testimonials Section**: Added featured testimonials section with 3 client testimonials
+- **Social Proof**: Includes ratings, business names, industries, and link to full testimonials page
+
+### External Service Configuration
+All external service links configured in `server/business-config.ts`:
+- Calendly URL for scheduling (default: https://calendly.com/selamcpa/consultation)
+- Intake form URL (configurable via INTAKE_FORM_URL env var)
+- Secure upload portal URL (configurable via SECURE_UPLOAD_URL env var)
+- Agent public URL (configurable via AGENT_PUBLIC_URL env var)

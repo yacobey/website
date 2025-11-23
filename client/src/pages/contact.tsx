@@ -99,10 +99,10 @@ export default function Contact() {
                 Schedule Free Consultation
               </Button>
               <a
-                href="tel:301-640-8549"
+                href="tel:240-473-2623"
                 className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors inline-block text-center"
               >
-                Call (301) 640-8549
+                Call (240) 473-2623
               </a>
             </div>
           </div>
@@ -131,10 +131,10 @@ export default function Contact() {
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Phone</h3>
                 <p className="text-gray-600 mb-4">Call us for immediate assistance</p>
                 <a 
-                  href="tel:301-640-8549"
+                  href="tel:240-473-2623"
                   className="text-blue-600 hover:text-blue-800 font-semibold text-lg transition-colors"
                 >
-                  (301) 640-8549
+                  (240) 473-2623
                 </a>
               </Card>
 

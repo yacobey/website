@@ -74,6 +74,16 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (November 2025)
 
+### Contact Information Update (November 2025)
+- **Phone Number Change**: Updated primary contact number from (301) 640-8549 to (240) 473-2623
+- **Updated Locations**:
+  - Business configuration (server/business-config.ts)
+  - All AI system prompts (OpenAI, chatbot services)
+  - Client-facing pages (Contact, Payment, Careers, Privacy Policy)
+  - Structured data and SEO metadata
+  - Error messages and fallback responses
+- **Format**: Both E.164 (+12404732623) and display format (240) 473-2623
+
 ### Agent Page Redesign
 - **Payment Model Change**: Converted from subscription to one-time payment ($29.99 for lifetime access)
 - **Enhanced Content**: Added comprehensive sections explaining:

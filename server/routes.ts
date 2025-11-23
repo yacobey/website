@@ -862,8 +862,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error processing chat message:", error);
       res.status(500).json({ 
-        message: "I apologize, but I'm experiencing technical difficulties. Please call us at (301) 640-8549 for immediate assistance.",
-        suggestedActions: ["Call (301) 640-8549", "Try again"]
+        message: "I apologize, but I'm experiencing technical difficulties. Please call us at (240) 473-2623 for immediate assistance.",
+        suggestedActions: ["Call (240) 473-2623", "Try again"]
       });
     }
   });
@@ -1087,7 +1087,7 @@ function generateChatResponse(message: string): string {
   
   // Contact and scheduling
   if (lowerMessage.includes('schedule') || lowerMessage.includes('appointment') || lowerMessage.includes('meeting') || lowerMessage.includes('contact')) {
-    return "Ready to get started? Here's how to connect:\n\n• Book a FREE consultation online\n• Call us at (301) 640-8549\n• Email through our contact form\n• Same-day response guaranteed\n\nOur CPAs are available for virtual or in-person meetings. What works best for your schedule?";
+    return "Ready to get started? Here's how to connect:\n\n• Book a FREE consultation online\n• Call us at (240) 473-2623\n• Email through our contact form\n• Same-day response guaranteed\n\nOur CPAs are available for virtual or in-person meetings. What works best for your schedule?";
   }
   
   // Help and general questions

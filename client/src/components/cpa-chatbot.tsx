@@ -61,9 +61,9 @@ export default function CPAChatbot() {
       setIsTyping(false);
       const errorMessage: ChatMessage = {
         role: "assistant", 
-        content: "I apologize, but I'm experiencing technical difficulties. Please call us at (301) 640-8549 for immediate assistance.",
+        content: "I apologize, but I'm experiencing technical difficulties. Please call us at (240) 473-2623 for immediate assistance.",
         timestamp: new Date(),
-        suggestedActions: ["Call (301) 640-8549", "Try again"]
+        suggestedActions: ["Call (240) 473-2623", "Try again"]
       };
       setMessages(prev => [...prev, errorMessage]);
     }

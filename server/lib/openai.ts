@@ -51,7 +51,7 @@ SERVICES TO PROMOTE:
 - SelamTax CPA Agent (AI-powered tax assistance)
 
 CONTACT INFO:
-- Phone: (301) 640-8549
+- Phone: (240) 473-2623
 - Service areas: MD, VA, DC Metro Area
 - Consultation scheduling available
 
@@ -111,8 +111,8 @@ IMPORTANT: Always respond in valid JSON format with this exact structure:
     }
     
     return {
-      message: "I apologize, but I'm experiencing technical difficulties. Please call us at (301) 640-8549 for immediate assistance, or try again in a moment.",
-      suggestedActions: ["Call (301) 640-8549", "Schedule a consultation"],
+      message: "I apologize, but I'm experiencing technical difficulties. Please call us at (240) 473-2623 for immediate assistance, or try again in a moment.",
+      suggestedActions: ["Call (240) 473-2623", "Schedule a consultation"],
       requiresFollowUp: false
     };
   }

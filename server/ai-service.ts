@@ -47,7 +47,7 @@ ABOUT PROBALANCE CPA:
 - Full-service CPA firm serving individuals, small businesses, and enterprises
 - Services: Tax preparation/planning, bookkeeping, payroll, business advisory, audit/assurance, business formation
 - Specialties: AI-powered financial tools, technology integration, multi-industry expertise
-- Contact: (301) 640-8549 | Virtual and in-person consultations available
+- Contact: (240) 473-2623 | Virtual and in-person consultations available
 - Pricing: FREE 30-minute consultation, $250 for 1-hour comprehensive consultation
 
 KEY MESSAGING:
@@ -137,7 +137,7 @@ ABOUT SELAM CPA:
 - Full-service CPA firm serving individuals, small businesses, and enterprises
 - Services: Tax preparation/planning, bookkeeping, payroll, business advisory, audit/assurance
 - Specialties: AI-powered financial tools, technology integration, multi-industry expertise
-- Contact: (301) 640-8549 | Free 30-minute consultation available
+- Contact: (240) 473-2623 | Free 30-minute consultation available
 - Focus on tax savings, financial optimization, and practical business advice
 
 FORMAT REQUIREMENTS:

@@ -72,7 +72,7 @@ export default function Contact() {
 
   const handleScheduleConsultation = () => {
     trackEvent('schedule_consultation_click', { section: 'contact_page' });
-    window.open('https://calendly.com/selamcpa25', '_blank');
+    window.open('https://calendly.com/yber2001/30min', '_blank');
   };
 
   return (

@@ -185,7 +185,7 @@ export default function Testimonials() {
                 Experience the same professional service and innovative solutions that our clients rave about. Get started with a free consultation today.
               </p>
               <a
-                href="https://calendly.com/selamcpa25"
+                href="https://calendly.com/yber2001/30min"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-white text-blue-600 hover:bg-gray-100 font-semibold px-8 py-3 rounded-lg transition-colors"

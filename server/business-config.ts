@@ -8,7 +8,7 @@ export const businessConfig = {
   
   // Business Links
   links: {
-    calendly: process.env.CALENDLY_URL || process.env.VITE_CALENDLY_URL || "https://calendly.com/selamcpa/consultation",
+    calendly: process.env.CALENDLY_URL || process.env.VITE_CALENDLY_URL || "https://calendly.com/yber2001/30min",
     intakeForm: process.env.INTAKE_FORM_URL || "https://forms.gle/selamcpa-intake-form",
     secureUpload: process.env.SECURE_UPLOAD_URL || "https://portal.selamcpa.com/upload",
     agentPublic: process.env.AGENT_PUBLIC_URL || process.env.VITE_AGENT_PUBLIC_URL || "https://agent.selamcpa.com"

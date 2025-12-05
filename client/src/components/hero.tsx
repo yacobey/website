@@ -9,7 +9,7 @@ export default function Hero() {
 
   const handleScheduleConsultation = () => {
     trackEvent('schedule_consultation_click', { section: 'hero' });
-    const calendlyUrl = businessConfig?.links.calendly || 'https://calendly.com/selamcpa25';
+    const calendlyUrl = businessConfig?.links.calendly || 'https://calendly.com/yber2001/30min';
     window.open(calendlyUrl, '_blank');
   };
 

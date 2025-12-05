@@ -125,7 +125,7 @@ export default function FAQ() {
               Our team is here to help! Get personalized answers and discover how we can streamline your accounting and boost your business growth.
             </p>
             <a
-              href="https://calendly.com/selamcpa25"
+              href="https://calendly.com/yber2001/30min"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-gradient-electric hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 text-white px-10 py-4 text-lg font-bold rounded-2xl transition-all duration-500 shadow-electric hover:shadow-colorful transform hover:scale-105 animate-pulse-slow"

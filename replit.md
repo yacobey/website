@@ -101,7 +101,7 @@ Preferred communication style: Simple, everyday language.
 
 ### External Service Configuration
 All external service links configured in `server/business-config.ts`:
-- Calendly URL for scheduling (default: https://calendly.com/selamcpa/consultation)
+- Calendly URL for scheduling (default: https://calendly.com/yber2001/30min)
 - Intake form URL (configurable via INTAKE_FORM_URL env var)
 - Secure upload portal URL (configurable via SECURE_UPLOAD_URL env var)
 - Agent public URL (configurable via AGENT_PUBLIC_URL env var)

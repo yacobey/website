@@ -29,6 +29,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Chatbot from "@/components/cpa-chatbot";
+import heroImage from "@assets/generated_images/sophisticated_professional_workspace_scene.png";
 
 export default function Home() {
   const { data: businessConfig } = useBusinessConfig();
@@ -126,53 +127,38 @@ export default function Home() {
                 </div>
               </div>
               
-              {/* Right Column - Visual Element */}
+              {/* Right Column - Professional Image */}
               <div className="hidden lg:block animate-fade-up-delay">
                 <div className="relative">
-                  {/* Decorative gradient blob */}
-                  <div className="absolute -inset-4 bg-gradient-to-tr from-emerald-500/30 via-blue-500/20 to-purple-500/30 rounded-3xl blur-3xl"></div>
+                  {/* Professional image with subtle frame */}
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                    <img 
+                      src={heroImage} 
+                      alt="Professional financial analytics and accounting services" 
+                      className="w-full h-auto object-cover"
+                    />
+                    {/* Subtle overlay for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent"></div>
+                  </div>
                   
-                  {/* Stats/Feature Cards */}
-                  <div className="relative bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 p-8">
-                    <div className="grid grid-cols-2 gap-6 mb-8">
-                      <div className="text-center p-4 bg-white/5 rounded-2xl">
-                        <div className="text-4xl font-bold text-emerald-400 mb-1">$15K+</div>
-                        <div className="text-sm text-slate-300">Avg. Client Savings</div>
+                  {/* Floating stats card */}
+                  <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-xl p-5 border border-slate-100">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                        <TrendingUp className="w-6 h-6 text-emerald-600" />
                       </div>
-                      <div className="text-center p-4 bg-white/5 rounded-2xl">
-                        <div className="text-4xl font-bold text-blue-400 mb-1">500+</div>
-                        <div className="text-sm text-slate-300">Happy Clients</div>
-                      </div>
-                      <div className="text-center p-4 bg-white/5 rounded-2xl">
-                        <div className="text-4xl font-bold text-purple-400 mb-1">50</div>
-                        <div className="text-sm text-slate-300">States Served</div>
-                      </div>
-                      <div className="text-center p-4 bg-white/5 rounded-2xl">
-                        <div className="text-4xl font-bold text-cyan-400 mb-1">24/7</div>
-                        <div className="text-sm text-slate-300">AI Assistant</div>
+                      <div>
+                        <div className="text-2xl font-bold text-slate-900">$15K+</div>
+                        <div className="text-sm text-slate-500">Avg. Client Savings</div>
                       </div>
                     </div>
-                    
-                    {/* Feature list */}
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center">
-                          <CheckCircle className="w-5 h-5 text-emerald-400" />
-                        </div>
-                        <span className="text-white/90">Proactive Year-Round Tax Planning</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                          <CheckCircle className="w-5 h-5 text-blue-400" />
-                        </div>
-                        <span className="text-white/90">AI-Powered Financial Insights</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                          <CheckCircle className="w-5 h-5 text-purple-400" />
-                        </div>
-                        <span className="text-white/90">100% Virtual & Secure Process</span>
-                      </div>
+                  </div>
+                  
+                  {/* Floating trust badge */}
+                  <div className="absolute -top-4 -right-4 bg-white rounded-xl shadow-xl px-4 py-3 border border-slate-100">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck className="w-5 h-5 text-emerald-600" />
+                      <span className="text-sm font-semibold text-slate-700">500+ Clients Trust Us</span>
                     </div>
                   </div>
                 </div>

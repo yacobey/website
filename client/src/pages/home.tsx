@@ -62,69 +62,130 @@ export default function Home() {
       <Header />
       
       <main>
-        {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-40"></div>
-          
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-            <div className="text-center max-w-4xl mx-auto">
-              <div className="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 rounded-full px-4 py-2 mb-8">
-                <Sparkles className="w-4 h-4 text-blue-300" />
-                <span className="text-blue-200 text-sm font-medium">AI-Powered Tax & Accounting Solutions</span>
-              </div>
+        {/* Hero Section - Two Column Layout */}
+        <section className="relative hero-gradient hero-pattern text-white overflow-hidden min-h-[90vh] flex items-center">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 w-full">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Your Financial Success Partner
-              </h1>
-              
-              <p className="text-xl lg:text-2xl text-blue-100 mb-4 font-medium">
-                Tax Excellence • AI-Driven Solutions • Virtual Convenience
-              </p>
-              
-              <p className="text-lg text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-                Virtual CPA firm based in Maryland, serving ambitious businesses and individuals across all 50 states. 
-                We combine proactive tax strategy with cutting-edge AI to maximize your savings and streamline your finances.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <a 
-                  href={calendlyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-                  data-testid="hero-cta-primary"
-                >
-                  Book a Tax Strategy Call
-                  <ArrowRight className="w-5 h-5" />
-                </a>
+              {/* Left Column - Content */}
+              <div className="animate-fade-up">
+                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
+                  <Sparkles className="w-4 h-4 text-emerald-400" />
+                  <span className="text-white/90 text-sm font-medium">AI-Powered Virtual CPA Firm</span>
+                </div>
                 
-                <Link 
-                  href="/tax"
-                  className="inline-flex items-center justify-center border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200"
-                  data-testid="hero-cta-secondary"
-                >
-                  Explore Services
-                </Link>
+                <h1 className="heading-display text-white mb-6">
+                  Proactive Tax Savings,{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                    Powered by AI
+                  </span>
+                </h1>
+                
+                <p className="text-xl lg:text-2xl text-blue-100 leading-relaxed mb-8 max-w-xl">
+                  AI-driven tax strategies and year-round support for businesses and professionals. 
+                  100% virtual. Serving all 50 states from Maryland.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                  <a 
+                    href={calendlyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary btn-lg group"
+                    data-testid="hero-cta-primary"
+                  >
+                    Book a Tax Strategy Call
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                  
+                  <Link 
+                    href="/tax"
+                    className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white hover:bg-white/20 px-6 py-4 rounded-xl text-lg font-semibold transition-all duration-200"
+                    data-testid="hero-cta-secondary"
+                  >
+                    See Pricing & Services
+                  </Link>
+                </div>
+                
+                {/* Trust Bar */}
+                <div className="flex flex-wrap items-center gap-4 text-sm text-slate-300 pt-4 border-t border-white/10">
+                  <div className="flex items-center gap-2">
+                    <Award className="w-4 h-4 text-emerald-400" />
+                    <span>Maryland-Licensed CPA</span>
+                  </div>
+                  <div className="hidden sm:block w-px h-4 bg-white/30"></div>
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                    <span>Secure Online Portal</span>
+                  </div>
+                  <div className="hidden sm:block w-px h-4 bg-white/30"></div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-emerald-400" />
+                    <span>20+ Years Experience</span>
+                  </div>
+                </div>
               </div>
               
-              {/* Trust Bar */}
-              <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-10 text-sm text-slate-300">
-                <div className="flex items-center gap-2">
-                  <Award className="w-5 h-5 text-blue-400" />
-                  <span>Licensed CPA</span>
-                </div>
-                <div className="hidden sm:block w-px h-6 bg-slate-600"></div>
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-green-400" />
-                  <span>5+ Years Experience</span>
-                </div>
-                <div className="hidden sm:block w-px h-6 bg-slate-600"></div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-purple-400" />
-                  <span>Serving All 50 States</span>
+              {/* Right Column - Visual Element */}
+              <div className="hidden lg:block animate-fade-up-delay">
+                <div className="relative">
+                  {/* Decorative gradient blob */}
+                  <div className="absolute -inset-4 bg-gradient-to-tr from-emerald-500/30 via-blue-500/20 to-purple-500/30 rounded-3xl blur-3xl"></div>
+                  
+                  {/* Stats/Feature Cards */}
+                  <div className="relative bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 p-8">
+                    <div className="grid grid-cols-2 gap-6 mb-8">
+                      <div className="text-center p-4 bg-white/5 rounded-2xl">
+                        <div className="text-4xl font-bold text-emerald-400 mb-1">$15K+</div>
+                        <div className="text-sm text-slate-300">Avg. Client Savings</div>
+                      </div>
+                      <div className="text-center p-4 bg-white/5 rounded-2xl">
+                        <div className="text-4xl font-bold text-blue-400 mb-1">500+</div>
+                        <div className="text-sm text-slate-300">Happy Clients</div>
+                      </div>
+                      <div className="text-center p-4 bg-white/5 rounded-2xl">
+                        <div className="text-4xl font-bold text-purple-400 mb-1">50</div>
+                        <div className="text-sm text-slate-300">States Served</div>
+                      </div>
+                      <div className="text-center p-4 bg-white/5 rounded-2xl">
+                        <div className="text-4xl font-bold text-cyan-400 mb-1">24/7</div>
+                        <div className="text-sm text-slate-300">AI Assistant</div>
+                      </div>
+                    </div>
+                    
+                    {/* Feature list */}
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                          <CheckCircle className="w-5 h-5 text-emerald-400" />
+                        </div>
+                        <span className="text-white/90">Proactive Year-Round Tax Planning</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                          <CheckCircle className="w-5 h-5 text-blue-400" />
+                        </div>
+                        <span className="text-white/90">AI-Powered Financial Insights</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                          <CheckCircle className="w-5 h-5 text-purple-400" />
+                        </div>
+                        <span className="text-white/90">100% Virtual & Secure Process</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              
             </div>
+          </div>
+          
+          {/* Decorative bottom wave */}
+          <div className="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+              <path d="M0 100V60C240 20 480 0 720 0C960 0 1200 20 1440 60V100H0Z" fill="hsl(210 40% 98%)" />
+            </svg>
           </div>
         </section>
 

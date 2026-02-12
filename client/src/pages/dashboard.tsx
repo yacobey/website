@@ -54,7 +54,7 @@ export default function DashboardPage() {
                   <div className="mt-6 text-center text-sm text-gray-600">
                     <p>Don't have access yet?</p>
                     <Button variant="link" asChild>
-                      <a href="/digital-guides">Purchase Digital Guidelines</a>
+                      <a href="/ai-resources">Purchase Digital Guidelines</a>
                     </Button>
                   </div>
                 </CardContent>

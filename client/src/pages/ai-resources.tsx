@@ -254,7 +254,7 @@ export default function AIResources() {
                 </ul>
               </div>
               <a
-                href="/digital-guides"
+                href="/ai-resources"
                 className="bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors inline-flex items-center gap-2"
               >
                 <Download className="w-5 h-5" />
@@ -338,7 +338,9 @@ export default function AIResources() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="#contact"
+                href="https://calendly.com/yber2001/30min"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
               >
                 Schedule Custom Consultation

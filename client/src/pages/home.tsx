@@ -8,32 +8,73 @@ import {
   Calculator, 
   TrendingUp, 
   Building2, 
-  Users, 
   Heart, 
-  Briefcase,
   FileCheck,
   BarChart3,
-  Sparkles,
-  Lock,
-  DollarSign,
+  ArrowRight,
+  CheckCircle,
+  Star,
+  Quote,
+  Stethoscope,
   Upload,
   Headphones,
   Calendar,
-  Star,
-  Quote,
-  ArrowRight,
-  CheckCircle,
-  MapPin,
-  Award
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Chatbot from "@/components/cpa-chatbot";
-import heroImage from "@assets/generated_images/sophisticated_professional_workspace_scene.png";
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="text-center">
+      <div className="text-2xl font-semibold tracking-tight text-slate-900">{value}</div>
+      <div className="mt-0.5 text-sm text-slate-500">{label}</div>
+    </div>
+  );
+}
+
+function Bullet({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-start gap-3">
+      <CheckCircle className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
+      <span className="text-sm text-slate-600 leading-relaxed">{children}</span>
+    </div>
+  );
+}
 
 export default function Home() {
   const { data: businessConfig } = useBusinessConfig();
   const calendlyUrl = businessConfig?.links.calendly || 'https://calendly.com/yber2001/30min';
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do you work with clients virtually?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Selam CPA is 100% virtual and serves clients in all 50 states from Maryland using secure portals and modern workflows."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What type of clients do you specialize in?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We specialize in Professional Service Firms, Nonprofits & Associations, and Medical & Dental Practices—providing audit-level expertise and Fractional CFO-level support."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does Fractional CFO-level support include?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Financial clarity and monthly reporting, cash flow and profitability insights, scalable advisory guidance, and a long-term, high-trust financial partnership."
+        }
+      }
+    ]
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -60,182 +101,153 @@ export default function Home() {
           }
         }}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Header />
       
       <main>
-        {/* Hero Section - Two Column Layout */}
-        <section className="relative hero-gradient hero-pattern text-white overflow-hidden min-h-[90vh] flex items-center">
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 w-full">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              
-              {/* Left Column - Content */}
-              <div className="animate-fade-up">
-                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
-                  <Sparkles className="w-4 h-4 text-emerald-400" />
-                  <span className="text-white/90 text-sm font-medium">AI-Powered Virtual CPA Firm</span>
-                </div>
-                
-                <h1 className="heading-display text-white mb-6">
-                  Proactive Tax Savings,{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
-                    Powered by AI
+        {/* Hero */}
+        <section className="relative overflow-hidden" data-testid="hero-section">
+          <div className="absolute inset-0 -z-10">
+            <div className="h-full w-full bg-gradient-to-b from-slate-50 to-white" />
+            <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-slate-200/40 blur-3xl" />
+            <div className="absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-slate-200/35 blur-3xl" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+            <div className="grid gap-10 md:grid-cols-2 md:items-center">
+              <div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-inset ring-slate-200" data-testid="badge-cpa">
+                    Maryland-Licensed CPA
                   </span>
+                  <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-inset ring-slate-200" data-testid="badge-portal">
+                    Secure Online Portal
+                  </span>
+                  <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-inset ring-slate-200" data-testid="badge-experience">
+                    20+ Years Experience
+                  </span>
+                </div>
+
+                <h1 className="mt-5 text-4xl font-semibold tracking-tight text-slate-900 md:text-5xl" data-testid="hero-heading">
+                  Savings, Powered by AI
                 </h1>
-                
-                <p className="text-xl lg:text-2xl text-blue-100 leading-relaxed mb-8 max-w-xl">
-                  AI-driven tax strategies and year-round support for businesses and professionals. 
-                  100% virtual. Serving all 50 states from Maryland.
+
+                <p className="mt-4 text-lg text-slate-600 leading-relaxed">
+                  AI-driven tax strategies and year-round support for businesses and professionals. 100% virtual. Serving all 50 states from Maryland.
                 </p>
-                
-                <div className="flex flex-col sm:flex-row gap-4 mb-8">
+
+                <p className="mt-4 text-slate-600 leading-relaxed">
+                  At Selam CPA, we combine audit-level expertise with modern advisory systems and automation to help clients move beyond compliance into strategic financial decision-making.
+                </p>
+
+                <div className="mt-7 flex flex-wrap gap-3">
                   <a 
                     href={calendlyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-primary btn-lg group"
+                    className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
                     data-testid="hero-cta-primary"
                   >
                     Book a Tax Strategy Call
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4" />
                   </a>
-                  
                   <Link 
                     href="/tax"
-                    className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white hover:bg-white/20 px-6 py-4 rounded-xl text-lg font-semibold transition-all duration-200"
+                    className="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 transition-all hover:bg-slate-50"
                     data-testid="hero-cta-secondary"
                   >
                     See Pricing & Services
                   </Link>
                 </div>
-                
-                {/* Trust Bar */}
-                <div className="flex flex-wrap items-center gap-4 text-sm text-slate-300 pt-4 border-t border-white/10">
-                  <div className="flex items-center gap-2">
-                    <Award className="w-4 h-4 text-emerald-400" />
-                    <span>Maryland-Licensed CPA</span>
-                  </div>
-                  <div className="hidden sm:block w-px h-4 bg-white/30"></div>
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                    <span>Secure Online Portal</span>
-                  </div>
-                  <div className="hidden sm:block w-px h-4 bg-white/30"></div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-emerald-400" />
-                    <span>20+ Years Experience</span>
-                  </div>
+
+                <div className="mt-8 grid grid-cols-3 gap-4" data-testid="hero-stats">
+                  <Stat label="Avg. Client Savings" value="$15K+" />
+                  <Stat label="Clients Trust Us" value="500+" />
+                  <Stat label="States Served" value="50" />
                 </div>
+
+                <p className="mt-4 text-xs text-slate-400">
+                  *Savings vary by client circumstances and compliance requirements.
+                </p>
               </div>
-              
-              {/* Right Column - Professional Image */}
-              <div className="hidden lg:block animate-fade-up-delay">
-                <div className="relative">
-                  {/* Professional image with subtle frame */}
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                    <img 
-                      src={heroImage} 
-                      alt="Professional financial analytics and accounting services" 
-                      className="w-full h-auto object-cover"
-                    />
-                    {/* Subtle overlay for text readability */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent"></div>
+
+              <Card className="bg-white/80 border border-slate-200 shadow-sm" data-testid="hero-card">
+                <CardContent className="p-6">
+                  <div className="text-sm font-semibold text-slate-900">
+                    Professional financial analytics and accounting services
                   </div>
-                  
-                  {/* Floating stats card */}
-                  <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-xl p-5 border border-slate-100">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-                        <TrendingUp className="w-6 h-6 text-emerald-600" />
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-slate-900">$15K+</div>
-                        <div className="text-sm text-slate-500">Avg. Client Savings</div>
-                      </div>
+                  <p className="mt-2 text-sm text-slate-600">
+                    Built for clarity, speed, and confidence—with secure workflows and modern tools.
+                  </p>
+
+                  <div className="mt-5 grid gap-3">
+                    <Bullet>Proactive tax planning (not just filing)</Bullet>
+                    <Bullet>Fractional CFO-style reporting and insights</Bullet>
+                    <Bullet>Audit-ready documentation and process discipline</Bullet>
+                    <Bullet>Secure virtual workflows and fast communication</Bullet>
+                  </div>
+
+                  <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
+                    <div className="text-xs font-semibold text-slate-700">Quick start</div>
+                    <div className="mt-2 text-sm text-slate-600">
+                      Book a call → Upload docs securely → Get year-round support.
+                    </div>
+                    <div className="mt-3 text-xs text-slate-500">
+                      Prefer phone? Call{" "}
+                      <a className="text-slate-700 no-underline hover:underline" href="tel:+12404732623">
+                        (240) 473-2623
+                      </a>
                     </div>
                   </div>
-                  
-                  {/* Floating trust badge */}
-                  <div className="absolute -top-4 -right-4 bg-white rounded-xl shadow-xl px-4 py-3 border border-slate-100">
-                    <div className="flex items-center gap-2">
-                      <ShieldCheck className="w-5 h-5 text-emerald-600" />
-                      <span className="text-sm font-semibold text-slate-700">500+ Clients Trust Us</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
+                </CardContent>
+              </Card>
             </div>
-          </div>
-          
-          {/* Decorative bottom wave */}
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-              <path d="M0 100V60C240 20 480 0 720 0C960 0 1200 20 1440 60V100H0Z" fill="hsl(210 40% 98%)" />
-            </svg>
           </div>
         </section>
 
-        {/* Who We Serve Section */}
-        <section className="py-20 bg-slate-50" aria-labelledby="who-we-serve">
+        {/* Specialties */}
+        <section className="py-14" aria-labelledby="who-we-serve" data-testid="specialties-section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 id="who-we-serve" className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
-                Who We Serve
-              </h2>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                Specialized expertise for your unique financial situation
+            <div className="max-w-2xl">
+              <h2 id="who-we-serve" className="text-2xl font-semibold tracking-tight text-slate-900">Who We Serve</h2>
+              <p className="mt-2 text-slate-600">
+                We specialize in serving clients who need high-trust financial partnership and strategic clarity.
               </p>
             </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Small Businesses */}
-              <Card className="group bg-white hover:shadow-xl transition-all duration-300 border-0 shadow-md" data-testid="card-small-business">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600 transition-colors">
-                    <Building2 className="w-8 h-8 text-blue-600 group-hover:text-white transition-colors" />
+
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow" data-testid="card-professional-services">
+                <CardContent className="p-6">
+                  <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-4">
+                    <Building2 className="w-5 h-5 text-slate-600" />
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">Small Businesses</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    S-Corps, LLCs, and growing companies needing strategic tax planning and clean financials
+                  <h3 className="text-base font-semibold text-slate-900">Professional Service Firms</h3>
+                  <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                    Advisory-driven support for firms that need clean reporting, smart tax strategy, and scalable systems.
                   </p>
                 </CardContent>
               </Card>
               
-              {/* Self-Employed / 1099 */}
-              <Card className="group bg-white hover:shadow-xl transition-all duration-300 border-0 shadow-md" data-testid="card-self-employed">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-green-600 transition-colors">
-                    <Briefcase className="w-8 h-8 text-green-600 group-hover:text-white transition-colors" />
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow" data-testid="card-nonprofits">
+                <CardContent className="p-6">
+                  <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-4">
+                    <Heart className="w-5 h-5 text-slate-600" />
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">Self-Employed & 1099</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    Freelancers, contractors, and gig workers maximizing deductions and staying compliant
+                  <h3 className="text-base font-semibold text-slate-900">Nonprofits & Associations</h3>
+                  <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                    Compliance + transparency with strong reporting, governance-ready financials, and sustainable operations.
                   </p>
                 </CardContent>
               </Card>
               
-              {/* Nonprofits */}
-              <Card className="group bg-white hover:shadow-xl transition-all duration-300 border-0 shadow-md" data-testid="card-nonprofit">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-600 transition-colors">
-                    <Heart className="w-8 h-8 text-purple-600 group-hover:text-white transition-colors" />
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow" data-testid="card-medical">
+                <CardContent className="p-6">
+                  <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-4">
+                    <Stethoscope className="w-5 h-5 text-slate-600" />
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">Nonprofits</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    501(c)(3) organizations needing compliance, Form 990, and financial transparency
-                  </p>
-                </CardContent>
-              </Card>
-              
-              {/* High-Earning Professionals */}
-              <Card className="group bg-white hover:shadow-xl transition-all duration-300 border-0 shadow-md" data-testid="card-high-earners">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-600 transition-colors">
-                    <Users className="w-8 h-8 text-amber-600 group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">High-Earning Professionals</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    Doctors, lawyers, and executives seeking advanced tax strategies and wealth planning
+                  <h3 className="text-base font-semibold text-slate-900">Medical & Dental Practices</h3>
+                  <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                    Profitability and cash-flow insights, entity/tax strategy, and reporting that supports better decisions.
                   </p>
                 </CardContent>
               </Card>
@@ -243,366 +255,311 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Core Services Section */}
-        <section className="py-20 bg-white" aria-labelledby="core-services">
+        {/* Core Services */}
+        <section className="py-14 bg-slate-50" aria-labelledby="core-services" data-testid="services-section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 id="core-services" className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
-                Core Services
-              </h2>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                Comprehensive financial solutions tailored to your needs
+            <div className="max-w-2xl">
+              <h2 id="core-services" className="text-2xl font-semibold tracking-tight text-slate-900">Core Services</h2>
+              <p className="mt-2 text-slate-600">
+                Comprehensive financial solutions designed to be clear, secure, and decision-useful.
               </p>
             </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {/* Tax */}
-              <div className="group text-center" data-testid="service-tax">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                  <Calculator className="w-10 h-10 text-white" />
+
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow" data-testid="service-tax">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Calculator className="w-5 h-5 text-slate-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">Tax Preparation & Planning</h3>
+                      <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+                        Strategic tax planning, preparation, and filing for individuals and businesses. Maximize deductions, minimize liability.
+                      </p>
+                      <Link href="/tax" className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors">
+                        Learn more <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow" data-testid="service-bookkeeping">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <FileCheck className="w-5 h-5 text-slate-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">Bookkeeping & Accounting</h3>
+                      <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+                        Monthly bookkeeping, financial statements, and accounts management. Clean books, clear insights.
+                      </p>
+                      <Link href="/bookkeeping" className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors">
+                        Learn more <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow" data-testid="service-audit">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <ShieldCheck className="w-5 h-5 text-slate-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">Audit & Assurance</h3>
+                      <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+                        Independent audits, reviews, and compilations. Build stakeholder confidence with reliable financials.
+                      </p>
+                      <Link href="/audit" className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors">
+                        Learn more <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow" data-testid="service-advisory">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <BarChart3 className="w-5 h-5 text-slate-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">Advisory & Consulting</h3>
+                      <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+                        CFO-level insights, business strategy, and financial planning. Make decisions with confidence.
+                      </p>
+                      <Link href="/advisory" className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors">
+                        Learn more <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Selam CPA */}
+        <section className="py-14" aria-labelledby="why-us" data-testid="why-us-section">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl">
+              <h2 id="why-us" className="text-2xl font-semibold tracking-tight text-slate-900">
+                Why Choose Selam CPA?
+              </h2>
+              <p className="mt-2 text-slate-600">
+                We're not just accountants—we're your strategic financial partners, combining modern technology with proven expertise.
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm" data-testid="benefit-proactive">
+                <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-3">
+                  <TrendingUp className="w-5 h-5 text-slate-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">Tax Preparation & Planning</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                  Strategic tax planning, preparation, and filing for individuals and businesses. Maximize deductions, minimize liability.
+                <h3 className="text-sm font-semibold text-slate-900">Proactive Tax Planning</h3>
+                <p className="mt-1 text-sm text-slate-500 leading-relaxed">
+                  We strategize year-round to minimize your tax burden and maximize savings.
                 </p>
-                <Link href="/tax" className="text-blue-600 hover:text-blue-800 font-medium text-sm inline-flex items-center gap-1">
-                  Learn more <ArrowRight className="w-4 h-4" />
-                </Link>
               </div>
-              
-              {/* Bookkeeping */}
-              <div className="group text-center" data-testid="service-bookkeeping">
-                <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                  <FileCheck className="w-10 h-10 text-white" />
+
+              <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm" data-testid="benefit-advisory">
+                <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-3">
+                  <BarChart3 className="w-5 h-5 text-slate-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">Bookkeeping & Accounting</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                  Monthly bookkeeping, financial statements, and accounts management. Clean books, clear insights.
+                <h3 className="text-sm font-semibold text-slate-900">Fractional CFO Support</h3>
+                <p className="mt-1 text-sm text-slate-500 leading-relaxed">
+                  Monthly reporting, cash flow insights, and scalable advisory guidance.
                 </p>
-                <Link href="/bookkeeping" className="text-blue-600 hover:text-blue-800 font-medium text-sm inline-flex items-center gap-1">
-                  Learn more <ArrowRight className="w-4 h-4" />
-                </Link>
               </div>
-              
-              {/* Audit & Assurance */}
-              <div className="group text-center" data-testid="service-audit">
-                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                  <ShieldCheck className="w-10 h-10 text-white" />
+
+              <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm" data-testid="benefit-audit">
+                <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-3">
+                  <ShieldCheck className="w-5 h-5 text-slate-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">Audit & Assurance</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                  Independent audits, reviews, and compilations. Build stakeholder confidence with reliable financials.
+                <h3 className="text-sm font-semibold text-slate-900">Audit-Ready Processes</h3>
+                <p className="mt-1 text-sm text-slate-500 leading-relaxed">
+                  Documentation discipline and reliable financials that build stakeholder confidence.
                 </p>
-                <Link href="/audit" className="text-blue-600 hover:text-blue-800 font-medium text-sm inline-flex items-center gap-1">
-                  Learn more <ArrowRight className="w-4 h-4" />
-                </Link>
               </div>
-              
-              {/* Advisory */}
-              <div className="group text-center" data-testid="service-advisory">
-                <div className="w-20 h-20 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                  <BarChart3 className="w-10 h-10 text-white" />
+
+              <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm" data-testid="benefit-secure">
+                <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-3">
+                  <CheckCircle className="w-5 h-5 text-slate-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">Advisory & Consulting</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                  CFO-level insights, business strategy, and financial planning. Make decisions with confidence.
+                <h3 className="text-sm font-semibold text-slate-900">Secure & Virtual</h3>
+                <p className="mt-1 text-sm text-slate-500 leading-relaxed">
+                  100% virtual workflows with encrypted portals. Work with us from anywhere.
                 </p>
-                <Link href="/advisory" className="text-blue-600 hover:text-blue-800 font-medium text-sm inline-flex items-center gap-1">
-                  Learn more <ArrowRight className="w-4 h-4" />
-                </Link>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Why Selam CPA Section */}
-        <section className="py-20 bg-gradient-to-br from-blue-900 to-slate-900 text-white" aria-labelledby="why-us">
+        {/* Testimonials */}
+        <section className="py-14 bg-slate-50" aria-labelledby="testimonials" data-testid="testimonials-section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 id="why-us" className="text-3xl lg:text-4xl font-bold mb-6">
-                  Why Choose Selam CPA?
-                </h2>
-                <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-                  We're not just accountants—we're your strategic financial partners, 
-                  combining modern technology with proven expertise.
-                </p>
-                
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4" data-testid="benefit-proactive">
-                    <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <TrendingUp className="w-6 h-6 text-blue-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold mb-1">Proactive Tax Planning</h3>
-                      <p className="text-slate-300 text-sm">
-                        We don't just file—we strategize year-round to minimize your tax burden and maximize savings.
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4" data-testid="benefit-ai">
-                    <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Sparkles className="w-6 h-6 text-purple-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold mb-1">AI-Powered Analysis</h3>
-                      <p className="text-slate-300 text-sm">
-                        Cutting-edge AI tools help identify opportunities and automate routine tasks for faster, smarter insights.
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4" data-testid="benefit-secure">
-                    <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Lock className="w-6 h-6 text-green-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold mb-1">Secure Virtual Workflows</h3>
-                      <p className="text-slate-300 text-sm">
-                        Bank-level encryption and secure document portals. Work with us from anywhere, anytime.
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4" data-testid="benefit-pricing">
-                    <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <DollarSign className="w-6 h-6 text-amber-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold mb-1">Transparent Fixed Pricing</h3>
-                      <p className="text-slate-300 text-sm">
-                        Clear, upfront pricing with no surprises. Know exactly what you're paying before we start.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                <div className="text-center">
-                  <div className="text-5xl font-bold text-blue-400 mb-2">$10K+</div>
-                  <p className="text-slate-300 mb-6">Average client tax savings per year</p>
-                  
-                  <div className="grid grid-cols-2 gap-6 mb-8">
-                    <div>
-                      <div className="text-3xl font-bold text-white">500+</div>
-                      <p className="text-slate-400 text-sm">Happy Clients</p>
-                    </div>
-                    <div>
-                      <div className="text-3xl font-bold text-white">50</div>
-                      <p className="text-slate-400 text-sm">States Served</p>
-                    </div>
-                  </div>
-                  
-                  <a 
-                    href={calendlyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 w-full"
-                    data-testid="why-us-cta"
-                  >
-                    Start Saving Today
-                    <ArrowRight className="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section className="py-20 bg-slate-50" aria-labelledby="testimonials">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 id="testimonials" className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+            <div className="max-w-2xl">
+              <h2 id="testimonials" className="text-2xl font-semibold tracking-tight text-slate-900">
                 What Our Clients Say
               </h2>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                Trusted by businesses and professionals across the country
+              <p className="mt-2 text-slate-600">
+                Trusted by businesses and professionals across the country.
               </p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Testimonial 1 */}
-              <Card className="bg-white border-0 shadow-md" data-testid="testimonial-1">
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              <Card className="border border-slate-200 bg-white shadow-sm" data-testid="testimonial-1">
                 <CardContent className="p-6">
-                  <div className="flex items-center gap-1 mb-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                  <div className="flex items-center gap-0.5 mb-3">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star key={s} className="w-4 h-4 fill-amber-400 text-amber-400" />
                     ))}
                   </div>
-                  <Quote className="w-8 h-8 text-blue-200 mb-4" />
-                  <p className="text-slate-600 mb-6 leading-relaxed">
-                    "Selam CPA transformed our tax strategy. We saved over $15,000 in our first year working with them. 
-                    Their proactive approach and AI tools are game-changers."
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    "Selam CPA transformed our tax strategy. We saved over $15,000 in our first year. Their proactive approach is a game-changer."
                   </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                      <span className="text-blue-600 font-semibold">JD</span>
-                    </div>
+                  <div className="mt-4 flex items-center gap-3">
+                    <div className="w-9 h-9 bg-slate-100 rounded-full flex items-center justify-center text-xs font-semibold text-slate-600">JD</div>
                     <div>
-                      <div className="font-semibold text-slate-900">James D.</div>
-                      <div className="text-sm text-slate-500">Tech Startup Founder</div>
+                      <div className="text-sm font-medium text-slate-900">James D.</div>
+                      <div className="text-xs text-slate-500">Tech Startup Founder</div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
-              {/* Testimonial 2 */}
-              <Card className="bg-white border-0 shadow-md" data-testid="testimonial-2">
+              <Card className="border border-slate-200 bg-white shadow-sm" data-testid="testimonial-2">
                 <CardContent className="p-6">
-                  <div className="flex items-center gap-1 mb-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                  <div className="flex items-center gap-0.5 mb-3">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star key={s} className="w-4 h-4 fill-amber-400 text-amber-400" />
                     ))}
                   </div>
-                  <Quote className="w-8 h-8 text-blue-200 mb-4" />
-                  <p className="text-slate-600 mb-6 leading-relaxed">
-                    "As a nonprofit, we needed someone who understood our unique requirements. 
-                    Selam CPA made our Form 990 process seamless and keeps us compliant."
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    "As a nonprofit, we needed someone who understood our unique requirements. Selam made our Form 990 process seamless."
                   </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                      <span className="text-purple-600 font-semibold">MR</span>
-                    </div>
+                  <div className="mt-4 flex items-center gap-3">
+                    <div className="w-9 h-9 bg-slate-100 rounded-full flex items-center justify-center text-xs font-semibold text-slate-600">MR</div>
                     <div>
-                      <div className="font-semibold text-slate-900">Maria R.</div>
-                      <div className="text-sm text-slate-500">Nonprofit Executive Director</div>
+                      <div className="text-sm font-medium text-slate-900">Maria R.</div>
+                      <div className="text-xs text-slate-500">Nonprofit Executive Director</div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
-              {/* Testimonial 3 */}
-              <Card className="bg-white border-0 shadow-md" data-testid="testimonial-3">
+              <Card className="border border-slate-200 bg-white shadow-sm" data-testid="testimonial-3">
                 <CardContent className="p-6">
-                  <div className="flex items-center gap-1 mb-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                  <div className="flex items-center gap-0.5 mb-3">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star key={s} className="w-4 h-4 fill-amber-400 text-amber-400" />
                     ))}
                   </div>
-                  <Quote className="w-8 h-8 text-blue-200 mb-4" />
-                  <p className="text-slate-600 mb-6 leading-relaxed">
-                    "I'm a freelancer working across multiple states. Selam CPA handles all my complex 
-                    tax situations and I don't have to worry about compliance anymore."
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    "The virtual workflow is incredibly efficient. Secure document sharing, fast turnaround, and year-round availability."
                   </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 font-semibold">SK</span>
-                    </div>
+                  <div className="mt-4 flex items-center gap-3">
+                    <div className="w-9 h-9 bg-slate-100 rounded-full flex items-center justify-center text-xs font-semibold text-slate-600">SK</div>
                     <div>
-                      <div className="font-semibold text-slate-900">Sarah K.</div>
-                      <div className="text-sm text-slate-500">Independent Consultant</div>
+                      <div className="text-sm font-medium text-slate-900">Sarah K.</div>
+                      <div className="text-xs text-slate-500">Medical Practice Owner</div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             </div>
-            
-            <div className="text-center mt-10">
-              <Link href="/testimonials" className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-2">
-                Read more client stories <ArrowRight className="w-4 h-4" />
+
+            <div className="mt-6">
+              <Link href="/testimonials" className="text-sm font-medium text-slate-700 hover:text-slate-900 inline-flex items-center gap-1 transition-colors">
+                Read more client stories <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
         </section>
 
-        {/* 3-Step Process Section */}
-        <section className="py-20 bg-white" aria-labelledby="process">
+        {/* How It Works */}
+        <section className="py-14" aria-labelledby="process" data-testid="process-section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 id="process" className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
-                Getting Started is Easy
+            <div className="max-w-2xl">
+              <h2 id="process" className="text-2xl font-semibold tracking-tight text-slate-900">
+                Getting Started
               </h2>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                Three simple steps to financial peace of mind
+              <p className="mt-2 text-slate-600">
+                Three simple steps to financial clarity and year-round support.
               </p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8 relative">
-              {/* Connecting line */}
-              <div className="hidden md:block absolute top-16 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-blue-200 via-blue-400 to-blue-200"></div>
-              
-              {/* Step 1 */}
-              <div className="text-center relative" data-testid="step-1">
-                <div className="w-32 h-32 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl relative z-10">
-                  <Calendar className="w-14 h-14 text-white" />
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
+              <div className="relative" data-testid="step-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-8 bg-slate-900 rounded-full flex items-center justify-center text-white text-sm font-semibold">1</div>
+                  <h3 className="text-base font-semibold text-slate-900">Book a Call</h3>
                 </div>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-full">
-                  Step 1
-                </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">Book Your Call</h3>
-                <p className="text-slate-600 leading-relaxed">
-                  Schedule a free strategy call. We'll discuss your situation, goals, and how we can help.
+                <p className="text-sm text-slate-600 leading-relaxed pl-11">
+                  Schedule a free strategy call. We'll discuss your situation, goals, and how we can help you save.
                 </p>
               </div>
-              
-              {/* Step 2 */}
-              <div className="text-center relative" data-testid="step-2">
-                <div className="w-32 h-32 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl relative z-10">
-                  <Upload className="w-14 h-14 text-white" />
+
+              <div className="relative" data-testid="step-2">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-8 bg-slate-900 rounded-full flex items-center justify-center text-white text-sm font-semibold">2</div>
+                  <h3 className="text-base font-semibold text-slate-900">Upload Docs Securely</h3>
                 </div>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full">
-                  Step 2
-                </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">Upload Docs Securely</h3>
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-sm text-slate-600 leading-relaxed pl-11">
                   Use our encrypted portal to share documents safely. No email attachments needed.
                 </p>
               </div>
-              
-              {/* Step 3 */}
-              <div className="text-center relative" data-testid="step-3">
-                <div className="w-32 h-32 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl relative z-10">
-                  <Headphones className="w-14 h-14 text-white" />
+
+              <div className="relative" data-testid="step-3">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-8 bg-slate-900 rounded-full flex items-center justify-center text-white text-sm font-semibold">3</div>
+                  <h3 className="text-base font-semibold text-slate-900">Get Year-Round Support</h3>
                 </div>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 bg-purple-600 text-white text-sm font-bold px-3 py-1 rounded-full">
-                  Step 3
-                </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">Get Ongoing Support</h3>
-                <p className="text-slate-600 leading-relaxed">
-                  Receive year-round guidance, proactive tax planning, and responsive support when you need it.
+                <p className="text-sm text-slate-600 leading-relaxed pl-11">
+                  Receive proactive tax planning, monthly reporting, and responsive support when you need it.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Final CTA Banner */}
-        <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-700" aria-labelledby="final-cta">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 id="final-cta" className="text-3xl lg:text-4xl font-bold text-white mb-4">
-              Ready to Take Control of Your Finances?
+        {/* Final CTA */}
+        <section className="py-14 bg-slate-50 border-t border-slate-200" data-testid="final-cta-section">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-900">
+              Ready to take control of your finances?
             </h2>
-            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Don't wait until tax season. Start planning now and maximize your savings with expert guidance.
+            <p className="mt-3 text-slate-600">
+              Book a free strategy call to discuss your goals and see how we can help you save.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="mt-6 flex flex-wrap gap-3 justify-center">
               <a 
                 href={calendlyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 hover:bg-blue-50 font-bold px-8 py-4 rounded-lg text-lg transition-all duration-200 shadow-lg"
+                className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800"
                 data-testid="final-cta-button"
               >
                 Book a Tax Strategy Call
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4" />
               </a>
-              
               <a 
-                href={`tel:${businessConfig?.phone.e164}`}
-                className="text-white hover:text-blue-100 font-medium transition-colors"
-                data-testid="final-cta-phone"
+                href="tel:+12404732623"
+                className="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 transition-all hover:bg-slate-50"
               >
-                or call {businessConfig?.phone.display}
+                Call (240) 473-2623
               </a>
             </div>
             
-            <p className="text-blue-200 text-sm mt-6">
-              <CheckCircle className="w-4 h-4 inline mr-1" />
-              Free consultation • No obligation • Serving all 50 states
+            <p className="mt-4 text-xs text-slate-400">
+              Free consultation · No obligation · Serving all 50 states
             </p>
           </div>
         </section>

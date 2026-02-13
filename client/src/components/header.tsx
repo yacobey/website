@@ -1,139 +1,118 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 
 const calendly = import.meta.env.VITE_CALENDLY_URL as string;
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [location] = useLocation();
+
+  const navLinks = [
+    { href: "/tax", label: "Tax" },
+    { href: "/bookkeeping", label: "Bookkeeping" },
+    { href: "/advisory", label: "Advisory" },
+    { href: "/audit", label: "Audit" },
+    { href: "/blog", label: "Blog" },
+    { href: "/agent", label: "Agent" },
+  ];
+
   return (
-    <header className="bg-white/95 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-16">
           <Link href="/" aria-label="Selam CPA" className="flex-shrink-0">
             <div className="flex items-center cursor-pointer">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-                  Selam CPA
-                </h1>
-                <p className="text-sm font-medium text-blue-600 -mt-1">
-                  Professional Accounting Services
-                </p>
-              </div>
+              <span className="text-xl font-bold text-slate-900 tracking-tight">Selam CPA</span>
+              <span className="hidden sm:inline-block ml-2 text-xs font-medium text-slate-400 border-l border-slate-200 pl-2">PLLC</span>
             </div>
           </Link>
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1" aria-label="Primary">
-            <Link href="/tax" data-testid="link-tax" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200">
-              Tax
-            </Link>
-            <Link href="/bookkeeping" data-testid="link-bookkeeping" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200">
-              Bookkeeping
-            </Link>
-            <Link href="/advisory" data-testid="link-advisory" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200">
-              Advisory
-            </Link>
-            <Link href="/audit" data-testid="link-audit" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200">
-              Audit
-            </Link>
-            <Link href="/blog" data-testid="link-blog" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200">
-              Blog
-            </Link>
-            <Link href="/agent" data-testid="link-agent" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200">
-              Agent
-            </Link>
-            <a 
-              href={calendly} 
-              target="_blank" 
-              rel="noopener" 
-              data-testid="button-consultation"
-              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-6 py-3 text-base font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ml-4"
-            >
-              Free Consultation
-            </a>
+
+          <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.href}
+                href={link.href} 
+                data-testid={`link-${link.label.toLowerCase()}`} 
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  location === link.href 
+                    ? "text-emerald-700 bg-emerald-50" 
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="ml-3 flex items-center gap-2">
+              <a 
+                href="tel:+12404732623"
+                className="text-sm text-slate-500 hover:text-slate-700 transition-colors hidden xl:flex items-center gap-1.5"
+              >
+                <Phone className="w-3.5 h-3.5" />
+                (240) 473-2623
+              </a>
+              <a 
+                href={calendly} 
+                target="_blank" 
+                rel="noopener" 
+                data-testid="button-consultation"
+                className="bg-slate-900 text-white hover:bg-slate-800 px-4 py-2 text-sm font-semibold rounded-lg transition-colors"
+              >
+                Free Consultation
+              </a>
+            </div>
           </nav>
 
-          {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+            className="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
             data-testid="mobile-menu-toggle"
           >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
         
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white/95 backdrop-blur-lg">
-            <nav className="px-4 py-4 space-y-1" aria-label="Mobile navigation">
-              <Link 
-                href="/tax" 
-                className="block text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200"
-                data-testid="mobile-link-tax"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Tax
-              </Link>
-              <Link 
-                href="/bookkeeping" 
-                className="block text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200"
-                data-testid="mobile-link-bookkeeping"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Bookkeeping
-              </Link>
-              <Link 
-                href="/advisory" 
-                className="block text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200"
-                data-testid="mobile-link-advisory"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Advisory
-              </Link>
-              <Link 
-                href="/audit" 
-                className="block text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200"
-                data-testid="mobile-link-audit"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Audit
-              </Link>
-              <Link 
-                href="/blog" 
-                className="block text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200"
-                data-testid="mobile-link-blog"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Blog
-              </Link>
-              <Link 
-                href="/agent" 
-                className="block text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200"
-                data-testid="mobile-link-agent"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Agent
-              </Link>
+          <div className="lg:hidden border-t border-slate-100 bg-white pb-4">
+            <nav className="pt-2 space-y-0.5" aria-label="Mobile navigation">
+              {navLinks.map((link) => (
+                <Link 
+                  key={link.href}
+                  href={link.href} 
+                  className={`block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                    location === link.href 
+                      ? "text-emerald-700 bg-emerald-50" 
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                  data-testid={`mobile-link-${link.label.toLowerCase()}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
               <Link 
                 href="/testimonials" 
-                className="block text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200"
+                className="block px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors"
                 data-testid="mobile-link-testimonials"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Testimonials
               </Link>
-              <div className="pt-2 border-t border-gray-200 mt-4">
+              <div className="pt-3 px-4 space-y-2 border-t border-slate-100 mt-2">
+                <a 
+                  href="tel:+12404732623"
+                  className="flex items-center justify-center gap-2 text-sm text-slate-600 font-medium py-2.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Phone className="w-4 h-4" />
+                  (240) 473-2623
+                </a>
                 <a 
                   href={calendly} 
                   target="_blank" 
                   rel="noopener" 
-                  className="block bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 px-4 py-3 text-base font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-center"
+                  className="block bg-slate-900 text-white hover:bg-slate-800 px-4 py-2.5 text-sm font-semibold rounded-lg transition-colors text-center"
                   data-testid="mobile-button-consultation"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >

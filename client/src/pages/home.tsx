@@ -1,88 +1,86 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { useBusinessConfig } from "@/hooks/use-business-config";
 import StructuredData from "@/components/structured-data";
-import { 
-  ShieldCheck, 
-  Calculator, 
-  TrendingUp, 
-  Building2, 
-  Heart, 
-  FileCheck,
-  BarChart3,
+import {
   ArrowRight,
   CheckCircle2,
-  Star,
-  Stethoscope,
-  Phone,
-  Lock,
-  Clock,
-  MapPin,
+  ChevronDown,
   ChevronRight,
+  Clock,
+  Lock,
+  MapPin,
+  Phone,
+  Star,
+  TrendingUp,
+  BarChart3,
+  FileSearch,
+  Receipt,
+  AlertCircle,
 } from "lucide-react";
 import Chatbot from "@/components/cpa-chatbot";
 import heroProfessional from "@assets/hero-professional.jpg";
 import consultationImg from "@assets/consultation.jpg";
 import teamWorkImg from "@assets/team-work.jpg";
 
-export default function Home() {
-  const { data: businessConfig } = useBusinessConfig();
-  const calendlyUrl = businessConfig?.links.calendly || 'https://calendly.com/yber2001/30min';
+const CALENDLY = "https://calendly.com/yber2001/30min";
 
+const faqs = [
+  {
+    q: "What exactly is a fractional controller?",
+    a: "A fractional controller is a senior-level financial professional who handles the financial management functions of your business — monthly close, reporting, cash flow forecasting, KPI tracking, and financial analysis — on a part-time or retainer basis. You get the expertise of a full-time controller without the $120,000+ annual salary. For most growing healthcare practices in the $1M–$5M revenue range, a fractional controller is exactly the right level of support: more strategic than a bookkeeper, more operationally focused than a CFO.",
+  },
+  {
+    q: "How is this different from what my bookkeeper does?",
+    a: "Your bookkeeper records transactions and reconciles accounts. That's essential — but it's backward-looking, and it stops well short of financial management. A fractional controller takes that foundation and builds on it: interpreting the numbers, identifying margin problems, building cash flow forecasts, producing meaningful reports, and advising on financial decisions. Most practice owners I work with have a bookkeeper already. I work alongside them or assess whether the current bookkeeping infrastructure is fit for purpose before we build anything on top of it.",
+  },
+  {
+    q: "What does onboarding look like?",
+    a: "Onboarding typically takes 30 days. We start with a thorough review of your existing books, accounting systems, chart of accounts, and any existing reports. I assess the accuracy of your current financials, identify gaps, and build the reporting framework we'll use going forward. By the end of month one, you'll have a clean close, a baseline financial picture, and a clear view of what we're tracking and why. Most clients tell me the onboarding alone surfaces insights they hadn't seen in years.",
+  },
+  {
+    q: "How quickly will I see results?",
+    a: "You'll have more financial clarity within the first month — that's guaranteed by the onboarding process. Meaningful operational insights typically emerge in months two and three, once we have a clean baseline and have completed the first full close cycle together. Cash flow forecasting becomes reliable around month three as we establish patterns in your revenue and expense cycles. The practices that see the fastest results are the ones where the owner is willing to act on what the numbers reveal — and most do, because the picture becomes hard to ignore.",
+  },
+  {
+    q: "What size practice do you work with?",
+    a: "I work with healthcare practices in the DMV area — typically generating between $800,000 and $6 million in annual revenue. You might be a solo practitioner who has grown a solid practice and finally wants real financial infrastructure. You might be a group practice with multiple providers and increasing complexity. The common denominator is that you've outgrown the \"check the bank balance\" approach to financial management and you're ready to run your practice like the business it is. If you're significantly below or above that revenue range, I'll tell you honestly on our first call whether this engagement makes sense for you.",
+  },
+];
+
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b border-slate-200 last:border-0">
+      <button
+        className="flex w-full items-start justify-between py-5 text-left gap-4"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+      >
+        <span className="font-semibold text-slate-900 text-base leading-snug">{q}</span>
+        <ChevronDown
+          className={`w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      {open && (
+        <div className="pb-5 text-slate-600 leading-relaxed text-sm">
+          {a}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function Home() {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What does Selam CPA specialize in?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Selam CPA specializes in tax preparation and planning, bookkeeping, audit and assurance, and advisory services for professional service firms, nonprofits and associations, and medical and dental practices. We are a Maryland-licensed CPA firm serving clients in all 50 US states."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you work with clients outside of Maryland?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. Selam CPA serves clients in all 50 states through secure virtual workflows. We use encrypted document portals and video conferencing so you get the same quality of service regardless of location."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much can I save on taxes with proactive planning?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Our clients save an average of $15,000 or more per year through proactive tax planning. Savings depend on your specific situation, but strategies like entity restructuring, retirement plan optimization, and year-round deduction tracking consistently produce significant results."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is a Fractional CFO and do I need one?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "A Fractional CFO provides executive-level financial leadership on a part-time basis — typically at 60-80% less than hiring a full-time CFO. If your business needs monthly financial reporting, cash flow forecasting, or strategic planning but isn't ready for a $200K+ salary, a fractional CFO is an excellent fit."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How do I get started with Selam CPA?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Getting started is simple: book a free strategy call through our website, upload your documents through our encrypted portal, and receive year-round proactive support. Most new clients are onboarded within one week."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is my financial information secure?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Absolutely. We use bank-level 256-bit encryption for all document transfers, secure client portals with two-factor authentication, and follow IRS data security guidelines. Your financial information never travels through email."
-        }
-      }
-    ]
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
   };
 
   return (
@@ -91,82 +89,87 @@ export default function Home() {
         type="Organization"
         data={{
           "@type": ["AccountingService", "LocalBusiness"],
-          "name": "Selam CPA PLLC",
-          "alternateName": "Selam CPA",
-          "description": "Maryland-licensed CPA firm providing tax preparation, bookkeeping, audit and assurance, and advisory services. Virtual firm serving all 50 US states with secure, encrypted workflows.",
-          "slogan": "Your Financial Success Partner",
-          "foundingDate": "2020",
-          "url": "https://selamcpa.com",
-          "telephone": "+12404732623",
-          "address": {
+          name: "Selam CPA",
+          description:
+            "Fractional controller and financial advisory services for healthcare practice owners in the DMV — DC, Maryland, and Virginia. Specializing in behavioral health clinics, physical therapy practices, and dental practices.",
+          url: "https://selamcpa.com",
+          telephone: "+12404732623",
+          email: "yber2001@gmail.com",
+          address: {
             "@type": "PostalAddress",
-            "addressRegion": "MD",
-            "addressCountry": "US"
+            addressRegion: "MD",
+            addressCountry: "US",
           },
-          "areaServed": {
-            "@type": "Country",
-            "name": "United States"
+          areaServed: [
+            { "@type": "State", name: "Maryland" },
+            { "@type": "State", name: "Virginia" },
+            { "@type": "City", name: "Washington DC" },
+          ],
+          priceRange: "$$$",
+          founder: {
+            "@type": "Person",
+            name: "Yacob Tewelde",
+            jobTitle: "CPA, FCCA — Fractional Controller & Financial Advisor",
           },
-          "priceRange": "$$",
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "5.0",
-            "reviewCount": "127"
-          },
-          "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "CPA Services",
-            "itemListElement": [
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tax Preparation & Planning" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bookkeeping & Accounting" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Audit & Assurance" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Advisory & Fractional CFO" } }
-            ]
-          }
         }}
       />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Header />
-      
+
       <main>
-        {/* Hero */}
-        <section className="relative overflow-hidden bg-[#0f172a]" data-testid="hero-section">
+        {/* ── HERO ─────────────────────────────────────────────────────── */}
+        <section
+          className="relative overflow-hidden bg-[#0f172a]"
+          data-testid="hero-section"
+        >
           <div className="absolute inset-0">
-            <img 
-              src={heroProfessional} 
-              alt="Financial professionals reviewing business documents" 
+            <img
+              src={heroProfessional}
+              alt="Healthcare practice owner reviewing financial reports"
               className="w-full h-full object-cover opacity-20"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a] via-[#0f172a]/95 to-[#0f172a]/70" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a] via-[#0f172a]/95 to-[#0f172a]/60" />
           </div>
 
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
             <div className="max-w-2xl">
-              <p className="text-emerald-400 font-medium tracking-wide uppercase text-sm mb-4" data-testid="hero-eyebrow">
-                Maryland-Licensed CPA Firm &middot; Serving All 50 States
+              <p className="text-emerald-400 font-medium tracking-wide uppercase text-sm mb-5">
+                Fractional Controller &amp; Financial Advisory &mdash; DC, Maryland, Virginia
               </p>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight" data-testid="hero-heading">
-                Your numbers deserve<br className="hidden sm:block" /> more than compliance.
+              <h1
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight"
+                data-testid="hero-heading"
+              >
+                Your Practice Is Growing. Your Financials Should Reflect That.
               </h1>
 
               <p className="mt-6 text-lg text-slate-300 leading-relaxed max-w-xl">
-                We help business owners keep more of what they earn — with tax strategies that work year-round, 
-                books you can actually trust, and a team that picks up the phone when you call.
+                Fractional controller and financial advisory services for healthcare practice owners
+                in the DMV who are done flying blind and ready for real financial clarity.
+              </p>
+
+              <p className="mt-4 text-slate-400 leading-relaxed max-w-xl">
+                You built a practice worth running well. But if you're still relying on your
+                bookkeeper for financial decisions — or making calls based on your bank balance —
+                you're leaving margin on the table and taking on risk you can't see. That changes here.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <a 
-                  href={calendlyUrl}
+                <a
+                  href={CALENDLY}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-7 py-3.5 rounded-lg transition-colors text-base"
                   data-testid="hero-cta-primary"
                 >
-                  Book Your Free Strategy Call
+                  Book a 15-Minute Discovery Call
                   <ArrowRight className="w-4 h-4" />
                 </a>
-                <a 
+                <a
                   href="tel:+12404732623"
                   className="inline-flex items-center justify-center gap-2 border border-slate-500 hover:border-slate-400 text-slate-300 hover:text-white font-medium px-7 py-3.5 rounded-lg transition-colors text-base"
                   data-testid="hero-cta-phone"
@@ -176,10 +179,14 @@ export default function Home() {
                 </a>
               </div>
 
-              <div className="mt-10 flex flex-wrap items-center gap-6 text-sm text-slate-400">
+              <p className="mt-4 text-sm text-slate-500">
+                No commitment. No pitch. Just a direct conversation about your practice financials.
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-slate-400">
                 <div className="flex items-center gap-2">
                   <Lock className="w-4 h-4 text-emerald-400" />
-                  <span>256-bit Encrypted Portal</span>
+                  <span>Encrypted Client Portal</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-emerald-400" />
@@ -187,456 +194,565 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-emerald-400" />
-                  <span>100% Virtual</span>
+                  <span>DMV Region Only</span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Social Proof Bar */}
-        <section className="bg-slate-50 border-b border-slate-200 py-6" data-testid="social-proof">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              <div>
-                <div className="text-2xl font-bold text-slate-900">500+</div>
-                <div className="text-sm text-slate-500 mt-0.5">Clients Served</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-slate-900">$15K+</div>
-                <div className="text-sm text-slate-500 mt-0.5">Avg. Tax Savings</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-slate-900">50</div>
-                <div className="text-sm text-slate-500 mt-0.5">States Served</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-emerald-600">5.0</div>
-                <div className="flex items-center justify-center gap-0.5 mt-0.5">
-                  {[1,2,3,4,5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />)}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Services */}
-        <section className="py-20 bg-white" aria-labelledby="services" data-testid="services-section">
+        {/* ── VALUE PROPOSITIONS ───────────────────────────────────────── */}
+        <section className="py-20 bg-white" aria-labelledby="value-props" data-testid="value-section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-14">
-              <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">What We Do</p>
-              <h2 id="services" className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
-                Full-service accounting, built around your business
+              <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">
+                What You Get
+              </p>
+              <h2
+                id="value-props"
+                className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight"
+              >
+                What Working With a Fractional Controller Actually Gives You
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="rounded-2xl bg-slate-50 p-8 border border-slate-100">
+                <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-5">
+                  <BarChart3 className="w-6 h-6 text-emerald-700" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">Financial Clarity — Finally</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Most practice owners are making major decisions — hiring, adding a location, investing in
+                  equipment — based on a gut feel and a bank balance. I build the financial reporting
+                  infrastructure that shows you exactly where your practice stands: clean monthly
+                  financials, a dashboard you can actually read, and a controller who explains what the
+                  numbers mean and what to do about them. No more flying blind at the end of the month.
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-slate-50 p-8 border border-slate-100">
+                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-5">
+                  <TrendingUp className="w-6 h-6 text-blue-700" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">Cash Flow Visibility You Can Plan Around</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Revenue and cash are not the same thing — and in healthcare, the gap between them can be
+                  brutal. Insurance reimbursement lags, payer mix shifts, and uneven collections create
+                  cash flow patterns that are hard to predict without a disciplined forecasting process. I
+                  build rolling cash flow projections for your practice so you always know what's coming
+                  in, what's going out, and where the pressure points are before they become problems.
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-slate-50 p-8 border border-slate-100">
+                <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-5">
+                  <FileSearch className="w-6 h-6 text-amber-700" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">Margin Analysis That Tells You the Truth</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Not all revenue is created equal. Some services, payers, and providers are driving your
+                  profitability — and some are subsidizing your worst margins without you knowing it. I
+                  break down your practice economics at the service line and provider level, so you can
+                  see where you're actually making money and make smarter decisions about pricing,
+                  scheduling, staffing, and contracting.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── SERVICES ─────────────────────────────────────────────────── */}
+        <section className="py-20 bg-slate-50" aria-labelledby="services" data-testid="services-section">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-2xl mx-auto mb-14">
+              <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">
+                Engagements
+              </p>
+              <h2
+                id="services"
+                className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight"
+              >
+                Three Ways to Engage — One Standard of Work
               </h2>
               <p className="mt-4 text-slate-600 text-lg">
-                From tax season to board meetings — we handle the financial work so you can focus on running your business.
+                Every engagement is built around one goal: giving you financial clarity you can
+                actually act on.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-5">
-              <Link href="/tax" className="group block">
-                <div className="rounded-2xl border border-slate-200 p-7 hover:border-emerald-200 hover:shadow-lg transition-all duration-300 h-full" data-testid="service-tax">
-                  <div className="flex items-start gap-5">
-                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-100 transition-colors">
-                      <Calculator className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                        Tax Preparation & Planning
-                      </h3>
-                      <p className="mt-2 text-slate-600 leading-relaxed">
-                        We don't just file your return — we build a year-round strategy to keep your tax bill as low as legally possible. 
-                        Individual, S-Corp, LLC, partnership, and nonprofit returns.
-                      </p>
-                      <span className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-emerald-600 group-hover:gap-2 transition-all">
-                        See tax services <ChevronRight className="w-4 h-4" />
-                      </span>
-                    </div>
-                  </div>
+            <div className="grid lg:grid-cols-3 gap-7">
+              {/* Card 1 */}
+              <div
+                className="bg-white rounded-2xl border-2 border-emerald-200 p-8 flex flex-col shadow-sm"
+                data-testid="service-fractional"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">
+                    Core Engagement
+                  </span>
+                  <span className="text-xs text-slate-500 font-medium">Ongoing Retainer</span>
                 </div>
-              </Link>
-
-              <Link href="/bookkeeping" className="group block">
-                <div className="rounded-2xl border border-slate-200 p-7 hover:border-emerald-200 hover:shadow-lg transition-all duration-300 h-full" data-testid="service-bookkeeping">
-                  <div className="flex items-start gap-5">
-                    <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-green-100 transition-colors">
-                      <FileCheck className="w-6 h-6 text-green-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                        Bookkeeping & Accounting
-                      </h3>
-                      <p className="mt-2 text-slate-600 leading-relaxed">
-                        Monthly bookkeeping, bank reconciliation, and financial statements that actually make sense. 
-                        QuickBooks Online and Xero integration included.
-                      </p>
-                      <span className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-emerald-600 group-hover:gap-2 transition-all">
-                        See bookkeeping plans <ChevronRight className="w-4 h-4" />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              <Link href="/audit" className="group block">
-                <div className="rounded-2xl border border-slate-200 p-7 hover:border-emerald-200 hover:shadow-lg transition-all duration-300 h-full" data-testid="service-audit">
-                  <div className="flex items-start gap-5">
-                    <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-purple-100 transition-colors">
-                      <ShieldCheck className="w-6 h-6 text-purple-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                        Audit & Assurance
-                      </h3>
-                      <p className="mt-2 text-slate-600 leading-relaxed">
-                        Independent audits, reviews, and compilations following GAAS standards. Single audits, 
-                        Form 990, and employee benefit plan audits for nonprofits and government entities.
-                      </p>
-                      <span className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-emerald-600 group-hover:gap-2 transition-all">
-                        See audit services <ChevronRight className="w-4 h-4" />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              <Link href="/advisory" className="group block">
-                <div className="rounded-2xl border border-slate-200 p-7 hover:border-emerald-200 hover:shadow-lg transition-all duration-300 h-full" data-testid="service-advisory">
-                  <div className="flex items-start gap-5">
-                    <div className="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-amber-100 transition-colors">
-                      <BarChart3 className="w-6 h-6 text-amber-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                        Advisory & Fractional CFO
-                      </h3>
-                      <p className="mt-2 text-slate-600 leading-relaxed">
-                        CFO-level financial leadership without the full-time salary. Monthly reporting, cash flow 
-                        forecasting, and strategic planning — starting at a fraction of the cost.
-                      </p>
-                      <span className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-emerald-600 group-hover:gap-2 transition-all">
-                        See advisory services <ChevronRight className="w-4 h-4" />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Who We Serve — with image */}
-        <section className="py-20 bg-slate-50" aria-labelledby="who-we-serve" data-testid="specialties-section">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">Who We Work With</p>
-                <h2 id="who-we-serve" className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
-                  Built for businesses that need more than a number-cruncher
-                </h2>
-                <p className="mt-4 text-slate-600 text-lg leading-relaxed">
-                  We work best with clients who want a long-term financial partner — not just someone to file their taxes once a year.
+                <h3 className="text-xl font-bold text-slate-900 mt-4 mb-1">
+                  Fractional Controller Advisory
+                </h3>
+                <p className="text-3xl font-bold text-emerald-600 mb-4">
+                  $3,500<span className="text-base font-medium text-slate-500"> / month</span>
                 </p>
-
-                <div className="mt-8 space-y-5">
-                  <div className="flex items-start gap-4" data-testid="card-professional-services">
-                    <div className="w-11 h-11 bg-white border border-slate-200 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <Building2 className="w-5 h-5 text-slate-700" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900">Professional Service Firms</h3>
-                      <p className="text-sm text-slate-600 mt-1 leading-relaxed">
-                        Law firms, consultancies, and agencies that need clean reporting, smart tax structure, and a CPA who understands professional services.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4" data-testid="card-nonprofits">
-                    <div className="w-11 h-11 bg-white border border-slate-200 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <Heart className="w-5 h-5 text-slate-700" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900">Nonprofits & Associations</h3>
-                      <p className="text-sm text-slate-600 mt-1 leading-relaxed">
-                        501(c)(3) organizations, trade associations, and membership groups that need Form 990 compliance, grant audits, and board-ready financials.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4" data-testid="card-medical">
-                    <div className="w-11 h-11 bg-white border border-slate-200 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <Stethoscope className="w-5 h-5 text-slate-700" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900">Medical & Dental Practices</h3>
-                      <p className="text-sm text-slate-600 mt-1 leading-relaxed">
-                        Private practices that want better profitability analysis, entity structure guidance, and a CPA who speaks healthcare finance.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <p className="text-slate-600 leading-relaxed mb-6">
+                  This is financial leadership for your practice — without the cost of a full-time hire.
+                  I function as your embedded controller: closing your books, building your reporting
+                  infrastructure, and delivering the financial intelligence you need to make confident
+                  operational decisions every month.
+                </p>
+                <ul className="space-y-2.5 mb-6 flex-1">
+                  {[
+                    "Monthly close and financial reporting (P&L, balance sheet, cash flow)",
+                    "Cash flow forecasting — rolling 13-week and monthly projections",
+                    "KPI dashboard built for your practice type",
+                    "Provider-level profitability analysis",
+                    "Vendor and payer contract review",
+                    "Monthly advisory call — I explain what the numbers mean",
+                    "Direct access for questions between calls",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-sm text-slate-600">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-slate-500 mb-5 italic">
+                  For practice owners generating $800K+ in annual revenue who want real financial
+                  visibility and a trusted partner to help them grow profitably.
+                </p>
+                <a
+                  href={CALENDLY}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-lg transition-colors text-sm"
+                >
+                  Book a Discovery Call
+                  <ArrowRight className="w-4 h-4" />
+                </a>
               </div>
 
-              <div className="hidden lg:block">
-                <div className="rounded-2xl overflow-hidden shadow-xl">
-                  <img 
-                    src={consultationImg} 
-                    alt="CPA consultation with business client" 
-                    className="w-full h-[500px] object-cover"
-                    loading="lazy"
-                  />
+              {/* Card 2 */}
+              <div
+                className="bg-white rounded-2xl border border-slate-200 p-8 flex flex-col shadow-sm"
+                data-testid="service-diagnostic"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-full">
+                    Entry Point
+                  </span>
+                  <span className="text-xs text-slate-500 font-medium">One-Time Engagement</span>
                 </div>
+                <h3 className="text-xl font-bold text-slate-900 mt-4 mb-1">Financial Diagnostic</h3>
+                <p className="text-3xl font-bold text-blue-600 mb-4">
+                  $1,500<span className="text-base font-medium text-slate-500"> one-time</span>
+                </p>
+                <p className="text-slate-600 leading-relaxed mb-6">
+                  Before you can fix your financials, you need to know exactly what's broken. The
+                  Financial Diagnostic is a comprehensive assessment of your practice's financial health
+                  — delivered as a clear, prioritized action plan. It's where most new clients start, and
+                  it's designed to be immediately useful regardless of whether we work together afterward.
+                </p>
+                <ul className="space-y-2.5 mb-6 flex-1">
+                  {[
+                    "Full review of current books and accounting setup",
+                    "Cash flow analysis — where it's going and why",
+                    "Margin breakdown by service line or revenue stream",
+                    "Identification of the top 3–5 financial risks or inefficiencies",
+                    "A written action plan with prioritized recommendations",
+                    "60-minute review call to walk through findings together",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-sm text-slate-600">
+                      <CheckCircle2 className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-slate-500 mb-5 italic">
+                  For practice owners who suspect their financials aren't telling them the full story, or
+                  who want an independent opinion before a major financial decision.
+                </p>
+                <a
+                  href={CALENDLY}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 rounded-lg transition-colors text-sm"
+                >
+                  Book a Discovery Call
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+
+              {/* Card 3 */}
+              <div
+                className="bg-white rounded-2xl border border-slate-200 p-8 flex flex-col shadow-sm"
+                data-testid="service-tax"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1 rounded-full">
+                    Add-On
+                  </span>
+                  <span className="text-xs text-slate-500 font-medium">Annual Engagement</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mt-4 mb-1">
+                  Tax Strategy Coordination
+                </h3>
+                <p className="text-base font-semibold text-amber-700 mb-4">
+                  Pricing discussed on engagement
+                </p>
+                <p className="text-slate-600 leading-relaxed mb-6">
+                  Tax planning that's actually integrated with how your practice performs financially —
+                  not a once-a-year conversation in February when it's already too late to act. This
+                  add-on layers annual tax strategy directly onto the financial advisory engagement, so
+                  your tax position reflects your real business decisions throughout the year.
+                </p>
+                <ul className="space-y-2.5 mb-6 flex-1">
+                  {[
+                    "Annual tax planning review — aligned with your P&L and cash flow",
+                    "Entity structure optimization",
+                    "Retirement plan strategy — SEP-IRA, Solo 401(k), defined benefit analysis",
+                    "Estimated tax planning and quarterly payment coordination",
+                    "Year-end financial positioning recommendations",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-sm text-slate-600">
+                      <CheckCircle2 className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-slate-500 mb-5 italic">
+                  For Fractional Controller Advisory clients who want tax strategy informed by the same
+                  advisor who knows their financials inside and out.
+                </p>
+                <a
+                  href={CALENDLY}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold py-3 rounded-lg transition-colors text-sm"
+                >
+                  Book a Discovery Call
+                  <ArrowRight className="w-4 h-4" />
+                </a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Why Us */}
-        <section className="py-20 bg-white" aria-labelledby="why-us" data-testid="why-us-section">
+        {/* ── MID-PAGE CTA ─────────────────────────────────────────────── */}
+        <section className="py-16 bg-emerald-600" data-testid="mid-cta-section">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-2xl lg:text-3xl font-bold text-white mb-4">
+              Not Sure Which Engagement Is Right for You?
+            </h2>
+            <p className="text-emerald-100 text-lg leading-relaxed mb-8">
+              Most practice owners start with the Financial Diagnostic — a one-time deep dive into your
+              books, cash flow, and margins. It gives you a clear picture of where you stand and a
+              prioritized plan to fix what's broken. We can talk through whether that's the right entry
+              point on a quick call.
+            </p>
+            <a
+              href={CALENDLY}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-white text-emerald-700 font-bold px-8 py-3.5 rounded-lg hover:bg-emerald-50 transition-colors text-base"
+            >
+              Book a 15-Minute Call
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </section>
+
+        {/* ── INDUSTRIES ───────────────────────────────────────────────── */}
+        <section className="py-20 bg-white" aria-labelledby="industries" data-testid="industries-section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-14">
-              <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">Why Selam CPA</p>
-              <h2 id="why-us" className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
-                What makes us different
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">
+                Specialization
+              </p>
+              <h2
+                id="industries"
+                className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight"
+              >
+                Built for Your Practice Type — Not Generic Business Accounting
               </h2>
-              <p className="mt-4 text-slate-600 text-lg">
-                We're a small firm on purpose. That means you get senior-level attention, fast responses, and a CPA who actually knows your business.
+              <p className="mt-4 text-slate-600 text-lg leading-relaxed">
+                Healthcare practices have financial dynamics that general accountants misread constantly.
+                Insurance reimbursement lags. Provider-level productivity. Payer mix shifts.
+                Visit-based revenue models. I work inside these dynamics every day.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center p-6" data-testid="benefit-proactive">
-                <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-7 h-7 text-emerald-600" />
-                </div>
-                <h3 className="font-semibold text-slate-900 mb-2">Proactive, Not Reactive</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  We don't wait until April. We plan ahead — reviewing your situation quarterly so nothing slips through the cracks.
-                </p>
-              </div>
-
-              <div className="text-center p-6" data-testid="benefit-advisory">
-                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <BarChart3 className="w-7 h-7 text-blue-600" />
-                </div>
-                <h3 className="font-semibold text-slate-900 mb-2">Fractional CFO Support</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Monthly reporting, cash flow analysis, and financial dashboards — without the $200K salary.
-                </p>
-              </div>
-
-              <div className="text-center p-6" data-testid="benefit-secure">
-                <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Lock className="w-7 h-7 text-purple-600" />
-                </div>
-                <h3 className="font-semibold text-slate-900 mb-2">Bank-Level Security</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  256-bit encryption, two-factor authentication, and secure document portals. Your data never travels through email.
-                </p>
-              </div>
-
-              <div className="text-center p-6" data-testid="benefit-virtual">
-                <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <MapPin className="w-7 h-7 text-amber-600" />
-                </div>
-                <h3 className="font-semibold text-slate-900 mb-2">100% Virtual</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Work with us from anywhere in the country. No commute, no waiting rooms — just fast, professional service.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials */}
-        <section className="py-20 bg-[#0f172a]" aria-labelledby="testimonials" data-testid="testimonials-section">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-14">
-              <p className="text-emerald-400 font-semibold text-sm uppercase tracking-wide mb-3">Client Results</p>
-              <h2 id="testimonials" className="text-3xl lg:text-4xl font-bold text-white tracking-tight">
-                Don't take our word for it
-              </h2>
-              <p className="mt-4 text-slate-400 text-lg">
-                Here's what our clients have to say.
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-7" data-testid="testimonial-1">
-                <div className="flex items-center gap-0.5 mb-4">
-                  {[1,2,3,4,5].map(s => <Star key={s} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
-                </div>
-                <p className="text-slate-300 leading-relaxed">
-                  "We switched to Selam CPA after years with a big firm that barely knew our name. First year, they found $18,000 in deductions we'd been missing. That's not a typo."
-                </p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center text-sm font-semibold text-emerald-400">JD</div>
-                  <div>
-                    <div className="text-sm font-medium text-white">James D.</div>
-                    <div className="text-xs text-slate-500">Tech Startup Founder, Virginia</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-7" data-testid="testimonial-2">
-                <div className="flex items-center gap-0.5 mb-4">
-                  {[1,2,3,4,5].map(s => <Star key={s} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
-                </div>
-                <p className="text-slate-300 leading-relaxed">
-                  "Our Form 990 used to be a nightmare every year. Selam made it seamless — and their team actually understands nonprofit accounting, which is rare."
-                </p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center text-sm font-semibold text-blue-400">MR</div>
-                  <div>
-                    <div className="text-sm font-medium text-white">Maria R.</div>
-                    <div className="text-xs text-slate-500">Nonprofit Executive Director, DC</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-7" data-testid="testimonial-3">
-                <div className="flex items-center gap-0.5 mb-4">
-                  {[1,2,3,4,5].map(s => <Star key={s} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
-                </div>
-                <p className="text-slate-300 leading-relaxed">
-                  "I run a dental practice and needed a CPA who understood healthcare. Selam restructured our entity and saved us almost $22K in the first year."
-                </p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center text-sm font-semibold text-purple-400">SK</div>
-                  <div>
-                    <div className="text-sm font-medium text-white">Dr. Sarah K.</div>
-                    <div className="text-xs text-slate-500">Dental Practice Owner, Maryland</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 text-center">
-              <Link href="/testimonials" className="text-sm font-medium text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1 transition-colors">
-                Read more client stories <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works — with image */}
-        <section className="py-20 bg-white" aria-labelledby="process" data-testid="process-section">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="hidden lg:block order-last lg:order-first">
-                <div className="rounded-2xl overflow-hidden shadow-xl">
-                  <img 
-                    src={teamWorkImg} 
-                    alt="Team collaborating on financial strategy" 
-                    className="w-full h-[480px] object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">Getting Started</p>
-                <h2 id="process" className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
-                  Three steps to financial clarity
-                </h2>
-                <p className="mt-4 text-slate-600 text-lg leading-relaxed">
-                  Most new clients are fully onboarded within a week. Here's how it works.
-                </p>
-                
-                <div className="mt-10 space-y-8">
-                  <div className="flex items-start gap-5" data-testid="step-1">
-                    <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">1</div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900 text-lg">Book a free strategy call</h3>
-                      <p className="text-slate-600 mt-1 leading-relaxed">
-                        We'll learn about your business, review your current tax situation, and outline exactly how we can help. No pressure, no hard sell.
-                      </p>
+            <div className="grid lg:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Behavioral Health Clinics",
+                  testId: "industry-behavioral",
+                  problem:
+                    "You're running multiple providers billing through multiple insurance payers — and you have almost no visibility into which providers are profitable, which payers are worth the administrative burden, and how no-show rates are quietly destroying your revenue predictability. Your monthly revenue looks inconsistent and you can't tell why.",
+                  fix:
+                    "I build provider-level P&Ls that show exactly what each clinician is generating net of their cost. I model the real impact of your no-show rate on monthly revenue and help you quantify it in dollars, not percentages. Payer contract reviews tell you which insurance relationships are worth keeping and which ones are subsidizing your worst margins. You stop guessing and start making informed staffing, scheduling, and contracting decisions.",
+                },
+                {
+                  title: "Physical Therapy Practices",
+                  testId: "industry-pt",
+                  problem:
+                    "Visit-based revenue sounds simple until you account for authorization gaps, payer-specific reimbursement rates, and the reality that not every therapist on your payroll is generating what you think they are. You may be billing consistently but collecting inconsistently — and without clean productivity reporting, you can't identify the problem until it's already affected your cash flow.",
+                  fix:
+                    "I build cash flow models that account for authorization approval timelines and reimbursement lag by payer. Therapist productivity dashboards make performance visible — visit volume, revenue per visit, and collection rates — by individual and by location. You get the financial infrastructure to make compensation, hiring, and scheduling decisions based on real numbers, not gut feel.",
+                },
+                {
+                  title: "Dental Practices",
+                  testId: "industry-dental",
+                  problem:
+                    "Your procedure mix is shifting but you're not sure which services are actually driving margin and which ones are filling the schedule without moving the needle. The insurance versus cash-pay split affects your revenue differently than most practice owners realize. And if you have an associate dentist, you may be paying them more than their production justifies.",
+                  fix:
+                    "I build procedure-level profitability analysis so you know exactly which services are worth promoting and scheduling more of. Cash-pay versus insurance revenue modeling gives you a clear picture of your optimal payer mix. Associate compensation modeling — whether percentage of collections, flat salary, or hybrid — gets structured to protect your margins while staying competitive.",
+                },
+              ].map(({ title, testId, problem, fix }) => (
+                <div
+                  key={title}
+                  className="rounded-2xl border border-slate-200 p-8 hover:border-emerald-200 hover:shadow-md transition-all duration-300"
+                  data-testid={testId}
+                >
+                  <h3 className="text-xl font-bold text-slate-900 mb-5">{title}</h3>
+                  <div className="mb-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                      <span className="text-xs font-bold text-red-600 uppercase tracking-wide">The Problem</span>
                     </div>
+                    <p className="text-sm text-slate-600 leading-relaxed">{problem}</p>
                   </div>
-
-                  <div className="flex items-start gap-5" data-testid="step-2">
-                    <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">2</div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900 text-lg">Upload your documents securely</h3>
-                      <p className="text-slate-600 mt-1 leading-relaxed">
-                        Use our encrypted client portal to share tax returns, bank statements, and financial documents. No emailing sensitive files.
-                      </p>
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                      <span className="text-xs font-bold text-emerald-700 uppercase tracking-wide">How We Fix It</span>
                     </div>
+                    <p className="text-sm text-slate-600 leading-relaxed">{fix}</p>
                   </div>
-
-                  <div className="flex items-start gap-5" data-testid="step-3">
-                    <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">3</div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900 text-lg">Get year-round support</h3>
-                      <p className="text-slate-600 mt-1 leading-relaxed">
-                        From quarterly tax planning to monthly financials, we're in your corner all year — not just during filing season.
-                      </p>
-                    </div>
-                  </div>
+                  <a
+                    href={CALENDLY}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 mt-6 text-sm font-semibold text-emerald-600 hover:text-emerald-800 transition-colors"
+                  >
+                    Talk about your practice <ChevronRight className="w-4 h-4" />
+                  </a>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section — for Google + ChatGPT/Perplexity */}
-        <section className="py-20 bg-slate-50" aria-labelledby="faq" data-testid="faq-section">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">Common Questions</p>
-              <h2 id="faq" className="text-3xl font-bold text-slate-900 tracking-tight">
-                Frequently asked questions
-              </h2>
-            </div>
-
-            <div className="space-y-6">
-              {faqSchema.mainEntity.map((faq, i) => (
-                <details key={i} className="group bg-white rounded-xl border border-slate-200 overflow-hidden">
-                  <summary className="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-slate-900 hover:bg-slate-50 transition-colors">
-                    <span className="pr-4">{faq.name}</span>
-                    <ChevronRight className="w-5 h-5 text-slate-400 group-open:rotate-90 transition-transform flex-shrink-0" />
-                  </summary>
-                  <div className="px-6 pb-6 text-slate-600 leading-relaxed border-t border-slate-100 pt-4">
-                    {faq.acceptedAnswer.text}
-                  </div>
-                </details>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="py-20 bg-emerald-600" data-testid="final-cta-section">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white tracking-tight">
-              Ready to stop overpaying on taxes?
-            </h2>
-            <p className="mt-4 text-emerald-100 text-lg max-w-xl mx-auto">
-              Book a free strategy call. We'll review your situation and show you exactly where the savings are — no obligation.
-            </p>
-            
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href={calendlyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-white text-emerald-700 font-semibold px-8 py-4 rounded-lg hover:bg-emerald-50 transition-colors text-lg"
-                data-testid="final-cta-button"
-              >
-                Book Your Free Call
-                <ArrowRight className="w-5 h-5" />
-              </a>
-              <a 
-                href="tel:+12404732623"
-                className="inline-flex items-center justify-center gap-2 border-2 border-white/30 text-white font-semibold px-8 py-4 rounded-lg hover:bg-white/10 transition-colors text-lg"
-              >
-                <Phone className="w-5 h-5" />
-                (240) 473-2623
-              </a>
+        {/* ── ABOUT / CREDIBILITY ──────────────────────────────────────── */}
+        <section className="py-20 bg-slate-50" aria-labelledby="about" data-testid="about-section">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-14 items-center">
+              <div className="hidden lg:block">
+                <div className="rounded-2xl overflow-hidden shadow-xl">
+                  <img
+                    src={consultationImg}
+                    alt="Yacob Tewelde, CPA FCCA, reviewing practice financials with a client"
+                    className="w-full h-[520px] object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">
+                  About
+                </p>
+                <h2
+                  id="about"
+                  className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight mb-2"
+                >
+                  You Don't Need Another Accountant. You Need Someone Who's Seen This Before.
+                </h2>
+                <p className="text-slate-500 text-lg mb-6">
+                  After 20+ years working inside the financials of healthcare practices, I know exactly
+                  where the money goes — and why it doesn't show up in your bank account.
+                </p>
+
+                <div className="space-y-4 text-slate-600 leading-relaxed">
+                  <p>
+                    I've reviewed hundreds of practice P&Ls. The pattern is almost always the same:
+                    revenue looks fine on paper, but cash is tight, margins are unclear, and the owner
+                    has no real visibility into which services, providers, or payers are actually
+                    profitable.
+                  </p>
+                  <p>
+                    That's not a bookkeeping problem. That's a financial leadership problem — and it's
+                    what I fix.
+                  </p>
+                  <p>
+                    I'm Yacob Tewelde, CPA, FCCA. I work exclusively with healthcare practice owners in
+                    the DMV area — DC, Maryland, and Virginia — as a fractional controller and financial
+                    advisor. My dual credentials (CPA and FCCA) reflect rigorous training on both sides
+                    of the Atlantic, but what matters more to my clients is that I speak their language:
+                    visit-based revenue, insurance reimbursement cycles, provider productivity, and payer
+                    mix.
+                  </p>
+                  <p>
+                    I don't run a high-volume tax shop. I work with a small number of practice owners who
+                    want a trusted financial partner — someone who closes their books with precision,
+                    builds dashboards that actually mean something, and tells them the truth about where
+                    their margins are leaking.
+                  </p>
+                  <p className="font-medium text-slate-700">
+                    If you've outgrown your bookkeeper and you're not ready for a full-time CFO, this is
+                    exactly where I operate.
+                  </p>
+                </div>
+
+                <div className="mt-8 bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+                  {[
+                    "Certified Public Accountant (CPA)",
+                    "Fellow of the Association of Chartered Certified Accountants (FCCA)",
+                    "20+ Years in Financial Advisory and Practice Accounting",
+                    "Deep specialization in healthcare practice economics — DMV region",
+                    "Fractional Controller | Financial Advisor | Tax Strategist",
+                  ].map((c) => (
+                    <div key={c} className="flex items-start gap-3 text-sm text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                      <span>{c}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            
-            <p className="mt-6 text-sm text-emerald-200">
-              Free consultation &middot; No commitment &middot; Serving all 50 states
+          </div>
+        </section>
+
+        {/* ── HOW IT WORKS ─────────────────────────────────────────────── */}
+        <section className="py-20 bg-white" aria-labelledby="how-it-works" data-testid="process-section">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-14 items-center">
+              <div>
+                <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">
+                  Getting Started
+                </p>
+                <h2
+                  id="how-it-works"
+                  className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight mb-10"
+                >
+                  Find Out Exactly Where Your Practice Stands Financially
+                </h2>
+                <p className="text-slate-600 text-lg mb-10 leading-relaxed">
+                  Book a 15-minute discovery call. We'll talk about your current financials, what's
+                  unclear, and whether fractional controller support is the right fit for your practice
+                  right now. No pitch. No pressure.
+                </p>
+
+                <div className="space-y-8">
+                  {[
+                    {
+                      n: "1",
+                      title: "Book a 15-Minute Discovery Call",
+                      desc:
+                        "We talk about your practice — current revenue, how you're managing your financials, and what's not working. I'll tell you honestly whether this engagement makes sense for you right now.",
+                    },
+                    {
+                      n: "2",
+                      title: "I Review Your Books and Assess the Gaps",
+                      desc:
+                        "During onboarding, I do a thorough review of your existing financials, accounting systems, and reporting. Most clients see their first real insights within the first 30 days.",
+                    },
+                    {
+                      n: "3",
+                      title: "You Get Real Financial Clarity — Every Month",
+                      desc:
+                        "Clean books, a dashboard built for your practice, rolling cash flow projections, and a controller who reviews everything with you and tells you what the numbers mean.",
+                    },
+                  ].map(({ n, title, desc }) => (
+                    <div key={n} className="flex gap-5">
+                      <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                        {n}
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-slate-900 mb-1">{title}</h3>
+                        <p className="text-slate-600 text-sm leading-relaxed">{desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <a
+                  href={CALENDLY}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-10 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-7 py-3.5 rounded-lg transition-colors"
+                >
+                  Schedule My Discovery Call
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+
+              <div className="hidden lg:block">
+                <div className="rounded-2xl overflow-hidden shadow-xl">
+                  <img
+                    src={teamWorkImg}
+                    alt="Financial team working through practice analytics"
+                    className="w-full h-[520px] object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── FAQ ──────────────────────────────────────────────────────── */}
+        <section className="py-20 bg-slate-50" aria-labelledby="faq" data-testid="faq-section">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <p className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-3">FAQ</p>
+              <h2 id="faq" className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
+                Fractional Controller FAQ
+              </h2>
+              <p className="mt-3 text-slate-600">
+                Straight answers to the questions practice owners ask before engaging.
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl border border-slate-200 px-8 divide-y divide-slate-100">
+              {faqs.map((f) => (
+                <FaqItem key={f.q} q={f.q} a={f.a} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── FINAL CTA ────────────────────────────────────────────────── */}
+        <section className="py-24 bg-[#0f172a]" data-testid="final-cta-section">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div className="flex justify-center mb-6">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+              ))}
+            </div>
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-5">
+              You've Built a Successful Practice. Now Build the Financial Infrastructure to Match.
+            </h2>
+            <p className="text-slate-300 text-lg leading-relaxed mb-8">
+              You shouldn't be running a growing healthcare practice without real financial visibility.
+              If your books are behind, your cash flow is unpredictable, or you genuinely don't know
+              which services or providers are driving your margins — that's fixable. Let's talk.
+            </p>
+            <a
+              href={CALENDLY}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-4 rounded-lg transition-colors text-lg"
+              data-testid="final-cta-button"
+            >
+              Schedule Your Discovery Call
+              <ArrowRight className="w-5 h-5" />
+            </a>
+            <p className="mt-4 text-slate-500 text-sm">
+              No commitment. No pitch. Just a direct conversation about your practice financials.
             </p>
           </div>
         </section>

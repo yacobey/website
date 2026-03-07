@@ -25,9 +25,6 @@ export default function Header() {
               <div className="text-lg font-bold text-white tracking-tight leading-none">
                 Selam CPA
               </div>
-              <div className="hidden sm:block text-[10px] font-medium text-slate-500 tracking-wide mt-0.5">
-                Yacob Tewelde, CPA, FCCA
-              </div>
             </div>
           </Link>
 

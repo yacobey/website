@@ -434,75 +434,92 @@ export default function Home() {
         </section>
 
         {/* ── ABOUT / YACOB ────────────────────────────────────────────── */}
-        <section className="py-28 bg-white" id="about" data-testid="about-section">
-          <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16">
-            <div className="grid lg:grid-cols-5 gap-16 items-start">
-              {/* Headshot column */}
-              <div className="lg:col-span-2">
-                <div className="rounded-2xl overflow-hidden shadow-2xl">
-                  <img
-                    src={yacobHeadshot}
-                    alt="Yacob Tewelde, CPA FCCA — Fractional Controller and Financial Advisor"
-                    className="w-full object-cover object-top"
-                    style={{ aspectRatio: "3/4" }}
-                  />
-                </div>
-                <div className="mt-6 bg-slate-50 rounded-xl border border-slate-100 p-6 space-y-3">
-                  {[
-                    "Certified Public Accountant (CPA)",
-                    "Fellow, ACCA (FCCA)",
-                    "20+ Years in Practice Accounting",
-                    "Healthcare Economics — DMV Region",
-                    "Fractional Controller & Tax Strategist",
-                  ].map((c) => (
-                    <div key={c} className="flex items-start gap-3 text-sm text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                      <span>{c}</span>
-                    </div>
-                  ))}
-                </div>
+        <section className="bg-[#0a0f1e] overflow-hidden" id="about" data-testid="about-section">
+          <div className="grid lg:grid-cols-2 min-h-[700px]">
+
+            {/* Photo — full bleed, fills entire left column */}
+            <div className="relative hidden lg:block">
+              <img
+                src={yacobHeadshot}
+                alt="Yacob Tewelde, CPA FCCA — Fractional Controller and Financial Advisor"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              />
+              {/* Gradient fade into dark on the right edge */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0a0f1e]" />
+              {/* Subtle bottom vignette */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e]/60 via-transparent to-transparent" />
+
+              {/* Name plate floating at bottom-left of photo */}
+              <div className="absolute bottom-10 left-10 right-16">
+                <p className="text-white font-bold text-xl tracking-tight">Yacob Tewelde</p>
+                <p className="text-emerald-400 text-sm font-medium mt-1">CPA, FCCA &nbsp;·&nbsp; Fractional Controller</p>
+              </div>
+            </div>
+
+            {/* Content — right column */}
+            <div className="px-10 py-20 lg:px-16 lg:py-24 flex flex-col justify-center">
+              <p className="text-emerald-400 font-semibold text-xs uppercase tracking-[0.2em] mb-8">
+                About
+              </p>
+
+              <h2 className="text-4xl lg:text-5xl font-bold text-white leading-[1.1] tracking-tight mb-10">
+                You Don't Need Another Accountant. You Need Someone Who's{" "}
+                <span className="text-emerald-400">Seen This Before.</span>
+              </h2>
+
+              <div className="space-y-5 text-slate-400 leading-relaxed mb-10">
+                <p>
+                  I've reviewed hundreds of practice P&Ls. The pattern is almost always the same: revenue looks fine on paper, but cash is tight, margins are unclear, and the owner has no real visibility into which services, providers, or payers are actually profitable.
+                </p>
+                <p>
+                  That's not a bookkeeping problem. That's a financial leadership problem — and it's what I fix.
+                </p>
+                <p>
+                  I work exclusively with healthcare practice owners in the DMV area as a fractional controller and financial advisor. My dual credentials (CPA and FCCA) reflect rigorous training on both sides of the Atlantic — but what matters more to my clients is that I speak their language: visit-based revenue, insurance reimbursement cycles, provider productivity, and payer mix.
+                </p>
               </div>
 
-              {/* Bio column */}
-              <div className="lg:col-span-3">
-                <p className="text-emerald-600 font-semibold text-xs uppercase tracking-[0.2em] mb-4">
-                  About
+              {/* Pull quote — the "high-volume tax shop" line elevated */}
+              <blockquote className="border-l-4 border-emerald-500 pl-6 mb-10">
+                <p className="text-white text-lg lg:text-xl italic leading-relaxed">
+                  "I work with a small number of practice owners who want a trusted financial partner — someone who closes their books with precision and tells them the truth about where their margins are leaking."
                 </p>
-                <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
-                  You Don't Need Another Accountant.
-                </h2>
-                <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight tracking-tight mb-8">
-                  You Need Someone Who's <span className="text-emerald-600">Seen This Before.</span>
-                </h2>
-                <p className="text-slate-500 text-xl leading-relaxed mb-8">
-                  After 20+ years working inside the financials of healthcare practices, I know exactly where the money goes — and why it doesn't show up in your bank account.
-                </p>
+                <footer className="mt-4 text-emerald-400 text-sm font-semibold not-italic">
+                  — Yacob Tewelde, CPA, FCCA
+                </footer>
+              </blockquote>
 
-                <div className="space-y-5 text-slate-600 leading-relaxed">
-                  <p>
-                    I've reviewed hundreds of practice P&Ls. The pattern is almost always the same: revenue looks fine on paper, but cash is tight, margins are unclear, and the owner has no real visibility into which services, providers, or payers are actually profitable.
-                  </p>
-                  <p>
-                    That's not a bookkeeping problem. That's a financial leadership problem — and it's what I fix.
-                  </p>
-                  <p>
-                    I'm Yacob Tewelde, CPA, FCCA. I work exclusively with healthcare practice owners in the DMV area — DC, Maryland, and Virginia — as a fractional controller and financial advisor. My dual credentials reflect rigorous training on both sides of the Atlantic, but what matters more to my clients is that I speak their language: visit-based revenue, insurance reimbursement cycles, provider productivity, and payer mix.
-                  </p>
-                  <p>
-                    I don't run a high-volume tax shop. I work with a small number of practice owners who want a trusted financial partner — someone who closes their books with precision, builds dashboards that actually mean something, and tells them the truth about where their margins are leaking.
-                  </p>
-                  <p className="font-semibold text-slate-800">
-                    If you've outgrown your bookkeeper and you're not ready for a full-time CFO, this is exactly where I operate.
-                  </p>
-                </div>
+              {/* Credential pills */}
+              <div className="flex flex-wrap gap-2 mb-10">
+                {[
+                  "CPA",
+                  "FCCA",
+                  "20+ Years Experience",
+                  "Healthcare Specialist",
+                  "DMV Region",
+                ].map((badge) => (
+                  <span
+                    key={badge}
+                    className="text-xs font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
 
+              <p className="text-slate-300 font-medium mb-8">
+                If you've outgrown your bookkeeper and you're not ready for a full-time CFO, this is exactly where I operate.
+              </p>
+
+              <div>
                 <a
                   href={CALENDLY}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 mt-10 bg-slate-900 hover:bg-slate-800 text-white font-semibold px-8 py-4 rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-200 group"
                 >
-                  Schedule a Discovery Call <ArrowRight className="w-4 h-4" />
+                  Schedule a Discovery Call
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
             </div>

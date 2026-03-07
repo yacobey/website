@@ -5,105 +5,96 @@ const CALENDLY = "https://calendly.com/yber2001/30min";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-300" data-testid="footer">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          <div>
+    <footer className="bg-[#060b14] text-slate-400" data-testid="footer">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Brand */}
+          <div className="lg:col-span-1">
             <div className="text-white font-bold text-xl tracking-tight mb-1">Selam CPA</div>
-            <div className="text-slate-400 text-xs mb-4">Yacob Tewelde, CPA, FCCA</div>
-            <p className="text-sm text-slate-400 leading-relaxed mb-6">
-              Fractional controller and financial advisory for healthcare practice owners in the DMV.
-              Serving DC, Maryland, and Virginia.
+            <div className="text-slate-500 text-xs mb-5">Yacob Tewelde, CPA, FCCA</div>
+            <p className="text-sm text-slate-500 leading-relaxed mb-7">
+              Fractional controller and financial advisory for healthcare practice owners in the DMV — DC, Maryland, and Virginia.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                <Award className="w-4 h-4 text-emerald-500" />
-                <span>CPA, FCCA</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                <Lock className="w-4 h-4 text-emerald-500" />
-                <span>256-bit SSL</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                <span>IRS e-File</span>
-              </div>
+            <div className="flex flex-col gap-2.5">
+              {[
+                { icon: <Award className="w-3.5 h-3.5 text-emerald-500" />, label: "CPA, FCCA Certified" },
+                { icon: <Lock className="w-3.5 h-3.5 text-emerald-500" />, label: "256-bit SSL Encryption" },
+                { icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />, label: "IRS Authorized e-File Provider" },
+              ].map(({ icon, label }) => (
+                <div key={label} className="flex items-center gap-2 text-xs text-slate-500">
+                  {icon}
+                  <span>{label}</span>
+                </div>
+              ))}
             </div>
           </div>
 
+          {/* Services */}
           <div>
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Services</h3>
-            <ul className="space-y-2.5">
-              <li>
-                <a href="/#services" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Fractional Controller Advisory
-                </a>
-              </li>
-              <li>
-                <a href="/#services" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Financial Diagnostic
-                </a>
-              </li>
-              <li>
-                <a href="/#services" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Tax Strategy Coordination
-                </a>
-              </li>
+            <h3 className="text-white font-semibold text-xs uppercase tracking-[0.15em] mb-5">Services</h3>
+            <ul className="space-y-3">
+              {[
+                "Fractional Controller Advisory",
+                "Financial Diagnostic",
+                "Tax Strategy Coordination",
+              ].map((s) => (
+                <li key={s}>
+                  <a href="/#services" className="text-sm text-slate-500 hover:text-white transition-colors">
+                    {s}
+                  </a>
+                </li>
+              ))}
             </ul>
 
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4 mt-8">Specialties</h3>
-            <ul className="space-y-2.5">
-              <li>
-                <a href="/#industries" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Behavioral Health Clinics
-                </a>
-              </li>
-              <li>
-                <a href="/#industries" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Physical Therapy Practices
-                </a>
-              </li>
-              <li>
-                <a href="/#industries" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Dental Practices
-                </a>
-              </li>
+            <h3 className="text-white font-semibold text-xs uppercase tracking-[0.15em] mb-5 mt-8">Specialties</h3>
+            <ul className="space-y-3">
+              {[
+                "Behavioral Health Clinics",
+                "Physical Therapy Practices",
+                "Dental Practices",
+              ].map((s) => (
+                <li key={s}>
+                  <a href="/#industries" className="text-sm text-slate-500 hover:text-white transition-colors">
+                    {s}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Company */}
           <div>
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Company</h3>
-            <ul className="space-y-2.5">
-              <li>
-                <a href="/#about" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  About Yacob Tewelde
-                </a>
-              </li>
-              <li>
-                <a href="/#faq" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  FAQ
-                </a>
-              </li>
-              <li>
-                <Link href="/blog" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy-policy" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
+            <h3 className="text-white font-semibold text-xs uppercase tracking-[0.15em] mb-5">Company</h3>
+            <ul className="space-y-3">
+              {[
+                { label: "About Yacob", href: "/#about" },
+                { label: "FAQ", href: "/#faq" },
+                { label: "Blog", href: "/blog" },
+                { label: "Privacy Policy", href: "/privacy-policy" },
+              ].map(({ label, href }) => (
+                <li key={label}>
+                  {href.startsWith("/") && !href.startsWith("/#") ? (
+                    <Link href={href} className="text-sm text-slate-500 hover:text-white transition-colors">
+                      {label}
+                    </Link>
+                  ) : (
+                    <a href={href} className="text-sm text-slate-500 hover:text-white transition-colors">
+                      {label}
+                    </a>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Contact */}
           <div>
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Contact</h3>
-            <ul className="space-y-3 mb-5">
+            <h3 className="text-white font-semibold text-xs uppercase tracking-[0.15em] mb-5">Contact</h3>
+            <ul className="space-y-4 mb-7">
               <li>
                 <a
                   href="tel:+12404732623"
-                  className="flex items-center gap-2.5 text-sm text-slate-400 hover:text-white transition-colors"
+                  className="flex items-center gap-3 text-sm text-slate-500 hover:text-white transition-colors"
                   data-testid="phone-link"
                 >
                   <Phone className="w-4 h-4 text-emerald-500 flex-shrink-0" />
@@ -113,19 +104,16 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:yber2001@gmail.com"
-                  className="flex items-center gap-2.5 text-sm text-slate-400 hover:text-white transition-colors"
+                  className="flex items-center gap-3 text-sm text-slate-500 hover:text-white transition-colors"
                 >
                   <Mail className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                   yber2001@gmail.com
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-2.5 text-sm text-slate-400">
+                <div className="flex items-start gap-3 text-sm text-slate-500">
                   <MapPin className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <span>
-                    Serving healthcare practices across the DMV —<br />
-                    Washington DC, Maryland, and Virginia
-                  </span>
+                  <span>DC, Maryland &amp; Virginia</span>
                 </div>
               </li>
             </ul>
@@ -133,7 +121,7 @@ export default function Footer() {
               href={CALENDLY}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center w-full bg-emerald-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg hover:bg-emerald-700 transition-colors"
+              className="inline-flex items-center justify-center w-full bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-semibold px-4 py-3 rounded-lg transition-colors"
               data-testid="consultation-link"
             >
               Book a Discovery Call
@@ -142,14 +130,13 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <p className="text-xs text-slate-500">
+      <div className="border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <p className="text-xs text-slate-600">
             &copy; {new Date().getFullYear()} Selam CPA. All rights reserved. Yacob Tewelde, CPA, FCCA.
           </p>
-          <p className="text-xs text-slate-600 text-center sm:text-right max-w-md">
-            This website is for informational purposes only and does not constitute accounting, legal,
-            or tax advice specific to your situation.
+          <p className="text-xs text-slate-700 text-center sm:text-right max-w-sm">
+            For informational purposes only. Not accounting, legal, or tax advice specific to your situation.
           </p>
         </div>
       </div>

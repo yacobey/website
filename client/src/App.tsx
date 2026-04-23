@@ -49,6 +49,7 @@ const HomeOffice = React.lazy(() => import("@/pages/calculators/home-office"));
 const Mileage = React.lazy(() => import("@/pages/calculators/mileage"));
 const Section179 = React.lazy(() => import("@/pages/calculators/section-179"));
 const Retirement = React.lazy(() => import("@/pages/calculators/retirement"));
+const Tools = React.lazy(() => import("@/pages/tools"));
 const AIConsulting = React.lazy(() => import("@/pages/ai-consulting"));
 const Healthcare = React.lazy(() => import("@/pages/industries/healthcare"));
 const Legal = React.lazy(() => import("@/pages/industries/legal"));
@@ -100,6 +101,7 @@ function Router() {
           <Route path="/calculators/mileage" component={Mileage} />
           <Route path="/calculators/section-179" component={Section179} />
           <Route path="/calculators/retirement" component={Retirement} />
+          <Route path="/tools" component={Tools} />
           <Route path="/ai-consulting" component={AIConsulting} />
           <Route path="/industries/healthcare" component={Healthcare} />
           <Route path="/industries/legal" component={Legal} />

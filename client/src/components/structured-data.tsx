@@ -12,7 +12,7 @@ const baseOrganization = {
   "description": "Professional CPA firm providing tax preparation, bookkeeping, advisory, and audit services for individuals and businesses in MD, VA, DC Metro Area.",
   "url": "https://selamcpa.com",
   "logo": "https://selamcpa.com/logo.png",
-  "telephone": "+12404732623",
+  "telephone": "+13016408549",
   "email": "info@selamcpa.com",
   "address": {
     "@type": "PostalAddress",

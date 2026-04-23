@@ -225,7 +225,7 @@ export default function PrivacyPolicy() {
                   </div>
                   <div className="flex items-center">
                     <Phone className="w-5 h-5 text-blue-600 mr-3" />
-                    <span className="text-gray-900">Phone: (240) 473-2623</span>
+                    <span className="text-gray-900">Phone: (301) 640-8549</span>
                   </div>
                   <div className="flex items-start">
                     <Shield className="w-5 h-5 text-blue-600 mr-3 mt-1" />

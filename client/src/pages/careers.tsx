@@ -378,7 +378,7 @@ export default function Careers() {
           <p className="text-gray-600 dark:text-gray-300">
             Questions about career opportunities? 
             <br />
-            Email us at <strong>careers@selamcpa.com</strong> or call <strong>(240) 473-2623</strong>
+            Email us at <strong>careers@selamcpa.com</strong> or call <strong>(301) 640-8549</strong>
           </p>
         </div>
       </div>

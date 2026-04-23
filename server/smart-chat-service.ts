@@ -147,7 +147,7 @@ function handleBookingRequest(state: ConversationState, userMessage: string): {
     response: `Perfect! I'd be happy to help you schedule a free consultation. 
 
 To book your consultation:
-📞 **Call us directly**: (240) 473-2623
+📞 **Call us directly**: (301) 640-8549
 💻 **Online booking**: Visit our payment portal at /payment and select "Consultation"
 📧 **Email**: Send details to selamcpa25@gmail.com
 
@@ -193,7 +193,7 @@ function handleNextStepsInquiry(state: ConversationState, userMessage: string): 
    • Draft review process
 
 **Ready to start?** Let's schedule your free consultation to discuss your specific audit requirements and timeline.`,
-      quickActions: ['Book Consultation', 'Call (240) 473-2623', 'Learn More'],
+      quickActions: ['Book Consultation', 'Call (301) 640-8549', 'Learn More'],
       nextStage: 'next_steps'
     };
   }
@@ -517,7 +517,7 @@ function handleGeneralInquiry(state: ConversationState, userMessage: string): {
 • Audit and financial statement services
 
 **Quick options:**
-📞 Call us: (240) 473-2623
+📞 Call us: (301) 640-8549
 📧 Email: selamcpa25@gmail.com
 💻 Online payment: Visit /payment
 

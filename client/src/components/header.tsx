@@ -41,11 +41,11 @@ export default function Header() {
             ))}
             <div className="ml-4 flex items-center gap-3">
               <a
-                href="tel:+12404732623"
+                href="tel:+13016408549"
                 className="hidden xl:flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
               >
                 <Phone className="w-3.5 h-3.5" />
-                (240) 473-2623
+                (301) 640-8549
               </a>
               <a
                 href={CALENDLY}
@@ -85,12 +85,12 @@ export default function Header() {
               ))}
               <div className="pt-3 px-4 space-y-2 border-t border-white/10 mt-2">
                 <a
-                  href="tel:+12404732623"
+                  href="tel:+13016408549"
                   className="flex items-center justify-center gap-2 text-sm text-slate-400 font-medium py-2.5 rounded-lg border border-white/10 hover:bg-white/5 transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <Phone className="w-4 h-4" />
-                  (240) 473-2623
+                  (301) 640-8549
                 </a>
                 <a
                   href={CALENDLY}

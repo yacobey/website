@@ -369,7 +369,7 @@ export default function Payment() {
             <div className="mt-8 text-center">
               <h3 className="font-semibold text-gray-900 mb-2">Questions?</h3>
               <div className="space-y-2 text-sm">
-                <p><strong>Phone:</strong> (240) 473-2623</p>
+                <p><strong>Phone:</strong> (301) 640-8549</p>
                 <p><strong>Email:</strong> selamcpa25@gmail.com</p>
                 <p><strong>Hours:</strong> Monday - Friday, 9 AM - 6 PM EST</p>
               </div>

@@ -84,8 +84,8 @@ export default function Home() {
           name: "Selam CPA",
           description: "Fractional controller and financial advisory services for healthcare practice owners in DC, Maryland, and Virginia.",
           url: "https://selamcpa.com",
-          telephone: "+12404732623",
-          email: "yber2001@gmail.com",
+          telephone: "+13016408549",
+          email: "info@selamcpa.com",
           address: { "@type": "PostalAddress", addressRegion: "MD", addressCountry: "US" },
           founder: { "@type": "Person", name: "Yacob Tewelde", jobTitle: "CPA, FCCA" },
         }}
@@ -143,10 +143,10 @@ export default function Home() {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a
-                  href="tel:+12404732623"
+                  href="tel:+13016408549"
                   className="inline-flex items-center justify-center gap-2 text-slate-300 hover:text-white font-medium px-8 py-4 rounded-lg border border-white/20 hover:border-white/40 transition-all duration-200 text-base"
                 >
-                  (240) 473-2623
+                  (301) 640-8549
                 </a>
               </div>
               <p className="mt-5 text-sm text-slate-500">

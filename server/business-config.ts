@@ -2,8 +2,8 @@
 export const businessConfig = {
   // Contact Information
   phone: {
-    e164: process.env.PUBLIC_PHONE_E164 || "+12404732623",
-    display: process.env.PUBLIC_PHONE_DISPLAY || process.env.VITE_PUBLIC_PHONE_DISPLAY || "(240) 473-2623"
+    e164: process.env.PUBLIC_PHONE_E164 || "+13016408549",
+    display: process.env.PUBLIC_PHONE_DISPLAY || process.env.VITE_PUBLIC_PHONE_DISPLAY || "(301) 640-8549"
   },
   
   // Business Links

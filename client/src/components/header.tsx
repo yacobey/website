@@ -5,11 +5,13 @@ import { Menu, X, Phone } from "lucide-react";
 const CALENDLY = "https://calendly.com/yber2001/30min";
 
 const navLinks = [
-  { href: "/#services", label: "Services" },
-  { href: "/#industries", label: "Specialties" },
-  { href: "/#about", label: "About" },
-  { href: "/#faq", label: "FAQ" },
-  { href: "/blog", label: "Blog" },
+  { label: "Services", href: "/#services" },
+  { label: "Industries", href: "/#industries" },
+  { label: "Calculators", href: "/calculators" },
+  { label: "AI for Firms", href: "/ai-consulting" },
+  { label: "About", href: "/#about" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Blog", href: "/blog" },
 ];
 
 export default function Header() {

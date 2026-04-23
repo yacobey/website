@@ -41,6 +41,8 @@ const Agent = React.lazy(() => import("@/pages/agent"));
 const PaymentCancel = React.lazy(() => import("@/pages/payment-cancel"));
 const PrivacyPolicy = React.lazy(() => import("@/pages/privacy-policy"));
 const Testimonials = React.lazy(() => import("@/pages/testimonials"));
+const Calculators = React.lazy(() => import("@/pages/calculators"));
+const AIConsulting = React.lazy(() => import("@/pages/ai-consulting"));
 
 function Router() {
   useAnalytics();
@@ -75,6 +77,8 @@ function Router() {
           <Route path="/agent" component={Agent} />
           <Route path="/privacy-policy" component={PrivacyPolicy} />
           <Route path="/testimonials" component={Testimonials} />
+          <Route path="/calculators" component={Calculators} />
+          <Route path="/ai-consulting" component={AIConsulting} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>

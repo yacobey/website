@@ -1,41 +1,56 @@
-// Business configuration with professional defaults for Selam CPA
 export const businessConfig = {
-  // Contact Information
-  phone: {
-    e164: process.env.PUBLIC_PHONE_E164 || "+13016408549",
-    display: process.env.PUBLIC_PHONE_DISPLAY || process.env.VITE_PUBLIC_PHONE_DISPLAY || "(301) 640-8549"
+  name: "Selam CPA",
+  legalName: "Selam Tax Inc.",
+  dba: "Selam CPA",
+  owner: "Yacob Tewelde, CPA, FCCA",
+  phone: "301-640-8549",
+  phoneE164: "+13016408549",
+  email: "info@selamcpa.com",
+  address: {
+    street: "8593 Light Moon Way",
+    city: "Laurel",
+    state: "MD",
+    zip: "20723",
+    full: "8593 Light Moon Way, Laurel, MD 20723",
   },
-  
-  // Business Links
-  links: {
-    calendly: process.env.CALENDLY_URL || process.env.VITE_CALENDLY_URL || "https://calendly.com/yber2001/30min",
-    intakeForm: process.env.INTAKE_FORM_URL || "https://forms.gle/selamcpa-intake-form",
-    secureUpload: process.env.SECURE_UPLOAD_URL || "https://portal.selamcpa.com/upload",
-    agentPublic: process.env.AGENT_PUBLIC_URL || process.env.VITE_AGENT_PUBLIC_URL || "https://agent.selamcpa.com"
+  geography: {
+    primary: "Laurel, MD",
+    region: "DMV — DC, Maryland, Virginia",
+    national: "All 50 states (virtual)",
+    seoLocations: [
+      "Laurel MD", "Columbia MD", "Baltimore MD",
+      "Washington DC", "Northern Virginia",
+      "Bethesda MD", "Silver Spring MD", "Rockville MD",
+      "Arlington VA", "Alexandria VA"
+    ],
   },
-  
-  // Business Information
-  business: {
-    name: "Selam CPA",
-    email: "info@selamcpa.com",
-    address: "Serving MD, VA, DC Metro Area",
-    hours: "Monday-Friday: 9:00 AM - 6:00 PM EST"
+  calendly: "https://calendly.com/yber2001/30min",
+  website: "https://selamcpa.com",
+  social: {
+    linkedin: "",
+    facebook: "",
   },
-
-  // SEO and Social Media
-  seo: {
-    socialImage: process.env.VITE_SOCIAL_IMAGE || "/assets/stock_images/professional_account_4628fcdf.jpg",
-    socialImageAlt: "Selam CPA - Professional Accounting & Tax Services",
-    domain: process.env.FRONTEND_ORIGIN || "https://selamcpa.com"
-  },
-
-  // API Configuration
-  api: {
-    baseUrl: process.env.VITE_API_URL || "/api"
-  }
+  services: [
+    "Tax Preparation & Planning",
+    "Bookkeeping & Accounting",
+    "Fractional CFO Services",
+    "Audit, Review & Compilation",
+    "AI Consulting for Accounting Firms",
+    "Tax Strategy & Advisory",
+  ],
+  industries: [
+    "Healthcare & Medical Practices",
+    "Legal & Professional Services",
+    "Real Estate & Property Management",
+    "Technology & SaaS",
+    "Retail & E-Commerce",
+    "Construction & Contractors",
+    "Nonprofits & Associations",
+    "Restaurants & Hospitality",
+  ],
 };
 
-// API endpoint to get business configuration
+// API endpoint helper — keeps backward compat with routes.ts
 export function getBusinessConfig() {
   return businessConfig;
 }

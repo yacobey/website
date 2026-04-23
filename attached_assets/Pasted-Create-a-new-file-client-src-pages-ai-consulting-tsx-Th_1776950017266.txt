@@ -1,0 +1,180 @@
+Create a new file client/src/pages/ai-consulting.tsx
+
+This is the AI Consulting service page for Selam CPA. 
+It sells AI implementation services to other accounting 
+firms and bookkeepers.
+
+The page should match the existing site design exactly:
+dark navy #0a0f1e backgrounds for hero and dark sections,
+emerald #10b981 accents, white text on dark, 
+gray-900 text on white sections, Tailwind CSS classes.
+
+PAGE STRUCTURE:
+
+1. HELMET / SEO:
+Title: "AI Consulting for Accounting Firms | Selam CPA — Build Your AI-Native Practice"
+Description: "Selam CPA helps accounting firms and bookkeepers build custom 
+AI systems using Claude — workflow automation, custom skills, knowledge bases, 
+and CRM integration. No coding required. Starting at $500."
+Keywords: "AI consulting accounting firms, Claude AI accounting, 
+AI workflow automation CPA firm, accounting AI implementation, 
+bookkeeper AI tools"
+Canonical: https://selamcpa.com/ai-consulting
+
+2. HERO — dark navy background, no video, centered:
+Small label: "FOR ACCOUNTING FIRMS & BOOKKEEPERS" in emerald, tracking-widest
+H1 line 1: "You Built a Great Practice." white, large
+H1 line 2: "Now Build the Infrastructure" white
+H1 line 3: "Behind It." emerald
+Subhead: "Selam CPA runs on a custom AI system built from scratch — 
+no coding required. We help other accounting firms and bookkeepers 
+build the same infrastructure: custom workflows, automated document 
+generation, knowledge bases, and CRM integration."
+Two buttons: 
+  "Book a Free Assessment →" emerald, links to https://calendly.com/yber2001/30min
+  "See What We Built →" outlined white, anchor links to #proof section
+
+3. PROOF SECTION — id="proof", white background:
+Label: "THE PROOF" in emerald
+H2: "We didn't just learn about AI. We built with it."
+Subhead: "Selam CPA is an AI-native accounting firm built from day one 
+on a custom Claude system. Here is exactly what we built — 
+and what we can build for you."
+
+Show a 2-column stats grid with 4 stat cards (dark navy background):
+  Stat 1: "5" / "Custom skills built" / "Engagement letters, tax organizers, IRS notice responses, CFO reports, consulting proposals"
+  Stat 2: "3,777" / "Knowledge vectors" / "IRS publications + 40 state tax guidance documents in Pinecone vector database"
+  Stat 3: "40+" / "States covered" / "State tax guidance ingested and searchable — federal + all income-tax states"
+  Stat 4: "0" / "Lines of code written by the CPA" / "Built entirely through natural language direction — no technical background required"
+
+Then show 5 capability cards in a grid:
+  Card 1 title: "Engagement Letter Generator"
+  Card 1 body: "Drafts professionally formatted engagement letters for any service type — tax prep, bookkeeping, fractional CFO, audit — in under 2 minutes. Auto-syncs to HubSpot CRM."
+  
+  Card 2 title: "Client Tax Organizer"
+  Card 2 body: "Generates a customized tax document checklist based on the client's entity type and situation. Includes IRS publication citations and CPA review flags."
+  
+  Card 3 title: "IRS Notice Response Drafter"
+  Card 3 body: "10 notice playbooks covering CP2000, CP14, CP90, Letter 525, Letter 531, and more. Hard stops on dangerous notices. [NEEDS VERIFICATION] flags on uncertain positions."
+  
+  Card 4 title: "Monthly CFO Report Generator"
+  Card 4 body: "Takes financial data and generates a professional management report with executive summary, variance analysis, KPI dashboard, and action items. Plain English throughout."
+  
+  Card 5 title: "Knowledge Base with Real Citations"
+  Card 5 body: "Every document output includes real IRS publication citations with page numbers and tax year. Pub 17, 334, 463, 502, 587, 946, and more — all searchable via Pinecone."
+
+4. HOW IT WORKS SECTION — light gray background:
+Label: "THE PROCESS" in emerald
+H2: "How we build your AI system"
+4 numbered steps in a horizontal row:
+  Step 1: "Assessment" / "We spend 2 hours mapping your current workflow, identifying your biggest time-wasters, and building your AI readiness report."
+  Step 2: "Architecture" / "We design your two-Claude system — Claude Web as strategist, Claude Code as workhorse — and write your CLAUDE.md firm brain."
+  Step 3: "Build" / "We build your custom skills one by one, starting with the highest-value workflows. Each skill is tested on real scenarios before delivery."
+  Step 4: "Train & Support" / "We train you to direct the system — no coding required. You learn to get production-quality outputs from day one."
+
+5. PRICING SECTION — white background:
+Label: "INVESTMENT" in emerald
+H2: "Three ways to get started"
+Subhead: "Every engagement starts with a conversation. 
+Book a free call and we'll tell you honestly which tier makes sense."
+
+3 pricing cards side by side:
+  Card 1 (standard border):
+    Tier: "Assessment"
+    Price: "$500"
+    Duration: "One-time"
+    Description: "For firms that want to understand their AI opportunity before committing."
+    Includes list:
+    - 2-hour workflow audit
+    - AI readiness report
+    - Top 5 workflow opportunities identified
+    - Recommended skill build order
+    - 30-day email Q&A
+    CTA: "Book Assessment →" links to calendly
+  
+  Card 2 (emerald border — featured):
+    Badge: "Most Popular"
+    Tier: "Foundation"
+    Price: "$2,500"
+    Duration: "One-time"
+    Description: "For firms ready to build their first real AI system."
+    Includes list:
+    - Everything in Assessment
+    - CLAUDE.md firm brain built and installed
+    - 3 custom skills built and tested
+    - Knowledge base setup (federal IRS publications)
+    - HubSpot or CRM integration
+    - 90-day support via email
+    CTA: "Get Started →" links to calendly
+  
+  Card 3 (standard border):
+    Tier: "Full Build"
+    Price: "$5,000"
+    Duration: "One-time"
+    Description: "For firms that want the complete AI-native infrastructure."
+    Includes list:
+    - Everything in Foundation
+    - 8–10 custom skills built
+    - Full knowledge base — IRS + all 50 states
+    - Complete workflow automation
+    - HubSpot CRM full integration
+    - 90-day support + 2 live training sessions
+    CTA: "Get Started →" links to calendly
+
+  Small disclaimer below cards: 
+  "All engagements include a discovery call before any work begins. 
+  If we're not the right fit, we'll tell you."
+
+6. WHO THIS IS FOR SECTION — dark navy background:
+Label: "WHO THIS IS FOR" in emerald
+H2: "Built for practitioners who are serious about efficiency."
+3 columns:
+  Column 1: "Solo CPAs & Bookkeepers" / "You're doing everything yourself. 
+  AI gives you the leverage of a full back office without the headcount."
+  
+  Column 2: "Small Firms (2–10 staff)" / "Your team spends hours on repetitive 
+  document work. Custom skills eliminate the work that shouldn't require 
+  a licensed professional."
+  
+  Column 3: "Firms Exploring AI" / "You've tried ChatGPT. You know there's 
+  something here. You need someone to show you how to build real systems, 
+  not just experiment with prompts."
+
+7. FAQ — white background, accordion:
+Q: "Do I need any coding skills to use this system?"
+A: "No. The entire Selam CPA AI system was built by a CPA with no coding 
+background. You direct the system in plain English — Claude Code handles 
+all the technical execution. If we can build it, so can you."
+
+Q: "What AI tools are used?"
+A: "The system is built on Anthropic's Claude — specifically Claude Code 
+for building and executing, and Claude Web for strategy and review. 
+We also use Pinecone for the vector knowledge base and HubSpot for 
+CRM integration. All tools have free or low-cost tiers to start."
+
+Q: "How long does the build take?"
+A: "The Assessment takes one week. The Foundation build takes two to three 
+weeks. The Full Build takes four to six weeks depending on complexity 
+and how quickly you can review and approve each component."
+
+Q: "Will this work for my practice area?"
+A: "Yes. The system is built around your specific services, clients, and 
+workflows — not a generic template. Whether you focus on tax, bookkeeping, 
+audit, or advisory, the skills are built for your actual work."
+
+Q: "What happens after the build is complete?"
+A: "You own everything. The code, the skills, the knowledge base, the 
+CLAUDE.md. We provide 90-day support to fix issues and answer questions. 
+After that, you can maintain and expand the system yourself — or hire us 
+for additional builds."
+
+8. FINAL CTA — dark navy background, centered:
+H2: "Ready to build your AI-native practice?" white
+Body: "Book a free 30-minute call. We'll walk through your current workflow, 
+show you what's possible, and tell you honestly whether this is the right 
+move for your firm."
+Button: "Book a Free Discovery Call →" emerald, links to calendly
+Small text: "No commitment. No pitch. We'll tell you if it's not the right fit."
+
+After creating the file, also add this route to App.tsx:
+<Route path="/ai-consulting" component={lazy(() => import("./pages/ai-consulting"))} />

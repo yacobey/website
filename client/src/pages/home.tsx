@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import { Link } from "wouter";
-import { businessConfig } from "../../server/business-config";
+import { businessConfig } from "@/lib/business-config";
 
 const services = [
   {
@@ -181,7 +181,7 @@ export default function Home() {
             all under one roof, built for how you actually work.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-
+            <a
               href={businessConfig.calendly}
               target="_blank"
               rel="noopener noreferrer"
@@ -189,7 +189,7 @@ export default function Home() {
             >
               Book a Free Discovery Call →
             </a>
-
+            <a
               href={`tel:${businessConfig.phoneE164}`}
               className="inline-flex items-center justify-center px-8 py-4 border border-white/30 text-white hover:bg-white/10 font-semibold rounded-lg transition-colors"
             >
@@ -419,6 +419,7 @@ export default function Home() {
             and tell you honestly whether we're the right fit.
           </p>
 
+          <a
             href={businessConfig.calendly}
             target="_blank"
             rel="noopener noreferrer"

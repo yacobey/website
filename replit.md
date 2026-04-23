@@ -72,6 +72,28 @@ Preferred communication style: Simple, everyday language.
 - **Scheduling**: Calendly (consultation booking)
 - **AI Integration**: OpenAI (for AI Assistant)
 
+## Recent Changes (April 2026)
+
+### Business Config & Contact Info Update
+- **Business Config Restructured**: `server/business-config.ts` now has full legal info, address (8593 Light Moon Way, Laurel, MD 20723), geography/SEO locations, services, and industries. Exports `getBusinessConfig()` for backward compatibility with `routes.ts`.
+- **Client-Side Config**: `client/src/lib/business-config.ts` mirrors the server config — use this in any client-side React components (the server file cannot be imported by Vite).
+- **Phone**: (301) 640-8549 / +13016408549 updated everywhere
+- **Email**: info@selamcpa.com updated everywhere
+
+### Navigation Update
+- Nav now includes: Services, Industries, **Calculators**, **AI for Firms**, About, FAQ, Blog
+
+### New Pages
+- **`/calculators`** — Tax & Finance Calculators hub with 3 categories (Business Structure, Tax Planning, Business Finance) listing 10 tools
+- **`/calculators/scorp-savings`** — Fully interactive S-Corp Tax Savings Calculator with 2025 federal rates, real-time comparison of sole proprietor vs. S-Corp, QBI deduction, FICA calculation, SEO-optimized with FAQ schema markup
+- **`/ai-consulting`** — AI Consulting for Accounting Firms landing page (dark navy design, services grid, outcomes list, CTA)
+
+### File Structure Additions
+- `client/src/lib/business-config.ts` — Client-accessible business config (keep in sync with server version)
+- `client/src/pages/calculators.tsx` — Calculator hub page
+- `client/src/pages/calculators/scorp-savings.tsx` — S-Corp calculator
+- `client/src/pages/ai-consulting.tsx` — AI for Firms page
+
 ## Recent Changes (November 2025)
 
 ### Contact Information Update (November 2025)

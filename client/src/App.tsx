@@ -42,6 +42,7 @@ const PaymentCancel = React.lazy(() => import("@/pages/payment-cancel"));
 const PrivacyPolicy = React.lazy(() => import("@/pages/privacy-policy"));
 const Testimonials = React.lazy(() => import("@/pages/testimonials"));
 const Calculators = React.lazy(() => import("@/pages/calculators"));
+const ScorpSavings = React.lazy(() => import("@/pages/calculators/scorp-savings"));
 const AIConsulting = React.lazy(() => import("@/pages/ai-consulting"));
 
 function Router() {
@@ -78,6 +79,7 @@ function Router() {
           <Route path="/privacy-policy" component={PrivacyPolicy} />
           <Route path="/testimonials" component={Testimonials} />
           <Route path="/calculators" component={Calculators} />
+          <Route path="/calculators/scorp-savings" component={ScorpSavings} />
           <Route path="/ai-consulting" component={AIConsulting} />
           <Route component={NotFound} />
         </Switch>

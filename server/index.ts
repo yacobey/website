@@ -8,6 +8,9 @@ import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
 
+// Trust the first proxy hop (Replit's infrastructure)
+app.set('trust proxy', 1);
+
 // Performance middleware - compression
 app.use(compression({
   level: 6, // Good balance between compression and speed

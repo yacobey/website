@@ -49,14 +49,14 @@ const services = [
 ];
 
 const industries = [
-  { name: "Healthcare & Medical", desc: "Practices, clinics, therapists", href: "/contact" },
-  { name: "Legal & Professional", desc: "Law firms, consultants, agencies", href: "/contact" },
-  { name: "Real Estate", desc: "Investors, agents, property managers", href: "/contact" },
-  { name: "Technology & SaaS", desc: "Startups, software companies", href: "/contact" },
-  { name: "Retail & E-Commerce", desc: "Stores, online sellers, DTC brands", href: "/contact" },
-  { name: "Construction", desc: "Contractors, builders, trades", href: "/contact" },
-  { name: "Nonprofits", desc: "501(c)(3) organizations, associations", href: "/contact" },
-  { name: "Restaurants & Hospitality", desc: "Restaurants, cafes, event venues", href: "/contact" },
+  { name: "Healthcare & Medical", desc: "Practices, clinics, therapists", href: "/industries/healthcare" },
+  { name: "Legal & Professional", desc: "Law firms, consultants, agencies", href: "/industries/legal" },
+  { name: "Real Estate", desc: "Investors, agents, property managers", href: "/industries/real-estate" },
+  { name: "Technology & SaaS", desc: "Startups, software companies", href: "/industries/technology" },
+  { name: "Retail & E-Commerce", desc: "Stores, online sellers, DTC brands", href: "/industries/retail" },
+  { name: "Construction", desc: "Contractors, builders, trades", href: "/industries/construction" },
+  { name: "Nonprofits", desc: "501(c)(3) organizations, associations", href: "/industries/nonprofit" },
+  { name: "Restaurants & Hospitality", desc: "Restaurants, cafes, event venues", href: "/industries/hospitality" },
 ];
 
 const faqs = [

@@ -44,6 +44,14 @@ const Testimonials = React.lazy(() => import("@/pages/testimonials"));
 const Calculators = React.lazy(() => import("@/pages/calculators"));
 const ScorpSavings = React.lazy(() => import("@/pages/calculators/scorp-savings"));
 const AIConsulting = React.lazy(() => import("@/pages/ai-consulting"));
+const Healthcare = React.lazy(() => import("@/pages/industries/healthcare"));
+const Legal = React.lazy(() => import("@/pages/industries/legal"));
+const RealEstate = React.lazy(() => import("@/pages/industries/real-estate"));
+const Technology = React.lazy(() => import("@/pages/industries/technology"));
+const Retail = React.lazy(() => import("@/pages/industries/retail"));
+const Construction = React.lazy(() => import("@/pages/industries/construction"));
+const Nonprofit = React.lazy(() => import("@/pages/industries/nonprofit"));
+const Hospitality = React.lazy(() => import("@/pages/industries/hospitality"));
 
 function Router() {
   useAnalytics();
@@ -81,6 +89,14 @@ function Router() {
           <Route path="/calculators" component={Calculators} />
           <Route path="/calculators/scorp-savings" component={ScorpSavings} />
           <Route path="/ai-consulting" component={AIConsulting} />
+          <Route path="/industries/healthcare" component={Healthcare} />
+          <Route path="/industries/legal" component={Legal} />
+          <Route path="/industries/real-estate" component={RealEstate} />
+          <Route path="/industries/technology" component={Technology} />
+          <Route path="/industries/retail" component={Retail} />
+          <Route path="/industries/construction" component={Construction} />
+          <Route path="/industries/nonprofit" component={Nonprofit} />
+          <Route path="/industries/hospitality" component={Hospitality} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>

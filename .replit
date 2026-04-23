@@ -42,3 +42,7 @@ integrations = ["javascript_sendgrid:1.0.0", "javascript_log_in_with_replit:1.0.
 
 [userenv.shared]
 VITE_CALENDLY_URL = "https://calendly.com/yber2001/30min"
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 20000

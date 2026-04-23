@@ -113,40 +113,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Chat routes
+  const SELAM_SYSTEM_PROMPT = `You are "Ask Selam", the AI tax advisor for Selam CPA — a full-service CPA firm led by Yacob Tewelde, CPA, FCCA, based in Laurel, Maryland and serving clients nationwide virtually.
+
+YOUR ROLE:
+- Answer general tax, accounting, and financial questions in plain English
+- Help small business owners understand their options
+- Guide users toward appropriate Selam CPA services when relevant
+- Be warm, professional, and direct — like a trusted advisor
+
+SERVICES YOU CAN DISCUSS:
+- Tax preparation (individuals, S-Corps, LLCs, partnerships, C-Corps)
+- Bookkeeping and accounting
+- Fractional CFO services
+- Audit, review, and compilation engagements
+- Tax strategy and planning (S-Corp elections, entity selection, retirement plans, estimated taxes)
+- AI consulting for accounting firms
+
+KEY FACTS:
+- Yacob Tewelde holds both CPA (Maryland) and FCCA credentials
+- The firm serves all 50 states virtually
+- Based in Laurel, MD — also serves DMV in person
+- Book a free 30-min call: https://calendly.com/yber2001/30min
+- Phone: (301) 640-8549
+- Email: info@selamcpa.com
+
+GUARDRAILS:
+- Never give specific tax advice for a user's personal situation
+- Always add: "This is general information — your situation may differ. Book a free call for personalized advice."
+- Never quote specific tax owed or refund amounts
+- Never discuss competitor firms
+- If asked about legal advice, redirect to an attorney
+- Keep responses concise — 2-4 paragraphs maximum
+- After answering, naturally mention the relevant Selam CPA service or calculator when appropriate
+
+TONE: Professional but warm. Plain English. No jargon without explanation. Think "trusted advisor at a dinner party", not "formal legal document".`;
+
   app.post("/api/chat", async (req, res) => {
     try {
-      const { sessionId, message } = req.body;
-      
+      const { sessionId, message, messages } = req.body;
+
+      // Support both new format (messages array) and legacy format (single message string)
+      const userMessage = message || (messages && messages.length > 0 ? messages[messages.length - 1].content : "");
+      const conversationMessages = messages || [{ role: "user", content: userMessage }];
+
       let response: string;
-      
-      // Try to use AI service first, fallback to rule-based responses
+
       if (process.env.OPENAI_API_KEY) {
         try {
-          // Analyze user intent and update preferences
-          const intent = analyzeUserIntent(message);
-          if (Object.keys(intent).length > 0) {
-            updateUserPreferences(sessionId, intent);
-          }
-          
-          response = await generateAIResponse(sessionId, message);
+          const OpenAI = (await import("openai")).default;
+          const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+          const completion = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+              { role: "system", content: SELAM_SYSTEM_PROMPT },
+              ...conversationMessages.map((m: any) => ({ role: m.role, content: m.content }))
+            ],
+            max_tokens: 500,
+            temperature: 0.7,
+          });
+
+          response = completion.choices[0].message.content || "I'm sorry, I couldn't generate a response. Please try again or call us at (301) 640-8549.";
         } catch (aiError) {
-          console.error("AI service error, falling back to smart chat service:", aiError);
-          const smartResponse = getSmartResponse(sessionId, message);
+          console.error("OpenAI error, falling back to smart chat:", aiError);
+          const smartResponse = getSmartResponse(sessionId, userMessage);
           response = smartResponse.response;
         }
       } else {
-        // Use smart chat service as primary fallback
-        const smartResponse = getSmartResponse(sessionId, message);
+        const smartResponse = getSmartResponse(sessionId, userMessage);
         response = smartResponse.response;
       }
-      
-      // Save both user message and bot response
-      await storage.createChatMessage({
-        sessionId,
-        message,
-        response
-      });
-      
+
+      // Save to storage
+      if (userMessage) {
+        await storage.createChatMessage({ sessionId, message: userMessage, response });
+      }
+
       res.json({ response });
     } catch (error) {
       console.error("Error processing chat message:", error);

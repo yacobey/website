@@ -150,26 +150,36 @@ export default function Home() {
         <title>Selam CPA | Tax, Bookkeeping & Fractional CFO | Laurel MD & Virtual Nationwide</title>
         <meta name="description" content="Selam CPA — led by Yacob Tewelde, CPA, FCCA. Tax preparation, bookkeeping, fractional CFO, audit, review & compilation for small businesses in Laurel MD, DMV region, and all 50 states virtually." />
         <meta name="keywords" content="CPA Laurel Maryland, CPA Columbia MD, CPA Baltimore, CPA Washington DC, fractional CFO Maryland, bookkeeping DMV, tax preparation Maryland, S-Corp tax, audit review compilation Maryland, AI consulting accounting firms" />
-        <meta property="og:title" content="Selam CPA | Tax, Bookkeeping & Fractional CFO" />
-        <meta property="og:description" content="Full-service CPA firm serving small businesses in the DMV and virtually nationwide. Tax, bookkeeping, fractional CFO, audit, and AI consulting." />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Selam CPA | Tax, Bookkeeping & Fractional CFO | Laurel MD" />
+        <meta property="og:description" content="Full-service CPA firm for small business owners. Tax preparation, bookkeeping, fractional CFO, and AI consulting. Laurel MD and all 50 states virtually." />
         <meta property="og:url" content="https://selamcpa.com" />
+        <meta property="og:image" content="https://selamcpa.com/og-image.jpg" />
+        <meta property="og:locale" content="en_US" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Selam CPA | Tax, Bookkeeping & Fractional CFO" />
+        <meta name="twitter:description" content="Full-service CPA firm for small business owners in Maryland and nationwide." />
+        <meta name="twitter:image" content="https://selamcpa.com/og-image.jpg" />
         <link rel="canonical" href="https://selamcpa.com" />
         <script type="application/ld+json">{JSON.stringify(schemaOrg)}</script>
       </Helmet>
 
       {/* HERO */}
-      <section id="hero" className="relative min-h-screen flex items-center justify-start overflow-hidden">
+      <section id="main-content" className="relative min-h-screen flex items-center justify-start overflow-hidden">
         <video
           autoPlay muted loop playsInline
+          poster="/hero-poster.jpg"
           className="absolute inset-0 w-full h-full object-cover"
-          src="/hero-video.mp4"
-        />
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+          Your browser does not support video.
+        </video>
         <div className="absolute inset-0 bg-[#0a0f1e]/70" />
         <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-32">
           <p className="text-emerald-400 text-sm font-medium tracking-widest uppercase mb-6">
             Laurel, MD · Columbia · Baltimore · DC · Virginia · All 50 States Virtual
           </p>
-          <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
             Your Business Is Growing.<br />
             <span className="text-emerald-400">Your Finances Should Keep Up.</span>
           </h1>

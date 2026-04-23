@@ -1,5 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import compression from "compression";
 import cookieParser from "cookie-parser";
 import { registerRoutes } from "./routes";
@@ -26,16 +27,41 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'",
+        "https://www.googletagmanager.com",
+        "https://www.google-analytics.com",
+        "https://js.stripe.com",
+        "https://cdnjs.cloudflare.com"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://js.stripe.com", "https://www.googletagmanager.com"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'", "https://api.stripe.com", "https://www.google-analytics.com"],
-      frameSrc: ["'self'", "https://js.stripe.com", "https://calendly.com"]
-    }
+      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      connectSrc: ["'self'",
+        "https://api.anthropic.com",
+        "https://www.google-analytics.com",
+        "https://api.stripe.com"],
+      frameSrc: ["https://js.stripe.com", "https://calendly.com"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
   },
-  crossOriginEmbedderPolicy: false
+  crossOriginEmbedderPolicy: false,
 }));
+
+// Rate limiting
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { error: 'Too many requests, please try again later.' }
+});
+
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  message: { error: 'Too many messages, please slow down.' }
+});
+
+app.use('/api/', apiLimiter);
+app.use('/api/chat', chatLimiter);
 
 // Performance optimizations for body parsing
 app.use(express.json({ limit: '10mb' }));

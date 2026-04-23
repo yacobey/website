@@ -1,0 +1,334 @@
+Please make the following pre-deploy improvements to the site.
+Implement all changes carefully without breaking existing functionality.
+
+===================================================
+PART 1: SECURITY HEADERS
+===================================================
+
+In server/routes.ts or server/index.ts, add these 
+security headers to all responses using Express middleware.
+Add this BEFORE all other middleware:
+
+import helmet from 'helmet';
+
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", 
+        "https://www.googletagmanager.com",
+        "https://www.google-analytics.com",
+        "https://js.stripe.com",
+        "https://cdnjs.cloudflare.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", 
+        "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      connectSrc: ["'self'", 
+        "https://api.anthropic.com",
+        "https://www.google-analytics.com",
+        "https://api.stripe.com"],
+      frameSrc: ["https://js.stripe.com", 
+        "https://calendly.com"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}));
+
+Also add rate limiting. Install express-rate-limit if not 
+already installed and add:
+
+import rateLimit from 'express-rate-limit';
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { error: 'Too many requests, please try again later.' }
+});
+
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  message: { error: 'Too many messages, please slow down.' }
+});
+
+app.use('/api/', apiLimiter);
+app.use('/api/chat', chatLimiter);
+
+If helmet or express-rate-limit are not in package.json,
+add them and run npm install.
+
+===================================================
+PART 2: MOBILE RESPONSIVENESS
+===================================================
+
+2A: HAMBURGER MENU in client/src/components/header.tsx
+
+Add a mobile hamburger menu. The current nav with 8 items 
+will overflow on mobile. Replace the header with this pattern:
+
+- Desktop (md and above): show full horizontal nav as current
+- Mobile (below md): hide nav links, show hamburger button
+  - Hamburger icon: 3 lines (use simple div bars)
+  - When clicked: slide-down mobile menu with all nav links
+  - Each link closes the menu on click
+  - Style mobile menu: full width, dark navy background,
+    each link on its own row with py-3 px-6 border-b border-white/10
+
+Use useState for isMenuOpen toggle.
+Keep all existing nav links and the "Book a Call" CTA button.
+On mobile show the CTA button in the mobile menu too.
+
+2B: RESPONSIVE TYPOGRAPHY in client/src/pages/home.tsx
+
+Find the hero H1 and update to responsive sizing:
+Change: text-5xl md:text-7xl
+Keep md:text-7xl but ensure text-4xl on small screens:
+Use: text-4xl sm:text-5xl md:text-7xl
+
+2C: RESPONSIVE GRIDS
+
+In home.tsx find the industries grid and ensure it uses:
+grid-cols-1 sm:grid-cols-2 md:grid-cols-4
+
+In all pricing/tier card sections across all pages 
+ensure 3-column grids use:
+grid-cols-1 md:grid-cols-3
+
+In all 2-column grids use:
+grid-cols-1 md:grid-cols-2
+
+2D: VIDEO HERO FALLBACK in home.tsx
+
+Add a poster attribute to the video element:
+<video 
+  autoPlay muted loop playsInline
+  poster="/hero-poster.jpg"
+  className="absolute inset-0 w-full h-full object-cover"
+>
+
+Also add this text to the video tag for accessibility:
+Your browser does not support video.
+
+===================================================
+PART 3: WEB STANDARDS
+===================================================
+
+3A: In client/index.html
+- Add lang="en" to the <html> tag
+- Add after the opening <body> tag:
+  <a href="#main-content" 
+     class="sr-only focus:not-sr-only focus:absolute focus:top-4 
+            focus:left-4 focus:z-50 focus:px-4 focus:py-2 
+            focus:bg-emerald-500 focus:text-white focus:rounded-lg">
+    Skip to main content
+  </a>
+- Add id="main-content" to the first <main> element or 
+  the first section after the header
+
+3B: Add Open Graph and Twitter meta tags to the Helmet 
+in client/src/pages/home.tsx. Add these inside <Helmet>:
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Selam CPA | Tax, Bookkeeping & Fractional CFO | Laurel MD" />
+<meta property="og:description" content="Full-service CPA firm for small business owners. Tax preparation, bookkeeping, fractional CFO, and AI consulting. Laurel MD and all 50 states virtually." />
+<meta property="og:url" content="https://selamcpa.com" />
+<meta property="og:image" content="https://selamcpa.com/og-image.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Selam CPA | Tax, Bookkeeping & Fractional CFO" />
+<meta name="twitter:description" content="Full-service CPA firm for small business owners in Maryland and nationwide." />
+<meta name="twitter:image" content="https://selamcpa.com/og-image.jpg" />
+
+3C: Create a real Privacy Policy page.
+Replace the content of client/src/pages/privacy-policy.tsx 
+with a proper privacy policy that includes:
+
+Title: "Privacy Policy | Selam CPA"
+
+Sections:
+1. Introduction — "Selam Tax Inc., doing business as Selam CPA 
+   ('we', 'our', 'us') operates selamcpa.com. This Privacy Policy 
+   explains how we collect, use, and protect your information."
+
+2. Information We Collect:
+   - Contact information you provide (name, email, phone)
+   - Information submitted through our contact forms and calculators
+   - Usage data collected automatically (Google Analytics)
+   - Payment information processed through Stripe 
+     (we never store card numbers)
+
+3. How We Use Your Information:
+   - To respond to your inquiries and provide services
+   - To send you information you requested
+   - To improve our website and services
+   - To comply with legal obligations
+
+4. Information Sharing:
+   - We do not sell your personal information
+   - We share information with service providers 
+     (Google Analytics, Stripe, SendGrid) only as necessary
+   - We may disclose information as required by law
+
+5. Cookies:
+   - We use Google Analytics cookies for website analytics
+   - You can opt out via Google Analytics Opt-out Browser Add-on
+
+6. Data Security:
+   - We use industry-standard security measures
+   - Payment processing handled by Stripe 
+     (PCI DSS compliant)
+
+7. Your Rights:
+   - You may request access to or deletion of your information
+   - Contact us at info@selamcpa.com
+
+8. Contact:
+   Selam Tax Inc. DBA Selam CPA
+   8593 Light Moon Way, Laurel, MD 20723
+   info@selamcpa.com
+   301-640-8549
+
+   Effective date: April 2026
+
+Style to match the site — white background, 
+max-w-3xl mx-auto, proper heading hierarchy.
+
+===================================================
+PART 4: CHATBOT REBUILD — "Ask Selam"
+===================================================
+
+Completely rebuild client/src/components/chatbot.tsx
+This is the most important change — transform it from 
+a basic chat widget into a branded AI advisor that 
+generates leads and revenue.
+
+DESIGN:
+- Floating button: bottom-right corner, fixed position
+  - Closed state: circular emerald button with chat icon, 
+    "Ask Selam" label, subtle pulse animation
+  - Open state: chat panel 380px wide, 520px tall
+    (full width on mobile, anchored to bottom)
+
+CHAT PANEL STRUCTURE:
+Header (dark navy #0a0f1e):
+  - Left: "Ask Selam" in white bold + 
+    "Selam CPA AI Advisor" in emerald small text
+  - Right: minimize button (—) and close button (×)
+  - Green status dot: "Online"
+
+Messages area (white background):
+  - User messages: right-aligned, emerald background, 
+    white text, rounded-tl-2xl rounded-bl-2xl rounded-tr-sm
+  - Assistant messages: left-aligned, gray-100 background, 
+    gray-900 text, rounded-tr-2xl rounded-br-2xl rounded-tl-sm
+  - Typing indicator: 3 animated dots when loading
+  - Timestamps on each message (HH:MM format)
+
+Suggested questions (show only before first message):
+Show 4 clickable suggestion chips:
+  "Should I elect S-Corp status?"
+  "What expenses can I deduct?"
+  "What does a fractional CFO do?"
+  "How do I respond to an IRS notice?"
+Style: small pills, border border-emerald-200, 
+text-emerald-700, bg-emerald-50, hover:bg-emerald-100
+
+Input area:
+  - Text input: "Ask a tax question..."
+  - Send button: emerald, arrow icon
+  - Disclaimer: "Not legal or tax advice. 
+    For general information only." — tiny gray text
+
+Free message limit:
+- Allow 3 free messages
+- After 3rd response, show upgrade prompt:
+  "You've used your 3 free questions. 
+   Unlock unlimited access for $29."
+  Button: "Unlock Unlimited →" links to /payment
+  OR "Book a Free Call Instead →" links to calendly
+  Both options shown — respect user preference
+
+Lead capture:
+- After 2nd message, show inline in chat:
+  "Want a personalized answer? Leave your email 
+   and we'll follow up."
+  Email input + "Send" button — optional, dismissible
+
+SYSTEM PROMPT for the AI:
+In server/routes.ts create a POST /api/chat endpoint 
+that calls the OpenAI API (already configured) with 
+this system prompt:
+
+const SELAM_SYSTEM_PROMPT = `You are "Ask Selam", 
+the AI tax advisor for Selam CPA — a full-service 
+CPA firm led by Yacob Tewelde, CPA, FCCA, based in 
+Laurel, Maryland and serving clients nationwide virtually.
+
+YOUR ROLE:
+- Answer general tax, accounting, and financial questions 
+  in plain English
+- Help small business owners understand their options
+- Guide users toward appropriate Selam CPA services 
+  when relevant
+- Be warm, professional, and direct — like a trusted advisor
+
+SERVICES YOU CAN DISCUSS:
+- Tax preparation (individuals, S-Corps, LLCs, partnerships, C-Corps)
+- Bookkeeping and accounting
+- Fractional CFO services
+- Audit, review, and compilation engagements
+- Tax strategy and planning (S-Corp elections, entity selection, 
+  retirement plans, estimated taxes)
+- AI consulting for accounting firms
+
+KEY FACTS:
+- Yacob Tewelde holds both CPA (Maryland) and FCCA credentials
+- The firm serves all 50 states virtually
+- Based in Laurel, MD — also serves DMV in person
+- Book a free 30-min call: https://calendly.com/yber2001/30min
+- Phone: 301-640-8549
+- Email: info@selamcpa.com
+
+GUARDRAILS:
+- Never give specific tax advice for a user's personal situation
+- Always add: "This is general information — your situation 
+  may differ. Book a free call for personalized advice."
+- Never quote specific tax owed or refund amounts
+- Never discuss competitor firms
+- If asked about legal advice, redirect to an attorney
+- Keep responses concise — 2-4 paragraphs maximum
+- After answering, naturally mention the relevant 
+  Selam CPA service or calculator when appropriate
+
+TONE: Professional but warm. Plain English. 
+No jargon without explanation. 
+Think "trusted advisor at a dinner party", 
+not "formal legal document".`;
+
+The /api/chat endpoint should:
+- Accept { messages: array, sessionId: string }
+- Prepend the system prompt
+- Call OpenAI with model gpt-4o-mini (cost efficient)
+- Stream the response
+- Return the assistant message
+
+CONVERSATION STATE:
+Store in React useState:
+- messages array (role, content, timestamp)
+- messageCount (for free limit)
+- isOpen (panel open/closed)
+- isLoading (typing indicator)
+- emailCaptured (boolean)
+- sessionId (generate once on mount with crypto.randomUUID())
+
+MOBILE BEHAVIOR:
+- On screens below 640px: chat panel is full-width, 
+  positioned fixed bottom-0 left-0 right-0, 
+  height 70vh
+- Floating button stays bottom-right on all screens
+
+Keep all existing chatbot functionality if any — 
+just enhance it with these new features.

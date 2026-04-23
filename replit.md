@@ -72,6 +72,37 @@ Preferred communication style: Simple, everyday language.
 - **Scheduling**: Calendly (consultation booking)
 - **AI Integration**: OpenAI (for AI Assistant)
 
+## Recent Changes (April 2026 — Pre-Deploy)
+
+### Security & Performance Hardening
+- **Rate Limiting**: Added `express-rate-limit` — 100 req/15min on all `/api/` routes, 20 msg/min on `/api/chat`
+- **CSP Updated**: Added `cdnjs.cloudflare.com` to scriptSrc, `api.anthropic.com` to connectSrc, `blob:` to imgSrc, `objectSrc: none`
+
+### Mobile & Accessibility
+- **Hero H1**: Responsive sizing `text-4xl sm:text-5xl md:text-7xl`
+- **Video fallback**: Added `poster="/hero-poster.jpg"` and `<source>` tag with accessibility text
+- **Skip to content**: Added `<a href="#main-content">` skip link in `client/index.html`
+- **`id="main-content"`** added to hero section in home.tsx
+
+### SEO / Open Graph
+- Full OG + Twitter Card tags added to home.tsx: `og:type`, `og:image`, `og:locale`, `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`
+
+### Privacy Policy Rewrite
+- Replaced generic template with real policy: Selam Tax Inc. DBA Selam CPA, proper sections (data collected, use, sharing, Stripe, Google Analytics opt-out, rights, contact)
+
+### Chatbot Rebuild — "Ask Selam"
+- Completely rebuilt `client/src/components/chatbot.tsx`
+  - Branded: emerald floating button with "Ask Selam" label + pulse animation
+  - Chat panel: 380px wide, 520px tall; full-width fixed at bottom on mobile (70vh)
+  - Header: dark navy #0a0f1e, green status dot, minimize + close buttons
+  - Suggested questions (4 chips shown before first user message)
+  - Timestamps on every message
+  - 3-dot typing indicator animation
+  - 3 free message limit → upgrade prompt with "Unlock Unlimited" ($29) + "Book a Free Call" options
+  - Lead capture email input shown after 2nd message (dismissible)
+  - Input disclaimer: "Not legal or tax advice."
+- **New system prompt** in `/api/chat` route: "Ask Selam" persona, Selam CPA facts, Yacob Tewelde CPA/FCCA, guardrails against specific advice, gpt-4o-mini model
+
 ## Recent Changes (April 2026)
 
 ### Business Config & Contact Info Update

@@ -43,6 +43,12 @@ const PrivacyPolicy = React.lazy(() => import("@/pages/privacy-policy"));
 const Testimonials = React.lazy(() => import("@/pages/testimonials"));
 const Calculators = React.lazy(() => import("@/pages/calculators"));
 const ScorpSavings = React.lazy(() => import("@/pages/calculators/scorp-savings"));
+const EstimatedTax = React.lazy(() => import("@/pages/calculators/estimated-tax"));
+const SelfEmploymentTax = React.lazy(() => import("@/pages/calculators/self-employment-tax"));
+const HomeOffice = React.lazy(() => import("@/pages/calculators/home-office"));
+const Mileage = React.lazy(() => import("@/pages/calculators/mileage"));
+const Section179 = React.lazy(() => import("@/pages/calculators/section-179"));
+const Retirement = React.lazy(() => import("@/pages/calculators/retirement"));
 const AIConsulting = React.lazy(() => import("@/pages/ai-consulting"));
 const Healthcare = React.lazy(() => import("@/pages/industries/healthcare"));
 const Legal = React.lazy(() => import("@/pages/industries/legal"));
@@ -88,6 +94,12 @@ function Router() {
           <Route path="/testimonials" component={Testimonials} />
           <Route path="/calculators" component={Calculators} />
           <Route path="/calculators/scorp-savings" component={ScorpSavings} />
+          <Route path="/calculators/estimated-tax" component={EstimatedTax} />
+          <Route path="/calculators/self-employment-tax" component={SelfEmploymentTax} />
+          <Route path="/calculators/home-office" component={HomeOffice} />
+          <Route path="/calculators/mileage" component={Mileage} />
+          <Route path="/calculators/section-179" component={Section179} />
+          <Route path="/calculators/retirement" component={Retirement} />
           <Route path="/ai-consulting" component={AIConsulting} />
           <Route path="/industries/healthcare" component={Healthcare} />
           <Route path="/industries/legal" component={Legal} />

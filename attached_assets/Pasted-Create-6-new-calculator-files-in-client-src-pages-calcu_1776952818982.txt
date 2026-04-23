@@ -1,0 +1,393 @@
+Create 6 new calculator files in client/src/pages/calculators/.
+After creating all 6 files add all 6 routes to App.tsx.
+Match the existing site design throughout.
+
+===================================================
+FILE 1: client/src/pages/calculators/estimated-tax.tsx
+Route: /calculators/estimated-tax
+===================================================
+
+Title: "Quarterly Estimated Tax Calculator 2025 | Selam CPA — Maryland"
+Description: "Calculate your 2025 quarterly estimated tax payments — Q1 through Q4. Federal and Maryland. Avoid underpayment penalties. Free calculator by Selam CPA."
+Keywords: "quarterly estimated tax calculator 2025, estimated tax payments Maryland, Q1 Q2 Q3 Q4 estimated tax, self employed estimated tax 2025, underpayment penalty calculator"
+Canonical: https://selamcpa.com/calculators/estimated-tax
+
+PAGE LAYOUT — same structure as scorp-savings page:
+Breadcrumb: Home › Calculators › Quarterly Estimated Tax
+Label: "FREE CALCULATOR · 2025 TAX YEAR" emerald
+H1: "Quarterly Estimated Tax Calculator"
+Subhead: "Calculate your federal and Maryland estimated tax payments 
+for each quarter of 2025 — and avoid the underpayment penalty."
+Disclaimer: "For estimation purposes only. Consult a CPA for personalized advice."
+
+CALCULATOR — interactive React component with these inputs:
+
+Input 1: Slider — "Expected Annual Net Income" $0–$500,000 step $5,000
+Input 2: Slider — "Other W-2 Income (you or spouse)" $0–$300,000 step $5,000
+Input 3: Toggle buttons — Filing Status: "Single" or "Married Filing Jointly"
+Input 4: Slider — "Federal Tax Already Withheld (W-2)" $0–$100,000 step $1,000
+Input 5: Toggle — "Self-employed?" Yes/No (affects SE tax calculation)
+
+CALCULATIONS to perform:
+- Annual federal income tax using 2025 brackets
+- SE tax if self-employed (15.3% on first $176,100 net earnings × 0.9235, 2.9% above)
+- SE deduction (half of SE tax)
+- QBI deduction (20% of net income, simplified, phased out above $191,950 single / $383,900 MFJ)
+- Total annual federal tax liability
+- Subtract withholding already paid
+- Remaining federal tax ÷ 4 = quarterly payment estimate
+- Maryland state tax using 2024 rates: 2% on first $1,000, 3% $1,001–$2,000, 4% $2,001–$3,000, 4.75% $3,001–$100,000, 5% $100,001–$125,000, 5.25% $125,001–$150,000, 5.5% $150,001–$250,000, 5.75% above $250,000
+- Maryland standard deduction: $2,400 single / $4,850 MFJ
+- Maryland quarterly payment = (MD tax - MD withholding) ÷ 4
+
+RESULTS to display in a clean table:
+Four rows, one per quarter:
+- Q1 2025: Due April 15, 2025 | Federal: $X | Maryland: $X | Total: $X
+- Q2 2025: Due June 16, 2025 | Federal: $X | Maryland: $X | Total: $X  
+- Q3 2025: Due September 15, 2025 | Federal: $X | Maryland: $X | Total: $X
+- Q4 2025: Due January 15, 2026 | Federal: $X | Maryland: $X | Total: $X
+- Annual Total row in bold
+
+Below table show:
+- Safe harbor note: "To avoid penalties, pay the lesser of 100% of last year's 
+  tax liability or 90% of this year's actual tax. If last year's AGI exceeded 
+  $150,000, the prior-year safe harbor is 110%."
+- Important: "These are federal and Maryland estimates only. If you live in 
+  a Maryland county, add county income tax (2.25%–3.2% of Maryland taxable income)."
+
+FAQ section with 4 questions:
+Q: "When are estimated tax payments due in 2025?"
+A: "Q1: April 15, 2025. Q2: June 16, 2025. Q3: September 15, 2025. Q4: January 15, 2026. Note that Q2 is only about 2 months after Q1 — not a full quarter."
+
+Q: "What happens if I underpay estimated taxes?"
+A: "The IRS charges an underpayment penalty — currently around 8% annualized on the underpaid amount. Maryland also charges a penalty. You can avoid penalties by meeting the safe harbor thresholds: paying 100% of last year's tax liability (110% if prior year AGI exceeded $150,000) or 90% of this year's actual liability."
+
+Q: "Do I need to pay Maryland estimated taxes separately?"
+A: "Yes. Maryland estimated taxes are paid separately from federal — to the Maryland Comptroller. Maryland uses Form PV for individual estimated payments. Payments can be made online at marylandtaxes.gov."
+
+Q: "I just became self-employed. When should I start paying estimated taxes?"
+A: "Immediately. If you expect to owe $1,000 or more in federal tax after withholding and credits, you are required to make estimated payments. Missing the first payment creates a penalty even if you pay in full later."
+
+CTA: "Book a Free Consultation →" calendly
+Related calculators: S-Corp Tax Savings, Self-Employment Tax, Home Office Deduction
+
+===================================================
+FILE 2: client/src/pages/calculators/self-employment-tax.tsx
+Route: /calculators/self-employment-tax
+===================================================
+
+Title: "Self-Employment Tax Calculator 2025 | Selam CPA — Maryland"
+Description: "Calculate your 2025 self-employment tax (SE tax) — Social Security and Medicare — and the above-the-line deduction you can take on Form 1040. Free calculator."
+Keywords: "self employment tax calculator 2025, SE tax calculator, schedule SE calculator, self employed FICA 2025, SE tax deduction calculator"
+Canonical: https://selamcpa.com/calculators/self-employment-tax
+
+CALCULATOR inputs:
+Input 1: Slider — "Net Self-Employment Income" $0–$500,000 step $5,000
+Input 2: Slider — "W-2 Wages (you or spouse — reduces SS base)" $0–$200,000 step $5,000
+
+CALCULATIONS:
+- Net earnings = net SE income × 0.9235
+- Social Security tax = min(net earnings + W2 wages, $176,100) × 12.4% — but only on SE portion above W2 wages
+  Actually: SS tax = max(0, min(net earnings, $176,100 - W2 wages)) × 12.4%
+- Medicare tax = net earnings × 2.9%
+- Additional Medicare tax = max(0, net earnings - $200,000) × 0.9% (single) — show note
+- Total SE tax
+- SE deduction = SE tax ÷ 2
+- Net tax cost (SE tax - value of SE deduction at estimated marginal rate)
+
+RESULTS display:
+- Social Security tax: $X (on $X of net earnings)
+- Medicare tax: $X
+- Total SE tax: $X
+- SE deduction you can take on Form 1040: $X
+- Note: "The SE deduction reduces your adjusted gross income — saving you income tax on top of the SE tax you pay."
+
+Show a simple visual breakdown: what portion goes to Social Security vs Medicare
+
+FAQ — 4 questions:
+Q: "What is the self-employment tax rate for 2025?"
+A: "The SE tax rate is 15.3% — 12.4% for Social Security (on net earnings up to $176,100) and 2.9% for Medicare (on all net earnings). The SE tax applies to 92.35% of your net self-employment income, not the gross amount."
+
+Q: "Why is the SE tax rate 15.3% when employees only pay 7.65%?"
+A: "Employees pay 7.65% and their employer pays the other 7.65%. Self-employed individuals pay both halves — the full 15.3%. However, you can deduct half of SE tax (the employer equivalent portion) as an above-the-line deduction on Form 1040, which partially offsets the cost."
+
+Q: "Does SE tax apply to all self-employment income?"
+A: "SE tax applies to net profit from a Schedule C business, your distributive share of partnership income from a general partner, and net earnings from self-employment in other contexts. S-Corp distributions are not subject to SE tax — which is the basis of the S-Corp tax savings strategy."
+
+Q: "What is the Additional Medicare Tax?"
+A: "Self-employed individuals with net earnings above $200,000 (single) or $250,000 (MFJ) owe an additional 0.9% Medicare tax on the amount above the threshold. Unlike regular SE tax, there is no deduction for this additional tax."
+
+CTA and related calculators
+
+===================================================
+FILE 3: client/src/pages/calculators/home-office.tsx
+Route: /calculators/home-office
+===================================================
+
+Title: "Home Office Deduction Calculator 2025 | Selam CPA — Actual vs Simplified"
+Description: "Calculate your 2025 home office deduction — actual expense method vs. simplified method. See which saves more. Free calculator by Selam CPA, Maryland."
+Keywords: "home office deduction calculator 2025, Form 8829 calculator, simplified method home office, home office actual vs simplified, self employed home office deduction"
+Canonical: https://selamcpa.com/calculators/home-office
+
+CALCULATOR inputs:
+Input 1: Slider — "Home Office Square Footage" 50–800 sq ft step 10
+Input 2: Slider — "Total Home Square Footage" 500–5000 sq ft step 100
+Input 3: Slider — "Annual Mortgage Interest or Rent" $0–$60,000 step $500
+Input 4: Slider — "Annual Property Tax" $0–$20,000 step $250
+Input 5: Slider — "Annual Homeowner's/Renter's Insurance" $0–$5,000 step $100
+Input 6: Slider — "Annual Utilities (electric, gas, water)" $0–$10,000 step $200
+Input 7: Slider — "Annual Net Business Income (for simplified method limit)" $0–$500,000 step $5,000
+
+CALCULATIONS:
+Business use percentage = office sqft ÷ total sqft
+
+Actual method:
+- Deductible portion of mortgage interest = mortgage interest × business %
+- Deductible portion of property tax = property tax × business %
+- Deductible portion of insurance = insurance × business %
+- Deductible portion of utilities = utilities × business %
+- Direct expenses (assume $0 — note user can add)
+- Total actual method deduction
+- Note: mortgage interest and property tax also partially deductible on Schedule A — actual method captures the business portion on Schedule C
+
+Simplified method:
+- Deduction = office sqft × $5 per sq ft
+- Maximum: $1,500 (300 sq ft max)
+- Capped at net income from business
+
+RESULTS:
+Show side by side:
+Left card: "Actual Expense Method" — total deduction $X, business use %
+Right card: "Simplified Method" — total deduction $X, $5 × sqft
+Recommendation: highlight which is larger with emerald styling
+
+Important notes to show:
+- "The simplified method maximum is $1,500 (300 sq ft × $5)"
+- "The actual method requires Form 8829 and a more detailed calculation"
+- "To use the home office deduction, the space must be used regularly and exclusively for business — no personal use allowed"
+- "Mortgage interest deductible as home office expense does not reduce your Schedule A mortgage interest deduction — it adds to it"
+
+FAQ — 4 questions:
+Q: "What is the exclusive use requirement for the home office deduction?"
+A: "Your home office must be used regularly and exclusively for business. A dedicated room is ideal. A corner of a room shared with personal use does not qualify — the IRS has been clear on this. Occasional personal use disqualifies the deduction."
+
+Q: "Is the simplified method always worse than the actual method?"
+A: "Not always. For small offices in expensive homes, the simplified method ($5 per sq ft, max $1,500) can occasionally exceed the actual method. But for most home offices, the actual method produces a larger deduction — especially when rent or mortgage interest is high."
+
+Q: "Can I use the home office deduction as an employee working from home?"
+A: "No. The Tax Cuts and Jobs Act of 2017 suspended the employee home office deduction through 2025. Only self-employed individuals and independent contractors can currently deduct home office expenses."
+
+Q: "Does the home office deduction trigger an audit?"
+A: "It used to be considered a red flag, but home office deductions have become much more common — especially post-pandemic. The key is that the space must genuinely meet the exclusive and regular use requirements. Document the square footage and take photos."
+
+CTA and related calculators
+
+===================================================
+FILE 4: client/src/pages/calculators/mileage.tsx
+Route: /calculators/mileage
+===================================================
+
+Title: "Mileage Deduction Calculator 2025 | Selam CPA — $0.70 Per Mile"
+Description: "Calculate your 2025 business mileage deduction at $0.70 per mile. Standard mileage vs. actual expense method comparison. Free calculator by Selam CPA."
+Keywords: "mileage deduction calculator 2025, business mileage 2025, IRS mileage rate 2025, standard mileage rate 2025, vehicle deduction calculator"
+Canonical: https://selamcpa.com/calculators/mileage
+
+CALCULATOR inputs:
+Input 1: Slider — "Business Miles Driven in 2025" 0–50,000 step 500
+Input 2: Slider — "Total Miles Driven in 2025" 0–80,000 step 500
+Input 3: Slider — "Annual Vehicle Expenses (gas, insurance, repairs, registration)" $0–$20,000 step $250
+Input 4: Slider — "Vehicle Purchase Price (if owned)" $0–$80,000 step $1,000
+Input 5: Toggle — "Vehicle type: Standard (under 6,000 lbs)" or "Heavy SUV/Truck (over 6,000 lbs)"
+
+CALCULATIONS:
+Business use % = business miles ÷ total miles
+
+Standard mileage method:
+- Deduction = business miles × $0.70
+
+Actual expense method:
+- Business portion of expenses = total expenses × business use %
+- Depreciation: for standard vehicle, use MACRS year 1 ($12,200 cap for 2025)
+  For heavy SUV: Section 179 up to $28,900 for SUVs, or full bonus depreciation if over 6,000 lbs and not SUV
+- Total actual method = business expenses + depreciation
+
+RESULTS side by side:
+Left: "Standard Mileage Method" — $X deduction, cents per mile
+Right: "Actual Expense Method" — $X deduction, requires Form 4562
+Recommendation: which is larger
+
+Key facts to display:
+- 2025 rate: $0.70 per mile for business
+- Medical/moving rate: $0.21 per mile
+- Charitable rate: $0.14 per mile
+- "Once you use the actual method for a vehicle, you generally cannot switch to standard mileage for that vehicle in a later year"
+- "A contemporaneous mileage log is required for either method — date, destination, business purpose, miles"
+
+FAQ — 4 questions:
+Q: "What is the IRS standard mileage rate for 2025?"
+A: "The IRS standard mileage rate for business use of a vehicle is $0.70 per mile for 2025. This rate covers the average cost of gas, insurance, depreciation, and maintenance — you do not deduct those separately if you use the standard rate."
+
+Q: "Do I need to keep a mileage log?"
+A: "Yes. The IRS requires a contemporaneous mileage log — meaning you record each trip at or near the time it occurs, not reconstructed later. The log must show the date, destination, business purpose, and miles for each business trip. Apps like MileIQ or Everlance make this easy."
+
+Q: "When should I use the actual expense method instead of standard mileage?"
+A: "The actual expense method tends to produce a larger deduction when your vehicle is expensive to operate (high gas, insurance, or repair costs), when you drive relatively few business miles, or when you placed the vehicle in service in 2025 and want to claim bonus depreciation. You must choose your method in the first year you use the vehicle for business."
+
+Q: "Can I deduct mileage to and from my office?"
+A: "No. Commuting miles — from your home to your regular place of business — are never deductible. However, if you have a qualifying home office, your home becomes your principal place of business and trips from home to client locations are deductible business miles."
+
+CTA and related calculators
+
+===================================================
+FILE 5: client/src/pages/calculators/section-179.tsx
+Route: /calculators/section-179
+===================================================
+
+Title: "Section 179 Deduction Calculator 2025 | Selam CPA — First-Year Expensing"
+Description: "Calculate your 2025 Section 179 deduction and bonus depreciation. Deduct equipment, software, and vehicles in the first year. Free calculator by Selam CPA."
+Keywords: "Section 179 calculator 2025, bonus depreciation 2025, equipment deduction calculator, first year expensing 2025, Section 179 limit 2025"
+Canonical: https://selamcpa.com/calculators/section-179
+
+CALCULATOR inputs:
+Input 1: Slider — "Cost of Equipment/Assets Purchased" $0–$2,000,000 step $5,000
+Input 2: Slider — "Business Net Income (before this deduction)" $0–$1,000,000 step $5,000
+Input 3: Toggle — "Asset type: Equipment/Software" or "SUV over 6,000 lbs" or "Passenger Vehicle"
+Input 4: Toggle — "Placed in service: Before 10/1/2025" or "After 10/1/2025"
+
+CALCULATIONS:
+2025 Section 179 limit: $1,220,000 (indexed)
+2025 Section 179 phase-out begins at: $3,050,000 total purchases
+2025 bonus depreciation rate: 40% (phasing down from 100%)
+
+Section 179 deduction:
+- Cannot exceed net business income
+- SUV limitation: $28,900 for SUVs over 6,000 lbs
+- Passenger vehicle cap: $12,200 year 1
+
+Bonus depreciation on remaining basis:
+- Remaining basis after Section 179 × 40%
+- Not limited by income
+
+Total first-year deduction = Section 179 + bonus depreciation
+Remaining depreciable basis = cost - Section 179 - bonus depreciation
+MACRS depreciation in year 1 on remaining basis (5-year property: 20%)
+
+Show tax savings estimate at 25% assumed marginal rate
+Show breakeven: "This deduction saves approximately $X in taxes this year"
+
+Key facts:
+- "Section 179 is limited to your net business income — it cannot create a loss"
+- "Bonus depreciation has no income limitation and can create a loss"
+- "Bonus depreciation rate is 40% in 2025, dropping to 20% in 2026, then 0% in 2027 under current law"
+- "Assets must be placed in service by December 31, 2025 to qualify"
+
+FAQ — 4 questions:
+Q: "What is the Section 179 deduction limit for 2025?"
+A: "The Section 179 limit for 2025 is $1,220,000. This begins to phase out when total asset purchases exceed $3,050,000. Section 179 cannot exceed your net business income — it cannot be used to create a loss."
+
+Q: "What is bonus depreciation and how is it different from Section 179?"
+A: "Bonus depreciation allows you to immediately deduct a percentage of the cost of qualifying new and used assets in the year placed in service. Unlike Section 179, bonus depreciation has no income limitation and can create or increase a net operating loss. The bonus rate is 40% in 2025, decreasing to 20% in 2026 and 0% in 2027 under current law unless Congress acts."
+
+Q: "What assets qualify for Section 179?"
+A: "Qualifying property includes tangible personal property used in business (equipment, machinery, computers), off-the-shelf computer software, and certain qualified improvement property. Real property generally does not qualify. Vehicles have special limitations — passenger vehicles are capped at $12,200 in year one, and SUVs over 6,000 lbs are capped at $28,900 for Section 179."
+
+Q: "Should I take Section 179 or bonus depreciation?"
+A: "If your income is high enough to absorb the full deduction, Section 179 and bonus depreciation produce the same result in year one. Section 179 is preferable when you want to control the exact amount deducted. Bonus depreciation is preferable when you want to create a loss or when your purchases exceed the Section 179 limit."
+
+CTA and related calculators
+
+===================================================
+FILE 6: client/src/pages/calculators/retirement.tsx
+Route: /calculators/retirement
+===================================================
+
+Title: "Self-Employed Retirement Calculator 2025 | SEP-IRA vs Solo 401k | Selam CPA"
+Description: "Compare SEP-IRA, Solo 401(k), and SIMPLE IRA contribution limits and tax savings for self-employed individuals in 2025. Free calculator by Selam CPA."
+Keywords: "SEP IRA calculator 2025, Solo 401k calculator 2025, self employed retirement calculator, SEP IRA vs Solo 401k, SIMPLE IRA 2025 limits, retirement contribution tax savings"
+Canonical: https://selamcpa.com/calculators/retirement
+
+CALCULATOR inputs:
+Input 1: Slider — "Net Self-Employment Income" $0–$500,000 step $5,000
+Input 2: Slider — "Age" 18–75 step 1
+Input 3: Toggle — Filing Status: Single or MFJ
+Input 4: Toggle — "Do you have employees?" Yes or No
+Input 5: Slider — "Estimated Marginal Tax Rate" 10%–37% step 1% (show as percentage)
+
+CALCULATIONS:
+2025 limits:
+- SEP-IRA: 25% of net earnings (after SE deduction) up to $70,000
+  Net earnings for SEP = net income - SE tax deduction
+  SEP contribution = min(net earnings × 0.25, 70000) -- Note: technically 20% of net SE income for self-employed
+  Actually: SEP rate for self-employed = 0.25/(1+0.25) = 20% of net SE income
+  SEP max = min(net SE income × 0.20, 70000)
+
+- Solo 401(k):
+  Employee elective deferral: min(net SE income, $23,500) — plus $7,500 catch-up if age 50+
+  Employer contribution: 20% of net SE income (same as SEP calculation)
+  Total Solo 401k = min(employee deferral + employer contribution, $70,000) — $77,500 if 50+
+
+- SIMPLE IRA:
+  Employee contribution: min(net SE income, $16,500) — plus $3,500 catch-up if age 50+
+  Employer match: 3% of net SE income
+  Total SIMPLE = employee + employer match
+  Note: SIMPLE IRA only for businesses with 100 or fewer employees
+
+Tax savings for each plan = contribution amount × marginal tax rate
+
+RESULTS:
+3 cards side by side:
+Card 1 SEP-IRA:
+- Max contribution: $X
+- Tax savings at your rate: $X
+- Best for: Simple to set up, no annual filing for balances under $250K
+- Deadline: Tax filing deadline including extensions
+
+Card 2 Solo 401(k) — highlight if larger:
+- Max contribution: $X (breakdown: $X employee + $X employer)
+- Tax savings at your rate: $X
+- Best for: Highest contribution potential, especially under $100K income
+- Catch-up available: Yes/No based on age
+- Deadline: December 31 to open, tax deadline for contributions
+
+Card 3 SIMPLE IRA:
+- Max contribution: $X
+- Tax savings at your rate: $X
+- Best for: Businesses with employees, simpler than 401(k)
+- Note: "Not available if you have a 401(k) plan elsewhere"
+
+Show which plan allows the highest contribution with emerald highlight
+
+Key insight box in dark navy:
+"At $[net income] income, a Solo 401(k) allows you to contribute 
+$[X more] than a SEP-IRA — saving an additional $[X] in taxes."
+
+FAQ — 5 questions:
+Q: "Which retirement plan is best for a self-employed person with no employees?"
+A: "For most self-employed individuals with no employees, the Solo 401(k) allows the highest contribution — especially at income levels below $150,000. The employee elective deferral component lets you contribute up to $23,500 regardless of business income, while the employer contribution adds up to 20% of net SE income on top of that."
+
+Q: "What is the deadline to open and fund a Solo 401(k)?"
+A: "The plan must be established by December 31 of the tax year. Contributions can be made up to the tax filing deadline including extensions — April 15 with an October 15 extension. The establishment deadline is critical — you cannot open a new Solo 401(k) for 2025 after December 31, 2025."
+
+Q: "Can I have both a SEP-IRA and a Solo 401(k)?"
+A: "No — you cannot contribute to both a SEP-IRA and a Solo 401(k) for the same year if they are for the same self-employment activity. You choose one. If you have a W-2 job with a 401(k) and also have self-employment income, different rules apply — consult a CPA."
+
+Q: "What is the SEP-IRA contribution limit for 2025?"
+A: "The SEP-IRA limit for 2025 is the lesser of 25% of compensation or $70,000. For self-employed individuals, the effective rate is approximately 20% of net self-employment income after the SE tax deduction. The SEP is simple to set up and has no annual filing requirement until the balance exceeds $250,000."
+
+Q: "Does my retirement contribution reduce my self-employment tax?"
+A: "No. Retirement contributions reduce your income tax but do not reduce your self-employment tax. SE tax is calculated on net self-employment income before retirement contributions. Only the SE deduction (half of SE tax) and the health insurance deduction reduce the SE tax base."
+
+CTA and related calculators
+
+===================================================
+ROUTES — add all 6 to App.tsx:
+===================================================
+
+<Route path="/calculators/estimated-tax" component={lazy(() => import("./pages/calculators/estimated-tax"))} />
+<Route path="/calculators/self-employment-tax" component={lazy(() => import("./pages/calculators/self-employment-tax"))} />
+<Route path="/calculators/home-office" component={lazy(() => import("./pages/calculators/home-office"))} />
+<Route path="/calculators/mileage" component={lazy(() => import("./pages/calculators/mileage"))} />
+<Route path="/calculators/section-179" component={lazy(() => import("./pages/calculators/section-179"))} />
+<Route path="/calculators/retirement" component={lazy(() => import("./pages/calculators/retirement"))} />
+
+Keep all existing routes and files intact.

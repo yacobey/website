@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Link } from "wouter";
 import { businessConfig } from "@/lib/business-config";
+import yacobHeadshot from "@assets/yacob-headshot.png";
 
 const services = [
   {
@@ -48,14 +49,14 @@ const services = [
 ];
 
 const industries = [
-  { name: "Healthcare & Medical", desc: "Practices, clinics, therapists", href: "/industries/healthcare" },
-  { name: "Legal & Professional", desc: "Law firms, consultants, agencies", href: "/industries/legal" },
-  { name: "Real Estate", desc: "Investors, agents, property managers", href: "/industries/real-estate" },
-  { name: "Technology & SaaS", desc: "Startups, software companies", href: "/industries/technology" },
-  { name: "Retail & E-Commerce", desc: "Stores, online sellers, DTC brands", href: "/industries/retail" },
-  { name: "Construction", desc: "Contractors, builders, trades", href: "/industries/construction" },
-  { name: "Nonprofits", desc: "501(c)(3) organizations, associations", href: "/industries/nonprofit" },
-  { name: "Restaurants & Hospitality", desc: "Restaurants, cafes, event venues", href: "/industries/hospitality" },
+  { name: "Healthcare & Medical", desc: "Practices, clinics, therapists", href: "/contact" },
+  { name: "Legal & Professional", desc: "Law firms, consultants, agencies", href: "/contact" },
+  { name: "Real Estate", desc: "Investors, agents, property managers", href: "/contact" },
+  { name: "Technology & SaaS", desc: "Startups, software companies", href: "/contact" },
+  { name: "Retail & E-Commerce", desc: "Stores, online sellers, DTC brands", href: "/contact" },
+  { name: "Construction", desc: "Contractors, builders, trades", href: "/contact" },
+  { name: "Nonprofits", desc: "501(c)(3) organizations, associations", href: "/contact" },
+  { name: "Restaurants & Hospitality", desc: "Restaurants, cafes, event venues", href: "/contact" },
 ];
 
 const faqs = [
@@ -87,11 +88,8 @@ const faqs = [
 
 const calculators = [
   { name: "S-Corp Tax Savings", desc: "See how much you could save by electing S-Corp status", href: "/calculators/scorp-savings" },
-  { name: "Quarterly Estimated Tax", desc: "Calculate your Q1–Q4 estimated tax payments", href: "/calculators/estimated-tax" },
+  { name: "Quarterly Estimated Tax", desc: "Calculate your Q1–Q4 estimated payments", href: "/calculators/estimated-tax" },
   { name: "Home Office Deduction", desc: "Actual vs. simplified method comparison", href: "/calculators/home-office" },
-  { name: "Self-Employment Tax", desc: "Calculate SE tax and the deductible portion", href: "/calculators/self-employment-tax" },
-  { name: "Mileage Deduction", desc: "2025 rate: $0.70/mile — calculate your deduction", href: "/calculators/mileage" },
-  { name: "Section 179 Expensing", desc: "First-year equipment deduction calculator", href: "/calculators/section-179" },
 ];
 
 export default function Home() {
@@ -169,7 +167,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-[#0a0f1e]/70" />
         <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-32">
           <p className="text-emerald-400 text-sm font-medium tracking-widest uppercase mb-6">
-            Laurel, MD · DMV Region · All 50 States Virtual
+            Laurel, MD · Columbia · Baltimore · DC · Virginia · All 50 States Virtual
           </p>
           <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
             Your Business Is Growing.<br />
@@ -177,7 +175,7 @@ export default function Home() {
           </h1>
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl mb-10 leading-relaxed">
             Full-service CPA firm for small business owners who want more than a tax return.
-            Tax preparation, bookkeeping, fractional CFO, audit, and AI-powered advisory —
+            Tax preparation, bookkeeping, fractional CFO, audit, review &amp; compilation —
             all under one roof, built for how you actually work.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
@@ -263,7 +261,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <img
-                src="/assets/yacob-headshot.png"
+                src={yacobHeadshot}
                 alt="Yacob Tewelde, CPA, FCCA — Selam CPA"
                 className="rounded-2xl w-full object-cover max-h-[500px]"
               />
@@ -349,15 +347,11 @@ export default function Home() {
                 We built an AI-native firm.<br />
                 <span className="text-emerald-600">We can build one for you.</span>
               </h2>
-              <p className="text-gray-500 leading-relaxed mb-6">
+              <p className="text-gray-500 leading-relaxed mb-8">
                 Selam CPA runs on a custom AI system — purpose-built skills for engagement letters,
                 tax organizers, IRS notice responses, CFO reports, and more. A knowledge base with
                 3,700+ vectors of IRS and state tax guidance. Automated HubSpot CRM sync.
-                All built without a single line of code written by the CPA.
-              </p>
-              <p className="text-gray-500 leading-relaxed mb-8">
-                We help other accounting firms and bookkeepers build the same infrastructure —
-                starting at $500 for an assessment, up to a full system build with 90-day support.
+                All built without writing a single line of code.
               </p>
               <Link href="/ai-consulting">
                 <span className="inline-flex items-center px-6 py-3 bg-[#0a0f1e] text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors cursor-pointer">

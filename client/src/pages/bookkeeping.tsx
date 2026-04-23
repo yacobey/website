@@ -1,266 +1,192 @@
-import DynamicSEO from "@/components/dynamic-seo";
+import { useState } from "react";
+import { Helmet } from "react-helmet";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { CheckCircle, FileText, BarChart3, Users, ArrowRight } from "lucide-react";
-import { CPAServiceStructuredData, WebPageStructuredData } from "@/components/structured-data";
 
-const services = [
+const CALENDLY = "https://calendly.com/yber2001/30min";
+
+const whatWeDo = [
+  { title: "Transaction Categorization", desc: "Every transaction coded correctly to your chart of accounts — expenses, income, assets, and liabilities all in their proper place." },
+  { title: "Bank & Credit Card Reconciliation", desc: "Monthly reconciliation of all accounts. Nothing falls through the cracks, no phantom transactions, no unexplained variances." },
+  { title: "Monthly Financial Reports", desc: "Income statement, balance sheet, and cash flow statement — delivered monthly in plain English with a brief narrative explaining what changed and why." },
+  { title: "QuickBooks & Xero Management", desc: "We work in your existing software or set it up from scratch. QuickBooks Online, QuickBooks Desktop, and Xero all supported." },
+];
+
+const plans = [
   {
-    title: "Monthly Bookkeeping & Reconciliation",
-    description: "Complete monthly financial record maintenance with bank reconciliation",
-    icon: <BarChart3 className="w-6 h-6 text-blue-600" />,
+    tier: "Monthly Bookkeeping",
+    bestFor: "Active businesses with regular transactions",
+    includes: ["Transaction coding", "Reconciliation", "Monthly P&L and balance sheet", "CPA review of entries"],
+    turnaround: "Reports delivered by the 15th of each month",
+    featured: false,
   },
   {
-    title: "Chart of Accounts Design & Cleanup",
-    description: "Structured account organization tailored to your business needs",
-    icon: <FileText className="w-6 h-6 text-blue-600" />,
+    tier: "Quarterly Bookkeeping",
+    bestFor: "Businesses with lower transaction volume or seasonal activity",
+    includes: ["Everything in monthly, delivered quarterly", "Year-end prep included"],
+    turnaround: "Reports within 2 weeks of quarter end",
+    featured: true,
   },
   {
-    title: "General Ledger Maintenance",
-    description: "Accurate transaction recording and categorization",
-    icon: <CheckCircle className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Month-End Closing & Financial Reporting",
-    description: "Professional financial statements and management reports",
-    icon: <BarChart3 className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Accounts Payable & Receivable Tracking",
-    description: "Cash flow management and vendor/customer tracking",
-    icon: <FileText className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Payroll Journal Entries",
-    description: "Accurate payroll recording and tax compliance",
-    icon: <Users className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Client Portal Access for Uploads",
-    description: "Secure document sharing and collaboration platform",
-    icon: <CheckCircle className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Catch-Up Bookkeeping for Prior Years",
-    description: "Historical record cleanup and organization",
-    icon: <FileText className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "QuickBooks Online / Xero Integration",
-    description: "Modern cloud-based accounting system setup and management",
-    icon: <BarChart3 className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Payroll Setup & Sync (via ADP)",
-    description: "Professional payroll system integration and management",
-    icon: <Users className="w-6 h-6 text-blue-600" />,
+    tier: "Annual / Catch-Up",
+    bestFor: "Getting current before tax season or a new engagement",
+    includes: ["Full-year transaction coding", "Reconciliation", "Financial statements"],
+    turnaround: "Quoted per project",
+    featured: false,
   },
 ];
 
+const whyItMatters = [
+  { icon: "⬡", title: "Loan & Credit Applications", desc: "Lenders require accurate financial statements. Messy books mean delayed approvals or worse — declined applications." },
+  { icon: "⬡", title: "Tax Preparation", desc: "Clean books make tax prep faster and cheaper. Disorganized records mean more CPA time — which means higher fees." },
+  { icon: "⬡", title: "Business Decisions", desc: "You cannot make good decisions about hiring, pricing, or expansion without knowing your actual numbers. Clean books give you clarity." },
+];
+
+const faqs = [
+  { q: "What software do you use for bookkeeping?", a: "We primarily work in QuickBooks Online and Xero. If you use a different platform, let us know and we will discuss compatibility. We can also set up a new QuickBooks account if you are starting fresh." },
+  { q: "Do I need to send you documents every month?", a: "Most clients connect their bank and credit card accounts to QuickBooks, which automatically imports transactions. We then categorize and reconcile from there. For clients who prefer not to connect accounts, we work from monthly statements you upload to our secure portal." },
+  { q: "What if my books are a mess?", a: "That is exactly what our catch-up bookkeeping service is for. We have cleaned up books that were two or three years behind. We will give you a fixed-fee quote for the catch-up work before we begin." },
+  { q: "Do you provide bookkeeping for clients outside Maryland?", a: "Yes. All of our bookkeeping engagements are available virtually. We work with clients across all 50 states entirely through secure online collaboration." },
+];
+
+function FAQ({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border border-gray-200 rounded-xl overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex justify-between items-center p-6 text-left font-semibold text-gray-900 hover:text-emerald-600 transition-colors">
+        <span>{q}</span>
+        <span className={`text-emerald-500 ml-4 flex-shrink-0 text-xl transition-transform ${open ? "rotate-45" : ""}`}>+</span>
+      </button>
+      {open && <div className="px-6 pb-6"><p className="text-gray-500 leading-relaxed">{a}</p></div>}
+    </div>
+  );
+}
+
 export default function Bookkeeping() {
   return (
-    <div className="min-h-screen bg-white">
-      <DynamicSEO page="bookkeeping" />
-      
-      <CPAServiceStructuredData
-        serviceName="Professional Bookkeeping Services"
-        description="Complete bookkeeping solutions for every stage of your business. From startups to established companies, we maintain accurate financial records so you can focus on what you do best."
-        url="https://selamcpa.com/bookkeeping"
-        additionalData={{
-          "serviceType": ["Monthly Bookkeeping", "Financial Reporting", "QuickBooks Setup", "Payroll Services"],
-          "audience": ["Small Businesses", "Startups", "Growing Companies"],
-          "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Bookkeeping Services",
-            "itemListElement": services.map(service => ({
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": service.title,
-                "description": service.description
-              }
-            }))
-          }
-        }}
-      />
-      
-      <WebPageStructuredData
-        name="Professional Bookkeeping Services | Selam CPA"
-        description="Complete bookkeeping solutions for every stage of your business. Professional financial record maintenance and reporting services."
-        url="https://selamcpa.com/bookkeeping"
-        breadcrumbs={[
-          { name: "Home", url: "https://selamcpa.com" },
-          { name: "Bookkeeping Services", url: "https://selamcpa.com/bookkeeping" }
-        ]}
-      />
-      
+    <>
+      <Helmet>
+        <title>Bookkeeping & Accounting Services | Selam CPA — Maryland Small Business CPA</title>
+        <meta name="description" content="Monthly, quarterly, and annual bookkeeping for small businesses in Laurel MD, DMV region, and all 50 states virtually. Clean books, clear decisions. Yacob Tewelde, CPA, FCCA." />
+        <meta name="keywords" content="bookkeeping Laurel Maryland, small business bookkeeping DMV, monthly bookkeeping CPA Maryland, QuickBooks bookkeeping Maryland, accounting services small business DC Virginia" />
+        <link rel="canonical" href="https://selamcpa.com/bookkeeping" />
+      </Helmet>
       <Header />
-      
-      {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6">
-              Complete Bookkeeping Solutions for Every Stage of Your Business
-            </h1>
-            <p className="text-xl mb-8 text-blue-100">
-              Professional bookkeeping services that grow with your business. From startups to established companies, 
-              we maintain accurate financial records so you can focus on what you do best.
+
+      {/* HERO */}
+      <section className="bg-[#0a0f1e] pt-32 pb-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-emerald-400 text-sm font-medium tracking-widest uppercase mb-6">Bookkeeping &amp; Accounting</p>
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+            <span className="text-white">Clean books.</span><br />
+            <span className="text-emerald-400">Clear decisions.</span>
+          </h1>
+          <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            Monthly, quarterly, or annual bookkeeping for small businesses that want accurate records,
+            timely reports, and a CPA who actually understands what the numbers mean.
+          </p>
+          <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold rounded-lg transition-colors">
+            Book a Free Consultation →
+          </a>
+          <p className="text-gray-500 text-sm mt-4">Serving Laurel MD · Columbia MD · Baltimore · DC · Virginia · All 50 States Virtually</p>
+        </div>
+      </section>
+
+      {/* WHAT WE DO */}
+      <section className="py-24 bg-white px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Bookkeeping that goes beyond data entry</h2>
+            <p className="text-gray-500 text-lg max-w-2xl leading-relaxed">
+              Most bookkeeping services categorize transactions and call it done.
+              We treat your books as the foundation for every financial decision you make —
+              which means accuracy matters, but so does context.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://calendly.com/yber2001/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
-              >
-                Get Free Bookkeeping Consultation
-              </a>
-              <a
-                href="/payment"
-                className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
-              >
-                Start Monthly Service
-              </a>
-            </div>
           </div>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Comprehensive Bookkeeping Services
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Our full-service bookkeeping solutions ensure your financial records are accurate, 
-                compliant, and provide the insights you need to make informed business decisions.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow"
-                >
-                  <div className="flex items-center mb-4">
-                    {service.icon}
-                    <h3 className="text-lg font-semibold text-gray-900 ml-3">{service.title}</h3>
-                  </div>
-                  <p className="text-gray-600">{service.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Partner Integration */}
-      <section className="py-16 bg-gradient-to-br from-green-50 to-blue-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Seamless Payroll Integration
-              </h3>
-              <p className="text-lg text-gray-600 mb-6">
-                We partner with ADP to provide comprehensive payroll solutions that integrate 
-                seamlessly with your bookkeeping. From setup to ongoing management, we handle it all.
-              </p>
-              <a
-                href="https://calendly.com/yber2001/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors inline-flex items-center gap-2"
-              >
-                Partner with ADP Payroll
-                <ArrowRight className="w-5 h-5" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Why Choose Selam CPA for Bookkeeping?
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">CPA-Quality Standards</h3>
-                <p className="text-gray-600">
-                  Every transaction reviewed by certified professionals with 20+ years of experience
-                </p>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {whatWeDo.map((item) => (
+              <div key={item.title} className="border border-gray-200 rounded-xl p-6 hover:border-emerald-400 hover:shadow-md transition-all">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 mb-4" />
+                <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
               </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BarChart3 className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Real-Time Insights</h3>
-                <p className="text-gray-600">
-                  Monthly reports and dashboard access for up-to-date financial visibility
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Dedicated Support</h3>
-                <p className="text-gray-600">
-                  Direct access to your bookkeeping team with responsive communication
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-600 text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">
-              Ready to Streamline Your Bookkeeping?
-            </h2>
-            <p className="text-xl mb-8 text-blue-100">
-              Let our experienced team handle your financial records while you focus on growing your business.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://calendly.com/yber2001/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
-              >
-                Schedule Free Consultation
-              </a>
-              <a
-                href="/payment"
-                className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
-              >
-                Start Service Today
-              </a>
-            </div>
+      {/* ENGAGEMENT OPTIONS */}
+      <section className="py-24 bg-gray-50 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 mb-16">Choose the level of support you need</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {plans.map((plan) => (
+              <div key={plan.tier} className={`rounded-2xl p-8 flex flex-col ${plan.featured ? "border-2 border-emerald-500 bg-white shadow-lg" : "border border-gray-200 bg-white"}`}>
+                <h3 className={`text-xl font-bold mb-2 ${plan.featured ? "text-emerald-600" : "text-gray-900"}`}>{plan.tier}</h3>
+                <p className="text-gray-500 text-sm mb-4"><span className="font-medium text-gray-700">Best for:</span> {plan.bestFor}</p>
+                <ul className="space-y-2 mb-4 flex-1">
+                  {plan.includes.map((item) => (
+                    <li key={item} className="flex gap-2 text-sm text-gray-600">
+                      <span className="text-emerald-500 flex-shrink-0">✓</span>{item}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-gray-400 text-xs mb-6"><span className="font-medium">Turnaround:</span> {plan.turnaround}</p>
+                <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold text-sm transition-colors ${plan.featured ? "bg-emerald-500 hover:bg-emerald-400 text-white" : "border border-gray-300 text-gray-700 hover:border-emerald-400 hover:text-emerald-600"}`}>
+                  Get a Quote →
+                </a>
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* WHY IT MATTERS */}
+      <section className="py-24 bg-[#0a0f1e] px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-white mb-16">Why your books matter beyond tax season</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {whyItMatters.map((item) => (
+              <div key={item.title}>
+                <div className="w-8 h-8 rounded-full border border-emerald-500/40 flex items-center justify-center mb-4">
+                  <span className="text-emerald-400 text-xs">✓</span>
+                </div>
+                <h3 className="text-white font-semibold text-lg mb-2">{item.title}</h3>
+                <p className="text-gray-400 leading-relaxed text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-24 bg-white px-6">
+        <div className="max-w-3xl mx-auto">
+          <div className="mb-16 text-center">
+            <p className="text-emerald-600 text-sm font-medium tracking-widest uppercase mb-3">FAQ</p>
+            <h2 className="text-4xl font-bold text-gray-900">Common Questions</h2>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((faq) => <FAQ key={faq.q} q={faq.q} a={faq.a} />)}
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="py-24 bg-[#0a0f1e] px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Let's get your books in order.</h2>
+          <p className="text-gray-400 text-lg mb-10 leading-relaxed">
+            Book a free 30-minute call. We will review your current situation and give you a fixed-fee quote.
+          </p>
+          <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-10 py-5 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-lg rounded-lg transition-colors">
+            Book a Free Consultation →
+          </a>
+          <p className="text-gray-500 text-sm mt-6">Serving Laurel MD · Columbia MD · Baltimore · Washington DC · Northern Virginia · All 50 States Virtually</p>
         </div>
       </section>
 
       <Footer />
-    </div>
+    </>
   );
 }

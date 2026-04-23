@@ -1,0 +1,329 @@
+Create 4 new service page files. Each file goes in client/src/pages/.
+After creating all 4 files, add all 4 routes to App.tsx.
+
+Match the existing site design exactly: dark navy #0a0f1e for hero 
+and dark sections, emerald #10b981 accents, white text on dark, 
+gray-900 on white sections, Tailwind CSS throughout.
+
+===================================================
+FILE 1: client/src/pages/tax.tsx
+Route: /tax
+===================================================
+
+Title: "Tax Preparation & Tax Planning | Selam CPA — Maryland CPA Serving DMV & Nationwide"
+Description: "Professional tax preparation for individuals, S-Corps, LLCs, and partnerships in Laurel MD, DMV region, and all 50 states virtually. Yacob Tewelde, CPA, FCCA."
+Keywords: "tax preparation Laurel Maryland, CPA tax preparation DMV, S-Corp tax Maryland, LLC tax preparation DC Virginia, tax planning small business Maryland"
+Canonical: https://selamcpa.com/tax
+
+HERO — dark navy, centered:
+Label: "TAX PREPARATION & PLANNING" emerald
+H1: "Your taxes done right." white, "Your tax burden reduced." emerald
+Subhead: "Federal and state returns for individuals, S-Corps, LLCs, 
+partnerships, and C-Corps — prepared accurately, filed on time, 
+and planned strategically so next year is better than this one."
+Button: "Book a Free Consultation →" emerald, links to calendly
+Small text: "Serving Laurel MD · Columbia MD · Baltimore · DC · Virginia · All 50 States Virtually"
+
+SERVICES INCLUDED — white background:
+H2: "What's included in every tax engagement"
+6 cards:
+- "Individual Returns (Form 1040)" / "Federal and state returns for W-2 employees, self-employed individuals, investors, and retirees. All schedules included."
+- "S-Corporation (Form 1120-S)" / "S-Corp returns with Schedule K-1 preparation for all shareholders. Reasonable compensation review included."
+- "LLC & Partnership (Form 1065)" / "Multi-member LLC and partnership returns with K-1s for all partners. Basis tracking available."
+- "C-Corporation (Form 1120)" / "Corporate returns for C-Corps of all sizes. Dividends, retained earnings, and NOL carryforward management."
+- "Tax Planning & Strategy" / "Year-round planning — S-Corp elections, entity selection, retirement contributions, estimated taxes, and multi-year projections."
+- "IRS & State Notice Response" / "Received a notice? We draft responses to CP2000, audit letters, balance-due notices, and more. Representation available separately."
+
+WHO WE SERVE — light gray:
+H2: "Who we prepare taxes for"
+4 columns:
+- "Individuals & Families" / "W-2 earners, retirees, investors, rental property owners, and anyone with a complex return."
+- "Small Business Owners" / "Sole proprietors, single-member LLCs, S-Corps, and partnerships — we know your forms."
+- "Self-Employed & Freelancers" / "Schedule C, SE tax, quarterly estimates, home office, vehicle — we handle it all."
+- "Multi-State Filers" / "Work in multiple states? Live in Maryland but work in DC? We handle multi-state returns regularly."
+
+KEY DATES — dark navy background:
+H2: "2025 Tax Filing Deadlines" white
+Show a clean table with these rows (white text, emerald accents):
+- "Individual (Form 1040)" | "April 15, 2026" | "Extended: October 15, 2026"
+- "S-Corporation (Form 1120-S)" | "March 15, 2026" | "Extended: September 15, 2026"
+- "Partnership (Form 1065)" | "March 15, 2026" | "Extended: September 15, 2026"
+- "C-Corporation (Form 1120)" | "April 15, 2026" | "Extended: October 15, 2026"
+- "Estimated Tax (Q1 2026)" | "April 15, 2026" | "—"
+Small text below: "Extensions extend the filing deadline, not the payment deadline. 
+Taxes owed are due by the original deadline regardless of extension."
+
+FAQ — white, accordion:
+Q: "How do I send you my tax documents?"
+A: "We use a secure client portal for document exchange. Once your engagement is confirmed, you will receive a link to upload your documents. We also accept documents via encrypted email or in person at our Laurel, MD office."
+
+Q: "Do you prepare taxes for clients outside Maryland?"
+A: "Yes. We prepare federal and state returns for clients in all 50 states virtually. Most of our workflow is designed for remote collaboration — document upload, secure review, and e-signature — so location is not a barrier."
+
+Q: "What if I receive an IRS notice after my return is filed?"
+A: "If we prepared your return and you receive a notice related to our work, we will respond at no additional charge for simple correspondence. Complex audit representation is available as a separate engagement."
+
+Q: "Can you help me reduce what I owe next year?"
+A: "Yes — that is what tax planning is for. We offer year-round planning engagements that focus on reducing your tax liability through legal strategies: entity structure, retirement contributions, timing of income and deductions, and more."
+
+Q: "What is your fee for tax preparation?"
+A: "Fees depend on the complexity of your return. Individual returns start at $350. S-Corp returns (Form 1120-S) start at $800. We provide a fixed-fee quote before beginning any work — no surprises."
+
+FINAL CTA — dark navy:
+H2: "Ready to get your taxes off your plate?" white
+Body: "Book a free 30-minute call. We'll review your situation and give you a fixed-fee quote before any work begins."
+Button: "Book a Free Consultation →" emerald, calendly link
+Small text: "Serving Laurel MD · Columbia MD · Baltimore · Washington DC · Northern Virginia · All 50 States Virtually"
+
+===================================================
+FILE 2: client/src/pages/bookkeeping.tsx
+Route: /bookkeeping
+===================================================
+
+Title: "Bookkeeping & Accounting Services | Selam CPA — Maryland Small Business CPA"
+Description: "Monthly, quarterly, and annual bookkeeping for small businesses in Laurel MD, DMV region, and all 50 states virtually. Clean books, clear decisions. Yacob Tewelde, CPA, FCCA."
+Keywords: "bookkeeping Laurel Maryland, small business bookkeeping DMV, monthly bookkeeping CPA Maryland, QuickBooks bookkeeping Maryland, accounting services small business DC Virginia"
+Canonical: https://selamcpa.com/bookkeeping
+
+HERO — dark navy, centered:
+Label: "BOOKKEEPING & ACCOUNTING" emerald
+H1: "Clean books." white, "Clear decisions." emerald
+Subhead: "Monthly, quarterly, or annual bookkeeping for small businesses 
+that want accurate records, timely reports, and a CPA who actually 
+understands what the numbers mean."
+Button: "Book a Free Consultation →" emerald, calendly
+Small text: "Serving Laurel MD · Columbia MD · Baltimore · DC · Virginia · All 50 States Virtually"
+
+WHAT WE DO — white:
+H2: "Bookkeeping that goes beyond data entry"
+Body: "Most bookkeeping services categorize transactions and call it done. 
+We treat your books as the foundation for every financial decision you make — 
+which means accuracy matters, but so does context."
+4 cards:
+- "Transaction Categorization" / "Every transaction coded correctly to your chart of accounts — expenses, income, assets, and liabilities all in their proper place."
+- "Bank & Credit Card Reconciliation" / "Monthly reconciliation of all accounts. Nothing falls through the cracks, no phantom transactions, no unexplained variances."
+- "Monthly Financial Reports" / "Income statement, balance sheet, and cash flow statement — delivered monthly in plain English with a brief narrative explaining what changed and why."
+- "QuickBooks & Xero Management" / "We work in your existing software or set it up from scratch. QuickBooks Online, QuickBooks Desktop, and Xero all supported."
+
+ENGAGEMENT OPTIONS — light gray:
+H2: "Choose the level of support you need"
+3 cards:
+Card 1: "Monthly Bookkeeping"
+- Best for: Active businesses with regular transactions
+- Includes: Transaction coding, reconciliation, monthly P&L and balance sheet, CPA review of entries
+- Turnaround: Reports delivered by the 15th of each month
+- CTA: "Get a Quote →" links to calendly
+
+Card 2: "Quarterly Bookkeeping" — featured with emerald border
+- Best for: Businesses with lower transaction volume or seasonal activity
+- Includes: Everything in monthly, delivered quarterly, with year-end prep included
+- Turnaround: Reports within 2 weeks of quarter end
+- CTA: "Get a Quote →" links to calendly
+
+Card 3: "Annual / Catch-Up"
+- Best for: Getting current before tax season or a new engagement
+- Includes: Full-year transaction coding, reconciliation, and financial statements
+- Turnaround: Quoted per project
+- CTA: "Get a Quote →" links to calendly
+
+WHY IT MATTERS — dark navy:
+H2: "Why your books matter beyond tax season" white
+3 columns with emerald icons (use simple text symbols):
+- "Loan & Credit Applications" / "Lenders require accurate financial statements. Messy books mean delayed approvals or worse — declined applications."
+- "Tax Preparation" / "Clean books make tax prep faster and cheaper. Disorganized records mean more CPA time — which means higher fees."
+- "Business Decisions" / "You cannot make good decisions about hiring, pricing, or expansion without knowing your actual numbers. Clean books give you clarity."
+
+FAQ — white:
+Q: "What software do you use for bookkeeping?"
+A: "We primarily work in QuickBooks Online and Xero. If you use a different platform, let us know and we will discuss compatibility. We can also set up a new QuickBooks account if you are starting fresh."
+
+Q: "Do I need to send you documents every month?"
+A: "Most clients connect their bank and credit card accounts to QuickBooks, which automatically imports transactions. We then categorize and reconcile from there. For clients who prefer not to connect accounts, we work from monthly statements you upload to our secure portal."
+
+Q: "What if my books are a mess?"
+A: "That is exactly what our catch-up bookkeeping service is for. We have cleaned up books that were two or three years behind. We will give you a fixed-fee quote for the catch-up work before we begin."
+
+Q: "Do you provide bookkeeping for clients outside Maryland?"
+A: "Yes. All of our bookkeeping engagements are available virtually. We work with clients across all 50 states entirely through secure online collaboration."
+
+FINAL CTA — dark navy:
+H2: "Let's get your books in order." white
+Body: "Book a free 30-minute call. We will review your current situation and give you a fixed-fee quote."
+Button: "Book a Free Consultation →" emerald, calendly
+Small text: "Serving Laurel MD · Columbia MD · Baltimore · Washington DC · Northern Virginia · All 50 States Virtually"
+
+===================================================
+FILE 3: client/src/pages/advisory.tsx  
+Route: /advisory
+===================================================
+
+Title: "Fractional CFO & Tax Advisory Services | Selam CPA — Maryland Small Business CFO"
+Description: "Fractional CFO services for small businesses in Maryland and nationwide. Cash flow forecasting, KPI dashboards, tax strategy, and CFO-level advisory at a fraction of the cost."
+Keywords: "fractional CFO Maryland, fractional CFO small business DMV, outsourced CFO Maryland, tax advisory Maryland, tax strategy small business, CFO services Laurel MD"
+Canonical: https://selamcpa.com/advisory
+
+HERO — dark navy, centered:
+Label: "FRACTIONAL CFO & TAX ADVISORY" emerald
+H1: "CFO-level thinking." white, "Without the CFO salary." emerald
+Subhead: "Strategic financial leadership for small businesses that are 
+growing beyond the limits of basic bookkeeping but aren't ready — 
+or don't need — a full-time CFO."
+Button: "Book a Free Consultation →" emerald, calendly
+Small text: "Serving Laurel MD · Columbia MD · Baltimore · DC · Virginia · All 50 States Virtually"
+
+WHAT A FRACTIONAL CFO DOES — white:
+H2: "What we do as your Fractional CFO"
+Intro: "A full-time CFO costs $150,000–$300,000 per year. A Fractional CFO 
+gives you the same strategic thinking on a part-time basis — typically 
+for a fraction of that cost."
+6 cards:
+- "Cash Flow Forecasting" / "12-month rolling cash flow model updated monthly. Know what's coming before it arrives — not after."
+- "Budget vs. Actual Analysis" / "Monthly comparison of actual results against budget. Variance explained in plain English, action items identified."
+- "KPI Dashboard" / "3–6 key performance indicators tracked monthly — specific to your business, not generic accounting metrics."
+- "Management Reports" / "Monthly narrative report explaining what happened, why it matters, and what to do about it. Written for a business owner, not an accountant."
+- "Tax Strategy Coordination" / "Fractional CFO and tax planning working together — timing of income and expenses, entity structure, distributions, and year-end decisions coordinated proactively."
+- "Strategic Advisory" / "Pricing decisions, hiring analysis, expansion planning, loan evaluation — financial clarity on the decisions that matter most."
+
+IS THIS RIGHT FOR YOU — light gray:
+H2: "Is a Fractional CFO right for your business?"
+Body: "Most small businesses need Fractional CFO services when they hit one of these inflection points:"
+Show 6 trigger points as a simple list with emerald checkmarks:
+✓ Revenue above $500K and growing fast
+✓ Making major decisions (hiring, expansion, equipment) without financial clarity
+✓ Cash flow is unpredictable — good months and bad months with no clear pattern
+✓ Preparing to seek a loan, line of credit, or outside investment
+✓ Tax bill surprises you every year — no planning, just reaction
+✓ Your bookkeeper gives you reports but cannot tell you what they mean
+
+TAX ADVISORY — dark navy:
+H2: "Tax Strategy & Advisory" white
+Body: "Tax planning is not a once-a-year conversation. It is an ongoing 
+strategy that compounds over time — and the earlier in the year you 
+start, the more options you have." gray-300
+4 strategy cards with emerald left border:
+- "S-Corp Election Analysis" / "Is S-Corp status right for your LLC? We run the numbers, assess the administrative cost, and give you a definitive recommendation."
+- "Entity Structure Review" / "Sole prop, LLC, S-Corp, C-Corp — the right structure depends on your income, goals, and risk tolerance. We review yours annually."
+- "Retirement Plan Strategy" / "SEP-IRA, Solo 401(k), SIMPLE IRA — the right plan depends on your income and whether you have employees. We help you choose and implement."
+- "Year-End Tax Planning" / "October through December is when most tax-saving moves must be made. We plan proactively so you're not scrambling in April."
+
+FAQ — white:
+Q: "How is a Fractional CFO different from a bookkeeper?"
+A: "A bookkeeper records what happened. A CFO tells you what it means and what to do about it. Bookkeeping is historical. CFO work is forward-looking — forecasting, planning, and strategic advice."
+
+Q: "How much does Fractional CFO service cost?"
+A: "Fractional CFO engagements are priced based on scope and frequency of deliverables. Most small business engagements range from $800 to $2,500 per month. We provide a fixed-fee proposal before beginning any work."
+
+Q: "Do I need bookkeeping in place before starting a CFO engagement?"
+A: "Yes. CFO work requires accurate financial data. If your books are not current, we will recommend a catch-up bookkeeping engagement first — or we can provide both services together."
+
+Q: "Can you help me prepare for a bank loan?"
+A: "Yes. We prepare loan packages including financial statements, projections, and narrative summaries that lenders require. We also review your financials before submission to identify and address any red flags."
+
+FINAL CTA — dark navy:
+H2: "Ready for a financial strategy, not just a tax return?" white
+Body: "Book a free 30-minute call. We will tell you whether Fractional CFO services make sense for your stage of growth."
+Button: "Book a Free Consultation →" emerald, calendly
+Small text: "Serving Laurel MD · Columbia MD · Baltimore · Washington DC · Northern Virginia · All 50 States Virtually"
+
+===================================================
+FILE 4: client/src/pages/audit.tsx
+Route: /audit
+===================================================
+
+Title: "Audit, Review & Compilation Services | Selam CPA — Maryland CPA SSARS"
+Description: "SSARS-compliant audit, review, and compilation engagements for small businesses in Maryland, DC, Virginia, and nationwide. Yacob Tewelde, CPA, FCCA."
+Keywords: "audit CPA Maryland, financial statement review Maryland, compilation engagement Maryland CPA, SSARS Maryland, audit small business DMV, review engagement Maryland"
+Canonical: https://selamcpa.com/audit
+
+HERO — dark navy, centered:
+Label: "AUDIT, REVIEW & COMPILATION" emerald
+H1: "Financial statements your" white, "lenders and investors trust." emerald
+Subhead: "SSARS-compliant audit, review, and compilation engagements 
+for small businesses that need credible financial statements — 
+for lenders, investors, regulators, or internal purposes."
+Button: "Book a Free Consultation →" emerald, calendly
+Small text: "Serving Laurel MD · Columbia MD · Baltimore · DC · Virginia · All 50 States Virtually"
+
+THREE LEVELS — white:
+H2: "Three levels of assurance — which do you need?"
+Intro: "The right engagement depends on what your lender, investor, 
+or regulator requires. Here is a plain-English explanation of each."
+3 cards side by side with clear differentiation:
+
+Card 1: "Compilation"
+Badge: "Lowest Cost"
+Body: "We present your financial information in the form of financial 
+statements based on data you provide — without verifying it or 
+providing any assurance. Required by some lenders and most 
+SBA loan applications."
+Best for: "SBA loans, internal reporting, small lender requirements"
+What we do: "Format your financial data into GAAP-compliant statements, issue a compilation report under SSARS No. 21"
+CTA: "Get a Quote →" calendly
+
+Card 2: "Review" — featured emerald border
+Badge: "Most Common"
+Body: "We perform analytical procedures and make inquiries of management 
+to provide limited assurance that no material modifications are needed. 
+More credible than a compilation — required by most conventional lenders."
+Best for: "Bank loans, lines of credit, SBA 7(a), investor reporting"
+What we do: "Analytical procedures, management inquiries, limited assurance report under SSARS No. 21"
+CTA: "Get a Quote →" calendly
+
+Card 3: "Audit"
+Badge: "Highest Assurance"
+Body: "We independently verify your financial statements through testing, 
+confirmation, and evidence-gathering to provide reasonable assurance 
+that statements are free from material misstatement."
+Best for: "Government contracts, grant compliance, large lenders, private equity"
+What we do: "Full audit procedures, internal controls assessment, audit opinion under GAAS"
+CTA: "Get a Quote →" calendly
+
+PROCESS — light gray:
+H2: "What to expect from an engagement"
+4 steps:
+Step 1: "Initial Consultation" / "We discuss your purpose — why you need the engagement, who will rely on the statements, and what level of assurance is required."
+Step 2: "Engagement Letter" / "We issue a formal engagement letter defining scope, timeline, fees, and responsibilities before any work begins."
+Step 3: "Fieldwork" / "We gather information, review your records, and perform the procedures required for the engagement level."
+Step 4: "Report Issuance" / "We issue the appropriate report — compilation, review, or audit opinion — along with your financial statements."
+
+IMPORTANT NOTES — dark navy:
+H2: "Important notes about attest engagements" white
+3 points as simple paragraphs with emerald left borders:
+- "Independence is required for review and audit engagements. We cannot perform a review or audit on financials we prepared as part of a bookkeeping engagement without appropriate safeguards. We will discuss this during your consultation."
+- "Peer review. Selam CPA is subject to peer review requirements for firms that perform attest services. Our peer review status is available upon request."
+- "Timing matters. Audit and review engagements take time. If you have a lender deadline, contact us as early as possible — rush engagements may not be possible."
+
+FAQ — white:
+Q: "What is the difference between a review and a compilation?"
+A: "A compilation presents your financial data in statement form without any verification or assurance. A review goes further — we perform analytical procedures and inquiries and provide limited assurance that no material modifications are needed. Most lenders require at minimum a review."
+
+Q: "My lender is asking for reviewed financial statements. How long will this take?"
+A: "A review engagement for a small business typically takes two to four weeks from the time we receive all necessary information. If you have a deadline, tell us upfront and we will let you know if it is achievable."
+
+Q: "Can you audit a nonprofit organization?"
+A: "Yes. We perform audits for nonprofit organizations including 501(c)(3) public charities, associations, and grant-funded organizations. Nonprofit audits have specific requirements under Uniform Guidance if you receive federal funding — we are familiar with those requirements."
+
+Q: "Do I need an audit or will a review suffice?"
+A: "This depends entirely on what the requesting party requires. Audits are generally required for government contracts, federal grant compliance (Uniform Guidance), and some larger lender relationships. For most small business bank loans and lines of credit, a review is sufficient. Ask your lender what they require before contacting us."
+
+Q: "What does a compilation or review cost?"
+A: "Compilations for small businesses typically range from $500 to $1,500. Reviews range from $1,500 to $4,000. Audits start at $4,000 and increase with complexity. We provide a fixed-fee quote after an initial consultation."
+
+FINAL CTA — dark navy:
+H2: "Need credible financial statements?" white
+Body: "Book a free consultation. We will tell you exactly which engagement you need, what it will cost, and how long it will take."
+Button: "Book a Free Consultation →" emerald, calendly
+Small text: "Serving Laurel MD · Columbia MD · Baltimore · Washington DC · Northern Virginia · All 50 States Virtually"
+
+===================================================
+ROUTES — add all 4 to App.tsx:
+===================================================
+
+<Route path="/tax" component={lazy(() => import("./pages/tax"))} />
+<Route path="/bookkeeping" component={lazy(() => import("./pages/bookkeeping"))} />
+<Route path="/advisory" component={lazy(() => import("./pages/advisory"))} />
+<Route path="/audit" component={lazy(() => import("./pages/audit"))} />
+
+Note: /advisory and /audit routes may already exist from previous sessions.
+If so, replace the existing page content rather than creating duplicate routes.
+Keep all other existing routes and files intact.

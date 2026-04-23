@@ -1,485 +1,191 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { Shield, FileCheck, Search, Award, Users, Building } from "lucide-react";
-import { CPAServiceStructuredData, WebPageStructuredData } from "@/components/structured-data";
 
-const services = [
+const CALENDLY = "https://calendly.com/yber2001/30min";
+
+const levels = [
   {
-    title: "GAAP-Based Financial Statement Audits",
-    description: "Independent audits following Generally Accepted Auditing Standards for maximum credibility",
-    icon: <Shield className="w-6 h-6 text-blue-600" />,
+    tier: "Compilation",
+    badge: "Lowest Cost",
+    body: "We present your financial information in the form of financial statements based on data you provide — without verifying it or providing any assurance. Required by some lenders and most SBA loan applications.",
+    bestFor: "SBA loans, internal reporting, small lender requirements",
+    whatWeDo: "Format your financial data into GAAP-compliant statements, issue a compilation report under SSARS No. 21",
+    featured: false,
   },
   {
-    title: "Single Audits (2 CFR Part 200 / Uniform Guidance)",
-    description: "Federal grant compliance audits for organizations receiving federal funding",
-    icon: <FileCheck className="w-6 h-6 text-blue-600" />,
+    tier: "Review",
+    badge: "Most Common",
+    body: "We perform analytical procedures and make inquiries of management to provide limited assurance that no material modifications are needed. More credible than a compilation — required by most conventional lenders.",
+    bestFor: "Bank loans, lines of credit, SBA 7(a), investor reporting",
+    whatWeDo: "Analytical procedures, management inquiries, limited assurance report under SSARS No. 21",
+    featured: true,
   },
   {
-    title: "Nonprofit & Government Audit Engagements",
-    description: "Specialized audit services for nonprofits, municipalities, and government entities",
-    icon: <Building className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Reviews & Compilations",
-    description: "Limited assurance engagements for smaller organizations and specific requirements",
-    icon: <Search className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Audit Readiness Assessment",
-    description: "Internal controls review and general ledger assessment to prepare for audits",
-    icon: <Award className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Employee Benefit Plan Audits",
-    description: "401(k), 403(b), and other employee benefit plan audit services",
-    icon: <Users className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Risk Assessment & Internal Audit Support",
-    description: "Internal control evaluation and risk management advisory services",
-    icon: <Shield className="w-6 h-6 text-blue-600" />,
-  },
-  {
-    title: "Yellow Book & Program-Specific Performance Audits",
-    description: "Government auditing standards compliance and program effectiveness audits",
-    icon: <FileCheck className="w-6 h-6 text-blue-600" />,
+    tier: "Audit",
+    badge: "Highest Assurance",
+    body: "We independently verify your financial statements through testing, confirmation, and evidence-gathering to provide reasonable assurance that statements are free from material misstatement.",
+    bestFor: "Government contracts, grant compliance, large lenders, private equity",
+    whatWeDo: "Full audit procedures, internal controls assessment, audit opinion under GAAS",
+    featured: false,
   },
 ];
 
-const auditTypes = [
-  {
-    type: "Financial Statement Audits",
-    description: "Independent examination of financial statements",
-    when: "Required by lenders, investors, or regulatory bodies",
-  },
-  {
-    type: "Compliance Audits",
-    description: "Verification of adherence to laws and regulations",
-    when: "Federal grants, government contracts, or industry requirements",
-  },
-  {
-    type: "Internal Control Audits",
-    description: "Assessment of internal control effectiveness",
-    when: "Risk management and operational improvement needs",
-  },
+const steps = [
+  { n: "01", title: "Initial Consultation", desc: "We discuss your purpose — why you need the engagement, who will rely on the statements, and what level of assurance is required." },
+  { n: "02", title: "Engagement Letter", desc: "We issue a formal engagement letter defining scope, timeline, fees, and responsibilities before any work begins." },
+  { n: "03", title: "Fieldwork", desc: "We gather information, review your records, and perform the procedures required for the engagement level." },
+  { n: "04", title: "Report Issuance", desc: "We issue the appropriate report — compilation, review, or audit opinion — along with your financial statements." },
 ];
+
+const importantNotes = [
+  "Independence is required for review and audit engagements. We cannot perform a review or audit on financials we prepared as part of a bookkeeping engagement without appropriate safeguards. We will discuss this during your consultation.",
+  "Peer review. Selam CPA is subject to peer review requirements for firms that perform attest services. Our peer review status is available upon request.",
+  "Timing matters. Audit and review engagements take time. If you have a lender deadline, contact us as early as possible — rush engagements may not be possible.",
+];
+
+const faqs = [
+  { q: "What is the difference between a review and a compilation?", a: "A compilation presents your financial data in statement form without any verification or assurance. A review goes further — we perform analytical procedures and inquiries and provide limited assurance that no material modifications are needed. Most lenders require at minimum a review." },
+  { q: "My lender is asking for reviewed financial statements. How long will this take?", a: "A review engagement for a small business typically takes two to four weeks from the time we receive all necessary information. If you have a deadline, tell us upfront and we will let you know if it is achievable." },
+  { q: "Can you audit a nonprofit organization?", a: "Yes. We perform audits for nonprofit organizations including 501(c)(3) public charities, associations, and grant-funded organizations. Nonprofit audits have specific requirements under Uniform Guidance if you receive federal funding — we are familiar with those requirements." },
+  { q: "Do I need an audit or will a review suffice?", a: "This depends entirely on what the requesting party requires. Audits are generally required for government contracts, federal grant compliance (Uniform Guidance), and some larger lender relationships. For most small business bank loans and lines of credit, a review is sufficient. Ask your lender what they require before contacting us." },
+  { q: "What does a compilation or review cost?", a: "Compilations for small businesses typically range from $500 to $1,500. Reviews range from $1,500 to $4,000. Audits start at $4,000 and increase with complexity. We provide a fixed-fee quote after an initial consultation." },
+];
+
+function FAQ({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border border-gray-200 rounded-xl overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex justify-between items-center p-6 text-left font-semibold text-gray-900 hover:text-emerald-600 transition-colors">
+        <span>{q}</span>
+        <span className={`text-emerald-500 ml-4 flex-shrink-0 text-xl transition-transform ${open ? "rotate-45" : ""}`}>+</span>
+      </button>
+      {open && <div className="px-6 pb-6"><p className="text-gray-500 leading-relaxed">{a}</p></div>}
+    </div>
+  );
+}
 
 export default function Audit() {
   return (
-    <div className="min-h-screen bg-white">
+    <>
       <Helmet>
-        <title>Professional Audit Services - Financial Statement Audits | Selam CPA</title>
-        <meta name="description" content="Independent audit and assurance services following GAAS standards. Financial statement audits, compliance audits, reviews, and compilations for businesses and nonprofits." />
-        <meta name="keywords" content="audit services, financial statement audit, GAAS, compliance audit, review and compilation, nonprofit audit, government audit" />
+        <title>Audit, Review & Compilation Services | Selam CPA — Maryland CPA SSARS</title>
+        <meta name="description" content="SSARS-compliant audit, review, and compilation engagements for small businesses in Maryland, DC, Virginia, and nationwide. Yacob Tewelde, CPA, FCCA." />
+        <meta name="keywords" content="audit CPA Maryland, financial statement review Maryland, compilation engagement Maryland CPA, SSARS Maryland, audit small business DMV, review engagement Maryland" />
         <link rel="canonical" href="https://selamcpa.com/audit" />
-        <meta property="og:title" content="Professional Audit Services - Financial Statement Audits | Selam CPA" />
-        <meta property="og:description" content="Independent audit and assurance services following GAAS standards. Providing stakeholders confidence in financial reporting." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://selamcpa.com/audit" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Professional Audit Services | Selam CPA" />
-        <meta name="twitter:description" content="Independent audit and assurance services following GAAS standards for businesses and nonprofits." />
       </Helmet>
-      
-      <CPAServiceStructuredData
-        serviceName="Professional Audit & Assurance Services"
-        description="Independent audit and assurance services following GAAS standards. Professional audit services that provide stakeholders with confidence in your financial reporting."
-        url="https://selamcpa.com/audit"
-        additionalData={{
-          "serviceType": ["Financial Statement Audits", "Compliance Audits", "Nonprofit Audits", "Government Audits"],
-          "audience": ["Nonprofits", "Government Entities", "Businesses", "Employee Benefit Plans"],
-          "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Audit Services",
-            "itemListElement": services.map(service => ({
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": service.title,
-                "description": service.description
-              }
-            }))
-          }
-        }}
-      />
-      
-      <WebPageStructuredData
-        name="Professional Audit & Assurance Services | Selam CPA"
-        description="Independent audit and assurance services following GAAS standards. Providing stakeholders confidence in financial reporting."
-        url="https://selamcpa.com/audit"
-        breadcrumbs={[
-          { name: "Home", url: "https://selamcpa.com" },
-          { name: "Audit Services", url: "https://selamcpa.com/audit" }
-        ]}
-      />
-      
       <Header />
-      
-      {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6">
-              Independent Audit & Assurance Services Built on GAAS & Trust
-            </h1>
-            <p className="text-xl mb-8 text-blue-100">
-              Professional audit services that provide stakeholders with confidence in your financial reporting. 
-              Our experienced team follows the highest standards of independence and professional skepticism.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://calendly.com/yber2001/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
-              >
-                Schedule Audit Consultation
-              </a>
-              <a
-                href="#audit-readiness"
-                className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
-              >
-                Audit Readiness Assessment
-              </a>
-            </div>
-          </div>
+
+      {/* HERO */}
+      <section className="bg-[#0a0f1e] pt-32 pb-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-emerald-400 text-sm font-medium tracking-widest uppercase mb-6">Audit, Review &amp; Compilation</p>
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+            <span className="text-white">Financial statements your</span><br />
+            <span className="text-emerald-400">lenders and investors trust.</span>
+          </h1>
+          <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            SSARS-compliant audit, review, and compilation engagements for small businesses that need
+            credible financial statements — for lenders, investors, regulators, or internal purposes.
+          </p>
+          <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold rounded-lg transition-colors">
+            Book a Free Consultation →
+          </a>
+          <p className="text-gray-500 text-sm mt-4">Serving Laurel MD · Columbia MD · Baltimore · DC · Virginia · All 50 States Virtually</p>
         </div>
       </section>
 
-      {/* Audit Types Overview */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Types of Audit Engagements
-              </h2>
-              <p className="text-xl text-gray-600">
-                Understanding which audit service you need and when
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {auditTypes.map((audit, index) => (
-                <div key={index} className="bg-white p-6 rounded-lg shadow-lg">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{audit.type}</h3>
-                  <p className="text-gray-600 mb-4">{audit.description}</p>
-                  <div className="border-t pt-4">
-                    <p className="text-sm font-semibold text-blue-600">When you need it:</p>
-                    <p className="text-sm text-gray-700">{audit.when}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Professional Use Cases Section */}
-      <section className="py-16 bg-gray-50" aria-labelledby="professional-use-cases">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 id="professional-use-cases" className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              For Audit Professionals & Finance Teams
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Whether you're a practicing auditor needing specialized expertise, a finance team preparing for audit, or seeking independent assurance opinions—our CPA-led audit practice provides the professional-grade support you need.
+      {/* THREE LEVELS */}
+      <section className="py-24 bg-white px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Three levels of assurance — which do you need?</h2>
+            <p className="text-gray-500 text-lg max-w-2xl leading-relaxed">
+              The right engagement depends on what your lender, investor, or regulator requires.
+              Here is a plain-English explanation of each.
             </p>
           </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* For Auditors */}
-            <div className="professional-card hover-expandable bg-white rounded-lg shadow-md p-6 border border-gray-200" data-testid="auditor-use-cases">
-              <div className="text-center mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <Users className="w-6 h-6 text-blue-600" />
+          <div className="grid md:grid-cols-3 gap-6">
+            {levels.map((level) => (
+              <div key={level.tier} className={`rounded-2xl p-8 flex flex-col ${level.featured ? "border-2 border-emerald-500 shadow-lg" : "border border-gray-200"}`}>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className={`text-xl font-bold ${level.featured ? "text-emerald-600" : "text-gray-900"}`}>{level.tier}</h3>
+                  <span className={`text-xs font-semibold px-3 py-1 rounded-full ${level.featured ? "bg-emerald-100 text-emerald-700" : "bg-gray-100 text-gray-600"}`}>{level.badge}</span>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900">Auditor Collaboration</h3>
-                <p className="text-gray-600 mt-2">Partner expertise for complex engagements</p>
-              </div>
-              
-              <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-100">
-                <h4 className="font-medium text-gray-900 mb-2">We Support Your Practice With:</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Second opinions on complex accounting treatments</li>
-                  <li>• Industry-specific expertise (nonprofit, government)</li>
-                  <li>• Overflow capacity during busy seasons</li>
-                  <li>• Documentation review and quality control</li>
-                  <li>• Technical consultation on GAAS applications</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* For CFOs */}
-            <div className="professional-card hover-expandable bg-white rounded-lg shadow-md p-6 border border-gray-200" data-testid="cfo-use-cases">
-              <div className="text-center mb-4">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <Building className="w-6 h-6 text-green-600" />
+                <p className="text-gray-500 text-sm leading-relaxed mb-4 flex-1">{level.body}</p>
+                <div className="border-t border-gray-100 pt-4 mt-4 space-y-2">
+                  <p className="text-xs text-gray-500"><span className="font-semibold text-gray-700">Best for:</span> {level.bestFor}</p>
+                  <p className="text-xs text-gray-500"><span className="font-semibold text-gray-700">What we do:</span> {level.whatWeDo}</p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900">CFO & Finance Teams</h3>
-                <p className="text-gray-600 mt-2">Audit readiness and compliance assurance</p>
+                <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className={`mt-6 inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold text-sm transition-colors ${level.featured ? "bg-emerald-500 hover:bg-emerald-400 text-white" : "border border-gray-300 text-gray-700 hover:border-emerald-400 hover:text-emerald-600"}`}>
+                  Get a Quote →
+                </a>
               </div>
-              
-              <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-100">
-                <h4 className="font-medium text-gray-900 mb-2">We Solve These Pain Points:</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Audit readiness assessments and preparation</li>
-                  <li>• Internal control design and testing</li>
-                  <li>• SOX compliance for emerging growth companies</li>
-                  <li>• Pre-audit financial statement reviews</li>
-                  <li>• Management representation guidance</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* For Controllers */}
-            <div className="professional-card hover-expandable bg-white rounded-lg shadow-md p-6 border border-gray-200" data-testid="controller-use-cases">
-              <div className="text-center mb-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <FileCheck className="w-6 h-6 text-purple-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900">Controllers & Accounting</h3>
-                <p className="text-gray-600 mt-2">Technical accounting and compliance expertise</p>
-              </div>
-              
-              <div className="hover-expandable-content mt-4 pt-4 border-t border-gray-100">
-                <h4 className="font-medium text-gray-900 mb-2">Professional Capabilities:</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Complex revenue recognition (ASC 606)</li>
-                  <li>• Lease accounting (ASC 842) implementation</li>
-                  <li>• Financial instruments and derivatives</li>
-                  <li>• Business combinations and M&A accounting</li>
-                  <li>• Technical accounting memorandums</li>
-                </ul>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Comprehensive Audit & Assurance Services
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                From financial statement audits to specialized compliance engagements, 
-                we provide the assurance services your organization needs.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {services.map((service, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow"
-                >
-                  <div className="flex items-center mb-4">
-                    {service.icon}
-                    <h3 className="text-lg font-semibold text-gray-900 ml-3">{service.title}</h3>
-                  </div>
-                  <p className="text-gray-600">{service.description}</p>
-                </div>
-              ))}
-            </div>
+      {/* PROCESS */}
+      <section className="py-24 bg-gray-50 px-6">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 mb-16">What to expect from an engagement</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {steps.map((step) => (
+              <div key={step.n}>
+                <p className="text-6xl font-bold text-emerald-100 mb-4 leading-none">{step.n}</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Audit Process */}
-      <section className="py-16 bg-blue-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Our Audit Process
-              </h2>
-              <p className="text-xl text-gray-600">
-                Systematic approach ensuring thorough examination and reliable results
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-xl">1</span>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Planning</h3>
-                <p className="text-gray-600 text-sm">
-                  Risk assessment and audit strategy development
-                </p>
+      {/* IMPORTANT NOTES */}
+      <section className="py-24 bg-[#0a0f1e] px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-bold text-white mb-12">Important notes about attest engagements</h2>
+          <div className="space-y-6">
+            {importantNotes.map((note, i) => (
+              <div key={i} className="border-l-4 border-emerald-500 pl-6">
+                <p className="text-gray-300 leading-relaxed">{note}</p>
               </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-xl">2</span>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Controls Testing</h3>
-                <p className="text-gray-600 text-sm">
-                  Internal control evaluation and testing
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-xl">3</span>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Substantive Testing</h3>
-                <p className="text-gray-600 text-sm">
-                  Detailed examination of transactions and balances
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-xl">4</span>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Review</h3>
-                <p className="text-gray-600 text-sm">
-                  Quality review and evidence evaluation
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-xl">5</span>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Reporting</h3>
-                <p className="text-gray-600 text-sm">
-                  Independent auditor's report and recommendations
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Industry Expertise */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Industry-Specific Audit Expertise
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow-lg border-l-4 border-blue-600">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Nonprofit Organizations</h3>
-                <ul className="text-gray-600 space-y-2">
-                  <li>• Grant compliance audits</li>
-                  <li>• Donor restriction testing</li>
-                  <li>• Form 990 preparation</li>
-                  <li>• Board governance review</li>
-                </ul>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-lg border-l-4 border-green-600">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Employee Benefit Plans</h3>
-                <ul className="text-gray-600 space-y-2">
-                  <li>• ERISA compliance</li>
-                  <li>• DOL filing requirements</li>
-                  <li>• Investment testing</li>
-                  <li>• Participant data verification</li>
-                </ul>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-lg border-l-4 border-purple-600">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Government Entities</h3>
-                <ul className="text-gray-600 space-y-2">
-                  <li>• Yellow Book standards</li>
-                  <li>• Federal program testing</li>
-                  <li>• Compliance requirements</li>
-                  <li>• Public accountability</li>
-                </ul>
-              </div>
-            </div>
+      {/* FAQ */}
+      <section className="py-24 bg-white px-6">
+        <div className="max-w-3xl mx-auto">
+          <div className="mb-16 text-center">
+            <p className="text-emerald-600 text-sm font-medium tracking-widest uppercase mb-3">FAQ</p>
+            <h2 className="text-4xl font-bold text-gray-900">Common Questions</h2>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((faq) => <FAQ key={faq.q} q={faq.q} a={faq.a} />)}
           </div>
         </div>
       </section>
 
-      {/* Audit Readiness Section */}
-      <section id="audit-readiness" className="py-16 bg-gradient-to-br from-green-50 to-blue-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Audit Readiness Assessment
-              </h3>
-              <p className="text-lg text-gray-600 mb-6">
-                Prepare your organization for a smooth audit process with our comprehensive readiness assessment. 
-                We'll identify potential issues and help you implement solutions before the audit begins.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="text-left">
-                  <h4 className="font-semibold text-gray-900 mb-2">What we review:</h4>
-                  <ul className="text-gray-600 space-y-1">
-                    <li>• Internal control design</li>
-                    <li>• Documentation completeness</li>
-                    <li>• Account reconciliations</li>
-                    <li>• Supporting documentation</li>
-                  </ul>
-                </div>
-                <div className="text-left">
-                  <h4 className="font-semibold text-gray-900 mb-2">What you get:</h4>
-                  <ul className="text-gray-600 space-y-1">
-                    <li>• Detailed assessment report</li>
-                    <li>• Remediation recommendations</li>
-                    <li>• Timeline for improvements</li>
-                    <li>• Ongoing support options</li>
-                  </ul>
-                </div>
-              </div>
-              <a
-                href="https://calendly.com/yber2001/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Schedule Readiness Assessment
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-600 text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">
-              Need an Independent Audit?
-            </h2>
-            <p className="text-xl mb-8 text-blue-100">
-              Our experienced audit team provides the independent perspective and professional skepticism 
-              your stakeholders expect. Contact us to discuss your audit requirements.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://calendly.com/yber2001/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
-              >
-                Schedule Audit Consultation
-              </a>
-              <a
-                href="/payment"
-                className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
-              >
-                Request Audit Proposal
-              </a>
-            </div>
-          </div>
+      {/* FINAL CTA */}
+      <section className="py-24 bg-[#0a0f1e] px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Need credible financial statements?</h2>
+          <p className="text-gray-400 text-lg mb-10 leading-relaxed">
+            Book a free consultation. We will tell you exactly which engagement you need,
+            what it will cost, and how long it will take.
+          </p>
+          <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-10 py-5 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-lg rounded-lg transition-colors">
+            Book a Free Consultation →
+          </a>
+          <p className="text-gray-500 text-sm mt-6">Serving Laurel MD · Columbia MD · Baltimore · Washington DC · Northern Virginia · All 50 States Virtually</p>
         </div>
       </section>
 
       <Footer />
-    </div>
+    </>
   );
 }

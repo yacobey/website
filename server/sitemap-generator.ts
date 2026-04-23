@@ -15,17 +15,37 @@ export async function generateSitemap(): Promise<string> {
   // Static pages
   const staticPages = [
     { path: '/', changefreq: 'weekly' as const, priority: '1.0' },
-    { path: '/about', changefreq: 'monthly' as const, priority: '0.9' },
-    { path: '/blog', changefreq: 'daily' as const, priority: '0.8' },
-    { path: '/ai-tools', changefreq: 'weekly' as const, priority: '0.8' },
-    { path: '/advisory', changefreq: 'monthly' as const, priority: '0.7' },
-    { path: '/bookkeeping', changefreq: 'monthly' as const, priority: '0.7' },
-    { path: '/tax', changefreq: 'monthly' as const, priority: '0.7' },
-    { path: '/audit', changefreq: 'monthly' as const, priority: '0.7' },
+    // Service pages
+    { path: '/tax', changefreq: 'monthly' as const, priority: '0.9' },
+    { path: '/bookkeeping', changefreq: 'monthly' as const, priority: '0.9' },
+    { path: '/advisory', changefreq: 'monthly' as const, priority: '0.9' },
+    { path: '/audit', changefreq: 'monthly' as const, priority: '0.9' },
+    { path: '/ai-consulting', changefreq: 'monthly' as const, priority: '0.9' },
+    // Calculator hub + individual calculators
+    { path: '/calculators', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/calculators/scorp-savings', changefreq: 'monthly' as const, priority: '0.9' },
+    { path: '/calculators/estimated-tax', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/calculators/self-employment-tax', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/calculators/home-office', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/calculators/mileage', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/calculators/section-179', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/calculators/retirement', changefreq: 'monthly' as const, priority: '0.8' },
+    // Industry pages
+    { path: '/industries/healthcare', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/industries/legal', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/industries/real-estate', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/industries/technology', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/industries/retail', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/industries/construction', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/industries/nonprofit', changefreq: 'monthly' as const, priority: '0.8' },
+    { path: '/industries/hospitality', changefreq: 'monthly' as const, priority: '0.8' },
+    // Other pages
+    { path: '/tools', changefreq: 'monthly' as const, priority: '0.7' },
+    { path: '/blog', changefreq: 'weekly' as const, priority: '0.7' },
+    { path: '/contact', changefreq: 'monthly' as const, priority: '0.7' },
+    { path: '/testimonials', changefreq: 'monthly' as const, priority: '0.6' },
     { path: '/partners', changefreq: 'monthly' as const, priority: '0.6' },
-    { path: '/ai-tools-affiliate', changefreq: 'weekly' as const, priority: '0.6' },
-    { path: '/careers', changefreq: 'weekly' as const, priority: '0.5' },
-    { path: '/payment', changefreq: 'monthly' as const, priority: '0.4' }
+    { path: '/careers', changefreq: 'monthly' as const, priority: '0.5' },
   ];
 
   // Add static pages

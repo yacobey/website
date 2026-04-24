@@ -1,0 +1,27 @@
+name: Test filter-jobs logic
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - ".github/workflows/security.yml"
+      - "tests/filter-jobs/**"
+  pull_request:
+    branches: ["**"]
+    paths:
+      - ".github/workflows/security.yml"
+      - "tests/filter-jobs/**"
+
+jobs:
+  filter-jobs-tests:
+    name: Shell tests — SECURITY_SUMMARY_FILTER_JOBS logic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make test scripts executable
+        run: chmod +x tests/filter-jobs/check_filter.sh tests/filter-jobs/test_filter_jobs.sh
+
+      - name: Run filter-jobs tests
+        run: bash tests/filter-jobs/test_filter_jobs.sh

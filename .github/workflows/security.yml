@@ -61,9 +61,16 @@ jobs:
     name: Send scan summary email
     runs-on: ubuntu-latest
     needs: [npm-audit, codeql]
-    # Set the repository variable SECURITY_SUMMARY_ON_FAILURE_ONLY to "true" to suppress
-    # summary emails when all scans pass. When absent or set to any other value, a summary
-    # email is sent after every run (default behaviour).
+    # Two optional repository variables control when summary emails are sent
+    # (Settings > Variables > Actions):
+    #
+    # SECURITY_SUMMARY_FILTER_JOBS — comma-separated list of job names whose failures
+    #   should trigger a summary email (e.g. "npm-audit" or "npm-audit,codeql").
+    #   When set, an email is sent only if at least one listed job failed. Unlisted
+    #   jobs are ignored. Takes precedence over SECURITY_SUMMARY_ON_FAILURE_ONLY.
+    #
+    # SECURITY_SUMMARY_ON_FAILURE_ONLY — set to "true" to suppress summary emails when
+    #   all scans pass. Has no effect when SECURITY_SUMMARY_FILTER_JOBS is set.
     if: ${{ always() && secrets.SENDGRID_API_KEY != '' && secrets.SENDGRID_FROM_EMAIL != '' && secrets.SECURITY_ALERT_EMAIL != '' }}
     steps:
       - name: Restore scan history from cache
@@ -95,11 +102,34 @@ jobs:
             OVERALL="PASSED"
           fi
 
-          # Honour the opt-in variable: skip summary emails on success when set to "true".
-          # Repository variables are available via vars context (Settings > Variables > Actions).
-          if [ "${{ vars.SECURITY_SUMMARY_ON_FAILURE_ONLY }}" = "true" ] && [ "$OVERALL" = "PASSED" ]; then
-            echo "SECURITY_SUMMARY_ON_FAILURE_ONLY is true and all scans passed — skipping summary email."
-            exit 0
+          # Per-job filtering: SECURITY_SUMMARY_FILTER_JOBS is an optional comma-separated list
+          # of job names (e.g. "npm-audit,codeql") whose failures should trigger a summary.
+          # When set, a summary email is sent only if at least one listed job failed.
+          # When absent or empty, fall back to the SECURITY_SUMMARY_ON_FAILURE_ONLY behaviour.
+          # Repository variables are set under Settings > Variables > Actions.
+          FILTER_JOBS="${{ vars.SECURITY_SUMMARY_FILTER_JOBS }}"
+          if [ -n "$FILTER_JOBS" ]; then
+            FILTER_TRIGGERED=0
+            IFS=',' read -ra FILTER_LIST <<< "$FILTER_JOBS"
+            for job_name in "${FILTER_LIST[@]}"; do
+              trimmed_job="$(echo "$job_name" | xargs)"
+              if [ "$trimmed_job" = "npm-audit" ] && [ "$NPM_RESULT" = "failure" ]; then
+                FILTER_TRIGGERED=1
+              fi
+              if [ "$trimmed_job" = "codeql" ] && [ "$CODEQL_RESULT" = "failure" ]; then
+                FILTER_TRIGGERED=1
+              fi
+            done
+            if [ "$FILTER_TRIGGERED" -eq 0 ]; then
+              echo "SECURITY_SUMMARY_FILTER_JOBS is set but none of the listed jobs failed — skipping summary email."
+              exit 0
+            fi
+          else
+            # Honour the opt-in variable: skip summary emails on success when set to "true".
+            if [ "${{ vars.SECURITY_SUMMARY_ON_FAILURE_ONLY }}" = "true" ] && [ "$OVERALL" = "PASSED" ]; then
+              echo "SECURITY_SUMMARY_ON_FAILURE_ONLY is true and all scans passed — skipping summary email."
+              exit 0
+            fi
           fi
 
           RUN_DATE="$(date -u '+%Y-%m-%d %H:%M UTC')"

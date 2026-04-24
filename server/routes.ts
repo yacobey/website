@@ -545,13 +545,49 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     res.json(getBusinessConfig());
   });
 
-  // SSL certificate validation endpoint
+  // Helper to verify admin credentials from Authorization header (Basic auth).
+  // Fails closed: returns false when required env vars are not configured.
+  const validateAdminAuth = (req: any): boolean => {
+    const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+    // Fail closed if credentials are not explicitly configured
+    if (!ADMIN_USERNAME || !ADMIN_PASSWORD) return false;
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Basic ')) return false;
+    try {
+      const decoded = Buffer.from(authHeader.substring(6), 'base64').toString('utf8');
+      const colonIndex = decoded.indexOf(':');
+      if (colonIndex === -1) return false;
+      const username = decoded.substring(0, colonIndex);
+      const password = decoded.substring(colonIndex + 1);
+      return username === ADMIN_USERNAME && password === ADMIN_PASSWORD;
+    } catch {
+      return false;
+    }
+  };
+
+  // SSL certificate validation endpoint (admin-only)
   app.get('/api/ssl-status/:domain', async (req, res) => {
+    if (!validateAdminAuth(req)) {
+      return res.status(401).json({ status: 'error', message: 'Unauthorized' });
+    }
+
     try {
       const domain = req.params.domain;
       const sslCheck = await SSLValidator.checkDomainSSL(domain);
       res.json(sslCheck);
-    } catch (error) {
+    } catch (error: any) {
+      const isDestinationBlocked = error?.message && (
+        error.message.includes('not permitted') ||
+        error.message.includes('private or restricted')
+      );
+      if (isDestinationBlocked) {
+        return res.status(400).json({
+          status: 'error',
+          details: { valid: false, errors: ['Invalid destination'] }
+        });
+      }
       console.error('SSL validation error:', error);
       res.status(500).json({ 
         status: 'error', 

@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { optimizeResultSet, checkDatabaseHealth } from "./db-optimizations";
 import { storage } from "./storage";
 import { db } from "./db";
+import { users } from "@shared/schema";
 
 // Performance monitoring endpoint
 export function addPerformanceRoutes(app: Express) {
@@ -10,7 +11,7 @@ export function addPerformanceRoutes(app: Express) {
     try {
       const start = Date.now();
       // Test database connection
-      await db.select().from(require("@shared/schema").users).limit(1);
+      await db.select().from(users).limit(1);
       const dbLatency = Date.now() - start;
       
       const health = {

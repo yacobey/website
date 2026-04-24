@@ -31,7 +31,10 @@ vi.mock("../storage", () => ({
   },
 }));
 
+import type { Request, Response, NextFunction } from "express";
 import { addPerformanceRoutes } from "../routes-performance";
+
+const noopAuth = (_req: Request, _res: Response, next: NextFunction) => next();
 
 describe("Performance Routes", () => {
   let app: express.Express;
@@ -39,7 +42,7 @@ describe("Performance Routes", () => {
   beforeAll(() => {
     app = express();
     app.use(express.json());
-    addPerformanceRoutes(app);
+    addPerformanceRoutes(app, noopAuth);
   });
 
   describe("GET /api/health", () => {

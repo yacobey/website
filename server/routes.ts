@@ -23,19 +23,29 @@ import { z } from "zod";
 import { generateBlogContent, generateBlogMetadata } from "./ai-service";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Admin authentication middleware — verifies a HS256-signed JWT issued at login
+  // Admin authentication middleware — verifies a HS256-signed JWT issued at login.
+  // Accepts the token from the Authorization: Bearer header or from the admin_token cookie.
   const adminAuth = (req: Request, res: Response, next: NextFunction): void => {
     const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET;
     if (!ADMIN_JWT_SECRET) {
-      res.status(500).json({ message: "Server misconfiguration" });
-      return;
-    }
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
-    const token = authHeader.substring(7);
+
+    let token: string | undefined;
+
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.substring(7);
+    } else if (req.cookies && req.cookies.admin_token) {
+      token = req.cookies.admin_token as string;
+    }
+
+    if (!token) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
     try {
       const payload = jwt.verify(token, ADMIN_JWT_SECRET, { algorithms: ['HS256'] }) as jwt.JwtPayload;
       if (payload.role !== 'admin') {

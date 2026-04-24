@@ -7,3 +7,4 @@ A comprehensive full-stack web application for a CPA firm, offering tax preparat
 ## Security
 
 The Security Scanning badge above reflects the current status of the [`security.yml`](.github/workflows/security.yml) workflow, which runs on every push and pull request. It checks for high-severity npm dependency vulnerabilities and performs CodeQL static analysis. Clicking the badge opens the full workflow run history.
+

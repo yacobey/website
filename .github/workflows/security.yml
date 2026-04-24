@@ -82,6 +82,8 @@ jobs:
             scan-history-${{ github.ref_name }}-
 
       - name: Build history, send summary email via SendGrid, and save history
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
         run: |
           NPM_RESULT="${{ needs.npm-audit.result }}"
           CODEQL_RESULT="${{ needs.codeql.result }}"
@@ -113,10 +115,8 @@ jobs:
             IFS=',' read -ra FILTER_LIST <<< "$FILTER_JOBS"
             for job_name in "${FILTER_LIST[@]}"; do
               trimmed_job="$(echo "$job_name" | xargs)"
-              if [ "$trimmed_job" = "npm-audit" ] && [ "$NPM_RESULT" = "failure" ]; then
-                FILTER_TRIGGERED=1
-              fi
-              if [ "$trimmed_job" = "codeql" ] && [ "$CODEQL_RESULT" = "failure" ]; then
+              job_result="$(echo "$NEEDS_JSON" | jq -r --arg job "$trimmed_job" '.[$job].result // "not-found"')"
+              if [ "$job_result" = "failure" ]; then
                 FILTER_TRIGGERED=1
               fi
             done

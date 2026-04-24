@@ -148,7 +148,11 @@ jobs:
             exit 0
           fi
 
-          curl --silent --show-error --fail \
+          SUMMARY_FROM_EMAIL="${{ secrets.SENDGRID_FROM_EMAIL }}"
+          SUMMARY_BODY_FILE=$(mktemp)
+          SUMMARY_HTTP_CODE=$(curl --silent --show-error \
+            -o "$SUMMARY_BODY_FILE" \
+            -w "%{http_code}" \
             --request POST \
             --url https://api.sendgrid.com/v3/mail/send \
             --header "Authorization: Bearer ${{ secrets.SENDGRID_API_KEY }}" \
@@ -158,12 +162,29 @@ jobs:
                 \"to\": $TO_JSON,
                 \"subject\": \"[Security Scan] ${OVERALL} — ${{ github.repository }}\"
               }],
-              \"from\": {\"email\": \"${{ secrets.SENDGRID_FROM_EMAIL }}\"},
+              \"from\": {\"email\": \"$SUMMARY_FROM_EMAIL\"},
               \"content\": [{
                 \"type\": \"text/plain\",
                 \"value\": \"${BODY}\"
               }]
-            }"
+            }")
+          SUMMARY_RESPONSE=$(cat "$SUMMARY_BODY_FILE")
+          rm -f "$SUMMARY_BODY_FILE"
+          if [ "$SUMMARY_HTTP_CODE" -ge 200 ] && [ "$SUMMARY_HTTP_CODE" -lt 300 ]; then
+            echo "Summary email sent successfully."
+          else
+            echo "SendGrid API returned HTTP $SUMMARY_HTTP_CODE."
+            if echo "$SUMMARY_RESPONSE" | grep -qi "sender identity\|sender not verified\|does not match a verified Sender Identity"; then
+              echo "WARNING: The sender address '$SUMMARY_FROM_EMAIL' appears to be unverified in SendGrid."
+              echo "A syntactically valid address still requires Sender Identity verification before SendGrid will accept it."
+              echo "To verify your sender, visit: https://app.sendgrid.com/settings/sender_auth"
+              echo "See SECURITY_ALERT_RECIPIENTS.md for details."
+              echo "Continuing without sending the summary email."
+            else
+              echo "SendGrid error response: $SUMMARY_RESPONSE"
+              exit 1
+            fi
+          fi
 
       - name: Save updated scan history to cache
         if: always()
@@ -289,16 +310,36 @@ jobs:
             exit 0
           fi
 
-          curl --silent --show-error --fail \
+          ALERT_BODY_FILE=$(mktemp)
+          ALERT_HTTP_CODE=$(curl --silent --show-error \
+            -o "$ALERT_BODY_FILE" \
+            -w "%{http_code}" \
             --request POST \
             --url https://api.sendgrid.com/v3/mail/send \
             --header "Authorization: Bearer ${{ secrets.SENDGRID_API_KEY }}" \
             --header "Content-Type: application/json" \
             --data "{
               \"personalizations\": $PERSONALIZATIONS_JSON,
-              \"from\": {\"email\": \"${{ secrets.SENDGRID_FROM_EMAIL }}\"},
+              \"from\": {\"email\": \"$FROM_EMAIL\"},
               \"content\": [{
                 \"type\": \"text/plain\",
                 \"value\": \"Security scan failed\\n\\nFailed job(s): ${FAILED_JOBS}\\nRepository: ${{ github.repository }}\\nBranch: ${{ github.ref_name }}\\nTriggered by: ${{ github.actor }}\\n\\nView the failed run:\\n${RUN_URL}\"
               }]
-            }"
+            }")
+          ALERT_RESPONSE=$(cat "$ALERT_BODY_FILE")
+          rm -f "$ALERT_BODY_FILE"
+          if [ "$ALERT_HTTP_CODE" -ge 200 ] && [ "$ALERT_HTTP_CODE" -lt 300 ]; then
+            echo "Email alert sent successfully."
+          else
+            echo "SendGrid API returned HTTP $ALERT_HTTP_CODE."
+            if echo "$ALERT_RESPONSE" | grep -qi "sender identity\|sender not verified\|does not match a verified Sender Identity"; then
+              echo "WARNING: The sender address '$FROM_EMAIL' appears to be unverified in SendGrid."
+              echo "A syntactically valid address still requires Sender Identity verification before SendGrid will accept it."
+              echo "To verify your sender, visit: https://app.sendgrid.com/settings/sender_auth"
+              echo "See SECURITY_ALERT_RECIPIENTS.md for details."
+              echo "Continuing without sending the email alert."
+            else
+              echo "SendGrid error response: $ALERT_RESPONSE"
+              exit 1
+            fi
+          fi

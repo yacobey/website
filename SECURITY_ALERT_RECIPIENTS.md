@@ -61,6 +61,26 @@ One or more recipient addresses in SECURITY_ALERT_EMAIL are invalid. Aborting em
 
 Both checks cause the workflow step to **fail visibly** rather than silently dropping the alert. To fix either issue, update the relevant secret (see above) and re-run the workflow.
 
+## SendGrid sender verification
+
+Setting `SENDGRID_FROM_EMAIL` to a syntactically valid address is not enough on its own. SendGrid requires the address to be a **verified Sender Identity** before it will accept outgoing mail from it. If the address passes the regex check but has not been verified, the API returns a `403 Forbidden` response and the workflow step will print a message like:
+
+```
+WARNING: The sender address 'alerts@example.com' appears to be unverified in SendGrid.
+A syntactically valid address still requires Sender Identity verification before SendGrid will accept it.
+To verify your sender, visit: https://app.sendgrid.com/settings/sender_auth
+```
+
+### How to verify a sender
+
+1. Log in to [SendGrid](https://app.sendgrid.com).
+2. Go to **Settings → Sender Authentication**.
+3. Choose **Verify a Single Sender** (for individual addresses) or set up **Domain Authentication** (recommended for production use).
+4. Follow the on-screen steps to verify the address you have stored in `SENDGRID_FROM_EMAIL`.
+5. Re-run the workflow — the email step should now succeed.
+
+More details are available in the [SendGrid Sender Identity documentation](https://docs.sendgrid.com/ui/sending-email/sender-verification).
+
 ## Other notification channels
 
 The workflow also posts a comment on the pull request and, if `SLACK_WEBHOOK_URL` is set, sends a Slack message. Those channels are independent of `SECURITY_ALERT_EMAIL`.

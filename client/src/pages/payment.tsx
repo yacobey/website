@@ -95,14 +95,15 @@ const ServiceSelector = ({ onServiceSelect }: { onServiceSelect: (service: any) 
   const [customDescription, setCustomDescription] = useState("");
 
   const predefinedServices = [
-    { name: "Free CPA Consultation - 30 Minutes", price: 0, description: "Complimentary professional accounting consultation session (30 minutes)" },
-    { name: "CPA Consultation - 1 Hour", price: 250, description: "Comprehensive accounting consultation session (1 hour)" },
-    { name: "Digital Accounting Guidelines Package", price: 9.99, description: "Practical digital solutions for everyday business accounting challenges" }
+    { key: "free_consultation", name: "Free CPA Consultation - 30 Minutes", price: 0, description: "Complimentary professional accounting consultation session (30 minutes)" },
+    { key: "consultation_1hr", name: "CPA Consultation - 1 Hour", price: 250, description: "Comprehensive accounting consultation session (1 hour)" },
+    { key: "digital_guidelines", name: "Digital Accounting Guidelines Package", price: 9.99, description: "Practical digital solutions for everyday business accounting challenges" }
   ];
 
   const handleCustomService = () => {
     if (customAmount && customDescription) {
       onServiceSelect({
+        key: "extended",
         name: customDescription,
         price: parseFloat(customAmount),
         description: customDescription
@@ -181,21 +182,28 @@ export default function Payment() {
 
   const handleServiceSelect = async (service: any) => {
     setSelectedService(service);
-    
+
     // If it's a free consultation, skip payment processing
     if (service.price === 0) {
       setClientSecret("free_consultation");
       return;
     }
-    
+
     setIsLoading(true);
     try {
-      const response = await apiRequest("POST", "/api/create-payment-intent", { 
-        amount: service.price,
-        description: service.description
-      });
+      const body: Record<string, unknown> = { service_key: service.key };
+      // For extended consultations the server needs the caller-supplied amount
+      // (still enforces a server-side minimum of $99)
+      if (service.key === "extended") {
+        body.amount = service.price;
+      }
+      const response = await apiRequest("POST", "/api/create-payment-intent", body);
       const data = await response.json();
-      setClientSecret(data.clientSecret);
+      if (data.clientSecret) {
+        // Use the server-returned amount so the UI reflects the authoritative price
+        setSelectedService({ ...service, price: data.amount ?? service.price });
+        setClientSecret(data.clientSecret);
+      }
     } catch (error) {
       console.error("Error creating payment intent:", error);
     } finally {

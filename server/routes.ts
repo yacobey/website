@@ -206,32 +206,57 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
+  // Server-side service catalog — the authoritative source of prices.
+  // The client sends a service_key; the server looks up the price.
+  const SERVICE_CATALOG: Record<string, { price: number; description: string }> = {
+    consultation_1hr:   { price: 250,  description: "Comprehensive accounting consultation session (1 hour)" },
+    digital_guidelines: { price: 9.99, description: "Practical digital solutions for everyday business accounting challenges" },
+  };
+  // Minimum amount enforced server-side for extended / custom consultations.
+  const EXTENDED_CONSULTATION_MIN = 99;
+
   // Stripe payment route for one-time payments
   app.post("/api/create-payment-intent", async (req, res) => {
     try {
-      const { amount, description = "CPA Services" } = req.body;
-      
-      if (!amount || amount < 0.50) {
-        return res.status(400).json({ error: "Amount must be at least $0.50" });
+      const { service_key, amount: clientAmount } = req.body;
+
+      let finalAmount: number;
+      let description: string;
+
+      if (service_key === "extended") {
+        // Extended consultation: caller-supplied amount with a server-enforced minimum
+        const requested = parseFloat(clientAmount);
+        if (!requested || requested < EXTENDED_CONSULTATION_MIN) {
+          return res.status(400).json({
+            error: `Extended consultation minimum is $${EXTENDED_CONSULTATION_MIN}`
+          });
+        }
+        finalAmount = requested;
+        description = "Extended CPA Consultation";
+      } else {
+        const service = SERVICE_CATALOG[service_key as string];
+        if (!service) {
+          return res.status(400).json({ error: "Invalid service" });
+        }
+        finalAmount = service.price;
+        description = service.description;
       }
 
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: Math.round(amount * 100), // Convert to cents
+        amount: Math.round(finalAmount * 100), // Convert to cents
         currency: "usd",
         description,
-        metadata: {
-          description: description
-        }
+        metadata: { service_key: service_key ?? "extended", description }
       });
-      
-      res.json({ 
+
+      res.json({
         clientSecret: paymentIntent.client_secret,
-        amount: amount
+        amount: finalAmount
       });
     } catch (error: any) {
       console.error("Error creating payment intent:", error);
-      res.status(500).json({ 
-        message: "Error creating payment intent: " + error.message 
+      res.status(500).json({
+        message: "Error creating payment intent: " + error.message
       });
     }
   });

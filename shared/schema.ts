@@ -276,6 +276,21 @@ export type EmailNotification = typeof emailNotifications.$inferSelect;
 export type InsertContentBackup = z.infer<typeof insertContentBackupSchema>;
 export type ContentBackup = typeof contentBackups.$inferSelect;
 
+/**
+ * Tracks Stripe Checkout session IDs that have already been used to claim
+ * agent lifetime access. Enforces single-use redemption via a UNIQUE
+ * constraint on session_id so that concurrent or replayed redemption
+ * attempts fail atomically at the database level.
+ */
+export const agentSessionRedemptions = pgTable("agent_session_redemptions", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull().unique(),
+  stripeCustomerId: text("stripe_customer_id").notNull(),
+  redeemedAt: timestamp("redeemed_at").defaultNow().notNull(),
+});
+
+export type AgentSessionRedemption = typeof agentSessionRedemptions.$inferSelect;
+
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
 });

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,6 +7,21 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Activity, Clock, Database, MemoryStick, RefreshCw } from "lucide-react";
+
+function useAdminAuth() {
+  const [, setLocation] = useLocation();
+  useEffect(() => {
+    const token = localStorage.getItem("admin_token");
+    const expires = localStorage.getItem("admin_expires");
+    const isValid = token && expires && new Date(expires) > new Date();
+    if (!isValid) {
+      setLocation("/admin-login");
+    }
+  }, [setLocation]);
+  const token = localStorage.getItem("admin_token");
+  const expires = localStorage.getItem("admin_expires");
+  return !!(token && expires && new Date(expires) > new Date());
+}
 
 interface HealthData {
   status: "healthy" | "degraded" | "unhealthy" | "error";
@@ -61,19 +78,27 @@ function formatBytes(bytes: number) {
 }
 
 export default function AdminStatusPage() {
+  const isAuthenticated = useAdminAuth();
+
   const { data, isLoading, isError, dataUpdatedAt, refetch, isFetching } = useQuery<HealthData>({
     queryKey: ["/api/health"],
     refetchInterval: 30000,
+    enabled: isAuthenticated,
     queryFn: async () => {
-      const res = await fetch("/api/health");
-      const json = await res.json();
-      return json as HealthData;
+      const token = localStorage.getItem("admin_token");
+      const res = await fetch("/api/health", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error("Health check failed");
+      return res.json() as Promise<HealthData>;
     },
   });
 
   const lastUpdated = dataUpdatedAt
     ? new Date(dataUpdatedAt).toLocaleTimeString()
     : null;
+
+  if (!isAuthenticated) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">

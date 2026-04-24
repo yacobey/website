@@ -568,7 +568,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
   });
 
   // Add performance monitoring routes
-  addPerformanceRoutes(app);
+  addPerformanceRoutes(app, adminAuth);
 
   // Add payment routes for subscriptions and one-time payments
   app.use("/api/payments", paymentRouter);

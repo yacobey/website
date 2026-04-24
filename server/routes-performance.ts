@@ -1,13 +1,15 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { optimizeResultSet, checkDatabaseHealth } from "./db-optimizations";
 import { storage } from "./storage";
 import { db } from "./db";
 import { users } from "@shared/schema";
 
+type Middleware = (req: Request, res: Response, next: NextFunction) => void;
+
 // Performance monitoring endpoint
-export function addPerformanceRoutes(app: Express) {
-  // Database health check
-  app.get("/api/health", async (req, res) => {
+export function addPerformanceRoutes(app: Express, adminAuth: Middleware) {
+  // Database health check — restricted to authenticated admins
+  app.get("/api/health", adminAuth, async (req, res) => {
     try {
       const start = Date.now();
       // Test database connection
@@ -32,8 +34,8 @@ export function addPerformanceRoutes(app: Express) {
     }
   });
 
-  // Performance metrics endpoint
-  app.get("/api/performance", async (req, res) => {
+  // Performance metrics endpoint — restricted to authenticated admins
+  app.get("/api/performance", adminAuth, async (req, res) => {
     try {
       const metrics = {
         memory: process.memoryUsage(),

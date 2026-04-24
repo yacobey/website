@@ -61,6 +61,8 @@ jobs:
     name: Send scan summary email
     runs-on: ubuntu-latest
     needs: [npm-audit, codeql]
+    permissions:
+      actions: read
     # Two optional repository variables control when summary emails are sent
     # (Settings > Variables > Actions):
     #
@@ -73,13 +75,40 @@ jobs:
     #   all scans pass. Has no effect when SECURITY_SUMMARY_FILTER_JOBS is set.
     if: ${{ always() && secrets.SENDGRID_API_KEY != '' && secrets.SENDGRID_FROM_EMAIL != '' && secrets.SECURITY_ALERT_EMAIL != '' }}
     steps:
-      - name: Restore scan history from cache
-        uses: actions/cache/restore@v4
+      - name: Find latest scan-history artifact from any branch
+        id: find-history
+        uses: actions/github-script@v7
         with:
-          path: scan-history.txt
-          key: scan-history-${{ github.ref_name }}-${{ github.run_id }}
-          restore-keys: |
-            scan-history-${{ github.ref_name }}-
+          script: |
+            const { data: { workflow_runs } } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'security.yml',
+              per_page: 20,
+              status: 'completed'
+            });
+            for (const run of workflow_runs) {
+              if (run.id === context.runId) continue;
+              const { data: { artifacts } } = await github.rest.actions.listWorkflowRunArtifacts({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: run.id
+              });
+              const hist = artifacts.find(a => a.name === 'scan-history' && !a.expired);
+              if (hist) {
+                core.setOutput('run-id', String(run.id));
+                return;
+              }
+            }
+            core.setOutput('run-id', '');
+
+      - name: Download scan history artifact
+        if: steps.find-history.outputs.run-id != ''
+        uses: actions/download-artifact@v4
+        with:
+          name: scan-history
+          run-id: ${{ steps.find-history.outputs.run-id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build history, send summary email via SendGrid, and save history
         env:
@@ -135,9 +164,9 @@ jobs:
           RUN_DATE="$(date -u '+%Y-%m-%d %H:%M UTC')"
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-          # Append current run to history file (format: date|overall|npm|codeql|url)
+          # Append current run to history file (format: date|overall|npm|codeql|url|branch)
           HISTORY_FILE="scan-history.txt"
-          NEW_ENTRY="${RUN_DATE}|${OVERALL}|npm-audit=${NPM_RESULT}|codeql=${CODEQL_RESULT}|${RUN_URL}"
+          NEW_ENTRY="${RUN_DATE}|${OVERALL}|npm-audit=${NPM_RESULT}|codeql=${CODEQL_RESULT}|${RUN_URL}|${{ github.ref_name }}"
           echo "$NEW_ENTRY" >> "$HISTORY_FILE"
 
           # Keep only the last 5 entries
@@ -147,9 +176,9 @@ jobs:
           fi
 
           # Build trend section from history (oldest → newest)
-          TREND_SECTION="Recent scan history (last 5 runs, oldest first):\n"
-          TREND_SECTION="${TREND_SECTION}--------------------------------------------------\n"
-          while IFS='|' read -r h_date h_overall h_npm h_codeql h_url; do
+          TREND_SECTION="Recent scan history (last 5 runs across all branches, oldest first):\n"
+          TREND_SECTION="${TREND_SECTION}--------------------------------------------------------------------\n"
+          while IFS='|' read -r h_date h_overall h_npm h_codeql h_url h_branch; do
             h_npm_icon="✅"
             echo "$h_npm" | grep -q "=failure"   && h_npm_icon="❌"
             echo "$h_npm" | grep -q "=skipped"   && h_npm_icon="⏭️"
@@ -158,9 +187,9 @@ jobs:
             echo "$h_codeql" | grep -q "=failure"   && h_codeql_icon="❌"
             echo "$h_codeql" | grep -q "=skipped"   && h_codeql_icon="⏭️"
             echo "$h_codeql" | grep -q "=cancelled" && h_codeql_icon="🚫"
-            TREND_SECTION="${TREND_SECTION}  ${h_date}  ${h_overall}  |  ${h_npm_icon} npm audit  ${h_codeql_icon} CodeQL\n"
+            TREND_SECTION="${TREND_SECTION}  ${h_date}  [${h_branch}]  ${h_overall}  |  ${h_npm_icon} npm audit  ${h_codeql_icon} CodeQL\n"
           done < "$HISTORY_FILE"
-          TREND_SECTION="${TREND_SECTION}--------------------------------------------------"
+          TREND_SECTION="${TREND_SECTION}--------------------------------------------------------------------"
 
           BODY="Security Scan Summary — ${OVERALL}\n\nRepository: ${{ github.repository }}\nBranch: ${{ github.ref_name }}\nTriggered by: ${{ github.actor }}\nRun: ${RUN_URL}\n\nJob results:\n  ${NPM_ICON} npm audit — ${NPM_RESULT}\n  ${CODEQL_ICON} CodeQL Analysis — ${CODEQL_RESULT}\n\n${TREND_SECTION}"
 
@@ -221,12 +250,13 @@ jobs:
             fi
           fi
 
-      - name: Save updated scan history to cache
+      - name: Upload scan history artifact
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/upload-artifact@v4
         with:
+          name: scan-history
           path: scan-history.txt
-          key: scan-history-${{ github.ref_name }}-${{ github.run_id }}
+          retention-days: 90
 
   notify-on-failure:
     name: Notify on failure

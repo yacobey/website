@@ -63,7 +63,15 @@ jobs:
     needs: [npm-audit, codeql]
     if: ${{ always() && secrets.SENDGRID_API_KEY != '' && secrets.SENDGRID_FROM_EMAIL != '' && secrets.SECURITY_ALERT_EMAIL != '' }}
     steps:
-      - name: Send summary email via SendGrid
+      - name: Restore scan history from cache
+        uses: actions/cache/restore@v4
+        with:
+          path: scan-history.txt
+          key: scan-history-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            scan-history-${{ github.ref_name }}-
+
+      - name: Build history, send summary email via SendGrid, and save history
         run: |
           NPM_RESULT="${{ needs.npm-audit.result }}"
           CODEQL_RESULT="${{ needs.codeql.result }}"
@@ -84,9 +92,37 @@ jobs:
             OVERALL="PASSED"
           fi
 
+          RUN_DATE="$(date -u '+%Y-%m-%d %H:%M UTC')"
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-          BODY="Security Scan Summary — ${OVERALL}\n\nRepository: ${{ github.repository }}\nBranch: ${{ github.ref_name }}\nTriggered by: ${{ github.actor }}\nRun: ${RUN_URL}\n\nJob results:\n  ${NPM_ICON} npm audit — ${NPM_RESULT}\n  ${CODEQL_ICON} CodeQL Analysis — ${CODEQL_RESULT}"
+          # Append current run to history file (format: date|overall|npm|codeql|url)
+          HISTORY_FILE="scan-history.txt"
+          NEW_ENTRY="${RUN_DATE}|${OVERALL}|npm-audit=${NPM_RESULT}|codeql=${CODEQL_RESULT}|${RUN_URL}"
+          echo "$NEW_ENTRY" >> "$HISTORY_FILE"
+
+          # Keep only the last 5 entries
+          TOTAL_LINES=$(wc -l < "$HISTORY_FILE")
+          if [ "$TOTAL_LINES" -gt 5 ]; then
+            tail -5 "$HISTORY_FILE" > "${HISTORY_FILE}.tmp" && mv "${HISTORY_FILE}.tmp" "$HISTORY_FILE"
+          fi
+
+          # Build trend section from history (oldest → newest)
+          TREND_SECTION="Recent scan history (last 5 runs, oldest first):\n"
+          TREND_SECTION="${TREND_SECTION}--------------------------------------------------\n"
+          while IFS='|' read -r h_date h_overall h_npm h_codeql h_url; do
+            h_npm_icon="✅"
+            echo "$h_npm" | grep -q "=failure"   && h_npm_icon="❌"
+            echo "$h_npm" | grep -q "=skipped"   && h_npm_icon="⏭️"
+            echo "$h_npm" | grep -q "=cancelled" && h_npm_icon="🚫"
+            h_codeql_icon="✅"
+            echo "$h_codeql" | grep -q "=failure"   && h_codeql_icon="❌"
+            echo "$h_codeql" | grep -q "=skipped"   && h_codeql_icon="⏭️"
+            echo "$h_codeql" | grep -q "=cancelled" && h_codeql_icon="🚫"
+            TREND_SECTION="${TREND_SECTION}  ${h_date}  ${h_overall}  |  ${h_npm_icon} npm audit  ${h_codeql_icon} CodeQL\n"
+          done < "$HISTORY_FILE"
+          TREND_SECTION="${TREND_SECTION}--------------------------------------------------"
+
+          BODY="Security Scan Summary — ${OVERALL}\n\nRepository: ${{ github.repository }}\nBranch: ${{ github.ref_name }}\nTriggered by: ${{ github.actor }}\nRun: ${RUN_URL}\n\nJob results:\n  ${NPM_ICON} npm audit — ${NPM_RESULT}\n  ${CODEQL_ICON} CodeQL Analysis — ${CODEQL_RESULT}\n\n${TREND_SECTION}"
 
           TO_JSON=""
           IFS=',' read -ra RAW_EMAILS <<< "${{ secrets.SECURITY_ALERT_EMAIL }}"
@@ -118,6 +154,13 @@ jobs:
                 \"value\": \"${BODY}\"
               }]
             }"
+
+      - name: Save updated scan history to cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: scan-history.txt
+          key: scan-history-${{ github.ref_name }}-${{ github.run_id }}
 
   notify-on-failure:
     name: Notify on failure

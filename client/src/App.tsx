@@ -38,6 +38,7 @@ const AdminLogin = React.lazy(() => import("@/pages/admin-login"));
 const IndexingControl = React.lazy(() => import("@/pages/indexing-control"));
 const IndexingStatus = React.lazy(() => import("@/pages/indexing-status"));
 const Agent = React.lazy(() => import("@/pages/agent"));
+const AdminStatus = React.lazy(() => import("@/pages/admin-status"));
 const PaymentCancel = React.lazy(() => import("@/pages/payment-cancel"));
 const PrivacyPolicy = React.lazy(() => import("@/pages/privacy-policy"));
 const Testimonials = React.lazy(() => import("@/pages/testimonials"));
@@ -91,6 +92,7 @@ function Router() {
           <Route path="/indexing-control" component={IndexingControl} />
           <Route path="/indexing-status" component={IndexingStatus} />
           <Route path="/agent" component={Agent} />
+          <Route path="/admin/status" component={AdminStatus} />
           <Route path="/privacy-policy" component={PrivacyPolicy} />
           <Route path="/testimonials" component={Testimonials} />
           <Route path="/calculators" component={Calculators} />

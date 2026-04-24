@@ -132,12 +132,25 @@ jobs:
           # Each entry is trimmed of whitespace so "alice@example.com, bob@example.com"
           # and "alice@example.com,bob@example.com" both work correctly.
           TO_JSON=""
+          INVALID_FOUND=0
           IFS=',' read -ra RAW_EMAILS <<< "${{ secrets.SECURITY_ALERT_EMAIL }}"
           for raw in "${RAW_EMAILS[@]}"; do
             trimmed="$(echo "$raw" | xargs)"
             [ -z "$trimmed" ] && continue
+            # Validate: must contain exactly one '@', with non-empty local part
+            # and a domain that contains at least one '.'
+            if ! echo "$trimmed" | grep -qE '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'; then
+              echo "ERROR: '$trimmed' is not a valid email address. Fix SECURITY_ALERT_EMAIL and re-run."
+              INVALID_FOUND=1
+            fi
             TO_JSON="${TO_JSON:+$TO_JSON,}{\"email\":\"$trimmed\"}"
           done
+
+          if [ "$INVALID_FOUND" -eq 1 ]; then
+            echo "One or more recipient addresses in SECURITY_ALERT_EMAIL are invalid. Aborting email alert."
+            exit 1
+          fi
+
           TO_JSON="[$TO_JSON]"
 
           if [ "$TO_JSON" = "[]" ]; then

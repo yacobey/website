@@ -42,6 +42,17 @@ Edit the secret (step 1–3 above) and remove the address you no longer want to 
 
 If any of the three secrets above is missing or empty the email step is skipped silently — no error is raised.
 
+## Address validation
+
+Before sending any email, the workflow validates every parsed address against a basic email pattern (`local-part@domain.tld`). If any address fails validation the CI step exits with a non-zero status and prints a message such as:
+
+```
+ERROR: 'alice@' is not a valid email address. Fix SECURITY_ALERT_EMAIL and re-run.
+One or more recipient addresses in SECURITY_ALERT_EMAIL are invalid. Aborting email alert.
+```
+
+This means a typo in `SECURITY_ALERT_EMAIL` causes the workflow step to **fail visibly** rather than silently dropping the alert. To fix it, update the secret (steps 1–4 above) and re-run the workflow.
+
 ## Other notification channels
 
 The workflow also posts a comment on the pull request and, if `SLACK_WEBHOOK_URL` is set, sends a Slack message. Those channels are independent of `SECURITY_ALERT_EMAIL`.

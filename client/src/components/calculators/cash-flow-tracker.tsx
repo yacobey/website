@@ -250,6 +250,7 @@ export default function CashFlowTracker() {
                         variant="ghost"
                         size="sm"
                         onClick={() => removeItem(item.id)}
+                        aria-label={`Remove ${item.name}`}
                         className="text-red-600 hover:text-red-800 hover:bg-red-50"
                       >
                         <Trash2 className="w-4 h-4" />

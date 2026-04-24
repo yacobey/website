@@ -96,6 +96,7 @@ jobs:
             });
 
       - name: Send Slack alert
+        if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
         uses: slackapi/slack-github-action@v1.27.0
         with:
           payload: |
@@ -114,3 +115,31 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
+      - name: Send email alert via SendGrid
+        if: ${{ always() && secrets.SENDGRID_API_KEY != '' && secrets.SENDGRID_FROM_EMAIL != '' && secrets.SECURITY_ALERT_EMAIL != '' }}
+        run: |
+          FAILED_JOBS=""
+          if [ "${{ needs.npm-audit.result }}" = "failure" ]; then
+            FAILED_JOBS="npm audit"
+          fi
+          if [ "${{ needs.codeql.result }}" = "failure" ]; then
+            FAILED_JOBS="${FAILED_JOBS:+$FAILED_JOBS, }CodeQL Analysis"
+          fi
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl --silent --show-error --fail \
+            --request POST \
+            --url https://api.sendgrid.com/v3/mail/send \
+            --header "Authorization: Bearer ${{ secrets.SENDGRID_API_KEY }}" \
+            --header "Content-Type: application/json" \
+            --data "{
+              \"personalizations\": [{
+                \"to\": [{\"email\": \"${{ secrets.SECURITY_ALERT_EMAIL }}\"}],
+                \"subject\": \"[Security Alert] Scan failed on ${{ github.repository }}\"
+              }],
+              \"from\": {\"email\": \"${{ secrets.SENDGRID_FROM_EMAIL }}\"},
+              \"content\": [{
+                \"type\": \"text/plain\",
+                \"value\": \"Security scan failed\\n\\nFailed job(s): ${FAILED_JOBS}\\nRepository: ${{ github.repository }}\\nBranch: ${{ github.ref_name }}\\nTriggered by: ${{ github.actor }}\\n\\nView the failed run:\\n${RUN_URL}\"
+              }]
+            }"

@@ -6,6 +6,54 @@ declare global {
   }
 }
 
+export type AnalyticsEventMap = {
+  click: {
+    action:
+      | 'try_ai_builder'
+      | 'generate_calculator'
+      | 'use_tax_calculator'
+      | 'use_roi_calculator'
+      | 'use_cash_flow_calculator'
+      | 'view_all_posts'
+      | 'read_article';
+    section: 'ai_tools' | 'blog_preview' | 'calculator_builder';
+    article?: string;
+  };
+  action: {
+    action: 'cash_flow_add_item' | 'cash_flow_remove_item';
+    type?: 'income' | 'expense';
+  };
+  calculator_use: {
+    action: 'custom_calculator' | 'roi_calculator' | 'tax_calculator';
+    name?: string;
+    investment?: string;
+    income?: string;
+  };
+  form_submit: {
+    section: 'contact_form' | 'contact_page';
+  };
+  form_error: {
+    section: 'contact_form' | 'contact_page';
+  };
+  schedule_consultation_click: {
+    section: 'hero' | 'contact_page';
+  };
+  get_in_touch_click: {
+    section: 'hero';
+  };
+  book_call_click: {
+    section: 'services';
+    service: string;
+  };
+  acca_service_click: {
+    service_name: string;
+    section: 'acca_services';
+  };
+  acca_consultation_click: {
+    section: 'acca_services';
+  };
+};
+
 export function initGA() {
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
   
@@ -33,7 +81,10 @@ export function initGA() {
   });
 }
 
-export function trackEvent(eventName: string, parameters?: Record<string, any>) {
+export function trackEvent<K extends keyof AnalyticsEventMap>(
+  eventName: K,
+  parameters: AnalyticsEventMap[K]
+) {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', eventName, parameters);
   }

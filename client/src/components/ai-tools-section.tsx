@@ -37,8 +37,8 @@ export default function AIToolsSection() {
     }, 2000);
   };
 
-  const handleUseCalculator = (type: string) => {
-    trackEvent('click', { action: `use_${type}_calculator`, section: 'ai_tools' });
+  const handleUseCalculator = (action: 'use_tax_calculator' | 'use_roi_calculator' | 'use_cash_flow_calculator') => {
+    trackEvent('click', { action, section: 'ai_tools' });
     window.location.href = '/ai-tools';
   };
 
@@ -153,7 +153,7 @@ export default function AIToolsSection() {
               <p className="text-slate-gray mb-4">Estimate federal and state taxes for individuals and businesses.</p>
               <Button 
                 variant="link"
-                onClick={() => handleUseCalculator('tax')}
+                onClick={() => handleUseCalculator('use_tax_calculator')}
                 className="text-primary font-semibold hover:text-primary-dark transition-colors p-0"
               >
                 Use Calculator <ExternalLink className="ml-1 w-4 h-4" />
@@ -170,7 +170,7 @@ export default function AIToolsSection() {
               <p className="text-slate-gray mb-4">Calculate return on investment for business decisions and projects.</p>
               <Button 
                 variant="link"
-                onClick={() => handleUseCalculator('roi')}
+                onClick={() => handleUseCalculator('use_roi_calculator')}
                 className="text-primary font-semibold hover:text-primary-dark transition-colors p-0"
               >
                 Use Calculator <ExternalLink className="ml-1 w-4 h-4" />
@@ -187,7 +187,7 @@ export default function AIToolsSection() {
               <p className="text-slate-gray mb-4">Monitor and project your business cash flow patterns.</p>
               <Button 
                 variant="link"
-                onClick={() => handleUseCalculator('cash_flow')}
+                onClick={() => handleUseCalculator('use_cash_flow_calculator')}
                 className="text-primary font-semibold hover:text-primary-dark transition-colors p-0"
               >
                 Use Calculator <ExternalLink className="ml-1 w-4 h-4" />

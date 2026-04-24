@@ -128,10 +128,18 @@ jobs:
           fi
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-          # Build a JSON array from the comma-separated SECURITY_ALERT_EMAIL secret.
-          # Each entry is trimmed of whitespace so "alice@example.com, bob@example.com"
-          # and "alice@example.com,bob@example.com" both work correctly.
-          TO_JSON=""
+          # Build one personalization entry per recipient from the comma-separated
+          # SECURITY_ALERT_EMAIL secret so each person sees only their own address
+          # in the To field (no visible CC to other recipients).
+          #
+          # Example: SECURITY_ALERT_EMAIL = "alice@example.com, bob@example.com"
+          # Produces:
+          #   "personalizations": [
+          #     {"to": [{"email": "alice@example.com"}], "subject": "..."},
+          #     {"to": [{"email": "bob@example.com"}], "subject": "..."}
+          #   ]
+          # Alice receives the email addressed only to herself; same for Bob.
+          PERSONALIZATIONS_JSON=""
           INVALID_FOUND=0
           IFS=',' read -ra RAW_EMAILS <<< "${{ secrets.SECURITY_ALERT_EMAIL }}"
           for raw in "${RAW_EMAILS[@]}"; do
@@ -143,7 +151,8 @@ jobs:
               echo "ERROR: '$trimmed' is not a valid email address. Fix SECURITY_ALERT_EMAIL and re-run."
               INVALID_FOUND=1
             fi
-            TO_JSON="${TO_JSON:+$TO_JSON,}{\"email\":\"$trimmed\"}"
+            ENTRY="{\"to\":[{\"email\":\"$trimmed\"}],\"subject\":\"[Security Alert] Scan failed on ${{ github.repository }}\"}"
+            PERSONALIZATIONS_JSON="${PERSONALIZATIONS_JSON:+$PERSONALIZATIONS_JSON,}$ENTRY"
           done
 
           if [ "$INVALID_FOUND" -eq 1 ]; then
@@ -151,9 +160,9 @@ jobs:
             exit 1
           fi
 
-          TO_JSON="[$TO_JSON]"
+          PERSONALIZATIONS_JSON="[$PERSONALIZATIONS_JSON]"
 
-          if [ "$TO_JSON" = "[]" ]; then
+          if [ "$PERSONALIZATIONS_JSON" = "[]" ]; then
             echo "SECURITY_ALERT_EMAIL contains no valid addresses after parsing; skipping email alert."
             exit 0
           fi
@@ -164,10 +173,7 @@ jobs:
             --header "Authorization: Bearer ${{ secrets.SENDGRID_API_KEY }}" \
             --header "Content-Type: application/json" \
             --data "{
-              \"personalizations\": [{
-                \"to\": $TO_JSON,
-                \"subject\": \"[Security Alert] Scan failed on ${{ github.repository }}\"
-              }],
+              \"personalizations\": $PERSONALIZATIONS_JSON,
               \"from\": {\"email\": \"${{ secrets.SENDGRID_FROM_EMAIL }}\"},
               \"content\": [{
                 \"type\": \"text/plain\",

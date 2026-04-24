@@ -56,3 +56,29 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:${{ matrix.language }}"
+
+  notify-on-failure:
+    name: Notify on failure
+    runs-on: ubuntu-latest
+    needs: [npm-audit, codeql]
+    if: ${{ always() && (needs.npm-audit.result == 'failure' || needs.codeql.result == 'failure') }}
+    steps:
+      - name: Send Slack alert
+        uses: slackapi/slack-github-action@v1.27.0
+        with:
+          payload: |
+            {
+              "text": ":rotating_light: *Security scan failed* on `${{ github.repository }}`",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":rotating_light: *Security scan failed*\n*Repo:* `${{ github.repository }}`\n*Branch:* `${{ github.ref_name }}`\n*Triggered by:* ${{ github.actor }}\n*<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View failed run>*"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

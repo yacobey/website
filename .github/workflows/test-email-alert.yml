@@ -1,0 +1,87 @@
+name: Test Email Alert
+
+# RUNBOOK — How to use this workflow
+# ====================================
+# 1. Go to Actions → "Test Email Alert" → "Run workflow".
+# 2. Optionally fill in the Reason field so the email subject is descriptive.
+# 3. Wait for the workflow to complete (the notify-on-failure job should succeed).
+# 4. Open the SECURITY_ALERT_EMAIL inbox and confirm the test email was received.
+#    Subject line: "[TEST] Security Alert Email — <repo>"
+# 5. If the workflow fails at "Validate required secrets are present", add the
+#    missing secrets under Settings → Secrets → Actions before going live.
+# 6. If the workflow fails at "Send test email alert", check the response body
+#    printed in the logs — common causes are an unverified sender domain on
+#    SendGrid or an invalid/expired API key.
+# Run this workflow whenever secrets are rotated or the SendGrid account changes.
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason for running the email alert test"
+        required: false
+        default: "Manual verification of SendGrid alert configuration"
+
+jobs:
+  deliberate-fail:
+    name: Deliberate failure (email trigger)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail intentionally to trigger email alert
+        run: |
+          echo "This job fails on purpose to exercise the notify-on-failure email path."
+          exit 1
+
+  notify-on-failure:
+    name: Notify on failure (email alert test)
+    runs-on: ubuntu-latest
+    needs: [deliberate-fail]
+    if: ${{ always() && needs.deliberate-fail.result == 'failure' }}
+    steps:
+      - name: Validate required secrets are present
+        run: |
+          missing=()
+          if [ -z "${{ secrets.SENDGRID_API_KEY }}" ]; then
+            missing+=("SENDGRID_API_KEY")
+          fi
+          if [ -z "${{ secrets.SENDGRID_FROM_EMAIL }}" ]; then
+            missing+=("SENDGRID_FROM_EMAIL")
+          fi
+          if [ -z "${{ secrets.SECURITY_ALERT_EMAIL }}" ]; then
+            missing+=("SECURITY_ALERT_EMAIL")
+          fi
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::error::The following required secrets are not set: ${missing[*]}"
+            echo "::error::Configure these secrets in the repository settings before relying on email alerts."
+            exit 1
+          fi
+          echo "All required SendGrid secrets are present."
+
+      - name: Send test email alert via SendGrid
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          HTTP_STATUS=$(curl --silent --output /tmp/sendgrid_response.json \
+            --write-out "%{http_code}" \
+            --request POST \
+            --url https://api.sendgrid.com/v3/mail/send \
+            --header "Authorization: Bearer ${{ secrets.SENDGRID_API_KEY }}" \
+            --header "Content-Type: application/json" \
+            --data "{
+              \"personalizations\": [{
+                \"to\": [{\"email\": \"${{ secrets.SECURITY_ALERT_EMAIL }}\"}],
+                \"subject\": \"[TEST] Security Alert Email — ${{ github.repository }}\"
+              }],
+              \"from\": {\"email\": \"${{ secrets.SENDGRID_FROM_EMAIL }}\"},
+              \"content\": [{
+                \"type\": \"text/plain\",
+                \"value\": \"This is a TEST email to verify the security alert pipeline.\\n\\nIf you received this, the SendGrid integration is configured correctly and emails will be delivered when real security scans fail.\\n\\nTest triggered by: ${{ github.actor }}\\nReason: ${{ inputs.reason }}\\nRepository: ${{ github.repository }}\\nRun: ${RUN_URL}\"
+              }]
+            }")
+          echo "SendGrid response body:"
+          cat /tmp/sendgrid_response.json || true
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+            echo "::notice::Email sent successfully (HTTP $HTTP_STATUS). Check ${{ secrets.SECURITY_ALERT_EMAIL }} to confirm delivery."
+          else
+            echo "::error::SendGrid returned HTTP $HTTP_STATUS. Check the response body above for details (e.g. unverified sender domain, bad API key)."
+            exit 1
+          fi

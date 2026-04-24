@@ -1,6 +1,5 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
-import jwt from "jsonwebtoken";
 import { storage } from "./storage";
 import { generateSitemap, generateRobotsTxt } from "./sitemap-generator";
 import { insertContactSchema, insertChatMessageSchema, insertSeoDataSchema } from "@shared/schema";
@@ -14,6 +13,7 @@ import Stripe from "stripe";
 import paymentRouter from "./payment-router";
 import { getBusinessConfig } from "./business-config";
 import { getEnhancedSEODefaults } from "./seo-business-integration";
+import crypto from "crypto";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
@@ -22,42 +22,34 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 import { z } from "zod";
 import { generateBlogContent, generateBlogMetadata } from "./ai-service";
 
+interface AdminSession {
+  username: string;
+  expires: Date;
+}
+
+const adminSessions = new Map<string, AdminSession>();
+
+function requireAdminAuth(req: Request, res: Response, next: NextFunction): void {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    res.status(401).json({ message: "Unauthorized: Admin authentication required" });
+    return;
+  }
+  const token = authHeader.substring(7);
+  const session = adminSessions.get(token);
+  if (!session) {
+    res.status(401).json({ message: "Unauthorized: Invalid or expired session" });
+    return;
+  }
+  if (new Date() > session.expires) {
+    adminSessions.delete(token);
+    res.status(401).json({ message: "Unauthorized: Session expired" });
+    return;
+  }
+  next();
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Admin authentication middleware — verifies a HS256-signed JWT issued at login.
-  // Accepts the token from the Authorization: Bearer header or from the admin_token cookie.
-  const adminAuth = (req: Request, res: Response, next: NextFunction): void => {
-    const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET;
-    if (!ADMIN_JWT_SECRET) {
-      res.status(401).json({ message: "Unauthorized" });
-      return;
-    }
-
-    let token: string | undefined;
-
-    const authHeader = req.headers.authorization;
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-      token = authHeader.substring(7);
-    } else if (req.cookies && req.cookies.admin_token) {
-      token = req.cookies.admin_token as string;
-    }
-
-    if (!token) {
-      res.status(401).json({ message: "Unauthorized" });
-      return;
-    }
-
-    try {
-      const payload = jwt.verify(token, ADMIN_JWT_SECRET, { algorithms: ['HS256'] }) as jwt.JwtPayload;
-      if (payload.role !== 'admin') {
-        res.status(403).json({ message: "Forbidden" });
-        return;
-      }
-      next();
-    } catch {
-      res.status(401).json({ message: "Unauthorized" });
-    }
-  };
-
   // Contact form submission
   app.post("/api/contact", async (req, res) => {
     try {
@@ -70,7 +62,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get all contacts (for admin)
-  app.get("/api/contacts", adminAuth, async (req, res) => {
+  app.get("/api/contacts", requireAdminAuth, async (req, res) => {
     try {
       const contacts = await storage.getContacts();
       res.json(contacts);
@@ -81,7 +73,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Update contact status
-  app.patch("/api/contacts/:id", adminAuth, async (req, res) => {
+  app.patch("/api/contacts/:id", requireAdminAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { status } = req.body;
@@ -117,7 +109,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/blog", async (req, res) => {
+  app.post("/api/blog", requireAdminAuth, async (req, res) => {
     try {
       const post = await storage.createBlogPost(req.body);
       res.json(post);
@@ -138,7 +130,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/calculators", async (req, res) => {
+  app.post("/api/calculators", requireAdminAuth, async (req, res) => {
     try {
       const calculator = await storage.createCalculator(req.body);
       res.json(calculator);
@@ -405,21 +397,20 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
   app.post("/api/admin/login", async (req, res) => {
     try {
       const { username, password } = req.body;
-
+      
       const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
       const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-      const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET;
 
-      if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !ADMIN_JWT_SECRET) {
-        return res.status(500).json({ message: "Server misconfiguration" });
+      if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+        console.error("Admin credentials are not configured via environment variables");
+        return res.status(503).json({ message: "Admin access is not configured" });
       }
-
+      
       if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-        const token = jwt.sign({ sub: username, role: 'admin' }, ADMIN_JWT_SECRET, {
-          algorithm: 'HS256',
-          expiresIn: '24h',
-        });
-        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+        const token = crypto.randomBytes(32).toString('hex');
+        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+        
+        adminSessions.set(token, { username, expires });
 
         res.json({
           success: true,
@@ -437,6 +428,19 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
       console.error("Error during login:", error);
       res.status(500).json({ message: "Internal server error" });
     }
+  });
+
+  app.post("/api/admin/logout", requireAdminAuth, (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      adminSessions.delete(token);
+    }
+    res.json({ success: true, message: "Logged out successfully" });
+  });
+
+  app.get("/api/admin/verify", requireAdminAuth, (req, res) => {
+    res.json({ success: true, message: "Session is valid" });
   });
 
 
@@ -487,7 +491,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.post("/api/seo-data", async (req, res) => {
+  app.post("/api/seo-data", requireAdminAuth, async (req, res) => {
     try {
       const validatedData = insertSeoDataSchema.parse(req.body);
       const seoData = await storage.createSeoData(validatedData);
@@ -498,7 +502,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.put("/api/seo-data/:page", async (req, res) => {
+  app.put("/api/seo-data/:page", requireAdminAuth, async (req, res) => {
     try {
       const page = req.params.page;
       const updateData = req.body;
@@ -567,7 +571,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
   });
 
   // SEO cleanup endpoint
-  app.post("/api/seo-cleanup", async (req, res) => {
+  app.post("/api/seo-cleanup", requireAdminAuth, async (req, res) => {
     try {
       const result = await cleanupSeoData();
       res.json(result);
@@ -749,7 +753,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
   });
 
   // Content schedule management endpoints
-  app.get("/api/content-schedule", async (req, res) => {
+  app.get("/api/content-schedule", requireAdminAuth, async (req, res) => {
     try {
       const schedules = await storage.getContentSchedules();
       res.json(schedules);
@@ -759,7 +763,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.post("/api/content-schedule", async (req, res) => {
+  app.post("/api/content-schedule", requireAdminAuth, async (req, res) => {
     try {
       const { contentType, frequency, nextRunDate, lastRunDate, isActive, topicCategories, publishTime } = req.body;
       
@@ -864,7 +868,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
   });
 
   // Blog post preview and scheduling
-  app.post("/api/blog/schedule", async (req, res) => {
+  app.post("/api/blog/schedule", requireAdminAuth, async (req, res) => {
     try {
       const { scheduledFor, contentType, ...postData } = req.body;
       
@@ -885,7 +889,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
   });
 
   // Social media integration endpoint
-  app.post("/api/social-media/post", async (req, res) => {
+  app.post("/api/social-media/post", requireAdminAuth, async (req, res) => {
     try {
       const { blogPostId, platforms } = req.body;
       const result = await postToSocialMedia(blogPostId, platforms);
@@ -897,7 +901,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
   });
 
   // Content backup and versioning endpoints
-  app.get("/api/content-backups/:blogPostId", async (req, res) => {
+  app.get("/api/content-backups/:blogPostId", requireAdminAuth, async (req, res) => {
     try {
       const blogPostId = parseInt(req.params.blogPostId);
       if (isNaN(blogPostId)) {
@@ -912,7 +916,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.post("/api/content-backups", async (req, res) => {
+  app.post("/api/content-backups", requireAdminAuth, async (req, res) => {
     try {
       const { blogPostId, version, changeReason } = req.body;
       
@@ -954,7 +958,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.post("/api/content-restore/:blogPostId/:version", async (req, res) => {
+  app.post("/api/content-restore/:blogPostId/:version", requireAdminAuth, async (req, res) => {
     try {
       const blogPostId = parseInt(req.params.blogPostId);
       const version = parseInt(req.params.version);

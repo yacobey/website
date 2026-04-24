@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { useAuth, getAdminAuthHeader } from "@/hooks/useAuth";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -20,14 +21,29 @@ interface PageStatus {
 export default function IndexingControl() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      setLocation('/admin-login');
+    }
+  }, [isAuthenticated, authLoading, setLocation]);
 
   const { data: seoData, isLoading } = useQuery<Array<{ page: string; metaRobots: string | null }>>({
     queryKey: ["/api/seo-data"],
+    enabled: isAuthenticated,
   });
 
   const updateMutation = useMutation({
     mutationFn: async ({ page, metaRobots }: { page: string; metaRobots: string }) => {
-      await apiRequest("PUT", `/api/seo-data/${page}`, { metaRobots });
+      const response = await fetch(`/api/seo-data/${page}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", ...getAdminAuthHeader() },
+        body: JSON.stringify({ metaRobots }),
+      });
+      if (!response.ok) throw new Error("Failed to update");
+      return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/seo-data"] });
@@ -53,7 +69,12 @@ export default function IndexingControl() {
       }));
 
       for (const update of updates || []) {
-        await apiRequest("PUT", `/api/seo-data/${update.page}`, { metaRobots: update.metaRobots });
+        const response = await fetch(`/api/seo-data/${update.page}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json", ...getAdminAuthHeader() },
+          body: JSON.stringify({ metaRobots: update.metaRobots }),
+        });
+        if (!response.ok) throw new Error("Failed to update page " + update.page);
       }
     },
     onSuccess: () => {
@@ -84,6 +105,14 @@ export default function IndexingControl() {
       <XCircle className="h-5 w-5 text-red-600" />
     );
   };
+
+  if (authLoading || (!isAuthenticated && !authLoading)) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg">Checking authentication...</div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

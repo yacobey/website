@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth, getAdminAuthHeader } from "@/hooks/useAuth";
 import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -87,6 +87,7 @@ export default function SEODashboard() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          ...getAdminAuthHeader(),
         },
         body: JSON.stringify(data),
       });

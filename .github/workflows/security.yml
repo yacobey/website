@@ -127,6 +127,24 @@ jobs:
             FAILED_JOBS="${FAILED_JOBS:+$FAILED_JOBS, }CodeQL Analysis"
           fi
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          # Build a JSON array from the comma-separated SECURITY_ALERT_EMAIL secret.
+          # Each entry is trimmed of whitespace so "alice@example.com, bob@example.com"
+          # and "alice@example.com,bob@example.com" both work correctly.
+          TO_JSON=""
+          IFS=',' read -ra RAW_EMAILS <<< "${{ secrets.SECURITY_ALERT_EMAIL }}"
+          for raw in "${RAW_EMAILS[@]}"; do
+            trimmed="$(echo "$raw" | xargs)"
+            [ -z "$trimmed" ] && continue
+            TO_JSON="${TO_JSON:+$TO_JSON,}{\"email\":\"$trimmed\"}"
+          done
+          TO_JSON="[$TO_JSON]"
+
+          if [ "$TO_JSON" = "[]" ]; then
+            echo "SECURITY_ALERT_EMAIL contains no valid addresses after parsing; skipping email alert."
+            exit 0
+          fi
+
           curl --silent --show-error --fail \
             --request POST \
             --url https://api.sendgrid.com/v3/mail/send \
@@ -134,7 +152,7 @@ jobs:
             --header "Content-Type: application/json" \
             --data "{
               \"personalizations\": [{
-                \"to\": [{\"email\": \"${{ secrets.SECURITY_ALERT_EMAIL }}\"}],
+                \"to\": $TO_JSON,
                 \"subject\": \"[Security Alert] Scan failed on ${{ github.repository }}\"
               }],
               \"from\": {\"email\": \"${{ secrets.SENDGRID_FROM_EMAIL }}\"},

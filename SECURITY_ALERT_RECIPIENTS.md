@@ -1,0 +1,47 @@
+# Security Alert Email Recipients
+
+This document explains how to control who receives email notifications when a security scan fails in CI.
+
+## How it works
+
+The `SECURITY_ALERT_EMAIL` GitHub Actions secret drives all alert recipients. The workflow reads this value, splits it on commas, and sends a single SendGrid request addressed to every recipient in the list. No code changes are needed to add or remove people.
+
+## Adding or changing recipients
+
+1. Go to **Settings → Secrets and variables → Actions** in the GitHub repository.
+2. Find the secret named `SECURITY_ALERT_EMAIL`.
+3. Click **Edit** (pencil icon).
+4. Set the value to a comma-separated list of email addresses:
+
+   ```
+   alice@example.com, bob@example.com, security-team@example.com
+   ```
+
+   Spaces around commas are ignored, so both formats below are valid:
+
+   ```
+   alice@example.com,bob@example.com
+   alice@example.com, bob@example.com
+   ```
+
+5. Click **Save secret**.
+
+The next failing scan will deliver the alert to every address in the list.
+
+## Removing a recipient
+
+Edit the secret (step 1–3 above) and remove the address you no longer want to notify. Save the secret. No deployment or code change is required.
+
+## Required secrets
+
+| Secret | Purpose |
+|---|---|
+| `SENDGRID_API_KEY` | Authenticates requests to the SendGrid API |
+| `SENDGRID_FROM_EMAIL` | The verified sender address shown in the From field |
+| `SECURITY_ALERT_EMAIL` | Comma-separated list of recipient addresses |
+
+If any of the three secrets above is missing or empty the email step is skipped silently — no error is raised.
+
+## Other notification channels
+
+The workflow also posts a comment on the pull request and, if `SLACK_WEBHOOK_URL` is set, sends a Slack message. Those channels are independent of `SECURITY_ALERT_EMAIL`.

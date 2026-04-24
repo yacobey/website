@@ -10,31 +10,136 @@ import {
   PieChart, 
   DollarSign,
   ExternalLink,
-  Sparkles
+  Sparkles,
+  ArrowRight
 } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { Link } from "wouter";
 
+type CalculatorField = { label: string; placeholder: string; readOnly?: boolean };
+
+type GeneratedCalculator = {
+  title: string;
+  fields: CalculatorField[];
+  tab: string;
+};
+
+function detectCalculatorType(prompt: string): GeneratedCalculator {
+  const lower = prompt.toLowerCase();
+
+  if (lower.includes("loan") || lower.includes("mortgage") || lower.includes("payment") || lower.includes("amortiz")) {
+    return {
+      title: "Loan Payment Calculator",
+      fields: [
+        { label: "Loan Amount", placeholder: "$50,000" },
+        { label: "Interest Rate", placeholder: "5.5%" },
+        { label: "Term (Years)", placeholder: "30" },
+        { label: "Monthly Payment", placeholder: "$284.09", readOnly: true },
+      ],
+      tab: "loan",
+    };
+  }
+
+  if (lower.includes("tax") || lower.includes("income tax") || lower.includes("deduct")) {
+    return {
+      title: "Tax Estimation Calculator",
+      fields: [
+        { label: "Annual Income", placeholder: "$120,000" },
+        { label: "Filing Status", placeholder: "Single" },
+        { label: "Deductions", placeholder: "$14,600" },
+        { label: "Estimated Tax", placeholder: "$22,500", readOnly: true },
+      ],
+      tab: "tax",
+    };
+  }
+
+  if (lower.includes("roi") || lower.includes("return on invest") || lower.includes("invest")) {
+    return {
+      title: "ROI Calculator",
+      fields: [
+        { label: "Initial Investment", placeholder: "$10,000" },
+        { label: "Net Profit", placeholder: "$3,500" },
+        { label: "Time Period (Months)", placeholder: "12" },
+        { label: "ROI", placeholder: "35%", readOnly: true },
+      ],
+      tab: "roi",
+    };
+  }
+
+  if (lower.includes("cash flow") || lower.includes("cashflow") || lower.includes("revenue") || lower.includes("expense")) {
+    return {
+      title: "Cash Flow Tracker",
+      fields: [
+        { label: "Monthly Revenue", placeholder: "$45,000" },
+        { label: "Operating Expenses", placeholder: "$28,000" },
+        { label: "Other Outflows", placeholder: "$5,000" },
+        { label: "Net Cash Flow", placeholder: "$12,000", readOnly: true },
+      ],
+      tab: "cashflow",
+    };
+  }
+
+  if (lower.includes("break") || lower.includes("breakeven") || lower.includes("break-even") || lower.includes("profit")) {
+    return {
+      title: "Break-Even Analysis Calculator",
+      fields: [
+        { label: "Fixed Costs", placeholder: "$15,000" },
+        { label: "Variable Cost / Unit", placeholder: "$12" },
+        { label: "Selling Price / Unit", placeholder: "$25" },
+        { label: "Break-Even Units", placeholder: "1,154", readOnly: true },
+      ],
+      tab: "breakeven",
+    };
+  }
+
+  if (lower.includes("deprecia")) {
+    return {
+      title: "Depreciation Calculator",
+      fields: [
+        { label: "Asset Value", placeholder: "$50,000" },
+        { label: "Salvage Value", placeholder: "$5,000" },
+        { label: "Useful Life (Years)", placeholder: "10" },
+        { label: "Annual Depreciation", placeholder: "$4,500", readOnly: true },
+      ],
+      tab: "depreciation",
+    };
+  }
+
+  const words = prompt.trim().split(/\s+/).slice(0, 5).join(" ");
+  return {
+    title: `${words.charAt(0).toUpperCase() + words.slice(1)} Calculator`,
+    fields: [
+      { label: "Input 1", placeholder: "Enter value" },
+      { label: "Input 2", placeholder: "Enter value" },
+      { label: "Input 3", placeholder: "Enter value" },
+      { label: "Result", placeholder: "Calculated", readOnly: true },
+    ],
+    tab: "builder",
+  };
+}
+
 export default function AIToolsSection() {
   const [calculatorPrompt, setCalculatorPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedCalc, setGeneratedCalc] = useState<GeneratedCalculator | null>(null);
 
   const handleTryAIBuilder = () => {
     trackEvent('click', { action: 'try_ai_builder', section: 'ai_tools' });
-    // In a real app, this would navigate to the AI builder page
     window.location.href = '/ai-tools';
   };
 
   const handleGenerateCalculator = async () => {
     if (!calculatorPrompt.trim()) return;
-    
+
     setIsGenerating(true);
+    setGeneratedCalc(null);
     trackEvent('click', { action: 'generate_calculator', section: 'ai_tools' });
-    
-    // Simulate AI generation
+
     setTimeout(() => {
+      const result = detectCalculatorType(calculatorPrompt);
+      setGeneratedCalc(result);
       setIsGenerating(false);
-    }, 2000);
+    }, 1500);
   };
 
   const handleUseCalculator = (action: 'use_tax_calculator' | 'use_roi_calculator' | 'use_cash_flow_calculator') => {
@@ -52,7 +157,7 @@ export default function AIToolsSection() {
           </p>
         </div>
         
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
           <div>
             <h3 className="text-3xl font-bold mb-6">Custom Calculator Builder</h3>
             <p className="text-lg text-slate-gray mb-8">
@@ -61,7 +166,7 @@ export default function AIToolsSection() {
             <div className="space-y-4 mb-8">
               <div className="flex items-center gap-3">
                 <CheckCircle className="text-success w-6 h-6" />
-                <span className="text-lg">ROI & Investment Calculators</span>
+                <span className="text-lg">ROI &amp; Investment Calculators</span>
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle className="text-success w-6 h-6" />
@@ -84,9 +189,10 @@ export default function AIToolsSection() {
               Try AI Builder
             </Button>
           </div>
-          <div>
+
+          <div className="space-y-6">
             <Card className="bg-gray-50 rounded-xl p-8 shadow-lg">
-              <Card className="bg-white rounded-lg p-6 mb-6">
+              <Card className="bg-white rounded-lg p-6">
                 <h4 className="text-xl font-semibold mb-4">AI Calculator Builder</h4>
                 <div className="space-y-4">
                   <div>
@@ -110,35 +216,53 @@ export default function AIToolsSection() {
                   </Button>
                 </div>
               </Card>
-              
-              {/* Sample Generated Calculator Preview */}
-              <Card className="bg-white rounded-lg p-6 border-2 border-primary/20">
-                <h5 className="font-semibold mb-4">Generated: Loan Payment Calculator</h5>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <Label className="block text-slate-gray mb-1">Loan Amount</Label>
-                    <Input type="text" className="w-full p-2 border rounded" placeholder="$50,000" />
-                  </div>
-                  <div>
-                    <Label className="block text-slate-gray mb-1">Interest Rate</Label>
-                    <Input type="text" className="w-full p-2 border rounded" placeholder="5.5%" />
-                  </div>
-                  <div>
-                    <Label className="block text-slate-gray mb-1">Term (Years)</Label>
-                    <Input type="text" className="w-full p-2 border rounded" placeholder="30" />
-                  </div>
-                  <div>
-                    <Label className="block text-slate-gray mb-1">Monthly Payment</Label>
-                    <Input 
-                      type="text" 
-                      className="w-full p-2 border rounded bg-gray-50" 
-                      placeholder="$284.09" 
-                      readOnly 
-                    />
-                  </div>
+            </Card>
+
+            {/* Generated Preview */}
+            {isGenerating && (
+              <Card className="bg-white rounded-xl p-6 border-2 border-primary/20 shadow-md animate-pulse">
+                <div className="h-5 bg-gray-200 rounded w-1/2 mb-4" />
+                <div className="grid grid-cols-2 gap-4">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i}>
+                      <div className="h-3 bg-gray-200 rounded w-3/4 mb-2" />
+                      <div className="h-8 bg-gray-100 rounded" />
+                    </div>
+                  ))}
                 </div>
               </Card>
-            </Card>
+            )}
+
+            {generatedCalc && !isGenerating && (
+              <Card className="bg-white rounded-xl p-6 border-2 border-primary/30 shadow-md">
+                <div className="flex items-center justify-between mb-4">
+                  <h5 className="font-semibold text-lg">Generated: {generatedCalc.title}</h5>
+                  <span className="inline-flex items-center gap-1 text-xs font-medium bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                    <CheckCircle className="w-3 h-3" /> Ready
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm mb-5">
+                  {generatedCalc.fields.map((field) => (
+                    <div key={field.label}>
+                      <Label className="block text-slate-gray mb-1">{field.label}</Label>
+                      <Input
+                        type="text"
+                        className={`w-full p-2 border rounded ${field.readOnly ? "bg-gray-50 font-medium text-primary" : ""}`}
+                        placeholder={field.placeholder}
+                        readOnly={field.readOnly}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <a
+                  href={`/ai-tools#${generatedCalc.tab}`}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark transition-colors"
+                  onClick={() => trackEvent('click', { action: 'open_full_calculator', tab: generatedCalc.tab, section: 'ai_tools' })}
+                >
+                  Open full interactive version <ArrowRight className="w-4 h-4" />
+                </a>
+              </Card>
+            )}
           </div>
         </div>
         

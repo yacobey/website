@@ -179,6 +179,11 @@ jobs:
           fi
 
           SUMMARY_FROM_EMAIL="${{ secrets.SENDGRID_FROM_EMAIL }}"
+          if ! echo "$SUMMARY_FROM_EMAIL" | grep -qE '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'; then
+            echo "ERROR: '$SUMMARY_FROM_EMAIL' is not a valid sender address. Fix SENDGRID_FROM_EMAIL and re-run."
+            exit 1
+          fi
+
           SUMMARY_BODY_FILE=$(mktemp)
           SUMMARY_HTTP_CODE=$(curl --silent --show-error \
             -o "$SUMMARY_BODY_FILE" \

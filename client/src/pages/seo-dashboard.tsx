@@ -15,6 +15,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { Link } from "wouter";
 import { 
   Search, 
   Globe, 
@@ -26,7 +27,8 @@ import {
   Save,
   Eye,
   Edit3,
-  LogOut
+  LogOut,
+  Activity
 } from "lucide-react";
 
 interface SEOPageData {
@@ -218,22 +220,35 @@ export default function SEODashboard() {
                 Manage meta titles, descriptions, Open Graph tags, and other SEO metadata for all website pages.
               </p>
             </div>
-            <Button
-              onClick={() => {
-                logout();
-                setLocation('/admin-login');
-                toast({
-                  title: "Logged out",
-                  description: "You have been successfully logged out.",
-                });
-              }}
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
-            >
-              <LogOut className="w-4 h-4" />
-              Logout
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+                asChild
+              >
+                <Link href="/admin/status">
+                  <Activity className="w-4 h-4" />
+                  Health Status
+                </Link>
+              </Button>
+              <Button
+                onClick={() => {
+                  logout();
+                  setLocation('/admin-login');
+                  toast({
+                    title: "Logged out",
+                    description: "You have been successfully logged out.",
+                  });
+                }}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
+              </Button>
+            </div>
           </div>
 
           {/* Google Indexing Quick Actions */}

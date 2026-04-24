@@ -1,8 +1,6 @@
 # Selam CPA
 
-[![Security Scanning](https://github.com/OWNER/REPO/actions/workflows/security.yml/badge.svg)](https://github.com/OWNER/REPO/actions/workflows/security.yml)
-
-> **Note:** Replace `OWNER/REPO` in the badge URL above with the actual GitHub repository path (e.g. `selamcpa/website`) once the repository is hosted on GitHub.
+[![Security Scanning](https://github.com/selamcpa/website/actions/workflows/security.yml/badge.svg)](https://github.com/selamcpa/website/actions/workflows/security.yml)
 
 A comprehensive full-stack web application for a CPA firm, offering tax preparation, financial statements, AI-powered financial tools, and advisory services.
 

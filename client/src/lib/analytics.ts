@@ -6,6 +6,36 @@ declare global {
   }
 }
 
+// All valid section identifiers used across analytics events.
+// Add new section values here when introducing events that carry a `section` field.
+export type AnalyticsSection =
+  | 'ai_tools'
+  | 'blog_preview'
+  | 'calculator_builder'
+  | 'contact_form'
+  | 'contact_page'
+  | 'hero'
+  | 'services'
+  | 'acca_services';
+
+// Shared parameter shapes reused by multiple related events.
+// Section fields derive from AnalyticsSection so literals stay centralized.
+type ContactFormParams = { section: Extract<AnalyticsSection, 'contact_form' | 'contact_page'> };
+type AccaParams = { section: Extract<AnalyticsSection, 'acca_services'> };
+
+/**
+ * AnalyticsEventMap — central registry of all trackable GA4 events.
+ *
+ * HOW TO ADD A NEW EVENT:
+ *  1. Add a new key whose name matches the GA4 event name you want to fire.
+ *  2. Define its parameter shape as the value type.
+ *  3. If the event uses a `section` field, add the new value to `AnalyticsSection`
+ *     above and reference it via Extract<AnalyticsSection, 'your-value'>.
+ *  4. If two or more events share an identical parameter shape, extract a shared
+ *     type (like `ContactFormParams`) and reuse it across those entries.
+ *  5. Call `trackEvent('<your-event-name>', { ... })` at the call-site — TypeScript
+ *     will enforce the correct parameter shape automatically.
+ */
 export type AnalyticsEventMap = {
   click: {
     action:
@@ -16,7 +46,7 @@ export type AnalyticsEventMap = {
       | 'use_cash_flow_calculator'
       | 'view_all_posts'
       | 'read_article';
-    section: 'ai_tools' | 'blog_preview' | 'calculator_builder';
+    section: Extract<AnalyticsSection, 'ai_tools' | 'blog_preview' | 'calculator_builder'>;
     article?: string;
   };
   action: {
@@ -29,29 +59,22 @@ export type AnalyticsEventMap = {
     investment?: string;
     income?: string;
   };
-  form_submit: {
-    section: 'contact_form' | 'contact_page';
-  };
-  form_error: {
-    section: 'contact_form' | 'contact_page';
-  };
+  // ContactFormParams is reused here because form_submit and form_error share the same shape
+  form_submit: ContactFormParams;
+  form_error: ContactFormParams;
   schedule_consultation_click: {
-    section: 'hero' | 'contact_page';
+    section: Extract<AnalyticsSection, 'hero' | 'contact_page'>;
   };
   get_in_touch_click: {
-    section: 'hero';
+    section: Extract<AnalyticsSection, 'hero'>;
   };
   book_call_click: {
-    section: 'services';
+    section: Extract<AnalyticsSection, 'services'>;
     service: string;
   };
-  acca_service_click: {
-    service_name: string;
-    section: 'acca_services';
-  };
-  acca_consultation_click: {
-    section: 'acca_services';
-  };
+  // AccaParams is reused here because acca_service_click and acca_consultation_click share the section
+  acca_service_click: AccaParams & { service_name: string };
+  acca_consultation_click: AccaParams;
 };
 
 export function initGA() {

@@ -190,6 +190,13 @@ jobs:
           fi
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
+          # Validate the sender address before doing anything else.
+          FROM_EMAIL="${{ secrets.SENDGRID_FROM_EMAIL }}"
+          if ! echo "$FROM_EMAIL" | grep -qE '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'; then
+            echo "ERROR: '$FROM_EMAIL' is not a valid sender address. Fix SENDGRID_FROM_EMAIL and re-run."
+            exit 1
+          fi
+
           # Build one personalization entry per recipient from the comma-separated
           # SECURITY_ALERT_EMAIL secret so each person sees only their own address
           # in the To field (no visible CC to other recipients).

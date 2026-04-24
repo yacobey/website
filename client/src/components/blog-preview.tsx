@@ -12,11 +12,11 @@ export default function BlogPreview() {
   });
 
   const handleViewAllPosts = () => {
-    trackEvent('click', 'view_all_posts', 'blog_preview');
+    trackEvent('click', { action: 'view_all_posts', section: 'blog_preview' });
   };
 
   const handleReadArticle = (slug: string) => {
-    trackEvent('click', 'read_article', 'blog_preview', { article: slug });
+    trackEvent('click', { action: 'read_article', section: 'blog_preview', article: slug });
   };
 
   const latestPosts = posts?.slice(0, 3) || [];

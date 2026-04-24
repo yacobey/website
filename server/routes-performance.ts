@@ -26,7 +26,7 @@ export function addPerformanceRoutes(app: Express) {
       res.status(500).json({ 
         status: 'error', 
         message: 'Health check failed',
-        error: error.message 
+        error: (error as Error).message 
       });
     }
   });
@@ -45,7 +45,7 @@ export function addPerformanceRoutes(app: Express) {
     } catch (error) {
       res.status(500).json({ 
         message: 'Failed to get performance metrics',
-        error: error.message 
+        error: (error as Error).message 
       });
     }
   });
@@ -69,7 +69,7 @@ export function addPerformanceRoutes(app: Express) {
     } catch (error) {
       res.status(500).json({ 
         message: 'Failed to fetch optimized blog posts',
-        error: error.message 
+        error: (error as Error).message 
       });
     }
   });

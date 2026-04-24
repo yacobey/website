@@ -7,11 +7,11 @@ export function generateLocalBusinessStructuredData() {
   return JSON.stringify({
     "@context": "https://schema.org",
     "@type": "AccountingService",
-    "name": config.business.name,
-    "image": `${config.seo.domain}${config.seo.socialImage}`,
-    "url": config.seo.domain,
-    "telephone": config.phone.e164,
-    "email": config.business.email,
+    "name": config.name,
+    "image": config.website,
+    "url": config.website,
+    "telephone": config.phoneE164,
+    "email": config.email,
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Maryland, Virginia, DC Metro Area",
@@ -98,13 +98,13 @@ export function generateLocalBusinessStructuredData() {
 // Enhanced SEO data with business integration
 export function getEnhancedSEODefaults(page: string) {
   const config = businessConfig;
-  const socialImageUrl = `${config.seo.domain}${config.seo.socialImage}`;
+  const socialImageUrl = config.website;
   
   const baseDefaults = {
     ogImage: socialImageUrl,
-    ogImageAlt: config.seo.socialImageAlt,
+    ogImageAlt: `${config.name} - Professional CPA Services`,
     twitterImage: socialImageUrl,
-    canonicalUrl: `${config.seo.domain}${page === 'home' ? '' : `/${page}`}`,
+    canonicalUrl: `${config.website}${page === 'home' ? '' : `/${page}`}`,
     structuredData: page === 'home' ? generateLocalBusinessStructuredData() : null
   };
 
@@ -112,48 +112,48 @@ export function getEnhancedSEODefaults(page: string) {
     case 'home':
       return {
         ...baseDefaults,
-        title: `${config.business.name} - Expert Accounting & Tax Services | MD, VA, DC`,
-        description: `Professional CPA services in MD, VA, DC. Expert tax preparation, bookkeeping, and business advisory. Call ${config.phone.display} for consultation.`,
+        title: `${config.name} - Expert Accounting & Tax Services | MD, VA, DC`,
+        description: `Professional CPA services in MD, VA, DC. Expert tax preparation, bookkeeping, and business advisory. Call ${config.phone} for consultation.`,
         keywords: "CPA, accounting, tax preparation, bookkeeping, business advisory, Maryland, Virginia, DC, ACCA",
-        ogTitle: `${config.business.name} - Professional CPA Services`,
-        ogDescription: `Expert accounting and tax services in Maryland, Virginia, and DC Metro Area. Contact us at ${config.phone.display} for professional consultation.`,
-        twitterTitle: `${config.business.name} - Expert CPA Services`,
-        twitterDescription: `Professional accounting, tax prep & business advisory in MD, VA, DC. Call ${config.phone.display}`
+        ogTitle: `${config.name} - Professional CPA Services`,
+        ogDescription: `Expert accounting and tax services in Maryland, Virginia, and DC Metro Area. Contact us at ${config.phone} for professional consultation.`,
+        twitterTitle: `${config.name} - Expert CPA Services`,
+        twitterDescription: `Professional accounting, tax prep & business advisory in MD, VA, DC. Call ${config.phone}`
       };
     
     case 'blog':
       return {
         ...baseDefaults,
-        title: `Tax & Accounting Insights - ${config.business.name} Blog`,
-        description: `Latest tax updates, accounting tips, and business insights from ${config.business.name}. Stay informed with expert CPA advice.`,
+        title: `Tax & Accounting Insights - ${config.name} Blog`,
+        description: `Latest tax updates, accounting tips, and business insights from ${config.name}. Stay informed with expert CPA advice.`,
         keywords: "tax news, accounting tips, business insights, CPA blog, tax updates",
-        ogTitle: `Tax & Accounting Blog - ${config.business.name}`,
-        ogDescription: `Expert insights on taxes, accounting, and business from ${config.business.name}. Professional CPA advice you can trust.`,
-        twitterTitle: `Tax & Accounting Blog - ${config.business.name}`,
+        ogTitle: `Tax & Accounting Blog - ${config.name}`,
+        ogDescription: `Expert insights on taxes, accounting, and business from ${config.name}. Professional CPA advice you can trust.`,
+        twitterTitle: `Tax & Accounting Blog - ${config.name}`,
         twitterDescription: `Expert tax and accounting insights from professional CPAs`
       };
       
     case 'ai-tools':
       return {
         ...baseDefaults,
-        title: `AI-Powered Financial Tools - ${config.business.name}`,
-        description: `Smart financial calculators and AI tools for tax planning, ROI analysis, and cash flow management. Free tools by ${config.business.name}.`,
+        title: `AI-Powered Financial Tools - ${config.name}`,
+        description: `Smart financial calculators and AI tools for tax planning, ROI analysis, and cash flow management. Free tools by ${config.name}.`,
         keywords: "financial calculators, tax calculator, ROI calculator, cash flow, AI tools, financial planning",
-        ogTitle: `AI Financial Tools - ${config.business.name}`,
+        ogTitle: `AI Financial Tools - ${config.name}`,
         ogDescription: `Free AI-powered financial calculators for tax planning, ROI analysis, and business decision making.`,
-        twitterTitle: `AI Financial Tools - ${config.business.name}`,
+        twitterTitle: `AI Financial Tools - ${config.name}`,
         twitterDescription: `Smart financial calculators and AI tools for better business decisions`
       };
     
     default:
       return {
         ...baseDefaults,
-        title: `${config.business.name} - Professional CPA Services`,
-        description: `Expert accounting and tax services by ${config.business.name}. Professional CPA guidance for your business needs.`,
+        title: `${config.name} - Professional CPA Services`,
+        description: `Expert accounting and tax services by ${config.name}. Professional CPA guidance for your business needs.`,
         keywords: "CPA, accounting, tax services",
-        ogTitle: `${config.business.name} - Professional CPA Services`,
-        ogDescription: `Expert accounting and tax services by ${config.business.name}. Professional CPA guidance for your business needs.`,
-        twitterTitle: `${config.business.name} - CPA Services`,
+        ogTitle: `${config.name} - Professional CPA Services`,
+        ogDescription: `Expert accounting and tax services by ${config.name}. Professional CPA guidance for your business needs.`,
+        twitterTitle: `${config.name} - CPA Services`,
         twitterDescription: `Professional accounting and tax services`
       };
   }

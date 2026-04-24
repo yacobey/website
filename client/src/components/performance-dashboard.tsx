@@ -5,15 +5,28 @@ import { Badge } from '@/components/ui/badge';
 import { Activity, Clock, Database, Globe } from 'lucide-react';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 
+interface ServerHealth {
+  status: string;
+  dbLatency: number;
+  uptime: number;
+  timestamp: string;
+}
+
+interface ServerMetrics {
+  memory: { used: number; total: number; heapUsed: number; external: number };
+  uptime: number;
+  timestamp: string;
+}
+
 export function PerformanceDashboard() {
   const clientMetrics = usePerformanceMonitor();
   
-  const { data: serverHealth } = useQuery({
+  const { data: serverHealth } = useQuery<ServerHealth>({
     queryKey: ['/api/health'],
     refetchInterval: 30000, // Refresh every 30 seconds
   });
 
-  const { data: serverMetrics } = useQuery({
+  const { data: serverMetrics } = useQuery<ServerMetrics>({
     queryKey: ['/api/performance'],
     refetchInterval: 60000, // Refresh every minute
   });

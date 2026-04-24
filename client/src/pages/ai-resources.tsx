@@ -269,7 +269,7 @@ export default function AIResources() {
       </section>
 
       {/* Gumroad Custom CSS */}
-      <style jsx>{`
+      <style>{`
         .gumroad-button {
           display: inline-block !important;
           background-color: #2563eb !important;

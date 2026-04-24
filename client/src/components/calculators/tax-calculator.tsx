@@ -59,7 +59,7 @@ export default function TaxCalculator() {
       effectiveRate
     });
 
-    trackEvent('calculator_use', 'tax_calculator', `income_${Math.floor(grossIncome/10000)*10}k`);
+    trackEvent('calculator_use', { action: 'tax_calculator', income: `${Math.floor(grossIncome/10000)*10}k` });
   };
 
   const formatCurrency = (amount: number) => {

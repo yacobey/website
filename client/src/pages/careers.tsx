@@ -327,7 +327,7 @@ export default function Careers() {
                         <FormItem>
                           <FormLabel>LinkedIn Profile</FormLabel>
                           <FormControl>
-                            <Input placeholder="https://linkedin.com/in/yourprofile" {...field} />
+                            <Input placeholder="https://linkedin.com/in/yourprofile" {...field} value={field.value ?? ''} />
                           </FormControl>
                           <FormDescription>Optional: Include your LinkedIn profile URL</FormDescription>
                           <FormMessage />
@@ -342,7 +342,7 @@ export default function Careers() {
                         <FormItem>
                           <FormLabel>Portfolio/Website</FormLabel>
                           <FormControl>
-                            <Input placeholder="https://yourportfolio.com" {...field} />
+                            <Input placeholder="https://yourportfolio.com" {...field} value={field.value ?? ''} />
                           </FormControl>
                           <FormDescription>Optional: Include a link to your professional portfolio</FormDescription>
                           <FormMessage />

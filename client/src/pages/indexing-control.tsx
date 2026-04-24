@@ -21,16 +21,13 @@ export default function IndexingControl() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: seoData, isLoading } = useQuery({
+  const { data: seoData, isLoading } = useQuery<Array<{ page: string; metaRobots: string | null }>>({
     queryKey: ["/api/seo-data"],
   });
 
   const updateMutation = useMutation({
     mutationFn: async ({ page, metaRobots }: { page: string; metaRobots: string }) => {
-      await apiRequest(`/api/seo-data/${page}`, {
-        method: "PUT",
-        body: { metaRobots },
-      });
+      await apiRequest("PUT", `/api/seo-data/${page}`, { metaRobots });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/seo-data"] });
@@ -56,10 +53,7 @@ export default function IndexingControl() {
       }));
 
       for (const update of updates || []) {
-        await apiRequest(`/api/seo-data/${update.page}`, {
-          method: "PUT",
-          body: { metaRobots: update.metaRobots },
-        });
+        await apiRequest("PUT", `/api/seo-data/${update.page}`, { metaRobots: update.metaRobots });
       }
     },
     onSuccess: () => {

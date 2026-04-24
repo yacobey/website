@@ -48,7 +48,7 @@ export default function ROICalculator() {
       timeYears: years
     });
 
-    trackEvent('calculator_use', 'roi_calculator', `investment_${Math.floor(initial/1000)}k`);
+    trackEvent('calculator_use', { action: 'roi_calculator', investment: `${Math.floor(initial/1000)}k` });
   };
 
   const formatCurrency = (amount: number) => {

@@ -47,12 +47,12 @@ export default function CashFlowTracker() {
       frequency: "monthly"
     });
 
-    trackEvent('action', 'cash_flow_add_item', newItem.type);
+    trackEvent('action', { action: 'cash_flow_add_item', type: newItem.type });
   };
 
   const removeItem = (id: string) => {
     setItems(prev => prev.filter(item => item.id !== id));
-    trackEvent('action', 'cash_flow_remove_item', 'removed');
+    trackEvent('action', { action: 'cash_flow_remove_item' });
   };
 
   const getMonthlyAmount = (item: CashFlowItem) => {

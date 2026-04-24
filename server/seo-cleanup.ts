@@ -49,7 +49,7 @@ export async function cleanupSeoData() {
     
   } catch (error) {
     console.error('Error during SEO cleanup:', error);
-    return { success: false, message: 'SEO cleanup failed', error: error.message };
+    return { success: false, message: 'SEO cleanup failed', error: (error as Error).message };
   }
 }
 

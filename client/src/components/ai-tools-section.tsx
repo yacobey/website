@@ -20,7 +20,7 @@ export default function AIToolsSection() {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleTryAIBuilder = () => {
-    trackEvent('click', 'try_ai_builder', 'ai_tools');
+    trackEvent('click', { action: 'try_ai_builder', section: 'ai_tools' });
     // In a real app, this would navigate to the AI builder page
     window.location.href = '/ai-tools';
   };
@@ -29,7 +29,7 @@ export default function AIToolsSection() {
     if (!calculatorPrompt.trim()) return;
     
     setIsGenerating(true);
-    trackEvent('click', 'generate_calculator', 'ai_tools');
+    trackEvent('click', { action: 'generate_calculator', section: 'ai_tools' });
     
     // Simulate AI generation
     setTimeout(() => {
@@ -38,7 +38,7 @@ export default function AIToolsSection() {
   };
 
   const handleUseCalculator = (type: string) => {
-    trackEvent('click', `use_${type}_calculator`, 'ai_tools');
+    trackEvent('click', { action: `use_${type}_calculator`, section: 'ai_tools' });
     window.location.href = '/ai-tools';
   };
 

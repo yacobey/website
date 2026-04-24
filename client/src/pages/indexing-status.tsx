@@ -21,12 +21,12 @@ export default function IndexingStatus() {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
 
-  const { data: sitemapData, refetch: refetchSitemap } = useQuery({
+  const { data: sitemapData, refetch: refetchSitemap } = useQuery<{ content: string }>({
     queryKey: ['/api/sitemap'],
     refetchInterval: false,
   });
 
-  const { data: robotsData, refetch: refetchRobots } = useQuery({
+  const { data: robotsData, refetch: refetchRobots } = useQuery<{ content: string }>({
     queryKey: ['/api/robots'],
     refetchInterval: false,
   });

@@ -10,7 +10,6 @@ export function optimizePool(pool: Pool) {
     min: 2,  // Minimum number of connections to maintain
     idleTimeoutMillis: 30000, // Close idle connections after 30 seconds
     connectionTimeoutMillis: 10000, // Max time to wait for connection
-    acquireTimeoutMillis: 10000, // Max time to wait for pool to assign connection
   });
 }
 

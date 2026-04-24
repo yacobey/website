@@ -45,7 +45,7 @@ export default function CalculatorBuilder() {
     }
 
     setIsGenerating(true);
-    trackEvent('click', 'generate_calculator', 'calculator_builder');
+    trackEvent('click', { action: 'generate_calculator', section: 'calculator_builder' });
 
     // Simulate AI generation with realistic calculator examples
     setTimeout(() => {
@@ -160,7 +160,7 @@ export default function CalculatorBuilder() {
       }
 
       setResult(calculatedResult);
-      trackEvent('calculator_use', 'custom_calculator', generatedCalculator.name);
+      trackEvent('calculator_use', { action: 'custom_calculator', name: generatedCalculator.name });
     } catch (error) {
       toast({
         title: "Calculation Error",

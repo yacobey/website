@@ -1,5 +1,6 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
+import jwt from "jsonwebtoken";
 import { storage } from "./storage";
 import { generateSitemap, generateRobotsTxt } from "./sitemap-generator";
 import { insertContactSchema, insertChatMessageSchema, insertSeoDataSchema } from "@shared/schema";
@@ -22,6 +23,31 @@ import { z } from "zod";
 import { generateBlogContent, generateBlogMetadata } from "./ai-service";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Admin authentication middleware — verifies a HS256-signed JWT issued at login
+  const adminAuth = (req: Request, res: Response, next: NextFunction): void => {
+    const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET;
+    if (!ADMIN_JWT_SECRET) {
+      res.status(500).json({ message: "Server misconfiguration" });
+      return;
+    }
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+    const token = authHeader.substring(7);
+    try {
+      const payload = jwt.verify(token, ADMIN_JWT_SECRET, { algorithms: ['HS256'] }) as jwt.JwtPayload;
+      if (payload.role !== 'admin') {
+        res.status(403).json({ message: "Forbidden" });
+        return;
+      }
+      next();
+    } catch {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+  };
+
   // Contact form submission
   app.post("/api/contact", async (req, res) => {
     try {
@@ -34,7 +60,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get all contacts (for admin)
-  app.get("/api/contacts", async (req, res) => {
+  app.get("/api/contacts", adminAuth, async (req, res) => {
     try {
       const contacts = await storage.getContacts();
       res.json(contacts);
@@ -45,7 +71,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Update contact status
-  app.patch("/api/contacts/:id", async (req, res) => {
+  app.patch("/api/contacts/:id", adminAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { status } = req.body;
@@ -263,7 +289,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
 
 
   // Dashboard API endpoints
-  app.get("/api/user-purchases/:email", async (req, res) => {
+  app.get("/api/user-purchases/:email", adminAuth, async (req, res) => {
     try {
       const purchases = await storage.getUserPurchases(req.params.email);
       res.json(purchases);
@@ -273,7 +299,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.get("/api/user-progress/:email", async (req, res) => {
+  app.get("/api/user-progress/:email", adminAuth, async (req, res) => {
     try {
       const progress = await storage.getUserProgress(req.params.email);
       res.json(progress);
@@ -283,7 +309,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.get("/api/user-recommendations/:email", async (req, res) => {
+  app.get("/api/user-recommendations/:email", adminAuth, async (req, res) => {
     try {
       const recommendations = await storage.getUserRecommendations(req.params.email);
       res.json(recommendations);
@@ -293,7 +319,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.patch("/api/user-progress/:email", async (req, res) => {
+  app.patch("/api/user-progress/:email", adminAuth, async (req, res) => {
     try {
       const { guideTitle, sectionsCompleted, notes } = req.body;
       const progress = await storage.updateUserProgress(req.params.email, guideTitle, sectionsCompleted, notes);
@@ -304,7 +330,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.delete("/api/recommendations/:id", async (req, res) => {
+  app.delete("/api/recommendations/:id", adminAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       await storage.dismissRecommendation(id);
@@ -326,7 +352,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.get("/api/career-applications", async (req, res) => {
+  app.get("/api/career-applications", adminAuth, async (req, res) => {
     try {
       const applications = await storage.getCareerApplications();
       res.json(applications);
@@ -336,7 +362,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.get("/api/career-applications/:id", async (req, res) => {
+  app.get("/api/career-applications/:id", adminAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const application = await storage.getCareerApplication(id);
@@ -350,7 +376,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.patch("/api/career-applications/:id", async (req, res) => {
+  app.patch("/api/career-applications/:id", adminAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { status, notes } = req.body;
@@ -369,15 +395,22 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
   app.post("/api/admin/login", async (req, res) => {
     try {
       const { username, password } = req.body;
-      
-      // Simple authentication - in production, use proper password hashing
-      const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-      const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'selamcpa2025';
-      
+
+      const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+      const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+      const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET;
+
+      if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !ADMIN_JWT_SECRET) {
+        return res.status(500).json({ message: "Server misconfiguration" });
+      }
+
       if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-        const token = Buffer.from(`${username}:${Date.now()}`).toString('base64');
-        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
-        
+        const token = jwt.sign({ sub: username, role: 'admin' }, ADMIN_JWT_SECRET, {
+          algorithm: 'HS256',
+          expiresIn: '24h',
+        });
+        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
         res.json({
           success: true,
           token,
@@ -810,7 +843,7 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  app.get("/api/email-notifications", async (req, res) => {
+  app.get("/api/email-notifications", adminAuth, async (req, res) => {
     try {
       const notifications = await storage.getEmailNotifications();
       res.json(notifications);

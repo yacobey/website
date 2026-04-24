@@ -44,7 +44,7 @@ If any of the three secrets above is missing or empty the email step is skipped 
 
 ## Address validation
 
-Before sending any email, the workflow validates both the sender and recipient addresses against a basic email pattern (`local-part@domain.tld`).
+Both the `send-scan-summary` and `notify-on-failure` jobs contain a dedicated **"Validate recipient email addresses"** step that runs before any SendGrid call. It validates both the sender and every recipient against a basic email pattern (`local-part@domain.tld`) and fails fast with a human-readable message if anything is wrong.
 
 **Sender address (`SENDGRID_FROM_EMAIL`)** is checked first. If it fails validation the step exits immediately with a message such as:
 
@@ -59,7 +59,7 @@ ERROR: 'alice@' is not a valid email address. Fix SECURITY_ALERT_EMAIL and re-ru
 One or more recipient addresses in SECURITY_ALERT_EMAIL are invalid. Aborting email alert.
 ```
 
-Both checks cause the workflow step to **fail visibly** rather than silently dropping the alert. To fix either issue, update the relevant secret (see above) and re-run the workflow.
+Both checks cause the **"Validate recipient email addresses"** step to fail visibly — before the SendGrid call is ever attempted — rather than silently dropping the alert. To fix either issue, update the relevant secret (see above) and re-run the workflow.
 
 ## SendGrid sender verification
 

@@ -110,6 +110,36 @@ jobs:
           run-id: ${{ steps.find-history.outputs.run-id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Validate recipient email addresses
+        env:
+          SENDGRID_FROM_EMAIL: ${{ secrets.SENDGRID_FROM_EMAIL }}
+          SECURITY_ALERT_EMAIL: ${{ secrets.SECURITY_ALERT_EMAIL }}
+        run: |
+          EMAIL_REGEX='^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'
+
+          # Validate sender address first
+          if ! echo "$SENDGRID_FROM_EMAIL" | grep -qE "$EMAIL_REGEX"; then
+            echo "ERROR: '${SENDGRID_FROM_EMAIL}' is not a valid sender address. Fix SENDGRID_FROM_EMAIL and re-run."
+            exit 1
+          fi
+
+          # Validate each recipient address in SECURITY_ALERT_EMAIL
+          INVALID_FOUND=0
+          IFS=',' read -ra RAW_EMAILS <<< "$SECURITY_ALERT_EMAIL"
+          for raw in "${RAW_EMAILS[@]}"; do
+            trimmed="$(echo "$raw" | xargs)"
+            [ -z "$trimmed" ] && continue
+            if ! echo "$trimmed" | grep -qE "$EMAIL_REGEX"; then
+              echo "ERROR: '${trimmed}' is not a valid email address. Fix SECURITY_ALERT_EMAIL and re-run."
+              INVALID_FOUND=1
+            fi
+          done
+          if [ "$INVALID_FOUND" -eq 1 ]; then
+            echo "One or more recipient addresses in SECURITY_ALERT_EMAIL are invalid. Aborting email alert."
+            exit 1
+          fi
+          echo "All email addresses validated successfully."
+
       - name: Build history, send summary email via SendGrid, and save history
         env:
           NEEDS_JSON: ${{ toJSON(needs) }}
@@ -317,8 +347,40 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
-      - name: Send email alert via SendGrid
+      - name: Validate recipient email addresses
+        id: validate-recipients
         if: ${{ always() && secrets.SENDGRID_API_KEY != '' && secrets.SENDGRID_FROM_EMAIL != '' && secrets.SECURITY_ALERT_EMAIL != '' }}
+        env:
+          SENDGRID_FROM_EMAIL: ${{ secrets.SENDGRID_FROM_EMAIL }}
+          SECURITY_ALERT_EMAIL: ${{ secrets.SECURITY_ALERT_EMAIL }}
+        run: |
+          EMAIL_REGEX='^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'
+
+          # Validate sender address first
+          if ! echo "$SENDGRID_FROM_EMAIL" | grep -qE "$EMAIL_REGEX"; then
+            echo "ERROR: '${SENDGRID_FROM_EMAIL}' is not a valid sender address. Fix SENDGRID_FROM_EMAIL and re-run."
+            exit 1
+          fi
+
+          # Validate each recipient address in SECURITY_ALERT_EMAIL
+          INVALID_FOUND=0
+          IFS=',' read -ra RAW_EMAILS <<< "$SECURITY_ALERT_EMAIL"
+          for raw in "${RAW_EMAILS[@]}"; do
+            trimmed="$(echo "$raw" | xargs)"
+            [ -z "$trimmed" ] && continue
+            if ! echo "$trimmed" | grep -qE "$EMAIL_REGEX"; then
+              echo "ERROR: '${trimmed}' is not a valid email address. Fix SECURITY_ALERT_EMAIL and re-run."
+              INVALID_FOUND=1
+            fi
+          done
+          if [ "$INVALID_FOUND" -eq 1 ]; then
+            echo "One or more recipient addresses in SECURITY_ALERT_EMAIL are invalid. Aborting email alert."
+            exit 1
+          fi
+          echo "All email addresses validated successfully."
+
+      - name: Send email alert via SendGrid
+        if: ${{ steps['validate-recipients'].outcome == 'success' }}
         run: |
           FAILED_JOBS=""
           if [ "${{ needs.npm-audit.result }}" = "failure" ]; then
@@ -328,13 +390,7 @@ jobs:
             FAILED_JOBS="${FAILED_JOBS:+$FAILED_JOBS, }CodeQL Analysis"
           fi
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-
-          # Validate the sender address before doing anything else.
           FROM_EMAIL="${{ secrets.SENDGRID_FROM_EMAIL }}"
-          if ! echo "$FROM_EMAIL" | grep -qE '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'; then
-            echo "ERROR: '$FROM_EMAIL' is not a valid sender address. Fix SENDGRID_FROM_EMAIL and re-run."
-            exit 1
-          fi
 
           # Build one personalization entry per recipient from the comma-separated
           # SECURITY_ALERT_EMAIL secret so each person sees only their own address
@@ -348,25 +404,13 @@ jobs:
           #   ]
           # Alice receives the email addressed only to herself; same for Bob.
           PERSONALIZATIONS_JSON=""
-          INVALID_FOUND=0
           IFS=',' read -ra RAW_EMAILS <<< "${{ secrets.SECURITY_ALERT_EMAIL }}"
           for raw in "${RAW_EMAILS[@]}"; do
             trimmed="$(echo "$raw" | xargs)"
             [ -z "$trimmed" ] && continue
-            # Validate: must contain exactly one '@', with non-empty local part
-            # and a domain that contains at least one '.'
-            if ! echo "$trimmed" | grep -qE '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'; then
-              echo "ERROR: '$trimmed' is not a valid email address. Fix SECURITY_ALERT_EMAIL and re-run."
-              INVALID_FOUND=1
-            fi
             ENTRY="{\"to\":[{\"email\":\"$trimmed\"}],\"subject\":\"[Security Alert] Scan failed on ${{ github.repository }}\"}"
             PERSONALIZATIONS_JSON="${PERSONALIZATIONS_JSON:+$PERSONALIZATIONS_JSON,}$ENTRY"
           done
-
-          if [ "$INVALID_FOUND" -eq 1 ]; then
-            echo "One or more recipient addresses in SECURITY_ALERT_EMAIL are invalid. Aborting email alert."
-            exit 1
-          fi
 
           PERSONALIZATIONS_JSON="[$PERSONALIZATIONS_JSON]"
 

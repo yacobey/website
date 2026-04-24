@@ -102,6 +102,58 @@ function extractStepBody(workflowSource: string, stepName: string): string {
   return match[1];
 }
 
+describe("security.yml — 'Validate recipient email addresses' step structure", () => {
+  let stepBody: string;
+
+  beforeAll(() => {
+    const workflowPath = path.resolve(
+      __dirname,
+      "../../.github/workflows/security.yml",
+    );
+    const workflowSource = fs.readFileSync(workflowPath, "utf8");
+    stepBody = extractStepBody(workflowSource, "Validate recipient email addresses");
+  });
+
+  it("step body is found and non-empty", () => {
+    expect(stepBody.length).toBeGreaterThan(0);
+  });
+
+  it("validates addresses using a regex guard (grep -qE)", () => {
+    expect(stepBody).toMatch(/grep\s+-qE/);
+  });
+
+  it("tracks invalid addresses with INVALID_FOUND flag", () => {
+    expect(stepBody).toMatch(/INVALID_FOUND/);
+  });
+
+  it("aborts (exit 1) when any invalid address is detected", () => {
+    expect(stepBody).toMatch(/INVALID_FOUND.*exit\s+1|exit\s+1.*INVALID_FOUND/s);
+  });
+
+  it("runs before the SendGrid step — step appears earlier in the file than 'Send email alert via SendGrid'", () => {
+    const workflowPath = path.resolve(
+      __dirname,
+      "../../.github/workflows/security.yml",
+    );
+    const workflowSource = fs.readFileSync(workflowPath, "utf8");
+    const validateIdx = workflowSource.indexOf("Validate recipient email addresses");
+    const sendgridIdx = workflowSource.indexOf("Send email alert via SendGrid");
+    expect(validateIdx).toBeGreaterThan(-1);
+    expect(sendgridIdx).toBeGreaterThan(-1);
+    expect(validateIdx).toBeLessThan(sendgridIdx);
+  });
+
+  it("is present in both send-scan-summary and notify-on-failure jobs", () => {
+    const workflowPath = path.resolve(
+      __dirname,
+      "../../.github/workflows/security.yml",
+    );
+    const workflowSource = fs.readFileSync(workflowPath, "utf8");
+    const occurrences = (workflowSource.match(/- name:\s*Validate recipient email addresses/g) ?? []).length;
+    expect(occurrences).toBeGreaterThanOrEqual(2);
+  });
+});
+
 describe("security.yml — 'Send email alert via SendGrid' step structure", () => {
   let stepBody: string;
 
@@ -144,15 +196,6 @@ describe("security.yml — 'Send email alert via SendGrid' step structure", () =
   it("accumulates separate personalization entries per loop iteration", () => {
     // Pattern: PERSONALIZATIONS_JSON="${PERSONALIZATIONS_JSON:+...}$ENTRY"
     expect(stepBody).toMatch(/PERSONALIZATIONS_JSON.*PERSONALIZATIONS_JSON.*ENTRY/s);
-  });
-
-  it("validates addresses before building the payload", () => {
-    // There must be an address-validation guard (grep -qE or INVALID_FOUND flag).
-    expect(stepBody).toMatch(/grep\s+-qE|INVALID_FOUND/);
-  });
-
-  it("aborts (exit 1) when any invalid address is detected", () => {
-    expect(stepBody).toMatch(/INVALID_FOUND.*exit\s+1|exit\s+1.*INVALID_FOUND/s);
   });
 });
 

@@ -18,6 +18,7 @@
 - [x] Added marketing-agent section to `CLAUDE.md` (2026-05-12)
 - [x] Drafted `SOCIAL_POSTING_SETUP.md` for LinkedIn + Facebook Page automation (2026-05-12)
 - [x] Built 1099 Toolkit funnel: sales page, product specs, email drip, Stripe/Make.com setup guide, launch plan (2026-05-12)
+- [x] Built advisory prompt library in `prompts/advisory/` — 5 CPA-flavored prompts (variance, scenario, narrative, cost driver, forecast challenge) (2026-05-12)
 
 ---
 

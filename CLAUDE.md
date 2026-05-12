@@ -81,6 +81,7 @@ info@selamcpa.com
 
 - When writing narrative commentary on a client's financials, **tell the client a story about their business** — not a dry variance report. Connect numbers to what's happening operationally.
 - Monthly client reports cover all of: P&L vs. budget / prior period, cash flow, balance sheet, narrative commentary.
+- **Reusable advisory prompts** live in `prompts/advisory/`. Use them for variance analysis, scenario modeling, client narratives, cost driver analysis, and forecast challenges. Each has an anonymization checklist at the top — run it every time.
 
 ---
 

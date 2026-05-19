@@ -13,6 +13,7 @@ import {
   contentAnalytics,
   emailNotifications,
   contentBackups,
+  socialPostDrafts,
   type Contact,
   type BlogPost,
   type Calculator,
@@ -27,6 +28,8 @@ import {
   type ContentAnalytics,
   type EmailNotification,
   type ContentBackup,
+  type SocialPostDraft,
+  type InsertSocialPostDraft,
   type InsertContact,
   type InsertBlogPost,
   type InsertCalculator,
@@ -60,6 +63,7 @@ export interface IStorage {
   // Blog methods
   getBlogPosts(): Promise<BlogPost[]>;
   getBlogPost(slug: string): Promise<BlogPost | undefined>;
+  getBlogPostById(id: number): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(slug: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined>;
   
@@ -114,6 +118,13 @@ export interface IStorage {
   createContentBackup(backup: InsertContentBackup): Promise<ContentBackup>;
   restoreContentVersion(blogPostId: number, version: number): Promise<BlogPost | undefined>;
   getLatestVersion(blogPostId: number): Promise<number>;
+
+  // Social post draft methods
+  createSocialPostDraft(draft: InsertSocialPostDraft): Promise<SocialPostDraft>;
+  getSocialPostDrafts(status?: string): Promise<SocialPostDraft[]>;
+  getSocialPostDraftById(id: number): Promise<SocialPostDraft | undefined>;
+  getSocialPostDraftByToken(token: string): Promise<SocialPostDraft | undefined>;
+  updateSocialPostDraft(id: number, updates: Partial<SocialPostDraft>): Promise<SocialPostDraft | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -257,6 +268,10 @@ export class MemStorage implements IStorage {
     );
   }
 
+  async getBlogPostById(id: number): Promise<BlogPost | undefined> {
+    return this.blogPosts.get(id);
+  }
+
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
     const id = this.currentBlogId++;
     const post: BlogPost = {
@@ -316,6 +331,28 @@ export class MemStorage implements IStorage {
   }
   async restoreContentVersion(blogPostId: number, version: number): Promise<BlogPost | undefined> { return undefined; }
   async getLatestVersion(blogPostId: number): Promise<number> { return 1; }
+  async createSocialPostDraft(draft: InsertSocialPostDraft): Promise<SocialPostDraft> {
+    return {
+      id: 1,
+      platform: draft.platform ?? "facebook",
+      source: draft.source,
+      blogPostId: draft.blogPostId ?? null,
+      topic: draft.topic ?? null,
+      message: draft.message,
+      link: draft.link ?? null,
+      status: draft.status ?? "pending",
+      approvalToken: draft.approvalToken,
+      externalPostId: null,
+      errorMessage: null,
+      createdAt: new Date(),
+      decidedAt: null,
+      postedAt: null,
+    };
+  }
+  async getSocialPostDrafts(_status?: string): Promise<SocialPostDraft[]> { return []; }
+  async getSocialPostDraftById(_id: number): Promise<SocialPostDraft | undefined> { return undefined; }
+  async getSocialPostDraftByToken(_token: string): Promise<SocialPostDraft | undefined> { return undefined; }
+  async updateSocialPostDraft(_id: number, _updates: Partial<SocialPostDraft>): Promise<SocialPostDraft | undefined> { return undefined; }
 
   async getCalculators(): Promise<Calculator[]> {
     return Array.from(this.calculators.values()).sort(
@@ -540,6 +577,11 @@ export class DatabaseStorage implements IStorage {
 
   async getBlogPost(slug: string): Promise<BlogPost | undefined> {
     const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    return post || undefined;
+  }
+
+  async getBlogPostById(id: number): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
     return post || undefined;
   }
 
@@ -878,8 +920,48 @@ export class DatabaseStorage implements IStorage {
       .where(eq(contentBackups.blogPostId, blogPostId))
       .orderBy(desc(contentBackups.version))
       .limit(1);
-    
+
     return latestBackup?.version || 0;
+  }
+
+  async createSocialPostDraft(insertDraft: InsertSocialPostDraft): Promise<SocialPostDraft> {
+    const [draft] = await db
+      .insert(socialPostDrafts)
+      .values(insertDraft)
+      .returning();
+    return draft;
+  }
+
+  async getSocialPostDrafts(status?: string): Promise<SocialPostDraft[]> {
+    if (status) {
+      return await db.select().from(socialPostDrafts)
+        .where(eq(socialPostDrafts.status, status))
+        .orderBy(desc(socialPostDrafts.createdAt));
+    }
+    return await db.select().from(socialPostDrafts).orderBy(desc(socialPostDrafts.createdAt));
+  }
+
+  async getSocialPostDraftById(id: number): Promise<SocialPostDraft | undefined> {
+    const [draft] = await db.select().from(socialPostDrafts).where(eq(socialPostDrafts.id, id));
+    return draft || undefined;
+  }
+
+  async getSocialPostDraftByToken(token: string): Promise<SocialPostDraft | undefined> {
+    const [draft] = await db.select().from(socialPostDrafts)
+      .where(eq(socialPostDrafts.approvalToken, token));
+    return draft || undefined;
+  }
+
+  async updateSocialPostDraft(
+    id: number,
+    updates: Partial<SocialPostDraft>,
+  ): Promise<SocialPostDraft | undefined> {
+    const [draft] = await db
+      .update(socialPostDrafts)
+      .set(updates)
+      .where(eq(socialPostDrafts.id, id))
+      .returning();
+    return draft || undefined;
   }
 }
 

@@ -13,6 +13,8 @@ import Stripe from "stripe";
 import paymentRouter from "./payment-router";
 import { getBusinessConfig } from "./business-config";
 import { getEnhancedSEODefaults } from "./seo-business-integration";
+import { queueDraft, approveAndPublish, rejectDraft } from "./social";
+import { isFacebookConfigured, postToFacebookPage } from "./social/facebook";
 import crypto from "crypto";
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -888,7 +890,8 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
     }
   });
 
-  // Social media integration endpoint
+  // Social media integration endpoint (immediate post, no approval flow — kept
+  // for backwards compatibility with existing admin tooling).
   app.post("/api/social-media/post", requireAdminAuth, async (req, res) => {
     try {
       const { blogPostId, platforms } = req.body;
@@ -898,6 +901,149 @@ TONE: Professional but warm. Plain English. No jargon without explanation. Think
       console.error("Error posting to social media:", error);
       res.status(500).json({ message: "Failed to post to social media" });
     }
+  });
+
+  // ----- AI-draft → approval → publish flow -----
+
+  // Generate a new draft, persist it, email approval links. Body is one of:
+  //   { kind: "blog", blogPostId }
+  //   { kind: "topic", topic }
+  //   { kind: "manual", message, link? }
+  app.post("/api/social/drafts/generate", requireAdminAuth, async (req, res) => {
+    try {
+      const { kind, blogPostId, topic, message, link, platform } = req.body ?? {};
+
+      if (kind === "blog") {
+        if (typeof blogPostId !== "number") {
+          return res.status(400).json({ message: "blogPostId is required for kind=blog" });
+        }
+        const blogPost = await storage.getBlogPostById(blogPostId);
+        if (!blogPost) {
+          return res.status(404).json({ message: "Blog post not found" });
+        }
+        const result = await queueDraft({ kind: "blog", blogPost, platform });
+        return res.json(result);
+      }
+
+      if (kind === "topic") {
+        if (typeof topic !== "string" || !topic.trim()) {
+          return res.status(400).json({ message: "topic is required for kind=topic" });
+        }
+        const result = await queueDraft({ kind: "topic", topic: topic.trim(), platform });
+        return res.json(result);
+      }
+
+      if (kind === "manual") {
+        if (typeof message !== "string" || !message.trim()) {
+          return res.status(400).json({ message: "message is required for kind=manual" });
+        }
+        const result = await queueDraft({
+          kind: "manual",
+          message: message.trim(),
+          link: typeof link === "string" && link.trim() ? link.trim() : undefined,
+          platform,
+        });
+        return res.json(result);
+      }
+
+      return res.status(400).json({ message: "kind must be one of: blog, topic, manual" });
+    } catch (error) {
+      console.error("Error generating social draft:", error);
+      res.status(500).json({
+        message: "Failed to generate social draft",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  });
+
+  app.get("/api/social/drafts", requireAdminAuth, async (req, res) => {
+    try {
+      const status = typeof req.query.status === "string" ? req.query.status : undefined;
+      const drafts = await storage.getSocialPostDrafts(status);
+      // Don't leak approval tokens via the admin list endpoint — they're
+      // single-use bearer credentials that arrive separately by email.
+      const sanitized = drafts.map(({ approvalToken: _t, ...rest }) => rest);
+      res.json(sanitized);
+    } catch (error) {
+      console.error("Error fetching social drafts:", error);
+      res.status(500).json({ message: "Failed to fetch social drafts" });
+    }
+  });
+
+  // Token-gated public endpoint reached from the approval email. Returns
+  // a small HTML page so a single email click finishes the workflow.
+  app.get("/api/social/drafts/approve", async (req, res) => {
+    const token = typeof req.query.token === "string" ? req.query.token : "";
+    if (!token) {
+      res.status(400).type("html").send(renderApprovalPage({ kind: "error", message: "Missing token." }));
+      return;
+    }
+    try {
+      const outcome = await approveAndPublish(token);
+      if (!outcome.ok) {
+        const message =
+          outcome.reason === "not_found"
+            ? "This approval link is invalid or has expired."
+            : `This draft was already decided (status: ${outcome.status}).`;
+        res.status(outcome.reason === "not_found" ? 404 : 409)
+          .type("html").send(renderApprovalPage({ kind: "error", message }));
+        return;
+      }
+      const { draft } = outcome;
+      if (draft.status === "posted") {
+        res.type("html").send(renderApprovalPage({
+          kind: "success",
+          message: `Posted to ${draft.platform}.`,
+          detail: draft.externalPostId ? `Post ID: ${draft.externalPostId}` : undefined,
+        }));
+      } else {
+        res.status(502).type("html").send(renderApprovalPage({
+          kind: "error",
+          message: `Approval recorded, but publishing failed.`,
+          detail: draft.errorMessage ?? undefined,
+        }));
+      }
+    } catch (error) {
+      console.error("Error approving social draft:", error);
+      res.status(500).type("html").send(renderApprovalPage({
+        kind: "error",
+        message: "Something went wrong while processing this approval.",
+      }));
+    }
+  });
+
+  app.get("/api/social/drafts/reject", async (req, res) => {
+    const token = typeof req.query.token === "string" ? req.query.token : "";
+    if (!token) {
+      res.status(400).type("html").send(renderApprovalPage({ kind: "error", message: "Missing token." }));
+      return;
+    }
+    try {
+      const outcome = await rejectDraft(token);
+      if (!outcome.ok) {
+        const message =
+          outcome.reason === "not_found"
+            ? "This rejection link is invalid or has expired."
+            : `This draft was already decided (status: ${outcome.status}).`;
+        res.status(outcome.reason === "not_found" ? 404 : 409)
+          .type("html").send(renderApprovalPage({ kind: "error", message }));
+        return;
+      }
+      res.type("html").send(renderApprovalPage({
+        kind: "success",
+        message: "Draft rejected. It will not be posted.",
+      }));
+    } catch (error) {
+      console.error("Error rejecting social draft:", error);
+      res.status(500).type("html").send(renderApprovalPage({
+        kind: "error",
+        message: "Something went wrong while processing this rejection.",
+      }));
+    }
+  });
+
+  app.get("/api/social/facebook/status", requireAdminAuth, (_req, res) => {
+    res.json({ configured: isFacebookConfigured() });
   });
 
   // Content backup and versioning endpoints
@@ -1079,7 +1225,13 @@ async function generateScheduledBlogPost(contentType: 'weekly' | 'monthly' | 'qu
       changeReason: 'initial_creation',
       originalPublishedAt: savedPost.publishedAt
     });
-    
+
+    // Kick off a social-media draft for approval — fire and forget. We don't
+    // want a failure here to block blog publishing, so errors are logged only.
+    queueDraft({ kind: 'blog', blogPost: savedPost }).catch((err) => {
+      console.error('Failed to queue social draft for blog post', savedPost.id, err);
+    });
+
     return savedPost;
   } catch (error) {
     console.error('Error generating monthly blog post:', error);
@@ -1144,37 +1296,71 @@ async function sendWelcomeEmail(email: string, notificationType: string): Promis
   }
 }
 
-// Social media integration functions
+// Immediate-post path used by /api/social-media/post. Auto-composes a short
+// teaser ("Title — excerpt") because this endpoint skips the AI draft step.
 async function postToSocialMedia(blogPostId: number, platforms: string[]): Promise<any> {
-  try {
-    // Get blog post from storage
-    const post = await storage.getBlogPost(`post-${blogPostId}`);
-    if (!post) {
-      throw new Error('Blog post not found');
-    }
-
-    const results = [];
-    for (const platform of platforms) {
-      // Placeholder for social media API integration
-      console.log(`Posting to ${platform}:`, post.title);
-      results.push({
-        platform,
-        success: true,
-        postId: `${platform}-${Date.now()}`
-      });
-    }
-
-    // Update blog post to mark as posted to social media
-    await storage.updateBlogPost(post.slug, { socialMediaPosted: true });
-
-    return {
-      success: true,
-      results
-    };
-  } catch (error) {
-    console.error('Social media posting error:', error);
-    throw error;
+  const post = await storage.getBlogPostById(blogPostId);
+  if (!post) {
+    throw new Error('Blog post not found');
   }
+
+  const siteOrigin = process.env.PUBLIC_SITE_URL || process.env.FRONTEND_ORIGIN;
+  const link = siteOrigin ? `${siteOrigin.replace(/\/$/, '')}/blog/${post.slug}` : undefined;
+  const message = `${post.title}\n\n${post.excerpt}`;
+
+  const results: Array<{ platform: string; success: boolean; postId?: string; error?: string }> = [];
+  let anySuccess = false;
+
+  for (const platform of platforms) {
+    if (platform !== 'facebook') {
+      results.push({ platform, success: false, error: `Unsupported platform: ${platform}` });
+      continue;
+    }
+    if (!isFacebookConfigured()) {
+      results.push({ platform, success: false, error: 'Facebook not configured' });
+      continue;
+    }
+    try {
+      const { id } = await postToFacebookPage({ message, link });
+      results.push({ platform, success: true, postId: id });
+      anySuccess = true;
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : 'Unknown error';
+      results.push({ platform, success: false, error: errMsg });
+    }
+  }
+
+  if (anySuccess) {
+    await storage.updateBlogPost(post.slug, { socialMediaPosted: true });
+  }
+
+  return { success: anySuccess, results };
+}
+
+// Renders the tiny success/failure page shown after a one-click email action.
+function renderApprovalPage(opts: { kind: "success" | "error"; message: string; detail?: string }): string {
+  const color = opts.kind === "success" ? "#1877f2" : "#c00";
+  const title = opts.kind === "success" ? "Done" : "There was a problem";
+  const detail = opts.detail
+    ? `<p style="color:#666;font-size:13px;margin:8px 0 0 0;">${escapeHtml(opts.detail)}</p>`
+    : "";
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${title}</title></head>
+<body style="font-family:-apple-system,Segoe UI,sans-serif;background:#f7f7f9;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;">
+  <div style="max-width:480px;background:#fff;border-radius:8px;padding:32px;box-shadow:0 1px 3px rgba(0,0,0,0.08);text-align:center;">
+    <h1 style="color:${color};margin:0 0 12px 0;font-size:22px;">${title}</h1>
+    <p style="margin:0;color:#222;font-size:15px;">${escapeHtml(opts.message)}</p>
+    ${detail}
+  </div>
+</body></html>`;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function generateChatResponse(message: string): string {

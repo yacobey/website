@@ -179,6 +179,42 @@ export const seoData = pgTable("seo_data", {
   lastUpdated: timestamp("last_updated").defaultNow().notNull(),
 });
 
+/**
+ * Drafts for social-media posts that an AI generates and a human approves
+ * before they go live. The flow:
+ *   1. A draft is created with status="pending" and a single-use approvalToken.
+ *   2. The token is emailed to the approver as one-click approve/reject links.
+ *   3. On approve → publish via the platform API, transition to "posted"
+ *      (or "failed" with errorMessage). On reject → transition to "rejected".
+ *
+ * The approvalToken column is unique so each token redeems exactly once.
+ */
+export const socialPostDrafts = pgTable("social_post_drafts", {
+  id: serial("id").primaryKey(),
+  platform: text("platform").notNull().default("facebook"), // facebook (room to grow: linkedin, twitter, ...)
+  source: text("source").notNull(), // ai_blog, ai_topic, manual
+  blogPostId: integer("blog_post_id").references(() => blogPosts.id),
+  topic: text("topic"),
+  message: text("message").notNull(),
+  link: text("link"),
+  status: text("status").notNull().default("pending"), // pending, approved, posted, rejected, failed
+  approvalToken: text("approval_token").notNull().unique(),
+  externalPostId: text("external_post_id"),
+  errorMessage: text("error_message"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  decidedAt: timestamp("decided_at"),
+  postedAt: timestamp("posted_at"),
+});
+
+export const insertSocialPostDraftSchema = createInsertSchema(socialPostDrafts).omit({
+  id: true,
+  createdAt: true,
+  decidedAt: true,
+  postedAt: true,
+  externalPostId: true,
+  errorMessage: true,
+});
+
 export const insertContactSchema = createInsertSchema(contacts).omit({
   id: true,
   createdAt: true,
@@ -275,6 +311,8 @@ export type InsertEmailNotification = z.infer<typeof insertEmailNotificationSche
 export type EmailNotification = typeof emailNotifications.$inferSelect;
 export type InsertContentBackup = z.infer<typeof insertContentBackupSchema>;
 export type ContentBackup = typeof contentBackups.$inferSelect;
+export type InsertSocialPostDraft = z.infer<typeof insertSocialPostDraftSchema>;
+export type SocialPostDraft = typeof socialPostDrafts.$inferSelect;
 
 /**
  * Tracks Stripe Checkout session IDs that have already been used to claim

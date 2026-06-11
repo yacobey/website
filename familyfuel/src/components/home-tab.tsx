@@ -1,9 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Bell, Flame, Home, Wallet } from "lucide-react";
-import { calculateTargets, daysUntil, todayKey, todayWeekday } from "@/lib/familyfuel/nutrition";
-import { useFamilyFuel } from "@/lib/familyfuel/store";
+import { Badge, Card, CardContent, CardHeader, CardTitle, Progress } from "./ui";
+import { calculateTargets, daysUntil, todayKey, todayWeekday } from "../lib/nutrition";
+import { useFamilyFuel } from "../lib/store";
 
 export default function HomeTab({ goToTab }: { goToTab: (tab: string) => void }) {
   const { state } = useFamilyFuel();
@@ -38,7 +36,7 @@ export default function HomeTab({ goToTab }: { goToTab: (tab: string) => void })
     <div className="space-y-4">
       {state.members.length === 0 && (
         <Card className="border-primary/50">
-          <CardContent className="py-6 text-center space-y-2">
+          <CardContent className="py-6 pt-6 text-center space-y-2">
             <p className="font-medium">Welcome to FamilyFuel! 👋</p>
             <p className="text-sm text-muted-foreground">
               Start by adding your family in the{" "}
@@ -151,7 +149,7 @@ export default function HomeTab({ goToTab }: { goToTab: (tab: string) => void })
               <span>Weekly budget</span>
               <span className="font-medium">${state.weeklyBudget.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <span>{listTotal <= state.weeklyBudget ? "Headroom" : "Over budget"}</span>
               <Badge variant={listTotal <= state.weeklyBudget ? "secondary" : "destructive"}>
                 ${Math.abs(state.weeklyBudget - listTotal).toFixed(2)}

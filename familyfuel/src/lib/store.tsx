@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import type { InventoryItem, MealPlan, Member } from "@shared/familyfuel";
+import type { InventoryItem, MealPlan, Member } from "../../shared/schemas";
 
 // Eaten log: date -> memberId -> list of logged meals
 export interface EatenEntry {

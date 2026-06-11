@@ -1,15 +1,9 @@
 import { useState } from "react";
-import type { Member } from "@shared/familyfuel";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+import type { Member } from "../../shared/schemas";
 import { Pencil, Plus, Trash2, Users } from "lucide-react";
-import { activityLabels, calculateTargets, goalLabels } from "@/lib/familyfuel/nutrition";
-import { demoMembers, newId, useFamilyFuel } from "@/lib/familyfuel/store";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, Label, Modal, Select } from "./ui";
+import { activityLabels, calculateTargets, goalLabels } from "../lib/nutrition";
+import { demoMembers, newId, useFamilyFuel } from "../lib/store";
 
 const emptyForm = {
   name: "",
@@ -93,7 +87,7 @@ export default function FamilyTab() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <h2 className="text-xl font-semibold flex items-center gap-2">
           <Users className="h-5 w-5" /> Family ({state.members.length})
         </h2>
@@ -103,83 +97,68 @@ export default function FamilyTab() {
               Load demo family
             </Button>
           )}
-          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
-              <Button onClick={openAdd}>
-                <Plus className="h-4 w-4 mr-1" /> Add member
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>{editingId ? "Edit family member" : "Add family member"}</DialogTitle>
-              </DialogHeader>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="col-span-2">
-                  <Label htmlFor="ff-name">Name</Label>
-                  <Input id="ff-name" value={form.name} onChange={(e) => set("name")(e.target.value)} />
-                </div>
-                <div>
-                  <Label htmlFor="ff-age">Age</Label>
-                  <Input id="ff-age" type="number" value={form.age} onChange={(e) => set("age")(e.target.value)} />
-                </div>
-                <div>
-                  <Label>Sex</Label>
-                  <Select value={form.sex} onValueChange={(v) => set("sex")(v)}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="female">Female</SelectItem>
-                      <SelectItem value="male">Male</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="ff-height">Height (cm)</Label>
-                  <Input id="ff-height" type="number" value={form.heightCm} onChange={(e) => set("heightCm")(e.target.value)} />
-                </div>
-                <div>
-                  <Label htmlFor="ff-weight">Weight (kg)</Label>
-                  <Input id="ff-weight" type="number" value={form.weightKg} onChange={(e) => set("weightKg")(e.target.value)} />
-                </div>
-                <div>
-                  <Label>Activity level</Label>
-                  <Select value={form.activity} onValueChange={(v) => set("activity")(v)}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {Object.entries(activityLabels).map(([value, label]) => (
-                        <SelectItem key={value} value={value}>{label}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label>Goal</Label>
-                  <Select value={form.goal} onValueChange={(v) => set("goal")(v)}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {Object.entries(goalLabels).map(([value, label]) => (
-                        <SelectItem key={value} value={value}>{label}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="col-span-2">
-                  <Label htmlFor="ff-allergies">Allergies (comma-separated)</Label>
-                  <Input id="ff-allergies" placeholder="peanuts, shellfish" value={form.allergies} onChange={(e) => set("allergies")(e.target.value)} />
-                </div>
-                <div className="col-span-2">
-                  <Label htmlFor="ff-dislikes">Dislikes (comma-separated)</Label>
-                  <Input id="ff-dislikes" placeholder="mushrooms, olives" value={form.dislikes} onChange={(e) => set("dislikes")(e.target.value)} />
-                </div>
-              </div>
-              <Button onClick={save} className="w-full mt-2">Save</Button>
-            </DialogContent>
-          </Dialog>
+          <Button onClick={openAdd}>
+            <Plus className="h-4 w-4 mr-1" /> Add member
+          </Button>
         </div>
       </div>
 
+      <Modal open={dialogOpen} onClose={() => setDialogOpen(false)} title={editingId ? "Edit family member" : "Add family member"}>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="col-span-2">
+            <Label htmlFor="ff-name">Name</Label>
+            <Input id="ff-name" value={form.name} onChange={(e) => set("name")(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="ff-age">Age</Label>
+            <Input id="ff-age" type="number" value={form.age} onChange={(e) => set("age")(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="ff-sex">Sex</Label>
+            <Select id="ff-sex" value={form.sex} onChange={(e) => set("sex")(e.target.value)}>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </Select>
+          </div>
+          <div>
+            <Label htmlFor="ff-height">Height (cm)</Label>
+            <Input id="ff-height" type="number" value={form.heightCm} onChange={(e) => set("heightCm")(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="ff-weight">Weight (kg)</Label>
+            <Input id="ff-weight" type="number" value={form.weightKg} onChange={(e) => set("weightKg")(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="ff-activity">Activity level</Label>
+            <Select id="ff-activity" value={form.activity} onChange={(e) => set("activity")(e.target.value)}>
+              {Object.entries(activityLabels).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </Select>
+          </div>
+          <div>
+            <Label htmlFor="ff-goal">Goal</Label>
+            <Select id="ff-goal" value={form.goal} onChange={(e) => set("goal")(e.target.value)}>
+              {Object.entries(goalLabels).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </Select>
+          </div>
+          <div className="col-span-2">
+            <Label htmlFor="ff-allergies">Allergies (comma-separated)</Label>
+            <Input id="ff-allergies" placeholder="peanuts, shellfish" value={form.allergies} onChange={(e) => set("allergies")(e.target.value)} />
+          </div>
+          <div className="col-span-2">
+            <Label htmlFor="ff-dislikes">Dislikes (comma-separated)</Label>
+            <Input id="ff-dislikes" placeholder="mushrooms, olives" value={form.dislikes} onChange={(e) => set("dislikes")(e.target.value)} />
+          </div>
+        </div>
+        <Button onClick={save} className="w-full mt-4">Save</Button>
+      </Modal>
+
       {state.members.length === 0 && (
         <Card>
-          <CardContent className="py-10 text-center text-muted-foreground">
+          <CardContent className="py-10 pt-10 text-center text-muted-foreground">
             Add each family member (or load the demo family) so meal plans and
             calorie targets can be personalized for everyone.
           </CardContent>
@@ -191,7 +170,7 @@ export default function FamilyTab() {
           const targets = calculateTargets(m);
           return (
             <Card key={m.id}>
-              <CardHeader className="pb-2 flex flex-row items-start justify-between space-y-0">
+              <CardHeader className="pb-2 flex-row items-start justify-between space-y-0">
                 <div>
                   <CardTitle className="text-lg">{m.name}</CardTitle>
                   <p className="text-sm text-muted-foreground">

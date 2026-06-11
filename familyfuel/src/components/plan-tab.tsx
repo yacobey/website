@@ -1,16 +1,11 @@
 import { useState } from "react";
-import type { Meal, MealPlan, PlanRequest } from "@shared/familyfuel";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CalendarDays, ChefHat, Clock, Loader2, RefreshCw, Repeat } from "lucide-react";
-import { calculateTargets, todayKey, todayWeekday } from "@/lib/familyfuel/nutrition";
-import { useFamilyFuel, type EatenEntry } from "@/lib/familyfuel/store";
+import type { Meal, MealPlan, PlanRequest } from "../../shared/schemas";
+import { CalendarDays, ChefHat, ChevronDown, Clock, Loader2, RefreshCw, Repeat } from "lucide-react";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, Label } from "./ui";
+import { useToast } from "./toast";
+import { postJson } from "../lib/api";
+import { calculateTargets, todayKey, todayWeekday } from "../lib/nutrition";
+import { useFamilyFuel, type EatenEntry, type FamilyFuelState } from "../lib/store";
 
 const slotEmoji: Record<Meal["slot"], string> = {
   breakfast: "🌅",
@@ -18,7 +13,7 @@ const slotEmoji: Record<Meal["slot"], string> = {
   dinner: "🍽️",
 };
 
-export function buildPlanMembers(members: ReturnType<typeof useFamilyFuel>["state"]["members"]): PlanRequest["members"] {
+export function buildPlanMembers(members: FamilyFuelState["members"]): PlanRequest["members"] {
   return members.map((m) => {
     const t = calculateTargets(m);
     return {
@@ -34,7 +29,7 @@ export function buildPlanMembers(members: ReturnType<typeof useFamilyFuel>["stat
   });
 }
 
-export function buildPlanInventory(inventory: ReturnType<typeof useFamilyFuel>["state"]["inventory"]) {
+export function buildPlanInventory(inventory: FamilyFuelState["inventory"]) {
   return inventory.map((i) => ({ name: i.name, quantity: i.quantity, expiresOn: i.expiresOn }));
 }
 
@@ -42,6 +37,7 @@ function MealCard({ meal, day }: { meal: Meal; day: string }) {
   const { state, update } = useFamilyFuel();
   const { toast } = useToast();
   const [swapping, setSwapping] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const isToday = day === todayWeekday();
   const mealKey = `${day}-${meal.slot}`;
@@ -76,7 +72,7 @@ function MealCard({ meal, day }: { meal: Meal; day: string }) {
     if (!state.plan) return;
     setSwapping(true);
     try {
-      const res = await apiRequest("POST", "/api/familyfuel/swap", {
+      const newMeal = await postJson<Meal>("/api/swap", {
         members: buildPlanMembers(state.members),
         inventory: buildPlanInventory(state.inventory),
         day,
@@ -85,7 +81,6 @@ function MealCard({ meal, day }: { meal: Meal; day: string }) {
         budgetPerMeal: Math.round((state.weeklyBudget / 21) * 100) / 100,
         currency: state.currency,
       });
-      const newMeal: Meal = await res.json();
       const days = state.plan.days.map((d) =>
         d.day === day
           ? { ...d, meals: d.meals.map((m) => (m.slot === meal.slot ? newMeal : m)) }
@@ -105,85 +100,93 @@ function MealCard({ meal, day }: { meal: Meal; day: string }) {
   };
 
   return (
-    <AccordionItem value={mealKey} className="border rounded-lg px-3 mb-2">
-      <AccordionTrigger className="hover:no-underline py-3">
-        <div className="flex items-center gap-2 text-left">
+    <div className="border rounded-lg mb-2">
+      <button
+        className="w-full flex items-center justify-between gap-2 px-3 py-3 text-left"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+      >
+        <div className="flex items-center gap-2">
           <span>{slotEmoji[meal.slot]}</span>
           <div>
             <div className="font-medium text-sm capitalize">{meal.slot}: {meal.name}</div>
-            <div className="text-xs text-muted-foreground flex items-center gap-2">
+            <div className="text-xs text-muted-foreground flex items-center gap-2 flex-wrap">
               <Clock className="h-3 w-3" /> {meal.prepMinutes + meal.cookMinutes} min
               {meal.estCost > 0 && <span>· ~${meal.estCost.toFixed(2)} new ingredients</span>}
               {meal.estCost === 0 && <Badge variant="secondary" className="text-[10px] px-1">From pantry</Badge>}
             </div>
           </div>
         </div>
-      </AccordionTrigger>
-      <AccordionContent className="space-y-3">
-        {meal.description && <p className="text-sm text-muted-foreground">{meal.description}</p>}
+        <ChevronDown className={`h-4 w-4 shrink-0 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
 
-        {meal.prepReminder && (
-          <p className="text-sm bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-md px-3 py-2">
-            ⏰ {meal.prepReminder}
-          </p>
-        )}
+      {open && (
+        <div className="px-3 pb-3 space-y-3">
+          {meal.description && <p className="text-sm text-muted-foreground">{meal.description}</p>}
 
-        <div>
-          <p className="text-sm font-medium mb-1">Portions per person</p>
-          <div className="grid gap-1">
-            {meal.portions.map((p) => {
-              const member = state.members.find((m) => m.name === p.memberName);
-              return (
-                <div key={p.memberName} className="flex items-center justify-between text-sm bg-muted rounded-md px-3 py-1.5">
-                  <span>
-                    <span className="font-medium">{p.memberName}</span>: {p.portion}
-                    <span className="text-muted-foreground"> · {p.calories} kcal · {p.proteinG}g protein</span>
-                  </span>
-                  {isToday && member && (
-                    <Button
-                      variant={isEaten(member.id) ? "default" : "outline"}
-                      size="sm"
-                      className="h-7 text-xs"
-                      onClick={() => toggleEaten(member.id, p.memberName)}
-                    >
-                      {isEaten(member.id) ? "✓ Eaten" : "Log eaten"}
-                    </Button>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+          {meal.prepReminder && (
+            <p className="text-sm bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
+              ⏰ {meal.prepReminder}
+            </p>
+          )}
 
-        <div>
-          <p className="text-sm font-medium mb-1">Ingredients</p>
-          <ul className="text-sm space-y-0.5">
-            {meal.ingredients.map((ing, i) => (
-              <li key={i} className="flex items-center gap-2">
-                <span>• {ing.amount ? `${ing.amount} ` : ""}{ing.name}</span>
-                {ing.fromPantry && <Badge variant="secondary" className="text-[10px] px-1">have it</Badge>}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {meal.steps.length > 0 && (
           <div>
-            <p className="text-sm font-medium mb-1">Steps</p>
-            <ol className="text-sm space-y-1 list-decimal list-inside">
-              {meal.steps.map((s, i) => (
-                <li key={i}>{s}</li>
-              ))}
-            </ol>
+            <p className="text-sm font-medium mb-1">Portions per person</p>
+            <div className="grid gap-1">
+              {meal.portions.map((p) => {
+                const member = state.members.find((m) => m.name === p.memberName);
+                return (
+                  <div key={p.memberName} className="flex items-center justify-between gap-2 text-sm bg-muted rounded-md px-3 py-1.5">
+                    <span>
+                      <span className="font-medium">{p.memberName}</span>: {p.portion}
+                      <span className="text-muted-foreground"> · {p.calories} kcal · {p.proteinG}g protein</span>
+                    </span>
+                    {isToday && member && (
+                      <Button
+                        variant={isEaten(member.id) ? "default" : "outline"}
+                        size="sm"
+                        className="h-7 text-xs shrink-0"
+                        onClick={() => toggleEaten(member.id, p.memberName)}
+                      >
+                        {isEaten(member.id) ? "✓ Eaten" : "Log eaten"}
+                      </Button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        )}
 
-        <Button variant="outline" size="sm" onClick={swap} disabled={swapping}>
-          {swapping ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <Repeat className="h-4 w-4 mr-1" />}
-          Swap this meal
-        </Button>
-      </AccordionContent>
-    </AccordionItem>
+          <div>
+            <p className="text-sm font-medium mb-1">Ingredients</p>
+            <ul className="text-sm space-y-0.5">
+              {meal.ingredients.map((ing, i) => (
+                <li key={i} className="flex items-center gap-2">
+                  <span>• {ing.amount ? `${ing.amount} ` : ""}{ing.name}</span>
+                  {ing.fromPantry && <Badge variant="secondary" className="text-[10px] px-1">have it</Badge>}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {meal.steps.length > 0 && (
+            <div>
+              <p className="text-sm font-medium mb-1">Steps</p>
+              <ol className="text-sm space-y-1 list-decimal list-inside">
+                {meal.steps.map((s, i) => (
+                  <li key={i}>{s}</li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          <Button variant="outline" size="sm" onClick={swap} disabled={swapping}>
+            {swapping ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <Repeat className="h-4 w-4 mr-1" />}
+            Swap this meal
+          </Button>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -199,14 +202,13 @@ export default function PlanTab() {
     }
     setGenerating(true);
     try {
-      const res = await apiRequest("POST", "/api/familyfuel/plan", {
+      const plan = await postJson<MealPlan>("/api/plan", {
         members: buildPlanMembers(state.members),
         inventory: buildPlanInventory(state.inventory),
         weeklyBudget: state.weeklyBudget,
         currency: state.currency,
         preferences: state.preferences || undefined,
       } satisfies PlanRequest);
-      const plan: MealPlan = await res.json();
       update({ plan, planGeneratedAt: new Date().toISOString(), checkedShoppingItems: [] });
       toast({ title: "Your 7-day plan is ready!" });
     } catch (error) {
@@ -279,11 +281,9 @@ export default function PlanTab() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Accordion type="multiple">
-              {day.meals.map((meal) => (
-                <MealCard key={`${day.day}-${meal.slot}`} meal={meal} day={day.day} />
-              ))}
-            </Accordion>
+            {day.meals.map((meal) => (
+              <MealCard key={`${day.day}-${meal.slot}`} meal={meal} day={day.day} />
+            ))}
           </CardContent>
         </Card>
       ))}

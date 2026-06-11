@@ -1,9 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Progress } from "@/components/ui/progress";
 import { ShoppingCart } from "lucide-react";
-import { inventoryCategories } from "@shared/familyfuel";
-import { newId, useFamilyFuel } from "@/lib/familyfuel/store";
+import { inventoryCategories } from "../../shared/schemas";
+import { Card, CardContent, CardHeader, CardTitle, Checkbox, Progress } from "./ui";
+import { newId, useFamilyFuel, type FamilyFuelState } from "../lib/store";
 
 export default function ShoppingTab() {
   const { state, update } = useFamilyFuel();
@@ -12,7 +10,7 @@ export default function ShoppingTab() {
   const toggle = (name: string, checked: boolean) => {
     const item = list.find((i) => i.name === name);
     if (checked) {
-      const patch: Parameters<typeof update>[0] = {
+      const patch: Partial<FamilyFuelState> = {
         checkedShoppingItems: [...state.checkedShoppingItems, name],
       };
       // Bought items become available in the kitchen inventory
@@ -75,7 +73,7 @@ export default function ShoppingTab() {
                           key={item.name}
                           className="flex items-center gap-3 text-sm rounded-md px-2 py-1.5 hover:bg-muted cursor-pointer"
                         >
-                          <Checkbox checked={checked} onCheckedChange={(c) => toggle(item.name, c === true)} />
+                          <Checkbox checked={checked} onChange={(e) => toggle(item.name, e.target.checked)} />
                           <span className={checked ? "line-through text-muted-foreground" : ""}>
                             {item.name} <span className="text-muted-foreground">({item.quantity})</span>
                           </span>

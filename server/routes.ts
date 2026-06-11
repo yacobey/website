@@ -21,8 +21,6 @@ if (!process.env.STRIPE_SECRET_KEY) {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 import { z } from "zod";
 import { generateBlogContent, generateBlogMetadata } from "./ai-service";
-import { scanInventoryImages, generateMealPlan, swapMeal } from "./familyfuel-service";
-import { scanRequestSchema, planRequestSchema, swapRequestSchema } from "@shared/familyfuel";
 
 interface AdminSession {
   username: string;
@@ -56,51 +54,6 @@ function requireAdminAuth(req: Request, res: Response, next: NextFunction): void
 const adminAuth = requireAdminAuth;
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // FamilyFuel meal planner: scan fridge/pantry photos into an inventory list
-  app.post("/api/familyfuel/scan", async (req, res) => {
-    try {
-      const { images } = scanRequestSchema.parse(req.body);
-      const result = await scanInventoryImages(images);
-      res.json(result);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid scan request", errors: error.errors });
-      }
-      console.error("Error scanning inventory images:", error);
-      res.status(500).json({ message: "Failed to analyze the photos. Please try again." });
-    }
-  });
-
-  // FamilyFuel meal planner: generate a 7-day plan
-  app.post("/api/familyfuel/plan", async (req, res) => {
-    try {
-      const planRequest = planRequestSchema.parse(req.body);
-      const plan = await generateMealPlan(planRequest);
-      res.json(plan);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid plan request", errors: error.errors });
-      }
-      console.error("Error generating meal plan:", error);
-      res.status(500).json({ message: "Failed to generate the meal plan. Please try again." });
-    }
-  });
-
-  // FamilyFuel meal planner: swap a single meal for an alternative
-  app.post("/api/familyfuel/swap", async (req, res) => {
-    try {
-      const swapRequest = swapRequestSchema.parse(req.body);
-      const meal = await swapMeal(swapRequest);
-      res.json(meal);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid swap request", errors: error.errors });
-      }
-      console.error("Error swapping meal:", error);
-      res.status(500).json({ message: "Failed to suggest a replacement meal. Please try again." });
-    }
-  });
-
   // Contact form submission
   app.post("/api/contact", async (req, res) => {
     try {

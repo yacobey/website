@@ -1,4 +1,4 @@
-import type { Member } from "@shared/familyfuel";
+import type { Member } from "../../shared/schemas";
 
 const activityMultipliers: Record<Member["activity"], number> = {
   sedentary: 1.2,

@@ -1,17 +1,13 @@
 import { useRef, useState } from "react";
-import type { InventoryItem, ScannedItem, ScanResponse } from "@shared/familyfuel";
-import { inventoryCategories } from "@shared/familyfuel";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import type { InventoryItem, ScannedItem, ScanResponse } from "../../shared/schemas";
+import { inventoryCategories } from "../../shared/schemas";
 import { Camera, Check, Loader2, Plus, Refrigerator, Trash2, X } from "lucide-react";
-import { fileToDownscaledDataUrl, videoToKeyframes } from "@/lib/familyfuel/image-utils";
-import { daysUntil, todayKey } from "@/lib/familyfuel/nutrition";
-import { newId, useFamilyFuel } from "@/lib/familyfuel/store";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, Select } from "./ui";
+import { useToast } from "./toast";
+import { postJson } from "../lib/api";
+import { fileToDownscaledDataUrl, videoToKeyframes } from "../lib/image-utils";
+import { daysUntil, todayKey } from "../lib/nutrition";
+import { newId, useFamilyFuel } from "../lib/store";
 
 function expiryDateFromDays(days: number | null): string | undefined {
   if (days === null) return undefined;
@@ -54,8 +50,7 @@ export default function KitchenTab() {
         toast({ title: "No photos found", description: "Please choose photos or a short video of your fridge or pantry.", variant: "destructive" });
         return;
       }
-      const res = await apiRequest("POST", "/api/familyfuel/scan", { images: images.slice(0, 8) });
-      const data: ScanResponse = await res.json();
+      const data = await postJson<ScanResponse>("/api/scan", { images: images.slice(0, 8) });
       if (data.items.length === 0) {
         toast({ title: "Nothing detected", description: "Try clearer, closer photos with good lighting." });
       }
@@ -164,13 +159,15 @@ export default function KitchenTab() {
                     className="w-24 h-8"
                     aria-label="Quantity"
                   />
-                  <Select value={it.category} onValueChange={(v) => updateScanned(i, { category: v as ScannedItem["category"] })}>
-                    <SelectTrigger className="w-28 h-8"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {inventoryCategories.map((c) => (
-                        <SelectItem key={c} value={c}>{c}</SelectItem>
-                      ))}
-                    </SelectContent>
+                  <Select
+                    value={it.category}
+                    onChange={(e) => updateScanned(i, { category: e.target.value as ScannedItem["category"] })}
+                    className="w-32 h-8 py-0"
+                    aria-label="Category"
+                  >
+                    {inventoryCategories.map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
                   </Select>
                   <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Remove item" onClick={() => removeScanned(i)}>
                     <X className="h-4 w-4" />

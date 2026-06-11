@@ -60,7 +60,6 @@ const Retail = React.lazy(() => import("@/pages/industries/retail"));
 const Construction = React.lazy(() => import("@/pages/industries/construction"));
 const Nonprofit = React.lazy(() => import("@/pages/industries/nonprofit"));
 const Hospitality = React.lazy(() => import("@/pages/industries/hospitality"));
-const FamilyFuel = React.lazy(() => import("@/pages/familyfuel"));
 
 function Router() {
   useAnalytics();
@@ -114,7 +113,6 @@ function Router() {
           <Route path="/industries/construction" component={Construction} />
           <Route path="/industries/nonprofit" component={Nonprofit} />
           <Route path="/industries/hospitality" component={Hospitality} />
-          <Route path="/familyfuel" component={FamilyFuel} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>

@@ -49,6 +49,10 @@ function requireAdminAuth(req: Request, res: Response, next: NextFunction): void
   next();
 }
 
+// Several admin routes below reference `adminAuth`, which was never defined and
+// crashed the server on startup; they expect the same bearer-token admin check.
+const adminAuth = requireAdminAuth;
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission
   app.post("/api/contact", async (req, res) => {

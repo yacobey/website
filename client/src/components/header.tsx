@@ -10,6 +10,7 @@ const navLinks = [
   { label: "Calculators", href: "/calculators" },
   { label: "AI for Firms", href: "/ai-consulting" },
   { label: "Tools", href: "/tools" },
+  { label: "Experience", href: "/experience" },
   { label: "About", href: "/#about" },
   { label: "FAQ", href: "/#faq" },
   { label: "Blog", href: "/blog" },

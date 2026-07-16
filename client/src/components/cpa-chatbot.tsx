@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "wouter";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -74,9 +75,13 @@ export default function CPAChatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const [location] = useLocation();
+
   // Auto-popup chatbot on first visit to showcase capabilities
+  // (not on /experience — the popup would interrupt the immersive journey)
   useEffect(() => {
     const hasVisited = localStorage.getItem("chatbot-introduced");
+    if (location === "/experience") return;
     if (!hasVisited && !hasShownAutoPopup) {
       // Show popup after 3 seconds to let page load
       const timer = setTimeout(() => {
@@ -87,7 +92,7 @@ export default function CPAChatbot() {
       
       return () => clearTimeout(timer);
     }
-  }, [hasShownAutoPopup]);
+  }, [hasShownAutoPopup, location]);
 
   // Add welcome message when chatbot opens
   useEffect(() => {

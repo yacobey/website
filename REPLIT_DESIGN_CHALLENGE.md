@@ -59,25 +59,36 @@ field IS the explanation. The moment the ribbons split, the viewer feels it in t
 - **Layout:** single column, max-width 720px, everything above the fold on desktop
   and mobile.
 
-## Ready-to-paste Replit Design master prompt
+## Ready-to-paste Replit Design master prompt (final — with states, benefits, privacy)
 
-> Design a single-page interactive experience called "Paycheck X-Ray". Dark editorial
+> Design a single-page interactive web tool called "Paycheck X-Ray". Dark editorial
 > finance aesthetic: near-black navy background (#0A0F1E) with subtle film grain,
 > generous whitespace, single-column layout max 720px wide, everything above the fold.
 > Typography: large high-contrast serif display headline (Fraunces style) reading
 > "Where does your paycheck actually go?", all numbers in tabular monospace so digits
-> tick without layout shift. One large elegant input: "Your annual salary". As the user
-> types, animate a Sankey-style ribbon flow that splits the salary into Take-home,
-> Federal income tax, Social Security, Medicare, and State tax (flat 5% estimate,
-> editable). The take-home ribbon is emerald (#10B981); every deduction ribbon is a
-> muted desaturated slate tone — green is the only saturated color on the page. Use
-> 2025 federal brackets, single filer, standard deduction; math runs fully client-side,
-> no backend. Numbers count up with a 600ms ease; ribbons animate with a 400ms spring.
-> Below the flow, one live-updating line in serif italic: "That's N hours of every week
-> you work for the government." Add an Annual / Monthly / Per-paycheck toggle as
-> minimal text tabs. Small footnote disclaimer that figures are estimates and not tax
-> advice. Fully responsive; on mobile the flow stacks vertically. No nav bar, no
-> sections, no marketing copy — the input and the flow ARE the page.
+> tick without layout shift. One large elegant input: "Your annual salary", with three
+> small example chips beneath it ("Try $60,000 · $100,000 · $150,000") so visitors can
+> play without entering their real number. As the user types, animate a Sankey-style
+> ribbon flow that splits the salary into Take-home, Federal income tax, Social
+> Security, Medicare, and State tax. The take-home ribbon is emerald (#10B981); every
+> deduction ribbon is a muted desaturated slate tone — green is the only saturated
+> color on the page. Use 2025 federal brackets, single filer, standard deduction,
+> 6.2% Social Security up to the wage base, 1.45% Medicare; math runs fully
+> client-side, no backend, nothing stored or sent anywhere. Directly under the input,
+> a slim collapsed "Refine" row expands to reveal: a State dropdown (all 50 states +
+> DC using simplified 2025 effective state income-tax rates, including $0 for the
+> nine no-income-tax states), a 401(k) contribution % field, and a monthly health
+> insurance premium field — pre-tax deductions appear as their own calm slate ribbon
+> labeled "Benefits (still yours)" and reduce taxable income correctly. The refine
+> row is optional; the tool must be complete and honest with just the one salary
+> input using a national-median state estimate, labeled as such. Numbers count up
+> with a 600ms ease; ribbons animate with a 400ms spring. Below the flow, one
+> live-updating line in serif italic: "That's N hours of every week you work for the
+> government." Add an Annual / Monthly / Per-paycheck toggle as minimal text tabs.
+> Two quiet trust lines in the footer: "Nothing you type is stored or sent — the math
+> runs entirely in your browser" and "Estimates only, not tax advice." Fully
+> responsive; on mobile the flow stacks vertically. No nav bar, no sections, no
+> marketing copy — the input and the flow ARE the page.
 
 **Budget guardrails (stay far under $50):**
 - One-shot the detailed prompt above rather than 15 vague iterations — the prompt is

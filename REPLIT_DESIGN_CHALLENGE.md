@@ -99,6 +99,93 @@ A beautiful full-screen countdown to the next IRS quarterly estimated-payment de
 with a one-field payment estimator and add-to-calendar. **Strength:** cheapest possible
 build, real pain (penalties). **Weakness:** less visual drama for the social post.
 
+## Extended idea round — six more concepts, critically evaluated
+
+Scored against the five criteria: instant emotional connection · zero explanation
+needed · premium/shareable visual · real pain · cheap one-page build.
+
+### D. "Debt-Free Date" ⭐ (strongest of the new round)
+Type balance + APR + monthly payment → a giant serif date fills the screen:
+**"You are debt-free on March 14, 2031."** Below it, one slider — "pay $50 more per
+month" — and the date visibly melts backward by years as you drag. Confetti when the
+date crosses under 1 year.
+- **Connection:** debt anxiety is the deepest money emotion there is; the payoff is
+  *hope*, which shares better than fear.
+- **The wow:** dragging the slider and watching years disappear is a perfect 8-second
+  screen recording. On-brand for a CPA. Math is trivial (amortization formula).
+- **Risk:** almost none. Slightly heavier emotionally than Paycheck X-Ray.
+
+### E. "The Meeting Cost Clock"
+Pick number of attendees + average salary → hit start → a live counter burns dollars
+in real time while the meeting runs. "This standup cost $412."
+- **Connection:** instantly viral with the tech/LinkedIn crowd — the exact audience
+  Replit's socials reach. Cheapest build on this list (one counter).
+- **Risk:** it's been done before (meeting-cost calculators exist), so "out of the
+  box" is weaker; and it's office-snark, not aligned with Selam CPA's client base.
+
+### F. "Is It Worth It?" — the life-hours converter
+Type any price + your salary → "This $1,299 phone = **34 hours of your life**,"
+rendered as an elegant clock-face / hour-grid visual that fills as you type.
+- **Connection:** converts money into the one currency everyone understands — time.
+  Dead-simple two-field build.
+- **Risk:** the "latte factor" genre is familiar; needs the visual execution to carry
+  the out-of-the-box claim.
+
+### G. "Subscription Lifetime"
+A beautiful grid of subscription logos — tap the ones you pay for → a running counter
+shows the 10-year true cost: "Your subscriptions are a **$31,000 car**."
+- **Connection:** subscription creep is universal and current; tapping logos is a
+  satisfying interaction with zero typing.
+- **Risk:** logo licensing makes it awkward for Replit to reshare; comparison objects
+  (car/house-downpayment) need care to not feel preachy.
+
+### H. "Retire Me"
+Age + monthly savings → the screen renders the exact date you can stop working, with
+a compound-interest curve drawing itself behind the type. Slider: "+$100/month" pulls
+the date closer.
+- **Connection:** retirement anxiety is real, and "a specific date" makes the
+  abstract concrete — same emotional mechanic as Debt-Free Date.
+- **Risk:** requires assumptions (return rate, spend rate) that invite nitpicking in
+  the replies; slightly more explaining than the others.
+
+### I. "Your Raise Was a Pay Cut"
+Type last year's raise % → against current inflation, see your real change in
+purchasing power, typeset like a newspaper correction notice.
+- **Connection:** provocative, very shareable, timely.
+- **Risk:** negative-emotion payoff (anger, no agency) — great for engagement, but
+  it's a downer with no action, and less on-brand for a trust-based CPA firm.
+
+## Final ranking (all nine)
+
+1. **Debt-Free Date (D)** — deepest emotion + the best single interaction (the
+   slider melting years away) + on-brand + trivial math. New top recommendation,
+   narrowly over Paycheck X-Ray.
+2. **Paycheck X-Ray (A)** — most universal, best pure visual (the ribbon split),
+   zero-risk tone. Pick this if you prefer the stronger *screenshot*; pick D if you
+   prefer the stronger *feeling*.
+3. **Is It Worth It? (F)** — simplest build with genuine universality.
+4. **Meeting Cost Clock (E)** — most viral ceiling, least original floor.
+5. **Am I Charging Enough? (B)** — best audience fit, narrower reach.
+6. **Subscription Lifetime (G)**, then **Retire Me (H)**, **Penalty Clock (C)**,
+   **Raise/Pay Cut (I)**.
+
+## Master prompt — Debt-Free Date (if chosen)
+
+> Design a single-page interactive experience called "Debt-Free Date". Dark editorial
+> aesthetic: near-black navy (#0A0F1E), subtle grain, single column max 720px, all
+> above the fold. Three minimal inputs in a row: current balance, APR, monthly
+> payment — labels in small caps, values in tabular monospace. The moment all three
+> are filled, the page's centerpiece renders: an enormous high-contrast serif date
+> (Fraunces style) — "You are debt-free on March 14, 2031" — animating in with a
+> 500ms rise-and-settle. Beneath it, one emerald (#10B981) slider labeled "What if
+> you paid a little more?" ranging +$0 to +$500/month; dragging it recalculates the
+> amortization live and the giant date visibly rolls backward, with a small line
+> beneath: "$150 more per month sets you free 3 years and 2 months sooner." When the
+> payoff drops under 12 months, fire a single tasteful emerald confetti burst. Green
+> is the only saturated color. Standard amortization math, fully client-side, no
+> backend. Small footnote: estimates only, not financial advice. Fully responsive.
+> No nav, no sections, no marketing copy — the inputs and the date ARE the page.
+
 ## Social post playbook (step 2 of the challenge)
 
 - Post a **screen recording**, not a static screenshot: typing the salary → ribbons

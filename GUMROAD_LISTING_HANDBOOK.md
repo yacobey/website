@@ -28,7 +28,8 @@ first-timer's launch.
 This handbook is that process, in order, with nothing skipped:
 
 - **Part 1 — Why now:** the real economics ($124 in fees, 170 subscribers to $10K/year)
-- **Part 2 — Choose & design:** how to pick an app small enough to actually finish
+- **Part 2 — Choose & design:** how to pick an app small enough to actually finish,
+  plus the step-by-step Replit walkthrough (the AI builds the app for you)
 - **Part 3 — Register:** Apple, Google Play, and Samsung step by step — and the
   12-testers-for-14-days rule that catches almost everyone
 - **Part 4 — Monetize:** subscriptions without writing billing code
@@ -45,12 +46,8 @@ Instant download. 10 pages, zero filler. Free lifetime updates to future edition
 *Fees and store policies are accurate as of mid-2026 — always verify current terms in
 each developer console.*
 
-## Cover image brief (make in Canva, 1280×720)
-- Dark navy background (#20242E), cobalt accent bar (#2447D6)
-- Title: "Publish Your First Paid Mobile App" in a bold serif
-- Subline: "The Indie Publisher's Handbook · 2026"
-- Three stat chips: "$124 all 3 stores" · "60-day plan" · "3 worksheets"
-- Match the PDF cover so the listing and product feel like one brand
+## Cover image
+✅ Done — upload `gumroad-cover.png` (1280×720, matches the PDF cover design).
 
 ## Settings
 - Category: Business & Money → Entrepreneurship (or Education)

@@ -8,9 +8,8 @@ the value-first thread format.
 1. Upload `indie-publishers-handbook.pdf` to Gumroad with `gumroad-cover.png` as the
    cover (listing copy in `GUMROAD_LISTING_HANDBOOK.md`).
 2. Replace `[GUMROAD LINK]` below with the product URL.
-3. Replace `YOUR-USERNAME` in the guide's Replit referral link
-   (replit.com/refer/YOUR-USERNAME) with your actual Replit username — every reader
-   who signs up through it earns you Replit credits.
+3. ✅ Done — the guide already contains your Replit referral link (replit.com/refer/yber2001);
+   every reader who signs up through it earns you Replit credits.
 
 ---
 
@@ -53,7 +52,7 @@ the value-first thread format.
 > The code was never the hard part. The process is. 3/6
 
 *(When people reply asking how to start, answer with your Replit referral link —
-replit.com/refer/YOUR-USERNAME — you earn credits for every signup.)*
+replit.com/refer/yber2001 — you earn credits for every signup.)*
 
 **4/6 — The trap**
 
